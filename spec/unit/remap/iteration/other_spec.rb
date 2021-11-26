@@ -1,0 +1,39 @@
+# frozen_string_literal: true
+
+describe Remap::Iteration::Other do
+  using Remap::State::Extension
+
+  describe "#map" do
+    let(:state) { state!(value) }
+    let(:other) { described_class.call(state: state, value: value) }
+
+    context "when called with a defined value" do
+      context "when error block is invoked" do
+        subject(:result) do
+          other.map do |_value|
+            state.problem("an error")
+          end
+        end
+
+        let(:value) { [1, 2, 3] }
+        let(:output) { value.size }
+
+        it { is_expected.to have(1).problems }
+        it { is_expected.not_to have_key(:value) }
+      end
+
+      context "when error block is not invoked" do
+        subject(:result) do
+          other.map do |value|
+            state.set(value.size)
+          end
+        end
+
+        let(:value) { [1, 2, 3] }
+        let(:output) { value.size }
+
+        it { is_expected.to contain(output) }
+      end
+    end
+  end
+end

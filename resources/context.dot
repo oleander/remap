@@ -1,0 +1,15 @@
+digraph Context {
+  Impartial -> {previous}
+  Success -> Impartial
+  Element -> {index, element, Success}
+  Problem -> {Failure, reason}
+  Item -> {value, payload, Success}
+  Link -> {Context, payload, left, right, problems}
+  Head -> {Context, input, options, scope}
+  Mapper -> {mapper, Impartial}
+  Scope -> {scope, Mapper}
+  Pair -> {payload, key, value, Success}
+
+  Success -> {payload}
+  Failure -> {payload}
+}

@@ -1,0 +1,12 @@
+{
+  "id": 42,
+  "reason": "Kauf",
+  "main-customer": {
+    "name": "Mustermann",
+    "of_legal_age": true,
+    "income": 5500
+  },
+  "object": {
+    "costs": 500000
+  }
+}
