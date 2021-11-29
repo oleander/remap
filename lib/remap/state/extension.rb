@@ -126,11 +126,6 @@ module Remap
           end
         end
 
-        def reason(left, right, &error)
-          params = { left: left, cleft: left.class, right: right, cright: right.class }
-          message = format("Could not merge [%<left>p] (%<cleft>s) with [%<right>p] (%<cright>s)", params)
-          error[message]
-        end
 
         # Creates a new state with params
         #
@@ -323,6 +318,8 @@ module Remap
           fetch(:value)
         end
 
+        private
+
         # Creates a context containing {options} and {self}
         #
         # @param value [Any]
@@ -340,6 +337,21 @@ module Remap
               error[message]
             end
           end.new(**to_hash, **options, value: value)
+        end
+
+        # Creates an error message used to describe a merge error
+        #
+        # @param left [Any]
+        # @param right [Any]
+        #
+        # @yieldparam [String]
+        # @yieldreturn [String]
+        #
+        # @return [String]
+        def reason(left, right, &error)
+          params = { left: left, cleft: left.class, right: right, cright: right.class }
+          message = format("Could not merge [%<left>p] (%<cleft>s) with [%<right>p] (%<cright>s)", params)
+          error[message]
         end
       end
     end
