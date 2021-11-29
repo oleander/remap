@@ -153,3 +153,6 @@ Style/MixinUsage:
 
 Style/OpenStructUse:
   Enabled: false
+
+Style/Alias:
+  EnforcedStyle: prefer_alias
