@@ -188,6 +188,10 @@ module Remap
           Failure.new(reasons: reasons, problems: problems)
         end
 
+        # Creates a problem from state
+        #
+        # @return [Success] if {#value} is defined
+        # @return [Failure] unless {#value} is defined
         def to_result(&error)
           unless block_given?
             return to_result(&:itself)
