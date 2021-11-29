@@ -5,9 +5,10 @@ module Remap
     attribute :problems, Types.Array(Types::Problem)
 
     # @return [Boolean]
-    def has_problem?
+    def problem?
       !problems.blank?
     end
+    alias has_problem? problem?
 
     # @abstract
     #
