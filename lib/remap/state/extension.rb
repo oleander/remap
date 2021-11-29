@@ -241,7 +241,7 @@ module Remap
         # @return [Hash]
         def failure(reason)
           case [path, reason]
-          in [[], Array | String => message]
+          in [EMPTY_ARRAY, Array | String => message]
             { base: Array.wrap(message) }
           in [path, String | Array => message]
             path.hide(Array.wrap(message))
