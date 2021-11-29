@@ -5,8 +5,8 @@ module Remap
     include Dry::Core::Constants
     extend Dry::Monads[:result]
     extend Dry::Configurable
-
     using State::Extension
+    extend Operation
 
     CONTRACT = Dry::Schema.JSON do
       # NOP
@@ -143,26 +143,28 @@ module Remap
       raise ArgumentError, e.message
     end
 
-    # Creates a new mapper
+    # Similar to {::call}, but takes a state
     #
-    # @param input [Any]
-    # @param params [Hash]
-
-    # @return [Context]
-
-    extend Operation
-
+    # @param state [State]
+    #
+    # @yield [Failure] if mapper fails
+    #
+    # @return [Result] if mapper succeeds
+    #
+    # @private
     def self.call!(state, &error)
       new(state.options).call(state._.set(mapper: self), &error)
     rescue Dry::Struct::Error => e
       raise ArgumentError, "Option missing to mapper [#{self}]: #{e}"
     end
 
-    # Creates a mapper tree using {#context} and uses {#state} as argument
+    # Mappers state according to the mapper rules
+    #
+    # @param state [State]
+    #
+    # @yield [Failure] if mapper fails
     #
     # @return [State]
-    #
-    # @see .call!
     #
     # @private
     def call(state, &error)
@@ -183,6 +185,7 @@ module Remap
 
     private
 
+    # @return [Dry::Validation::Contract]
     def contract(scope: self)
       Class.new(Dry::Validation::Contract) do |klass|
         config = scope.class.config
