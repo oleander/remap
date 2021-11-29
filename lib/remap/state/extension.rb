@@ -232,8 +232,22 @@ module Remap
           end
         end
 
+        # Creates a single problem / failure
+        #
+        # @param reason [#to_s]
+        #
+        # @see State::Schema
+        #
+        # @return [Hash]
         def failure(reason)
-          explaination(reason)
+          case [path, reason]
+          in [[], Array | String => message]
+            { base: Array.wrap(message) }
+          in [path, String | Array => message]
+            path.hide(Array.wrap(message))
+          in [path, Hash => failures]
+            path.hide(failures)
+          end
         end
 
         def explaination(reason, explainations = EMPTY_HASH)

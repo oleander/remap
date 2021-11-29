@@ -179,44 +179,49 @@ describe Remap::State::Extension do
   describe "#failure" do
     let(:value) { "value" }
 
-    context "without path" do
-      context "when string" do
-        subject { state.failure(reason) }
+    subject { state!(value!, path: path).failure(reason) }
 
-        let(:state) { state!(value, path: []) }
+    context "when state is without path" do
+      let(:path) { [] }
+
+      context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to include({ base: [include({ reason: "reason" })] }) }
+        it { is_expected.to eq({ base: [reason] }) }
       end
 
-      context "when hash" do
-        subject { state.failure(reason) }
+      context "when reason is an array" do
+        let(:reason) { ["reason"] }
 
-        let(:state) { state!(value, path: []) }
-        let(:reason) { { key: ["reason"] } }
+        it { is_expected.to eq({ base: reason }) }
+      end
 
-        it { is_expected.to include({ key: include({ reason: "reason" }) }) }
+      context "when reason is a hash" do
+        let(:reason) { { key: ["error"] } }
+
+        it { is_expected.to eq(reason) }
       end
     end
 
-    context "with path" do
-      context "when string" do
-        subject { state.failure(reason) }
+    context "when state has path" do
+      let(:path) { [:a, :b] }
 
-        let(:value) { "value" }
-        let(:state) { state!(value, path: %i[a b]) }
+      context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to include({ a: { b: [include({ reason: "reason" })] } }) }
+        it { is_expected.to eq({ a: { b: [reason] } }) }
       end
 
-      context "when hash" do
-        subject { state.failure(reason) }
+      context "when reason is an array" do
+        let(:reason) { ["reason"] }
 
-        let(:state) { state!(value, path: %i[a b]) }
-        let(:reason) { { c: "reason" } }
+        it { is_expected.to eq({ a: { b: reason } }) }
+      end
 
-        it { is_expected.to include({ a: { b: { c: [include({ reason: "reason" })] } } }) }
+      context "when reason is a hash" do
+        let(:reason) { { c: ["reason"] } }
+
+        it { is_expected.to include({ a: { b: { c: ["reason"] } } }) }
       end
     end
   end
