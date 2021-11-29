@@ -42,5 +42,12 @@ module Remap
     def merge(_other)
       raise NotImplementedError, "merge not implemented"
     end
+
+    # @return [Error]
+    #
+    # @abstract
+    def exception
+      raise NotImplementedError, "exception not implemented"
+    end
   end
 end
