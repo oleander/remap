@@ -106,9 +106,6 @@ Lint/ConstantDefinitionInBlock:
 RSpec/MultipleExpectations:
   Enabled: false
 
-Layout/LineLength:
-  Enabled: false
-
 Style/CaseEquality:
   Enabled: false
 
@@ -132,3 +129,9 @@ RSpec/FilePath:
 
 Layout/CaseIndentation:
   EnforcedStyle: end
+
+Metrics/ModuleLength:
+  Exclude: ["lib/remap/state/extension.rb"]
+
+Lint/ShadowedException:
+  Enabled: false

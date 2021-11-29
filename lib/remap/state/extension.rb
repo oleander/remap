@@ -91,7 +91,7 @@ module Remap
 
         # @return [String]
         def inspect
-          reject { _2.blank? }.then do |cleaned|
+          reject { |_, value| value.blank? }.then do |cleaned|
             format("#<State %<json>s>", json: JSON.pretty_generate(cleaned))
           end
         end
@@ -252,7 +252,7 @@ module Remap
             end
           end
 
-          output = explainations.deep_merge(explaination) do |key, left, right|
+          explainations.deep_merge(explaination) do |key, left, right|
             case [left, right]
             in [Array, Array]
               left + right
@@ -260,10 +260,6 @@ module Remap
               raise ArgumentError, "Cannot merge #{left} with #{right} @ #{key}"
             end
           end
-
-          # Remap::Types::Report::Self[output] do
-          #   binding.pry
-          # end
         end
 
         # Number of current problems
@@ -394,7 +390,7 @@ module Remap
         # @yieldparam reason [T]
         #
         # @return [Struct]
-        def context(value, state: self, &error)
+        def context(value, &error)
           ::Struct.new(*keys, *options.keys, keyword_init: true) do
             define_method :method_missing do |name, *|
               error["Method [#{name}] not defined"]
