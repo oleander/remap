@@ -5,7 +5,7 @@ module Remap
     class Key < Unit
       using State::Extension
 
-      attribute :key, Types::Hash.not
+      attribute :key, Types::Key
       requirement Types::Hash.constrained(min_size: 1)
 
       # Fetches {#input[value]} and passes it to {block}

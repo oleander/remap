@@ -27,9 +27,5 @@ module Remap
       path?: Array.constrained(min_size: 1),
       reason: String.constrained(min_size: 1)
     )
-
-    Dry::Types.define_builder(:not) do |type, owner = Object|
-      type.constrained_type.new(Instance(owner), rule: Negation.new(type.rule))
-    end
   end
 end
