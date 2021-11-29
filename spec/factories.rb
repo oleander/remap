@@ -129,7 +129,7 @@ FactoryBot.define do
     end
 
     trait :with_problems do
-      sequence(:problems) { |n| generate(:key_path).hide("Reason #{n}") }
+      sequence(:problems) { |n| [{ reason: "Reason #{n}", path: [n] }]  }
     end
   end
 end

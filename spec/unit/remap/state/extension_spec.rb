@@ -229,7 +229,7 @@ describe Remap::State::Extension do
         let(:right) { undefined!(:with_problems) }
 
         it "throws undefined! symbol" do
-          expect { left.recursive_merge(right) }.to throw_symbol(:undefined!)
+          expect { left.recursive_merge(right) }.to throw_symbol(:undefined)
         end
       end
 
@@ -734,12 +734,29 @@ describe Remap::State::Extension do
     let(:path) { [:key1] }
     let(:reason) { "reason" }
     let(:value) { "value" }
-    let(:state) { defined!(value, path: path) }
 
-    let(:problems) { [{ path: path, value: value, reason: reason }] }
+    context "when value is defined" do
+      let(:state) { defined!(value, path: path) }
+      let(:problems) { [{ path: path, value: value, reason: reason }] }
 
-    it { is_expected.to include(problems: problems) }
-    it { is_expected.not_to have_key(:value) }
+      it { is_expected.to include(problems: problems) }
+      it { is_expected.not_to have_key(:value) }
+    end
+
+    context "when value is undefined" do
+      let(:state) { undefined!(path: path) }
+      let(:problems) { [{ path: path, reason: reason }] }
+
+      it { is_expected.to include(problems: problems) }
+      it { is_expected.not_to have_key(:value) }
+    end
+
+    context "path is defined" do
+
+    end
+
+    context "path is undefined" do
+    end
   end
 
   describe "#inspect" do
