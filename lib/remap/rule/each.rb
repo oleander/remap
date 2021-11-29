@@ -28,8 +28,8 @@ module Remap
       #
       # @return [State]
       def call(state)
-        state.map do |state|
-          rule.call(state)
+        state.map do |inner_state|
+          rule.call(inner_state)
         end
       end
     end

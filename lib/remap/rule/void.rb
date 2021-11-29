@@ -22,7 +22,9 @@ module Remap
       #
       # @return [State]
       def call(state)
-        state.bind { _2.set(_1) }
+        state.bind do |value, inner_state|
+          inner_state.set(value)
+        end
       end
     end
   end
