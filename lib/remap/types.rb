@@ -16,14 +16,19 @@ module Remap
     Nothing    = Constant(Remap::Nothing)
     Maybe      = Instance(Dry::Monads::Maybe).fallback(&Dry::Monads::Maybe)
     Proc       = Instance(Proc)
-    Key        = Interface(:hash) | Integer
-    Problem    = Hash.schema(value?: Any, path?: Array.constrained(min_size: 1),
-                             reason: String.constrained(min_size: 1))
+    Key        = Interface(:hash)
+
     Value      = Any
 
     State = Hash.constructor do |value, type, &error|
       type[value, &error]._(&error)
     end
+
+    Problem    = Hash.schema(
+      value?: Any,
+      path?: Array.constrained(min_size: 1),
+      reason: String.constrained(min_size: 1)
+    )
 
     Selectors = Array.of(Remap::Selector)
 
