@@ -185,23 +185,17 @@ module Remap
 
     private
 
-    # @return [Dry::Validation::Contract]
-    def contract(scope: self)
-      Class.new(Dry::Validation::Contract) do |klass|
-        config = scope.class.config
-
-        config.rules.each do |rule|
-          klass.class_eval(&rule)
-        end
-
-        config.options.each do |option|
-          klass.class_eval(&option)
-        end
-
-        schema(config.contract)
-      end.new(**attributes)
+    # @return [Contract]
+    def contract
+      Contract.call(
+        contract: config.contract,
+        attributes: attributes,
+        options: config.options,
+        rules: config.rules
+      )
     end
 
+    # @return [Dry::Configurable]
     def config
       self.class.config
     end
