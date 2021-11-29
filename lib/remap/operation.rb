@@ -17,6 +17,7 @@ module Remap
       end
 
       value = new_state.fetch(:value) do
+        binding.pry
         return Failure.new(reasons: new_state.failure("No mapped data"), problems: new_state.problems)
       end
 

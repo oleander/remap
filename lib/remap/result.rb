@@ -2,7 +2,7 @@
 
 module Remap
   class Result < Dry::Struct
-    attribute :problems, Types::Problem
+    attribute :problems, Types.Array(Types::Problem)
 
     def has_problem?
       !problems.blank?

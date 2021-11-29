@@ -97,6 +97,14 @@ describe Remap::Types do
       end
     end
 
+    context "when path is missing" do
+      let(:input) { valid.except(:path) }
+
+      it "does not invokes block" do
+        expect { |b| described_class.call(input, &b) }.not_to yield_control
+      end
+    end
+
     context "when reason is empty" do
       let(:input) { valid.merge(reason: "") }
 

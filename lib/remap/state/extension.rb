@@ -339,6 +339,8 @@ module Remap
             value.blank?
           end
 
+          Remap::Types::Problem[problem]
+
           merge(problems: problems + [problem]).except(:value)
         end
 
