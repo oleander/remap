@@ -97,7 +97,7 @@ describe Remap::State::Extension do
       subject { state.merge(key: :key) }
 
       it { is_expected.to have_key(:key) }
-      it { is_expected.to include(path: []) }
+      it { is_expected.to include(path: state.path) }
     end
 
     context "when value is a state" do
@@ -330,14 +330,14 @@ describe Remap::State::Extension do
       it { is_expected.to include(index: index) }
       it { is_expected.to include(element: value) }
       it { is_expected.to contain(value) }
-      it { is_expected.to include(path: [index]) }
+      it { is_expected.to include(path: state.path + [index]) }
     end
 
     context "when given just an index" do
       subject(:result) { state.set(index: index) }
 
       it { is_expected.to include(index: index) }
-      it { is_expected.to include(path: [index]) }
+      it { is_expected.to include(path: state.path + [index]) }
     end
 
     context "when given a key" do
@@ -349,7 +349,7 @@ describe Remap::State::Extension do
         subject { result.execute { key } }
 
         it { is_expected.to contain(key) }
-        it { is_expected.to include(path: [key]) }
+        it { is_expected.to include(path: state.path + [key]) }
       end
 
       describe "#value" do
@@ -565,7 +565,7 @@ describe Remap::State::Extension do
 
       let(:key) { :key }
       let(:value) { "value" }
-      let(:state) { defined!(value) }
+      let(:state) { defined!(value, path: []) }
       let(:problems) { [{ path: [key], reason: "message", value: value }] }
 
       it { is_expected.to include(problems: problems) }
@@ -657,7 +657,7 @@ describe Remap::State::Extension do
       let(:key) { :key }
       let(:value) { "value" }
       let(:state) { defined!(value) }
-      let(:problems) { [{ path: [key], reason: "error", value: value }] }
+      let(:problems) { [{ path: state.path + [key], reason: "error", value: value }] }
 
       it { is_expected.to include(problems: problems) }
     end

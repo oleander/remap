@@ -3,52 +3,16 @@
 require "faker"
 
 using Remap::State::Extension
+include Dry::Core::Constants
 
 FactoryBot.define do
   initialize_with { new(attributes) }
 
-  # sequence of array
-  sequence(:key_path) { Array.new(2).map { FactoryBot.generate(:key) } }
-  sequence(:hash) { Faker::Types.complex_rb_hash(number: 1) }
-  sequence(:value, aliases: [:values]) { |n| "value#{n}" }
-  sequence(:string) { Faker::Types.rb_string }
+  sequence(:key_path, aliases: [:path]) { Array.new(2).map { FactoryBot.generate(:key) } }
   sequence(:integer, aliases: [:index]) { Faker::Number.number(digits: 2) }
-  sequence(:float) { Faker::Number.decimal(l_digits: 2, r_digits: 2) }
-  sequence(:boolean) { Faker::Boolean.boolean }
-  sequence(:date) { Faker::Date.between(from: Date.today - 1.year, to: Date.today) }
-  sequence(:time) { Faker::Time.between(from: Date.today - 1.year, to: Date.today) }
-  sequence(:datetime) { Faker::Time.between(from: Date.today - 1.year, to: Date.today) }
-  sequence(:decimal) { Faker::Number.decimal(l_digits: 2, r_digits: 2) }
-  sequence(:uuid) { Faker::Internet.uuid }
-  sequence(:email) { Faker::Internet.email }
-  sequence(:url) { Faker::Internet.url }
-  sequence(:ip_v4) { Faker::Internet.ip_v4_address }
-  sequence(:mac_address) { Faker::Internet.mac_address }
-  sequence(:slug) { Faker::Lorem.word }
-  sequence(:username) { Faker::Internet.username }
-  sequence(:password) { Faker::Internet.password }
-  sequence(:word) { Faker::Lorem.word }
-  sequence(:sentence) { Faker::Lorem.sentence }
-  sequence(:paragraph) { Faker::Lorem.paragraph }
-  sequence(:sentences) { Faker::Lorem.sentences }
-  sequence(:paragraphs) { Faker::Lorem.paragraphs }
-  sequence(:name) { Faker::Name.name }
-  sequence(:first_name) { Faker::Name.first_name }
-  sequence(:last_name) { Faker::Name.last_name }
-  sequence(:title) { Faker::Job.title }
-  sequence(:phone_number) { Faker::PhoneNumber.phone_number }
-  sequence(:street_address) { Faker::Address.street_address }
-  sequence(:city) { Faker::Address.city }
-  sequence(:state) { Faker::Address.state }
-  sequence(:zip) { Faker::Address.zip }
-  sequence(:country) { Faker::Address.country }
-  sequence(:latitude) { Faker::Address.latitude }
-  sequence(:longitude) { Faker::Address.longitude }
-  sequence(:street_name) { Faker::Address.street_name }
-  sequence(:city_prefix) { Faker::Address.city_prefix }
-  sequence(:city_suffix) { Faker::Address.city_suffix }
-  sequence(:class_name) { Faker::Lorem.word.camelize }
   sequence(:key) { "key_#{Faker::Lorem.word.underscore}".to_sym }
+  sequence(:value, aliases: [:values, :input]) { |n| "value#{n}" }
+  sequence(:class_name) { Faker::Lorem.word.camelize }
 
   factory Remap::Base, aliases: [:mapper, Remap::Base] do
     initialize_with do |context: self|
@@ -57,17 +21,13 @@ FactoryBot.define do
           context.options.each_key do |name|
             option name
           end
-
-          # define do
-          #   map
-          # end
         end
       end
     end
 
     transient do
-      name { "#{generate(:class_name)}Mapper" }
-      options { {} }
+      name { [generate(:class_name), "Mapper"].join }
+      options { EMPTY_HASH }
     end
   end
 
@@ -76,18 +36,18 @@ FactoryBot.define do
     to { output }
 
     transient do
-      input { generate(:key_path) }
-      output { generate(:key_path) }
+      input { generate(:path) }
+      output { generate(:path) }
     end
   end
 
   factory Remap::Rule::Map, aliases: [Remap::Rule::Map] do
-    path { build(Remap::Rule::Path) }
+    path { build(Remap::Rule::Path, input: input, output: output) }
     rule { build(Remap::Rule::Void) }
 
     transient do
-      input { [:input] }
-      output { [:output] }
+      input { generate(:path) }
+      output { generate(:path) }
     end
   end
 
@@ -105,31 +65,36 @@ FactoryBot.define do
     # NOP
   end
 
-  factory :state, class: Hash do
+  factory :problem, class: Hash do
+    initialize_with { Remap::Types::Problem[attributes] }
+
+    reason { Faker::Lorem.sentence }
+    path
+    value
+  end
+
+  factory :state, class: Hash, aliases: [:undefined] do
     initialize_with { attributes._ }
 
-    options { {} }
-    problems { [] }
-    input { {} }
+    problems { EMPTY_ARRAY }
+    options { EMPTY_HASH }
     values { input }
-    path { [] }
-    mapper
 
-    factory :undefined do
-      # NOP
-    end
+    mapper
+    path
+    input
 
     factory :defined do
-      value { 1 }
+      value
     end
 
     factory :element do
-      value { "value" }
-      index { 1 }
+      value
+      index
     end
 
     trait :with_problems do
-      sequence(:problems) { |n| [{ reason: "Reason #{n}", path: [n] }] }
+      problems { build_list(:problem, 1) }
     end
   end
 end
