@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.0.0"
 
   spec.add_dependency "activesupport"
+  spec.add_dependency "dry-configurable"
   spec.add_dependency "dry-core"
   spec.add_dependency "dry-initializer"
   spec.add_dependency "dry-interface"
@@ -25,7 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-struct"
   spec.add_dependency "dry-types"
   spec.add_dependency "dry-validation"
-  spec.add_dependency "dry-configurable"
   spec.add_dependency "zeitwerk"
 
   spec.metadata = {

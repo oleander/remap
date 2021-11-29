@@ -10,7 +10,7 @@ module Remap
       # @param state [State]
       #
       # @return [State]
-      def call(state)
+      def call(_state)
         raise NotImplementedError, "#{self.class}#call not implemented"
       end
 
