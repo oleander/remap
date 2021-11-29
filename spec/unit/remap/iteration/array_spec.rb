@@ -11,11 +11,11 @@ describe Remap::Iteration::Array do
 
     context "when called with a block" do
       it "does not yield block" do
-        expect { |block| iterator.map(&block) }.not_to yield_control
+        expect { |block| iterator.call(&block) }.not_to yield_control
       end
 
       it "contains the input value" do
-        expect(iterator.map(&:itself)).to contain(value)
+        expect(iterator.call(&:itself)).to contain(value)
       end
     end
   end
@@ -25,7 +25,7 @@ describe Remap::Iteration::Array do
 
     context "when no values are rejected" do
       subject(:result) do
-        iterator.map do |value|
+        iterator.call do |value|
           state.set(value.upcase)
         end
       end
@@ -39,7 +39,7 @@ describe Remap::Iteration::Array do
 
     context "when all values are rejected" do
       subject(:result) do
-        iterator.map do |_value, index:|
+        iterator.call do |index:|
           state.problem("P:#{index}")
         end
       end

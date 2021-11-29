@@ -16,7 +16,7 @@ module Remap
       # @yieldreturn [State<T>]
       #
       # @return [State<Array<T>>]
-      def map(&block)
+      def call(&block)
         value.each_with_index.reduce(init) do |input_state, (value, index)|
           block[value, index: index]._.then do |new_state|
             new_state.fmap { [_1] }
@@ -25,7 +25,6 @@ module Remap
           end
         end._
       end
-      alias call map
 
       private
 
