@@ -2,5 +2,15 @@
 
 module Remap
   class Static < Dry::Interface
+    # Maps a static value to {state}
+    #
+    # @param state [State<T>]
+    #
+    # @return [State<Y>]
+    #
+    # @abstract
+    def call(state)
+      raise NotImplementedError, "#{self.class}#call not implemented"
+    end
   end
 end
