@@ -147,3 +147,6 @@ Naming/PredicateName:
 
 Lint/EmptyClass:
   Exclude: ["lib/remap/nothing.rb"]
+
+Style/MixinUsage:
+  Enabled: false
