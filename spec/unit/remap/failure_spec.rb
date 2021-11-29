@@ -32,4 +32,20 @@ describe Remap::Failure do
       expect(failure.fmap).to be(failure)
     end
   end
+
+  describe "#merge" do
+    let(:reason1) { { base: ["reason1"] } }
+    let(:reason2) { { base: ["reason2"] } }
+    let(:problem1) { { reason: "problem1" } }
+    let(:problem2) { { reason: "problem2" } }
+
+    let(:left) { described_class.call(problems: [problem1], reasons: reason1) }
+    let(:right) { described_class.call(problems: [problem2], reasons: reason2) }
+
+    subject { left.merge(right) }
+
+    it { is_expected.to be_a(described_class) }
+    it { is_expected.to have_attributes(problems: [problem1, problem2]) }
+    it { is_expected.to have_attributes(reasons: { base: ["reason1", "reason2"] }) }
+  end
 end
