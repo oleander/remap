@@ -8,6 +8,14 @@ module Remap
       attribute :value, Types::Array
       attribute :state, Types::State
 
+      # Defines an array iterator that will iterate over {#value}
+      #
+      # @yieldparam value [T]
+      # @yieldparam index: [Integer]
+      #
+      # @yieldreturn [State<T>]
+      #
+      # @return [State<Array<T>>]
       def map(&block)
         value.each_with_index.reduce(init) do |input_state, (value, index)|
           block[value, index: index]._.then do |new_state|
