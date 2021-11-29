@@ -20,10 +20,6 @@ module Remap
           end
 
           def get(*path)
-            if path.empty?
-              throw :missing, []
-            end
-
             _, result = path.reduce([[], self]) do |(current_path, element), key|
               value = element.fetch(key) do
                 throw :missing, current_path + [key]

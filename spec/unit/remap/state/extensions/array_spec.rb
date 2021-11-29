@@ -8,11 +8,9 @@ describe Remap::State::Extensions::Array do
 
     context "when path is empty" do
       let(:path) { [] }
-      let(:receiver) { [] }
+      let(:receiver) { ['value'] }
 
-      it "throws a symbol" do
-        expect { result }.to throw_symbol(:missing, [])
-      end
+      it { is_expected.to eq(['value']) }
     end
 
     context "when empty" do
