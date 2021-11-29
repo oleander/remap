@@ -4,7 +4,6 @@ require "dry/struct"
 require "dry/validation"
 
 require "active_support/core_ext/module/delegation"
-require "dry/logic/builder"
 require "dry/configurable"
 require "dry/interface"
 require "dry/schema"

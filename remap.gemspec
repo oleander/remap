@@ -21,7 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-core"
   spec.add_dependency "dry-initializer"
   spec.add_dependency "dry-interface"
-  spec.add_dependency "dry-logic"
   spec.add_dependency "dry-monads"
   spec.add_dependency "dry-schema"
   spec.add_dependency "dry-struct"
