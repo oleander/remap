@@ -44,10 +44,6 @@ module Remap
         enum
       end
 
-      def [](key)
-        mappings[key]
-      end
-
       # Translate {key} into a value using pre-defined mappings
       #
       # @param key [#hash]
@@ -66,6 +62,13 @@ module Remap
         end
       end
       alias call get
+
+      # @param key [Key]
+      #
+      # @return [Maybe]
+      def [](key)
+        mappings[key]
+      end
 
       # Map all keys in {keys} to {to}
       #
