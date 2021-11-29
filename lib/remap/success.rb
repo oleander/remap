@@ -4,24 +4,22 @@ module Remap
   class Success < Result
     attribute :result, Types::Any
 
-    def inspect
-      format("Success<[%<result>s]>", result: JSON.pretty_generate(to_h))
-    end
-
-    def to_hash
-      { success: result, problems: problems }
-    end
-
+    # @return [false]
     def failure?
       false
     end
 
-    def success?(value = Undefined)
-      return true if value.equal?(Undefined)
-
-      result == value
+    # @return [true]
+    def success?
+      true
     end
 
+    # Calls {block} with {#result} and returns a other success
+    #
+    # @yieldparam [T]
+    # @yieldreturn [U]
+    #
+    # @return [Success<U>]
     def fmap(&block)
       new(result: block[result])
     end
