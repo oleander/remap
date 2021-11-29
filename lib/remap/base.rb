@@ -97,11 +97,6 @@ module Remap
       config.options << ->(*) { option(field, type: key) }
     end
 
-    # @return [String]
-    def self.inspect
-      "<#{self.class} #{rule}, #{self}>"
-    end
-
     # Defines a mapper rules and possible constructor
     #
     # @param constructor (Nothing) [#call]
