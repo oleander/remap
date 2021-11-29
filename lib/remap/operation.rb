@@ -3,7 +3,6 @@
 module Remap
   module Operation
     using State::Extension
-    include State
 
     # Public interface for mappers
     #
@@ -18,11 +17,11 @@ module Remap
         return call(input, **options, &:itself)
       end
 
-      state(input, options: options, mapper: self).then do |state|
-        call!(state) do |failure|
-          return error[failure]
-        end.to_result(&error)
-      end
+      state = State.call(input, options: options, mapper: self)
+
+      call!(state) do |failure|
+        return error[failure]
+      end.to_result(&error)
     end
   end
 end
