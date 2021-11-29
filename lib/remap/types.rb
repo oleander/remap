@@ -7,12 +7,11 @@ require "dry/logic"
 module Remap
   module Types
     include Dry::Types()
-
     using State::Extension
 
     Enumerable = Any.constrained(type: Enumerable)
-    Mapper     = Interface(:call!)
     Nothing    = Constant(Remap::Nothing)
+    Mapper     = Interface(:call!)
     Key        = Interface(:hash)
 
     State = Hash.constructor do |value, type, &error|
@@ -20,9 +19,9 @@ module Remap
     end
 
     Problem = Hash.schema(
-      value?: Any,
+      reason: String.constrained(min_size: 1),
       path?: Array.constrained(min_size: 1),
-      reason: String.constrained(min_size: 1)
+      value?: Any
     )
   end
 end
