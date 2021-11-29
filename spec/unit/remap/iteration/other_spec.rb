@@ -10,7 +10,7 @@ describe Remap::Iteration::Other do
     context "when called with a defined value" do
       context "when error block is invoked" do
         subject(:result) do
-          other.map do |_value|
+          other.call do |_value|
             state.problem("an error")
           end
         end
@@ -24,7 +24,7 @@ describe Remap::Iteration::Other do
 
       context "when error block is not invoked" do
         subject(:result) do
-          other.map do |value|
+          other.call do |value|
             state.set(value.size)
           end
         end

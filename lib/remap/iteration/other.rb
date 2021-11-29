@@ -9,10 +9,9 @@ module Remap
       using State::Extension
 
       # @see Base#map
-      def map(&block)
+      def call(&block)
         block[value]._
       end
-      alias call map
     end
   end
 end
