@@ -10,9 +10,8 @@ require "dry/types"
 require "dry/monads"
 require "zeitwerk"
 
-loader = Zeitwerk::Loader.for_gem
-loader.collapse("#{__dir__}/remap/rule/support")
-loader.setup
-
 module Remap
+  loader = Zeitwerk::Loader.for_gem
+  loader.collapse("#{__dir__}/remap/rule/support")
+  loader.setup
 end
