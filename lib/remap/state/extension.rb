@@ -124,7 +124,6 @@ module Remap
           end
         end
 
-
         # Creates a new state with params
         #
         # @param value [Any, Undefined] Used as {value:}
@@ -262,7 +261,6 @@ module Remap
 
           raise ArgumentError, "Expected State#value not to be a State [#{value}] (#{value.class})"
         end
-
 
         # Returns a new state that includes a new problem
         #
