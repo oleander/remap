@@ -273,7 +273,7 @@ module Remap
               return error["Undefined returned, skipping!"]
             end
 
-            set(result)
+            set(result)._
           rescue NoMethodError => e
             e.name == :fetch ? error["Fetch not defined on value: #{e}"] : raise
           rescue NameError => e

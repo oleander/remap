@@ -16,7 +16,15 @@ module Remap
     using Extension
 
     def state(value, mapper:, options: {})
-      { value: value, input: value, mapper: mapper, problems: [], path: [], options: options, values: value }._
+      {
+        problems: EMPTY_ARRAY,
+        path: EMPTY_ARRAY,
+        options: options,
+        mapper: mapper,
+        values: value,
+        value: value,
+        input: value
+      }._
     end
     alias call state
     module_function :state, :call
