@@ -194,32 +194,6 @@ module Remap
           end
         end
 
-        def explaination(reason, explainations = EMPTY_HASH)
-          Remap::Types::Report::Self[explainations]
-
-          report = ->(message) { [{}.merge(reason: message)] }
-
-          explaination = case [self, reason]
-          in [{path: []}, String]
-            { base: report[reason] }
-          in [{path:}, String]
-            path.hide(report[reason])
-          in [{path:}, Hash]
-            reason.paths_pair.reduce(EMPTY_HASH) do |acc, (item, suffix)|
-              Array.wrap(item).map { (path + suffix).hide(report[_1]) }.reduce(acc, &:deep_merge)
-            end
-          end
-
-          explainations.deep_merge(explaination) do |key, left, right|
-            case [left, right]
-            in [Array, Array]
-              left + right
-            else
-              raise ArgumentError, "Cannot merge #{left} with #{right} @ #{key}"
-            end
-          end
-        end
-
         # Number of current problems
         # Mainly used for debugging
         #

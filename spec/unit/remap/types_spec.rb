@@ -1,69 +1,6 @@
 # frozen_string_literal: true
 
 describe Remap::Types do
-  describe described_class::Report::Self do
-    context "given empty input" do
-      let(:input) { {} }
-
-      it "does not invoke block" do
-        expect { |b| described_class.call(input, &b) }.not_to yield_control
-      end
-    end
-
-    context "when given an empty base" do
-      let(:input) { { base: [] } }
-
-      it "does not invoke block" do
-        expect { |b| described_class.call(input, &b) }.not_to yield_control
-      end
-    end
-
-    context "when a non-empty base" do
-      let(:problem) { { reason: "reason", value: "a value" } }
-      let(:input) { { base: [problem] } }
-
-      it "does not invoke block" do
-        expect { |b| described_class.call(input, &b) }.not_to yield_control
-      end
-    end
-
-    context "when given a nested problem" do
-      let(:problem) { { reason: "reason", value: "a value" } }
-      let(:input) { { key1: { key2: [problem] } } }
-
-      it "does not invoke block" do
-        expect { |b| described_class.call(input, &b) }.not_to yield_control
-      end
-    end
-
-    context "when value is not there" do
-      let(:problem) { { reason: "reason" } }
-      let(:input) { { key1: { key2: [problem] } } }
-
-      it "does not invoke block" do
-        expect { |b| described_class.call(input, &b) }.not_to yield_control
-      end
-    end
-
-    context "when reason is not there" do
-      let(:problem) { { value: "value" } }
-      let(:input) { { key1: { key2: [problem] } } }
-
-      it "does not invoke block" do
-        expect { |b| described_class.call(input, &b) }.to yield_control
-      end
-    end
-
-    context "when problem is not an array" do
-      let(:problem) { { reason: "reason", value: "a value" } }
-      let(:input) { { key1: { key2: problem } } }
-
-      it "does not invoke block" do
-        expect { |b| described_class.call(input, &b) }.to yield_control
-      end
-    end
-  end
-
   describe described_class::State do
     context "given valid input" do
       it "does not invoke block" do

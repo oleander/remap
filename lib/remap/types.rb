@@ -30,19 +30,5 @@ module Remap
     Dry::Types.define_builder(:not) do |type, owner = Object|
       type.constrained_type.new(Instance(owner), rule: Negation.new(type.rule))
     end
-
-    module Report
-      include Dry.Types()
-
-      Problem = Hash.schema(value?: Any, reason: String)
-
-      Key = String | Symbol | Integer
-
-      Value = Any.constructor do |value, &error|
-        (Array(Problem) | Self).call(value, &error)
-      end
-
-      Self = Hash.map(Key, Value) | Hash.schema(base: Array(Problem))
-    end
   end
 end
