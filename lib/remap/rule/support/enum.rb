@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+require "active_support/proxy_object"
+
 module Remap
   class Rule
-    class Enum
+    class Enum < ActiveSupport::ProxyObject
+      def self.const_missing(name)
+        ::Object.const_get(name)
+      end
+
       include Dry::Core::Constants
       include Dry::Monads[:maybe]
 
@@ -33,7 +39,9 @@ module Remap
           raise ArgumentError, "no block given"
         end
 
-        new.tap { _1.execute(&block) }
+        enum = new
+        enum.execute(&block)
+        enum
       end
 
       def [](key)
