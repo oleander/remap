@@ -131,19 +131,19 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to eq({ base: [reason] }) }
+        it { is_expected.to be_a_failure.and(have_attributes(reasons: { base: [reason] })) }
       end
 
       context "when reason is an array" do
         let(:reason) { ["reason"] }
 
-        it { is_expected.to eq({ base: reason }) }
+        it { is_expected.to be_a_failure.and(have_attributes(reasons: { base: reason })) }
       end
 
       context "when reason is a hash" do
         let(:reason) { { key: ["error"] } }
 
-        it { is_expected.to eq(reason) }
+        it { is_expected.to be_a_failure.and(have_attributes(reasons: reason)) }
       end
     end
 
@@ -153,19 +153,19 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to eq({ a: { b: [reason] } }) }
+        it { is_expected.to be_a_failure.and(have_attributes(reasons: { a: { b: [reason] } })) }
       end
 
       context "when reason is an array" do
         let(:reason) { ["reason"] }
 
-        it { is_expected.to eq({ a: { b: reason } }) }
+        it { is_expected.to be_a_failure.and(have_attributes(reasons: { a: { b: reason } })) }
       end
 
       context "when reason is a hash" do
         let(:reason) { { c: ["reason"] } }
 
-        it { is_expected.to include({ a: { b: { c: ["reason"] } } }) }
+        it { is_expected.to be_a_failure.and(have_attributes(reasons: { a: { b: { c: ["reason"] } } })) }
       end
     end
   end

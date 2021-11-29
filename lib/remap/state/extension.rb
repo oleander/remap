@@ -176,7 +176,7 @@ module Remap
         #
         # @return [Hash]
         def failure(reason)
-          case [path, reason]
+          reasons = case [path, reason]
           in [EMPTY_ARRAY, Array | String => message]
             { base: Array.wrap(message) }
           in [path, String | Array => message]
@@ -184,6 +184,20 @@ module Remap
           in [path, Hash => failures]
             path.hide(failures)
           end
+
+          Failure.new(reasons: reasons, problems: problems)
+        end
+
+        def to_result(&error)
+          unless block_given?
+            return to_result(&:itself)
+          end
+
+          value = fetch(:value) do
+            return error[failure("No mapped data")]
+          end
+
+          Success.new(problems: problems, result: value)
         end
 
         # Passes {#value} to block, if defined
