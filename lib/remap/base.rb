@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require "dry/monads/all"
-
 module Remap
   class Base < Mapper
-    include Dry::Core::Memoizable
     include Dry::Core::Constants
     extend Dry::Monads[:result]
 

@@ -5,7 +5,7 @@ require "dry/validation"
 
 require "active_support/core_ext/module/delegation"
 require "dry/core/class_builder"
-require "dry/core/memoizable"
+# require "dry/core/memoizable"
 require "dry/logic/builder"
 require "dry/configurable"
 require "dry/interface"
