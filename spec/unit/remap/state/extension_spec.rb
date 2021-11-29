@@ -90,6 +90,23 @@ describe Remap::State::Extension do
     end
   end
 
+  describe "#to_result" do
+    subject { state.to_result }
+
+    context "without value" do
+      let(:state) { undefined!(:with_problems) }
+
+      it { is_expected.to be_a_failure.and(have_attributes(problems: be_present)) }
+    end
+
+    context "with value" do
+      let(:value) { "value" }
+      let(:state) { defined!(value, :with_problems) }
+
+      it { is_expected.to be_a_success.and(have_attributes(problems: be_present, result: value)) }
+    end
+  end
+
   describe "#merge" do
     let(:state) { undefined! }
 
