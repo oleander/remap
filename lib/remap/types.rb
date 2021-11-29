@@ -14,7 +14,6 @@ module Remap
     Enumerable = Any.constrained(type: Enumerable)
     Mapper     = Interface(:call!)
     Nothing    = Constant(Remap::Nothing)
-    Maybe      = Instance(Dry::Monads::Maybe).fallback(&Dry::Monads::Maybe)
     Key        = Interface(:hash)
     Value      = Any
 
