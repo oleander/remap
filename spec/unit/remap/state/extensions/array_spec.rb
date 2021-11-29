@@ -4,19 +4,30 @@ describe Remap::State::Extensions::Array do
   describe "#get" do
     subject(:result) { receiver.get(*path) }
 
-    let(:receiver) { [1, 2, 3] }
-
-    context "when value exists" do
+    context "when empty" do
+      let(:receiver) { [] }
       let(:path) { [0] }
 
-      it { is_expected.to eq(1) }
+      it "throws a symbol" do
+        expect { subject }.to throw_symbol(:missing, [0])
+      end
     end
 
-    context "when value does not exist" do
-      let(:path) { [4] }
+    context "when not empty" do
+      let(:receiver) { [1,2,3,4] }
 
-      it "throws a symbol" do
-        expect { subject }.to throw_symbol(:missing, [4])
+      context "when value exists" do
+        let(:path) { [0] }
+
+        it { is_expected.to eq(1) }
+      end
+
+      context "when value does not exist" do
+        let(:path) { [4] }
+
+        it "throws a symbol" do
+          expect { subject }.to throw_symbol(:missing, [4])
+        end
       end
     end
   end
