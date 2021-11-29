@@ -261,13 +261,19 @@ module Remap
         # @return [State<U>]
         def execute(&block)
           bind do |value, &error|
-            catch :success do
+            result = catch :success do
               path = catch :missing do
-                throw :success, set(context(value, &error).instance_exec(value, &block))._
+                throw :success, context(value, &error).instance_exec(value, &block)
               end
 
               return error["Could not fetch value at", path: path]
             end
+
+            if result.equal?(Dry::Core::Constants::Undefined)
+              return error["Undefined returned, skipping!"]
+            end
+
+            set(result)
           rescue NoMethodError => e
             e.name == :fetch ? error["Fetch not defined on value: #{e}"] : raise
           rescue NameError => e
