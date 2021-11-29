@@ -9,17 +9,17 @@ module Remap
 
       requirement Types::Array
 
-      # Fetches {#input[value]} and passes it to {block}
+      # Selects the {#index}th element from {state} and passes it to {block}
       #
-      # @param [State] state
+      # @param state [State<Array<T>>]
       #
-      # @yieldparam [State]
-      # @yieldreturn [State<T>]
-
-      # @return [State<T>]
+      # @yieldparam [State<T>]
+      # @yieldreturn [State<U>]
+      #
+      # @return [State<U>]
       def call(state, &block)
         unless block
-          raise ArgumentError, "no block given"
+          return call(state, &:itself)
         end
 
         state.bind(index: index) do |array, inner_state, &error|

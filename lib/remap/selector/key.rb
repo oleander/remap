@@ -8,14 +8,14 @@ module Remap
       attribute :key, Types::Key
       requirement Types::Hash.constrained(min_size: 1)
 
-      # Fetches {#input[value]} and passes it to {block}
+      # Selects {#key} from {state} and passes it to {block}
       #
-      # @param [State] state
+      # @param state [State<Hash<K, V>>]
       #
-      # @yieldparam [State]
-      # @yieldreturn [State<T>]
-
-      # @return [State<T>]
+      # @yieldparam [State<V>]
+      # @yieldreturn [State<U>]
+      #
+      # @return [State<U>]
       def call(state, &block)
         unless block
           return call(state, &:itself)
