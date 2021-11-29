@@ -180,7 +180,7 @@ describe Remap::Rule::Map do
         end
 
         context "when the index exists" do
-          let(:input) { %i[one two three] }
+          let(:input) { [:one, :two, :three] }
 
           it { is_expected.to contain(:two) }
         end

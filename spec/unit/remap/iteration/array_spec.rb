@@ -21,7 +21,7 @@ describe Remap::Iteration::Array do
   end
 
   context "given a non-empty array" do
-    let(:value) { %i[one two tree].map(&:to_s) }
+    let(:value) { [:one, :two, :tree].map(&:to_s) }
 
     context "when no values are rejected" do
       subject(:result) do
