@@ -14,18 +14,21 @@ module Remap
     #
     # @return [Success] if mapper succeeds
     def call(input, **options, &error)
-      new_state = state(input, options: options, mapper: self)
-
-      new_state = call!(new_state) do |failure|
-        return Failure.new(reasons: failure, problems: new_state.problems)
+      unless block_given?
+        return call(input, **options, &:itself)
       end
 
-      if error
-        return error[new_state]
+      init_state = state(input, options: options, mapper: self)
+
+      new_state = call!(init_state) do |failure|
+        return error[Failure.call(reasons: failure)]
       end
 
       value = new_state.fetch(:value) do
-        return Failure.new(reasons: new_state.failure("No mapped data"), problems: new_state.problems)
+        return error[Failure.new(
+          reasons: new_state.failure("No mapped data"),
+          problems: new_state.problems
+        )]
       end
 
       Success.new(problems: new_state.problems, result: value)
