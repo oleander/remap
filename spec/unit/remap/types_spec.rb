@@ -45,7 +45,7 @@ describe Remap::Types do
       end
     end
 
-    context "when value is not there" do
+    context "when reason is not there" do
       let(:problem) { { value: "value" } }
       let(:input) { { key1: { key2: [problem] } } }
 
@@ -117,7 +117,10 @@ describe Remap::Types do
   describe described_class::Selectors do
     subject(:type) { described_class.call([all!, index!(10), :key]) }
 
-    it { is_expected.to contain_exactly(be_a(Remap::Selector::All), be_a(Remap::Selector::Index), be_a(Remap::Selector::Key)) }
+    specify do
+      expect(type).to contain_exactly(be_a(Remap::Selector::All), be_a(Remap::Selector::Index),
+                                      be_a(Remap::Selector::Key))
+    end
   end
 
   describe "::not" do

@@ -12,14 +12,13 @@ module Remap
     using State::Extension
 
     Enumerable = Any.constrained(type: Enumerable)
-    Mapper     = Interface(:call!) # Class.constrained(lt: Remap::Mapper) | Instance(Remap::Mapper).constructor { |v, &e| Instance(Remap::Mapper::Binary).call(v, &e) }
+    Mapper     = Interface(:call!)
     Nothing    = Constant(Remap::Nothing)
     Maybe      = Instance(Dry::Monads::Maybe).fallback(&Dry::Monads::Maybe)
-    # Remap      = Class.constrained(lt: Remap)
     Proc       = Instance(Proc)
     Key        = Interface(:hash) | Integer
     Problem    = Hash.schema(value?: Any, path: Array.constrained(min_size: 1), reason: String.constrained(min_size: 1))
-    Value = Any # .constrained(not_eql: nil)
+    Value      = Any
 
     State = Hash.constructor do |value, type, &error|
       type[value, &error]._(&error)
