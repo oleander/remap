@@ -156,3 +156,9 @@ Style/OpenStructUse:
 
 Style/Alias:
   EnforcedStyle: prefer_alias
+
+Style/FormatString:
+  EnforcedStyle: percent
+
+Style/FormatStringToken:
+  EnforcedStyle: unannotated

@@ -15,7 +15,7 @@ module Remap
       def call(state)
         state.set(state.options.fetch(name))
       rescue KeyError
-        raise ArgumentError, "Option [#{name}] not found in input [#{state.options.inspect}]"
+        raise ArgumentError, "Option [%s] not found in input [%p]" % [name, state.options]
       end
     end
   end

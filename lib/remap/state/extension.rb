@@ -48,7 +48,7 @@ module Remap
         # @return [String]
         def inspect
           reject { |_, value| value.blank? }.then do |cleaned|
-            format("#<State %<json>s>", json: JSON.pretty_generate(cleaned))
+            "#<State %s>" % JSON.pretty_generate(cleaned)
           end
         end
 
@@ -364,9 +364,7 @@ module Remap
         #
         # @return [String]
         def reason(left, right, &error)
-          params = { left: left, cleft: left.class, right: right, cright: right.class }
-          message = format("Could not merge [%<left>p] (%<cleft>s) with [%<right>p] (%<cright>s)", params)
-          error[message]
+          error["Could not merge [%p] (%s) with [%p] (%s)" % [left, left.class, right, right.class]]
         end
       end
     end
