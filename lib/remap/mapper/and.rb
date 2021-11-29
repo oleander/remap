@@ -5,6 +5,14 @@ module Remap
     class And < Binary
       using State::Extension
 
+      # Succeedes if both {left} and {right} succeed
+      # Returnes the combined result of {left} and {right}
+      #
+      # @param state [State]
+      #
+      # @yield [Failure] if mapper fails
+      #
+      # @return [Result]
       def call!(state, &error)
         unless error
           return call!(state, &exception)
@@ -22,7 +30,7 @@ module Remap
           return error[failure]
         end
 
-        state1.merged(state2)
+        state1.combine(state2)
       end
     end
   end

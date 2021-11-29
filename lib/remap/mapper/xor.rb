@@ -5,6 +5,14 @@ module Remap
     class Xor < Binary
       using State::Extension
 
+      # Succeedes if {left} or {right} succeeds, but not both
+      #
+      # @param state [State]
+      #
+      # @yieldparam [Failure] if mapper fails
+      # @yieldreturn [Failure]
+      #
+      # @return [Result]
       def call!(state, &error)
         unless error
           return call!(state, &exception)
@@ -20,7 +28,7 @@ module Remap
           return state1
         end
 
-        error[state1.merged(state2).failure("Both left and right passed in xor")]
+        state1.combine(state2).failure("Both left and right passed xor operation").then(&error)
       end
     end
   end

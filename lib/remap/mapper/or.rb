@@ -5,6 +5,15 @@ module Remap
     class Or < Binary
       using State::Extension
 
+      # Succeedes if {left} or {right} succeeds
+      # Returns which ever succeeds first
+      #
+      # @param state [State]
+      #
+      # @yieldparam [Failure] if mapper fails
+      # @yieldreturn [Failure]
+      #
+      # @return [Result]
       def call!(state, &error)
         unless error
           return call!(state, &exception)
