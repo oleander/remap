@@ -2,53 +2,80 @@
 
 module Support
   include Dry::Core::Constants
+  include Remap
 
-  module Types
-    include Dry::Types()
-  end
-
-  def defined!(value = value!, *traits, **options)
-    build(:state, *traits, value: value, **options)
-  end
-
-  def undefined!(*traits)
-    build(:undefined, *traits)
-  end
-
-  def state!(value = value!, path: [], input: value, **options)
-    build(:defined, value: value, path: path, input: input, options: options)
-  end
-  alias null! state!
-
-  def path!(input: nil, output: nil)
-    build(Remap::Rule::Path, **{ input: input, output: output }.compact)
-  end
-
+  # @return [Remap::Rule::Void]
   def void!
-    Remap::Rule::Void.call({})
+    Rule::Void.call(EMPTY_HASH)
   end
   alias rule! void!
 
-  def index!(idx)
-    Remap::Selector::Index.call(index: idx)
-  end
-
+  # @return [Remap::Rule::Map]
   def map!(&block)
-    Remap::Rule::Map.call(path: { to: [], map: [] }, rule: void!).adjust(&block)
+    Rule::Map.call(path: path!(input: [], output: []), rule: void!).adjust(&block)
   end
 
+  # @return [Remap::Rule::Map]
   def pending!(*args)
-    map = Remap::Rule::Map.call(path: { to: [], map: [] }, rule: void!)
-    map.pending(*args)
-    map
+    Rule::Map.call(path: path!(input: [], output: []), rule: void!).pending(*args)
   end
 
+  # @return [Hash]
   def hash!(max = 3)
     Faker::Types.complex_rb_hash(number: max)
   end
   alias value! hash!
 
-  def mapper!(options = {}, &block)
+  # @return [Remap::Static::Fixed]
+  def static!(value)
+    Static::Fixed.call(value: value)
+  end
+
+  # @return [Selector::All]
+  def all!
+    Selector::All.call({})
+  end
+
+  # @return [Selector::Index]
+  def index!(idx)
+    Selector::Index.call(index: idx)
+  end
+
+  # @return [Selector::Index]
+  def first!
+    index!(0)
+  end
+
+  # A random hash
+  #
+  # @param value [T]
+  #
+  # @return [Hash] (State<T>)
+  def defined!(value = value!, *traits, **options)
+    build(:state, *traits, value: value, **options)
+  end
+
+  # @return [Hash]
+  def undefined!(*traits)
+    build(:undefined, *traits)
+  end
+
+  # @return [Hash]
+  def state!(value = value!, path: [], input: value, **options)
+    build(:defined, value: value, path: path, input: input, options: options)
+  end
+
+  # @return [Array<Key>]
+  def path!(**options)
+    build(Rule::Path, **options)
+  end
+
+  # A mapper class with {options} as required attributes
+  #
+  # @param options [Hash]
+  #
+  # @return [Remap::Mapper::Class]
+  def mapper!(options = EMPTY_HASH, &block)
     build(:mapper, options: options).tap do |mapper|
       if block
         mapper.class_eval(&block)
@@ -56,37 +83,34 @@ module Support
     end
   end
 
-  def static!(value)
-    Remap::Static::Fixed.call(value: value)
-  end
-
+  # @return [Remap::Rule::Map]
   def problem!(*reason)
-    map! do
-      skip!(*reason)
-    end
+    map! { skip!(*reason) }
   end
 
-  def all!
-    Remap::Selector::All.call({})
-  end
-
-  def first!
-    Remap::Selector::Index.call({ index: 0 })
-  end
-
+  # @return [String]
   def string!
-    Faker::Types.rb_string #=> "foobar"
+    Faker::Types.rb_string
   end
 
-  def symbol!
-    :symbol
+  # A random array with length {max}
+  #
+  # @return [Array]
+  def array!(max = 3)
+    Faker::Types.rb_array(len: max)
   end
 
-  def array!(_max = 3)
-    Faker::Types.rb_array(len: 3)
-  end
-
+  # A random int
+  #
+  # @return [Integer]
   def int!
-    100
+    Faker::Number.number(digits: 1)
+  end
+
+  # A random symbol
+  #
+  # @return [Symbol]
+  def symbol!
+    string!.to_sym
   end
 end
