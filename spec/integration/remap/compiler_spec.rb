@@ -195,7 +195,9 @@ describe Remap::Compiler do
       context "when value does not exist" do
         let(:block) { ->(*) { set :a, :b, to: option(:does_not_exist) } }
 
-        it { is_expected.to have(1).problems }
+        it "raises an argument error" do
+          expect { rule.call(state) }.to raise_error(ArgumentError)
+        end
       end
     end
   end

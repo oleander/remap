@@ -39,7 +39,9 @@ describe Remap::Rule::Set do
       context "when the state does not include the option" do
         let(:state) { state! }
 
-        it { is_expected.to have(1).problems }
+        it "raises an argument error" do
+          expect { rule.call(state) }.to raise_error(ArgumentError)
+        end
       end
     end
 

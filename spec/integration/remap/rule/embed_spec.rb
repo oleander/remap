@@ -84,7 +84,9 @@ describe Remap::Rule::Embed do
 
       let(:state) { state! }
 
-      it { is_expected.to have(1).problems }
+      it "raises an argument error" do
+        expect { rule.call(state) }.to raise_error(ArgumentError)
+      end
     end
   end
 end

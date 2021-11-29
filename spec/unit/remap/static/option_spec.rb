@@ -22,7 +22,7 @@ describe Remap::Static::Option do
       let(:state) { state! }
 
       it "raises an argument error" do
-        expect(option).to have(1).problems
+        expect { option }.to raise_error(ArgumentError)
       end
     end
   end
