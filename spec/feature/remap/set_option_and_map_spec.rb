@@ -19,7 +19,7 @@ describe Remap::Base do
     let(:input) { { data: { key: "value" } } }
 
     let(:output) do
-      { payload: { key: "value" }, config: { api_key: "12345", environment: "production" } }
+      be_a_success.and(have_attributes(result: { payload: { key: "value" }, config: { api_key: "12345", environment: "production" } }))
     end
   end
 end

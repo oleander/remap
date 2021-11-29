@@ -24,7 +24,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      { success: { exists: 2 } }
+      be_a_success.and(have_attributes(result: { exists: 2 }))
     end
   end
 end

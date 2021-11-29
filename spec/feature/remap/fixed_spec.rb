@@ -67,18 +67,20 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: {
-        success: {
-          id: 42,
-          object: { costs: [500_000.0] },
-          reason: "Kauf",
-          customer: {
-            of_legal_age: [true],
-            name: "Mustermann",
-            income: 5500.0
+      be_a_success.and(
+        have_attributes({
+          result: {
+            id: 42,
+            object: { costs: [500_000.0] },
+            reason: "Kauf",
+            customer: {
+              of_legal_age: [true],
+              name: "Mustermann",
+              income: 5500.0
+            }
           }
-        }
-      })
+        })
+      )
     end
   end
 end

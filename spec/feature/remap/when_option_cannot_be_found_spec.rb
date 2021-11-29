@@ -12,6 +12,6 @@ describe Remap::Base do
   end
 
   it "raises an argument error" do
-    expect { Mapper.call(hash!, key: "KEY") }.to raise_error(ArgumentError)
+    expect { mapper.call(hash!, key: "KEY") }.to raise_error(ArgumentError)
   end
 end

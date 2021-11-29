@@ -19,7 +19,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      { person: { name: "Loleander" } }
+      be_a_success.and(have_attributes(result: { person: { name: "Loleander" } }))
     end
   end
 end
