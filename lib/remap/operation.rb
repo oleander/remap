@@ -5,6 +5,14 @@ module Remap
     using State::Extension
     include State
 
+    # Public interface for mappers
+    #
+    # @param input [Any] Data to be mapped
+    # @param options [Hash] Mapper arguments
+    #
+    # @yield [Failure] if mapper fails
+    #
+    # @return [Success] if mapper succeeds
     def call(input, **options, &error)
       new_state = state(input, options: options, mapper: self)
 
