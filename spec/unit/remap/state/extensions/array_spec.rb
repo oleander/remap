@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Remap::State::Extensions::Array do
   using described_class
 
@@ -9,12 +11,12 @@ describe Remap::State::Extensions::Array do
       let(:path) { [0] }
 
       it "throws a symbol" do
-        expect { subject }.to throw_symbol(:missing, [0])
+        expect { result }.to throw_symbol(:missing, [0])
       end
     end
 
     context "when not empty" do
-      let(:receiver) { [1,2,3,4] }
+      let(:receiver) { [1, 2, 3, 4] }
 
       context "when value exists" do
         let(:path) { [0] }
@@ -26,7 +28,7 @@ describe Remap::State::Extensions::Array do
         let(:path) { [4] }
 
         it "throws a symbol" do
-          expect { subject }.to throw_symbol(:missing, [4])
+          expect { result }.to throw_symbol(:missing, [4])
         end
       end
     end
