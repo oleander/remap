@@ -751,7 +751,7 @@ describe Remap::State::Extension do
       it { is_expected.not_to have_key(:value) }
     end
 
-    context "path is defined" do
+    context "when path is defined" do
       let(:path) { %i[key1 key2] }
       let(:state) { defined!(value, path: path) }
       let(:problems) { [{ path: path, value: value, reason: reason }] }
@@ -760,7 +760,7 @@ describe Remap::State::Extension do
       it { is_expected.not_to have_key(:value) }
     end
 
-    context "path is undefined" do
+    context "when path is undefined" do
       let(:state) { defined!(value, path: []) }
       let(:problems) { [{ value: value, reason: reason }] }
 
