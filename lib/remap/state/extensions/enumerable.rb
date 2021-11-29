@@ -5,8 +5,8 @@ module Remap
     module Extensions
       using Object
 
-      module Array
-        refine ::Array do
+      module Enumerable
+        refine ::Enumerable do
           # Creates a hash using {self} as the {path} and {value} as the hash value
           #
           # @param value [Any] Hash value
