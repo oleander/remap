@@ -767,6 +767,15 @@ describe Remap::State::Extension do
       it { is_expected.to include(problems: problems) }
       it { is_expected.not_to have_key(:value) }
     end
+
+    context "when problems already exists" do
+      let(:init_problems) { [{ path: [:key1], value: value, reason: "reason1" }] }
+      let(:state) { defined!(value, path: [:key1], problems: init_problems) }
+      let(:problems) { init_problems + [{ path: [:key1], value: value, reason: reason }] }
+
+      it { is_expected.to include(problems: problems) }
+      it { is_expected.not_to have_key(:value) }
+    end
   end
 
   describe "#inspect" do

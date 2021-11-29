@@ -352,14 +352,26 @@ module Remap
           fetch(:value)
         end
 
+        # Returns a new state that includes a new problem
+        #
+        # Removes {#value} as problems cannot contain values
+        #
+        # @param message [#to_s]
+        #
+        # @return [State]
         def problem(message)
-          problem = { reason: message, path: path, value: dig(:value) }.reject do |_, value|
+          problem = { reason: message.to_s, path: path, value: dig(:value) }.reject do |_, value|
             value.blank?
           end
 
           merge(problems: problems + [problem]).except(:value)
         end
 
+        # A list of problems
+        #
+        # @see State::Schema
+        #
+        # @return [Hash]
         def problems
           fetch(:problems)
         end

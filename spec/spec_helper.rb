@@ -60,8 +60,8 @@ module Support
     include Dry::Types()
   end
 
-  def defined!(value = 10, *traits, path: [], **options)
-    build(:defined, *traits, path: path, options: options, value: value)
+  def defined!(value = value!, *traits, **options)
+    build(:state, *traits, value: value, **options)
   end
 
   def undefined!(*traits)
