@@ -40,5 +40,10 @@ module Remap
 
       new(failure)
     end
+
+    # @return [String]
+    def exception
+      Error.new(JSON.pretty_generate(attributes))
+    end
   end
 end

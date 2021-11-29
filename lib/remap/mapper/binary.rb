@@ -3,14 +3,14 @@
 module Remap
   class Mapper
     class Binary < self
+      include Operation
+
       attribute :left, Types::Mapper
       attribute :right, Types::Mapper
 
       def exception
-        ->(error) { raise error }
+        ->(failure) { raise failure.exception }
       end
-
-      include Operation
     end
   end
 end
