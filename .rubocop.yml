@@ -150,3 +150,6 @@ Lint/EmptyClass:
 
 Style/MixinUsage:
   Enabled: false
+
+Style/OpenStructUse:
+  Enabled: false
