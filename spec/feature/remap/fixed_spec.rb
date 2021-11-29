@@ -47,14 +47,23 @@ describe Remap::Base do
     end
 
     let(:input) do
-      { id: 42,
-        applicants: [{ last_name: "Mustermann", birth_date: "2000-01-01" }],
-        financing_plan: { objects_costs: [{ building: 500_000.0 }] },
-        financial_data: { incomes: [{ label: "Gehalt Antragsteller", value: 5000.0, number_of_rates: 12 }, { label: "Nebentätigkeit Antragsteller",
-                                                                                                             value: 500.0,
-                                                                                                             number_of_rates: 12 }] },
+      {
+        id: 42,
+        applicants: [
+          { last_name: "Mustermann", birth_date: "2000-01-01" }
+        ],
+        financing_plan: {
+          objects_costs: [{ building: 500_000.0 }]
+        },
+        financial_data: {
+          incomes: [
+            { label: "Gehalt Antragsteller", value: 5000.0, number_of_rates: 12 },
+            { label: "Nebentätigkeit Antragsteller", value: 500.0, number_of_rates: 12 }
+          ]
+        },
         offer: { reason: "PURCHASE" },
-        status: "ok" }
+        status: "ok"
+      }
     end
 
     let(:output) do
