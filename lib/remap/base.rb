@@ -26,20 +26,44 @@ module Remap
       config.contract = Dry::Schema.JSON(&context)
     end
 
-    # @see Dry::Validation::Contract.rule
+    # Refines a rule for the mapper
+    # If the rule fail, the mapper will fail
+    #
+    # class Mapper < Remap::Base
+    #   rule(:age) do
+    #     value
+    #   end
+    # end
+    #
+    # @see https://dry-rb.org/gems/dry-validation/1.6/rules/
+    #
+    # @return [void]
     def self.rule(...)
       config.rules << ->(*) { rule(...) }
     end
 
-    # Defines a a constructor argument for the mapper
+    # Defines a required option for the mapper
+    #
+    # @example A mapper that takes an argument {#name}
+    #   class Mapper < Remap::Base
+    #     option :name
+    #
+    #     define do
+    #       set :name, to: option(:name)
+    #     end
+    #   end
+    #
+    #   Mapper.call(input, name: "John") # => { name: "John" }
     #
     # @param name [Symbol]
-    # @param type [#call]
+    # @param type (Types::Any) [#call]
+    #
+    # @return [void]
     def self.option(field, type: Types::Any)
       attribute(field, type)
 
       unless (key = schema.keys.find { _1.name == field })
-        raise ArgumentError, "Could not locate [#{field}] in [#{self}]"
+        raise ArgumentError, "[BUG] Could not locate [#{field}] in [#{self}]"
       end
 
       config.options << ->(*) { option(field, type: key) }
