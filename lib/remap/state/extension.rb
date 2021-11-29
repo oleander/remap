@@ -24,6 +24,14 @@ module Remap
       end
 
       refine Array do
+        # Creates a hash using {self} as the {path} and {value} as the hash value
+        #
+        # @param value [Any] Hash value
+        #
+        # @example A hash from path
+        #   [:a, :b].hide('value') # => { a: { b: 'value' } }
+        #
+        # @return [Hash]
         def hide(value)
           reverse.reduce(value) do |element, key|
             { key => element }
