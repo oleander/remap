@@ -33,5 +33,14 @@ module Remap
     def fmap
       raise NotImplementedError, "fmap not implemented"
     end
+
+    # @param other [Result]
+    #
+    # @return [Result]
+    #
+    # @abstract
+    def merge(other)
+      raise NotImplementedError, "merge not implemented"
+    end
   end
 end

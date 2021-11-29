@@ -19,6 +19,11 @@ module Remap
       self
     end
 
+    # Merges two failures
+    #
+    # @param other [Failure]
+    #
+    # @return [Failure]
     def merge(other)
       unless other.is_a?(Failure)
         raise ArgumentError, "can't merge #{self.class} with #{other.class}"
