@@ -9,7 +9,6 @@ module Remap
     extend Forwardable
 
     using State::Extension
-    extend State
 
     CONTRACT = Dry::Schema.JSON do
       # NOP
