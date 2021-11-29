@@ -16,5 +16,3 @@ loader.setup
 
 module Remap
 end
-
-loader.eager_load
