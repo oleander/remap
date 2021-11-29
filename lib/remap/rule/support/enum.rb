@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "active_support/proxy_object"
 
 module Remap
   class Rule
