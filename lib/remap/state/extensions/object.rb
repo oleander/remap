@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Remap
   module State
     module Extensions
@@ -23,13 +25,13 @@ module Remap
           #
           # @param path [Array<Key>]
           def get(*path, &block)
-            if block_given?
-              return block.call
+            if block
+              return yield
             end
 
             throw :missing, path
           end
-          alias fetch get
+          alias_method :fetch, :get
         end
       end
     end
