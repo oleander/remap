@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Remap
   class Contract < Dry::Validation::Contract
     def self.call(rules:, options:, contract:, attributes:)
