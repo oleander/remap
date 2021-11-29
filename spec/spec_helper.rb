@@ -69,12 +69,12 @@ module Support
   end
 
   def state!(value = value!, path: [], input: value, **options)
-    FactoryBot.build(:defined, value: value, path: path, input: input, options: options)
+    build(:defined, value: value, path: path, input: input, options: options)
   end
   alias null! state!
 
   def path!(input: nil, output: nil)
-    FactoryBot.build(Remap::Rule::Path, **{ input: input, output: output }.compact)
+    build(Remap::Rule::Path, **{ input: input, output: output }.compact)
   end
 
   def void!
@@ -103,7 +103,7 @@ module Support
   end
 
   def context!(value = nil)
-    FactoryBot.build(Remap::Context::Value, **{ value: value }.compact)
+    build(Remap::Context::Value, **{ value: value }.compact)
   end
 
   def hash!(max = 3)
@@ -112,7 +112,7 @@ module Support
   alias value! hash!
 
   def mapper!(options = {}, &block)
-    FactoryBot.build(:mapper, options: options).tap do |mapper|
+    build(:mapper, options: options).tap do |mapper|
       if block
         mapper.class_eval(&block)
       end
