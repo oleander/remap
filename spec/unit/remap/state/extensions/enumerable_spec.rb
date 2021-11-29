@@ -52,17 +52,17 @@ describe Remap::State::Extensions::Enumerable do
         it { is_expected.to eq(["value"]) }
       end
 
-      context "when empty" do
+      context "when receiver is empty" do
         let(:receiver) { [] }
         let(:path) { [0] }
 
         it "throws a symbol" do
-          expect { result }.to throw_symbol(:missing, [0])
+          expect { result }.to throw_symbol(:missing, path)
         end
       end
 
-      context "when not empty" do
-        context "when value exists" do
+      context "when receiver is not empty" do
+        context "when value exists in receiver" do
           let(:receiver) { [{ a: "value" }] }
           let(:path) { [0, :a] }
 
@@ -74,7 +74,7 @@ describe Remap::State::Extensions::Enumerable do
           let(:path) { [0, 1] }
 
           it "throws a symbol" do
-            expect { result }.to throw_symbol(:missing, [0, 1])
+            expect { result }.to throw_symbol(:missing, path)
           end
         end
       end
