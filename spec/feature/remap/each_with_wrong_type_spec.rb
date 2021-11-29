@@ -18,7 +18,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      [1, 2, 3]
+      be_a_success.and(have_attributes(result: [1, 2, 3]))
     end
   end
 end

@@ -67,7 +67,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      {
+      be_a_success.and(have_attributes(result: {
         success: {
           id: 42,
           object: { costs: [500_000.0] },
@@ -78,7 +78,7 @@ describe Remap::Base do
             income: 5500.0
           }
         }
-      }
+      })
     end
   end
 end

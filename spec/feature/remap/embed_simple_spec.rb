@@ -25,7 +25,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      { name: "Ford" }
+      be_a_success.and(have_attributes(result: { name: "Ford" }))
     end
   end
 end
