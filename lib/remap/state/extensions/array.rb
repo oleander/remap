@@ -19,16 +19,20 @@ module Remap
             end
           end
 
-          def get(*path, last)
+          def get(*path)
             if path.empty?
-              return fetch(last) do
-                throw :missing, path + [last]
-              end
+              throw :missing, []
             end
 
-            dig(*path).fetch(last) do
-              throw :missing, path + [last]
+            _, result = path.reduce([[], self]) do |(current_path, element), key|
+              value = element.fetch(key) do
+                throw :missing, current_path + [key]
+              end
+
+              [current_path + [key], value]
             end
+
+            result
           end
         end
       end
