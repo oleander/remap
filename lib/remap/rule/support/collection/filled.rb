@@ -16,10 +16,8 @@ module Remap
         # @return [State]
         def call(state)
           rules.map do |rule|
-            Thread.new(rule, state) do |inner_rule, inner_state|
-              inner_rule.call(inner_state)
-            end
-          end.map(&:value).reduce do |acc, inner_state|
+            rule.call(state)
+          end.reduce do |acc, inner_state|
             acc.merged(inner_state)
           end
         end
