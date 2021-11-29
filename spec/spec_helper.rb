@@ -2,6 +2,7 @@
 
 require "simplecov"
 
+require "dry/core/class_builder"
 require "factory_bot"
 require "remap"
 require "pry"
