@@ -6,15 +6,14 @@ require "dry/validation"
 require "active_support/core_ext/module/delegation"
 require "dry/core/class_builder"
 require "dry/core/memoizable"
-require "dry/core/deprecations"
 require "dry/logic/builder"
-require "dry-configurable"
+require "dry/configurable"
+require "dry/interface"
 require "dry/schema"
 require "dry/types"
 require "dry/monads"
 require "dry/logic"
 require "zeitwerk"
-require "dry/interface"
 
 Dry::Types.load_extensions(:maybe)
 
