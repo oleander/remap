@@ -4,9 +4,7 @@ module Remap
   class Base < Mapper
     include Dry::Core::Constants
     extend Dry::Monads[:result]
-
     extend Dry::Configurable
-    extend Forwardable
 
     using State::Extension
 
@@ -19,8 +17,6 @@ module Remap
     setting :rules, default: EMPTY_ARRAY
     setting :contract, default: CONTRACT
     setting :context, default: IDENTITY
-
-    delegate [:config] => self
 
     schema schema.strict(false)
 

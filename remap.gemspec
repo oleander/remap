@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-struct"
   spec.add_dependency "dry-types"
   spec.add_dependency "dry-validation"
+  spec.add_dependency "dry-configurable"
   spec.add_dependency "zeitwerk"
 
   spec.metadata = {
