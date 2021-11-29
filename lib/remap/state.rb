@@ -18,7 +18,7 @@ module Remap
     def state(value, mapper:, options: {})
       { value: value, input: value, mapper: mapper, problems: [], path: [], options: options, values: value }._
     end
-    alias_method :call, :state
+    alias call state
     module_function :state, :call
   end
 end

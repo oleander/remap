@@ -6,27 +6,25 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gemspec
 
-
 group :development do
-  gem "pry", require: true
+  gem "bundler"
   gem "factory_bot", require: false
   gem "guard", require: false
   gem "guard-bundler", require: false
   gem "guard-rspec", require: false
   gem "guard-rubocop", require: false
-  gem "solargraph", require: false
+  gem "pry", require: true
   gem "reek"
   gem "rubocop"
-  gem "bundler"
   gem "rubocop-performance"
   gem "rubocop-rake"
   gem "rubocop-rspec"
+  gem "solargraph", require: false
 end
 
 group :test do
-  gem "super_diff"
   gem "faker"
   gem "rspec"
   gem "simplecov"
+  gem "super_diff"
 end
-

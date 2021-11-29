@@ -129,7 +129,7 @@ FactoryBot.define do
     end
 
     trait :with_problems do
-      sequence(:problems) { |n| [{ reason: "Reason #{n}", path: [n] }]  }
+      sequence(:problems) { |n| [{ reason: "Reason #{n}", path: [n] }] }
     end
   end
 end
