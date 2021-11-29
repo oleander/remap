@@ -41,19 +41,3 @@ RSpec::Matchers.define :contain do |expected|
     "expected #{JSON.pretty_generate(actual.value)} not to contain #{expected}"
   end
 end
-
-RSpec::Matchers.define :succeed do
-  include Dry::Monads[:result]
-
-  match do |actual|
-    if @with
-      actual == Success(@with)
-    else
-      actual.success?
-    end
-  end
-
-  chain :with do |value|
-    @with = value
-  end
-end

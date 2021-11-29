@@ -33,24 +33,14 @@ module Support
     Remap::Selector::Index.call(index: idx)
   end
 
-  def map!(val = Undefined, &block)
-    map = Remap::Rule::Map.call(path: { to: [], map: [] }, rule: void!)
-
-    if val == Undefined
-      map.adjust(&block)
-    else
-      map.adjust { v }
-    end
+  def map!(&block)
+    Remap::Rule::Map.call(path: { to: [], map: [] }, rule: void!).adjust(&block)
   end
 
   def pending!(*args)
     map = Remap::Rule::Map.call(path: { to: [], map: [] }, rule: void!)
     map.pending(*args)
     map
-  end
-
-  def context!(value = nil)
-    build(Remap::Context::Value, **{ value: value }.compact)
   end
 
   def hash!(max = 3)
@@ -98,29 +88,5 @@ module Support
 
   def int!
     100
-  end
-
-  module Extension
-    refine Remap::Rule::Path do
-      def output(value)
-        to.reverse.reduce(value) do |val, key|
-          { key => val }
-        end
-      end
-
-      def input(value)
-        map.segments.reverse.reduce(value) do |val, segment|
-          { segment.key => val }
-        end
-      end
-
-      def state(value)
-        Remap::State.new(input(value))
-      end
-
-      def expect(value)
-        output(value)
-      end
-    end
   end
 end
