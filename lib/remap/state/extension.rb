@@ -193,7 +193,7 @@ module Remap
         # @return [Success] if {#value} is defined
         # @return [Failure] unless {#value} is defined
         def to_result(&error)
-          unless block_given?
+          unless error
             return to_result(&:itself)
           end
 

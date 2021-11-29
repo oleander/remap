@@ -34,6 +34,8 @@ describe Remap::Failure do
   end
 
   describe "#merge" do
+    subject { left.merge(right) }
+
     let(:reason1) { { base: ["reason1"] } }
     let(:reason2) { { base: ["reason2"] } }
     let(:problem1) { { reason: "problem1" } }
@@ -42,10 +44,8 @@ describe Remap::Failure do
     let(:left) { described_class.call(problems: [problem1], reasons: reason1) }
     let(:right) { described_class.call(problems: [problem2], reasons: reason2) }
 
-    subject { left.merge(right) }
-
     it { is_expected.to be_a(described_class) }
     it { is_expected.to have_attributes(problems: [problem1, problem2]) }
-    it { is_expected.to have_attributes(reasons: { base: ["reason1", "reason2"] }) }
+    it { is_expected.to have_attributes(reasons: { base: %w[reason1 reason2] }) }
   end
 end

@@ -14,7 +14,7 @@ module Remap
     #
     # @return [Success] if mapper succeeds
     def call(input, **options, &error)
-      unless block_given?
+      unless error
         return call(input, **options, &:itself)
       end
 

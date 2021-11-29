@@ -39,7 +39,7 @@ module Remap
     # @return [Result]
     #
     # @abstract
-    def merge(other)
+    def merge(_other)
       raise NotImplementedError, "merge not implemented"
     end
   end
