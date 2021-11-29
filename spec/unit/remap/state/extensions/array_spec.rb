@@ -31,7 +31,7 @@ describe Remap::State::Extensions::Array do
       end
 
       context "when value does not exist" do
-        let(:receiver) { [["value"]] }
+        let(:receiver) { ["value"] }
         let(:path) { [0, 1] }
 
         it "throws a symbol" do

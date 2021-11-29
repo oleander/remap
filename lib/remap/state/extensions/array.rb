@@ -3,6 +3,8 @@
 module Remap
   module State
     module Extensions
+      using Object
+
       module Array
         refine ::Array do
           # Creates a hash using {self} as the {path} and {value} as the hash value
