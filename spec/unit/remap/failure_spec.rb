@@ -34,18 +34,30 @@ describe Remap::Failure do
   end
 
   describe "#merge" do
-    subject { left.merge(right) }
+    subject(:result) { left.merge(right) }
 
     let(:reason1) { { base: ["reason1"] } }
-    let(:reason2) { { base: ["reason2"] } }
     let(:problem1) { { reason: "problem1" } }
-    let(:problem2) { { reason: "problem2" } }
 
     let(:left) { described_class.call(problems: [problem1], reasons: reason1) }
-    let(:right) { described_class.call(problems: [problem2], reasons: reason2) }
 
-    it { is_expected.to be_a(described_class) }
-    it { is_expected.to have_attributes(problems: [problem1, problem2]) }
-    it { is_expected.to have_attributes(reasons: { base: %w[reason1 reason2] }) }
+    context "when right is a failure" do
+      let(:reason2) { { base: ["reason2"] } }
+      let(:problem2) { { reason: "problem2" } }
+
+      let(:right) { described_class.call(problems: [problem2], reasons: reason2) }
+
+      it { is_expected.to be_a(described_class) }
+      it { is_expected.to have_attributes(problems: [problem1, problem2]) }
+      it { is_expected.to have_attributes(reasons: { base: %w[reason1 reason2] }) }
+    end
+
+    context "when right is a success" do
+      let(:right) { Remap::Success.new(result: value!) }
+
+      it "raises an error" do
+        expect { result }.to raise_error(ArgumentError)
+      end
+    end
   end
 end
