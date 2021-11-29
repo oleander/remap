@@ -27,7 +27,7 @@ describe Remap::Iteration::Hash do
 
     context "when no values are rejected" do
       subject(:result) do
-        iterator.map do |value, key:|
+        iterator.map do |value|
           state.set(value.next)
         end
       end
