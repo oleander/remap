@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 describe Remap::Base do
+  using Remap::State::Extensions::Enumerable
   using Remap::State::Extension
 
   it_behaves_like described_class do

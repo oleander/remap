@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 describe Remap::State::Extension do
+  using Remap::State::Extensions::Enumerable
   using described_class
 
   describe "#_" do

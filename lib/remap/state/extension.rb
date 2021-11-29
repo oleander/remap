@@ -9,6 +9,15 @@ module Remap
       using Extensions::Object
 
       refine Hash do
+        # Validates {self} against {Schema}
+        #
+        # Only used during development
+        #
+        # @yield [Hash] if schema fails
+        #
+        # @raise if schema fails and no block is given
+        #
+        # @return [self]
         def _(&block)
           unless block
             return _ { raise "Input: #{self} output: #{JSON.pretty_generate(_1)}" }
@@ -19,22 +28,6 @@ module Remap
           end
 
           self
-        end
-
-        def paths
-          reduce(EMPTY_ARRAY) do |acc, (path, leaves)|
-            if (paths = leaves.paths).empty?
-              next acc + [[path]]
-            end
-
-            acc + paths.map { |inner| [path] + inner }
-          end
-        end
-
-        def paths_pair
-          paths.map do |path|
-            [dig(*path), path]
-          end
         end
 
         # Makes the state iterable
@@ -100,18 +93,6 @@ module Remap
             reason(left, right) do |reason|
               [reason, "[#{key}]"].join(" @ ").then(&error)
             end
-          end
-        end
-
-        def get(*path, last)
-          if path.empty?
-            return fetch(last) do
-              throw :missing, path + [last]
-            end
-          end
-
-          dig(*path).fetch(last) do
-            throw :missing, path + [last]
           end
         end
 
