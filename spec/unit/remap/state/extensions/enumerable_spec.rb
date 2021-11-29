@@ -4,38 +4,78 @@ describe Remap::State::Extensions::Enumerable do
   using described_class
 
   describe "#get" do
-    subject(:result) { receiver.get(*path) }
+    context "when receiver is a hash" do
+      subject(:result) { receiver.get(*path) }
 
-    context "when path is empty" do
-      let(:path) { [] }
-      let(:receiver) { ["value"] }
+      context "when path is empty" do
+        let(:path) { [] }
+        let(:receiver) { { key: "value" } }
 
-      it { is_expected.to eq(["value"]) }
-    end
-
-    context "when empty" do
-      let(:receiver) { [] }
-      let(:path) { [0] }
-
-      it "throws a symbol" do
-        expect { result }.to throw_symbol(:missing, [0])
-      end
-    end
-
-    context "when not empty" do
-      context "when value exists" do
-        let(:receiver) { [{ a: "value" }] }
-        let(:path) { [0, :a] }
-
-        it { is_expected.to eq("value") }
+        it { is_expected.to eq(receiver) }
       end
 
-      context "when value does not exist" do
-        let(:receiver) { ["value"] }
-        let(:path) { [0, 1] }
+      context "when receiver is empty" do
+        let(:receiver) { {} }
+        let(:path) { [0] }
 
         it "throws a symbol" do
-          expect { result }.to throw_symbol(:missing, [0, 1])
+          expect { result }.to throw_symbol(:missing, path)
+        end
+      end
+
+      context "when path is not empty" do
+        context "when value exists in receiver" do
+          let(:receiver) { { a: ["value"] } }
+          let(:path) { [:a, 0] }
+
+          it { is_expected.to eq("value") }
+        end
+
+        context "when value does not exist" do
+          let(:receiver) { { a: { b: 'value' } } }
+          let(:path) { [:a, 0] }
+
+          it "throws a symbol" do
+            expect { result }.to throw_symbol(:missing, path)
+          end
+        end
+      end
+    end
+
+    context "when receiver is an array" do
+      subject(:result) { receiver.get(*path) }
+
+      context "when path is empty" do
+        let(:path) { [] }
+        let(:receiver) { ["value"] }
+
+        it { is_expected.to eq(["value"]) }
+      end
+
+      context "when empty" do
+        let(:receiver) { [] }
+        let(:path) { [0] }
+
+        it "throws a symbol" do
+          expect { result }.to throw_symbol(:missing, [0])
+        end
+      end
+
+      context "when not empty" do
+        context "when value exists" do
+          let(:receiver) { [{ a: "value" }] }
+          let(:path) { [0, :a] }
+
+          it { is_expected.to eq("value") }
+        end
+
+        context "when value does not exist" do
+          let(:receiver) { ["value"] }
+          let(:path) { [0, 1] }
+
+          it "throws a symbol" do
+            expect { result }.to throw_symbol(:missing, [0, 1])
+          end
         end
       end
     end
