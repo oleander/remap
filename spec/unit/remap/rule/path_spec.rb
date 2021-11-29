@@ -16,38 +16,44 @@ describe Remap::Rule::Path do
         let(:map) { [:a, index!(1)] }
         let(:input) { { a: ["A"] } }
         let(:to) { [:c] }
+        let(:problems) { [{ reason: be_a(String), path: [:a, 1], value: ["A"] }] }
 
-        it { is_expected.to include(problems: { a: { 1 => be_a(Array) } }) }
+        it { is_expected.to include(problems: problems) }
       end
     end
 
     context "when key is a miss" do
       it_behaves_like described_class do
-        let(:map) { %i[a miss] }
+        let(:map) { [:a, :miss] }
         let(:input) { { a: ["A"] } }
         let(:to) { [:c] }
+        let(:problems) { [{ reason: be_a(String), path: [:a, :miss], value: ["A"] }] }
 
-        it { is_expected.to include(problems: include(a: { miss: be_a(Array) })) }
+        it { is_expected.to include(problems: problems) }
       end
     end
 
     context "when #all selector does not match an array" do
       it_behaves_like described_class do
+        let(:value) { string! }
         let(:map) { [:a, all!] }
-        let(:input) { { a: "NOT-AN-ARRAY" } }
+        let(:input) { { a: value } }
         let(:to) { [:c] }
+        let(:problems) { [{ reason: be_a(String), path: [:a, "*"], value: value }] }
 
-        it { is_expected.to include(problems: include(a: { "*" => be_a(Array) })) }
+        it { is_expected.to include(problems: problems) }
       end
     end
 
     context "when #first selector does not match an array" do
       it_behaves_like described_class do
+        let(:value) { string! }
         let(:map) { [:a, first!] }
-        let(:input) { { a: "NOT-AN-ARRAY" } }
+        let(:input) { { a: value } }
         let(:to) { [:c] }
+        let(:problems) { [{ reason: be_a(String), path: [:a, 0], value: value }] }
 
-        it { is_expected.to include(problems: include(a: { 0 => be_a(Array) })) }
+        it { is_expected.to include(problems: problems) }
       end
     end
   end
@@ -57,7 +63,7 @@ describe Remap::Rule::Path do
       it_behaves_like described_class do
         let(:map) { [] }
         let(:to) { [] }
-        let(:input) { { cars: %i[car0 car1] } }
+        let(:input) { { cars: [:car0, :car1] } }
 
         it_behaves_like "a success" do
           let(:expected) { input }
