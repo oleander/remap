@@ -19,7 +19,7 @@ module Remap
       end
     end
 
-
+    # @return [Proc]
     def to_proc
       method(:call).to_proc
     end
