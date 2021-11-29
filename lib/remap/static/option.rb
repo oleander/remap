@@ -13,9 +13,9 @@ module Remap
       #
       # @return [State]
       def call(state)
-        state.set state.options.fetch(name) {
-          return state.problem("Option [#{name}] not found in [#{state.options.inspect}]")
-        }
+        state.set(state.options.fetch(name))
+      rescue KeyError
+        raise ArgumentError, "Option [#{name}] not found in input [#{state.options.inspect}]"
       end
     end
   end
