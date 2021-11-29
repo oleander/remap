@@ -18,6 +18,7 @@ module Remap
     # Remap      = Class.constrained(lt: Remap)
     Proc       = Instance(Proc)
     Key        = Interface(:hash) | Integer
+    Problem    = Hash.schema(value?: Any, path: Array.constrained(min_size: 1), reason: String.constrained(min_size: 1))
     Value = Any # .constrained(not_eql: nil)
 
     State = Hash.constructor do |value, type, &error|

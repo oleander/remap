@@ -82,6 +82,38 @@ describe Remap::Types do
     end
   end
 
+  describe described_class::Problem do
+    let(:valid) { { reason: "reason", value: "a value", path: [:a, :b] } }
+
+    it "does not invoke block" do
+      expect { |b| described_class.call(valid, &b) }.not_to yield_control
+    end
+
+    context "when path is empty" do
+      let(:input) { valid.merge(path: []) }
+
+      it "invokes block" do
+        expect { |b| described_class.call(input, &b) }.to yield_control
+      end
+    end
+
+    context "when reason is empty" do
+      let(:input) { valid.merge(reason: "") }
+
+      it "invokes block" do
+        expect { |b| described_class.call(input, &b) }.to yield_control
+      end
+    end
+
+    context "when value is missing" do
+      let(:input) { valid.except(:value) }
+
+      it "does not invokes block" do
+        expect { |b| described_class.call(input, &b) }.not_to yield_control
+      end
+    end
+  end
+
   describe described_class::Selectors do
     subject(:type) { described_class.call([all!, index!(10), :key]) }
 
