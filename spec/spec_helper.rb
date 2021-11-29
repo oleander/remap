@@ -60,6 +60,14 @@ module Support
     include Dry::Types()
   end
 
+  def defined!(value = 10, *traits, path: [], **options)
+    build(:defined, *traits, path: path, options: options, value: value)
+  end
+
+  def undefined!(*traits)
+    build(:undefined, *traits)
+  end
+
   def state!(value = value!, path: [], input: value, **options)
     FactoryBot.build(:defined, value: value, path: path, input: input, options: options, input: value)
   end

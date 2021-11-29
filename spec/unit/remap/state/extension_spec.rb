@@ -3,14 +3,6 @@
 describe Remap::State::Extension do
   using described_class
 
-  def defined(value = 10, *traits, path: [], **options)
-    build(:defined, *traits, path: path, options: options, value: value)
-  end
-
-  def undefined(*traits)
-    build(:undefined, *traits)
-  end
-
   describe "#get" do
     subject(:result) { receiver.get(*path) }
 
@@ -70,7 +62,7 @@ describe Remap::State::Extension do
 
   describe "#_" do
     context "when target is valid" do
-      let(:state) { defined }
+      let(:state) { defined! }
 
       it "does not invoke block" do
         expect { |b| state._(&b) }.not_to yield_control
@@ -82,7 +74,7 @@ describe Remap::State::Extension do
     end
 
     context "when target is invalid" do
-      let(:state) { defined.except(:input) }
+      let(:state) { defined!.except(:input) }
 
       it "invokes block" do
         expect { |b| state._(&b) }.to yield_control
@@ -93,29 +85,29 @@ describe Remap::State::Extension do
   describe "#merged" do
     subject { left.merged(right) }
 
-    context "when left is undefined" do
-      let(:left) { undefined(:with_problems) }
+    context "when left is undefined!" do
+      let(:left) { undefined!(:with_problems) }
 
-      context "when right is undefined" do
-        let(:right) { undefined(:with_problems) }
+      context "when right is undefined!" do
+        let(:right) { undefined!(:with_problems) }
 
         it { is_expected.not_to have_key(:value) }
         it { is_expected.to have(2).problems }
       end
 
-      context "when right is defined" do
-        let(:right) { defined(1, :with_problems) }
+      context "when right is defined!" do
+        let(:right) { defined!(1, :with_problems) }
 
         it { is_expected.to contain(right.value) }
         it { is_expected.to have(2).problems }
       end
     end
 
-    context "when right is defined" do
-      let(:left) { defined(:with_problems) }
+    context "when right is defined!" do
+      let(:left) { defined!(:with_problems) }
 
-      context "when right is undefined" do
-        let(:right) { undefined(:with_problems) }
+      context "when right is undefined!" do
+        let(:right) { undefined!(:with_problems) }
 
         it { is_expected.to contain(left.value) }
         it { is_expected.to have(1).problems }
@@ -123,8 +115,8 @@ describe Remap::State::Extension do
     end
 
     context "when different types" do
-      let(:left) { defined(10) }
-      let(:right) { defined(:hello) }
+      let(:left) { defined!(10) }
+      let(:right) { defined!(:hello) }
 
       it { is_expected.to have(1).problems }
       it { is_expected.not_to have_key(:value) }
@@ -132,22 +124,22 @@ describe Remap::State::Extension do
 
     context "when same type" do
       context "with same values" do
-        let(:left) { defined({ key: "value" })  }
-        let(:right) { defined({ key: "value" }) }
+        let(:left) { defined!({ key: "value" })  }
+        let(:right) { defined!({ key: "value" }) }
 
         it { is_expected.to include(value: { key: "value" }) }
       end
 
       context "when array" do
-        let(:left) { defined([1, 2]) }
-        let(:right) { defined([3, 4]) }
+        let(:left) { defined!([1, 2]) }
+        let(:right) { defined!([3, 4]) }
 
         it { is_expected.to include(value: contain_exactly(1, 2, 3, 4)) }
       end
 
       context "when hash" do
-        let(:left) { defined({ a: "A" }) }
-        let(:right) { defined({ b: "B" }) }
+        let(:left) { defined!({ a: "A" }) }
+        let(:right) { defined!({ b: "B" }) }
 
         it { is_expected.to contain({ a: "A", b: "B" }) }
       end
@@ -155,9 +147,9 @@ describe Remap::State::Extension do
   end
 
   describe "#merge" do
-    let(:state) { undefined }
+    let(:state) { undefined! }
 
-    context "when value is undefined" do
+    context "when value is undefined!" do
       subject { state.merge(key: :key) }
 
       it { is_expected.to have_key(:key) }
@@ -167,7 +159,7 @@ describe Remap::State::Extension do
     context "when value is a state" do
       subject(:result) { state.merge(value: invalid) }
 
-      let(:invalid) { defined }
+      let(:invalid) { defined! }
 
       it "raises an argument error" do
         expect { result }.to raise_error(ArgumentError)
@@ -230,19 +222,19 @@ describe Remap::State::Extension do
   end
 
   describe "#recursive_merge" do
-    context "when left is undefined" do
-      let(:left) { undefined(:with_problems) }
+    context "when left is undefined!" do
+      let(:left) { undefined!(:with_problems) }
 
-      context "when right is undefined" do
-        let(:right) { undefined(:with_problems) }
+      context "when right is undefined!" do
+        let(:right) { undefined!(:with_problems) }
 
-        it "throws undefined symbol" do
-          expect { left.recursive_merge(right) }.to throw_symbol(:undefined)
+        it "throws undefined! symbol" do
+          expect { left.recursive_merge(right) }.to throw_symbol(:undefined!)
         end
       end
 
-      context "when right is defined" do
-        let(:right) { defined(1, :with_problems) }
+      context "when right is defined!" do
+        let(:right) { defined!(1, :with_problems) }
 
         it "returns the right hand site" do
           expect(left.recursive_merge(right)).to eq(1)
@@ -250,11 +242,11 @@ describe Remap::State::Extension do
       end
     end
 
-    context "when left is defined" do
-      let(:left) { defined(1) }
+    context "when left is defined!" do
+      let(:left) { defined!(1) }
 
-      context "when right is undefined" do
-        let(:right) { undefined }
+      context "when right is undefined!" do
+        let(:right) { undefined! }
 
         it "returns the left hand site" do
           expect(left.recursive_merge(right)).to eq(1)
@@ -263,10 +255,10 @@ describe Remap::State::Extension do
     end
 
     context "when left is a hash" do
-      let(:left) { defined({ a: 1, b: 2 }) }
+      let(:left) { defined!({ a: 1, b: 2 }) }
 
       context "when right is a hash" do
-        let(:right) { defined({ c: 3, d: 4 }) }
+        let(:right) { defined!({ c: 3, d: 4 }) }
 
         let(:output) { { a: 1, b: 2, c: 3, d: 4 } }
 
@@ -280,7 +272,7 @@ describe Remap::State::Extension do
       end
 
       context "when right is a string" do
-        let(:right) { defined("hello") }
+        let(:right) { defined!("hello") }
 
         it "calls block with problem" do
           expect { |b| left.recursive_merge(right, &b) }.to yield_control
@@ -288,7 +280,7 @@ describe Remap::State::Extension do
       end
 
       context "when right is an array" do
-        let(:right) { defined([1, 2]) }
+        let(:right) { defined!([1, 2]) }
 
         it "calls block with problem" do
           expect { |b| left.recursive_merge(right, &b) }.to yield_control
@@ -297,10 +289,10 @@ describe Remap::State::Extension do
     end
 
     context "when left is an array" do
-      let(:left) { defined([1, 2, 3]) }
+      let(:left) { defined!([1, 2, 3]) }
 
       context "when right is a hash" do
-        let(:right) { defined({ c: 3, d: 4 }) }
+        let(:right) { defined!({ c: 3, d: 4 }) }
 
         it "does invoke block" do
           expect { |b| left.recursive_merge(right, &b) }.to yield_control
@@ -308,7 +300,7 @@ describe Remap::State::Extension do
       end
 
       context "when right is a string" do
-        let(:right) { defined("hello") }
+        let(:right) { defined!("hello") }
 
         it "calls block with problem" do
           expect { |b| left.recursive_merge(right, &b) }.to yield_control
@@ -316,7 +308,7 @@ describe Remap::State::Extension do
       end
 
       context "when right is an array" do
-        let(:right) { defined([4, 5, 6]) }
+        let(:right) { defined!([4, 5, 6]) }
 
         it "does not invoke block" do
           expect { |b| left.recursive_merge(right, &b) }.not_to yield_control
@@ -330,7 +322,7 @@ describe Remap::State::Extension do
   end
 
   describe "#conflicts" do
-    let(:state) { defined([100, 200]) }
+    let(:state) { defined!([100, 200]) }
     let(:key) { symbol! }
 
     context "when both are arrays" do
@@ -357,8 +349,8 @@ describe Remap::State::Extension do
   end
 
   describe "#tap" do
-    context "when defined" do
-      let(:state) { defined(10) }
+    context "when defined!" do
+      let(:state) { defined!(10) }
 
       it "invokes block" do
         expect { |b| state.tap(&b) }.to yield_control
@@ -371,12 +363,12 @@ describe Remap::State::Extension do
   end
 
   describe "#set" do
-    let(:state) { defined }
+    let(:state) { defined! }
     let(:index) { 1 }
     let(:value) { "value" }
 
     context "when value is an invalid state" do
-      let(:value) { defined }
+      let(:value) { defined! }
 
       it "sets value" do
         expect { state.set(value) }.to raise_error(ArgumentError)
@@ -428,10 +420,10 @@ describe Remap::State::Extension do
       end
     end
 
-    context "when state is defined" do
+    context "when state is defined!" do
       subject(:result) { state.set(**options) }
 
-      let(:state) { defined }
+      let(:state) { defined! }
       let(:mapper) { mapper! }
 
       context "when given a mapper" do
@@ -443,10 +435,10 @@ describe Remap::State::Extension do
       end
     end
 
-    context "when state is undefined" do
+    context "when state is undefined!" do
       subject(:result) { state.set(**options) }
 
-      let(:state) { undefined }
+      let(:state) { undefined! }
       let(:mapper) { mapper! }
 
       context "when given a mapper" do
@@ -460,25 +452,25 @@ describe Remap::State::Extension do
   end
 
   describe "#include?" do
-    context "when value is defined" do
-      subject { defined(1) }
+    context "when value is defined!" do
+      subject { defined!(1) }
 
       it { is_expected.to contain(1) }
       it { is_expected.not_to contain(2) }
     end
 
-    context "when value is undefined" do
-      subject { undefined }
+    context "when value is undefined!" do
+      subject { undefined! }
 
       it { is_expected.not_to have_key(:value) }
     end
   end
 
   describe "#execute" do
-    context "when defined" do
+    context "when defined!" do
       subject { state.execute { |value| value + 1 } }
 
-      let(:state) { defined(1) }
+      let(:state) { defined!(1) }
 
       it { is_expected.to contain(2) }
     end
@@ -486,7 +478,7 @@ describe Remap::State::Extension do
     context "when options are avalible" do
       subject { state.execute { name } }
 
-      let(:state) { defined(1, name: "Linus") }
+      let(:state) { defined!(1, name: "Linus") }
 
       it { is_expected.to contain("Linus") }
     end
@@ -498,7 +490,7 @@ describe Remap::State::Extension do
         end
       end
 
-      let(:state) { defined }
+      let(:state) { defined! }
 
       it { is_expected.to have(1).problems }
       it { is_expected.not_to have_key(:value) }
@@ -516,8 +508,8 @@ describe Remap::State::Extension do
       it { is_expected.to contain(true) }
     end
 
-    context "when undefined" do
-      let(:state) { undefined }
+    context "when undefined!" do
+      let(:state) { undefined! }
 
       it "does not invoke block" do
         expect { |block| state.execute(&block) }.not_to yield_control
@@ -530,18 +522,19 @@ describe Remap::State::Extension do
       end
 
       let(:value) { "value" }
-      let(:state) { defined(value, path: [:key1]) }
+      let(:state) { defined!(value, path: [:key1]) }
+      let(:problems) { [{ path: [:key1], reason: "This is skipped!", value: value}] }
 
-      it { is_expected.to include(problems: { key1: [include({ reason: "This is skipped!" })] }) }
+      it { is_expected.to include(problems: problems) }
       it { is_expected.not_to have_key(:value) }
     end
 
-    context "when Undefined is returned" do
+    context "when undefined! is returned" do
       subject do
-        state.execute { Undefined }
+        state.execute { undefined! }
       end
 
-      let(:state) { defined }
+      let(:state) { defined! }
 
       it { is_expected.to have(1).problems }
       it { is_expected.not_to have_key(:value) }
@@ -556,7 +549,7 @@ describe Remap::State::Extension do
         end
 
         let(:value) { { a: { b: "value" } } }
-        let(:state) { defined(value) }
+        let(:state) { defined!(value) }
 
         it { is_expected.to contain("value") }
       end
@@ -569,9 +562,10 @@ describe Remap::State::Extension do
         end
 
         let(:value) { { a: { b: "value" } } }
-        let(:state) { defined(value) }
+        let(:state) { defined!(value) }
+        let(:problems) { [{ path: [:a, :x], reason: be_a(String), value: value}] }
 
-        it { is_expected.to include(problems: { a: { x: be_a(Array) } }) }
+        it { is_expected.to include(problems: problems) }
       end
     end
 
@@ -583,7 +577,7 @@ describe Remap::State::Extension do
       end
 
       let(:value) { { key: "value" } }
-      let(:state) { defined(value) }
+      let(:state) { defined!(value) }
 
       it { is_expected.to have(1).problems }
       it { is_expected.not_to have_key(:value) }
@@ -597,7 +591,7 @@ describe Remap::State::Extension do
       end
 
       let(:value) { [1, 2, 3] }
-      let(:state) { defined(value) }
+      let(:state) { defined!(value) }
 
       it { is_expected.to have(1).problems }
       it { is_expected.not_to have_key(:value) }
@@ -605,8 +599,8 @@ describe Remap::State::Extension do
   end
 
   describe "#fmap" do
-    context "when value is defined" do
-      let(:state) { defined(1) }
+    context "when value is defined!" do
+      let(:state) { defined!(1) }
 
       it "invokes block with value" do
         expect(state.fmap { |v| v + 1 }).to contain(2)
@@ -622,13 +616,14 @@ describe Remap::State::Extension do
 
       let(:key) { :key }
       let(:value) { "value" }
-      let(:state) { defined(value) }
+      let(:state) { defined!(value) }
+      let(:problems) { [{ path: [key], reason: "message", value: value}] }
 
-      it { is_expected.to include(problems: { key => [include({ reason: "message" })] }) }
+      it { is_expected.to include(problems: problems) }
     end
 
-    context "when value not defined" do
-      let(:state) { undefined }
+    context "when value not defined!" do
+      let(:state) { undefined! }
 
       it "invokes block with value" do
         expect { |block| state.fmap(&block) }.not_to yield_control
@@ -643,7 +638,7 @@ describe Remap::State::Extension do
           end
         end
 
-        let(:state) { defined }
+        let(:state) { defined! }
         let(:reason) { "reason" }
 
         it { is_expected.not_to have_key(:value) }
@@ -658,10 +653,11 @@ describe Remap::State::Extension do
             end
           end
 
-          let(:state) { defined(1, path: [:key]) }
+          let(:state) { defined!(1, path: [:key]) }
           let(:reason) { "reason" }
+          let(:problems) { [{ path: [:key], reason: reason, value: 1}] }
 
-          it { is_expected.to include(problems: { key: [include({ reason: reason })] }) }
+          it { is_expected.to include(problems: problems) }
         end
 
         context "with key argument" do
@@ -671,26 +667,27 @@ describe Remap::State::Extension do
             end
           end
 
-          let(:state) { defined(1, path: [:key1]) }
+          let(:state) { defined!(1, path: [:key1]) }
           let(:reason) { "reason" }
+          let(:problems) { [{ path: [:key1, :key2], reason: reason, value: 1}] }
 
-          it { is_expected.to include(problems: { key1: { key2: [include({ reason: reason })] } }) }
+          it { is_expected.to include(problems: problems) }
         end
       end
     end
   end
 
   describe "#bind" do
-    context "when value is defined" do
-      let(:state) { defined(1) }
+    context "when value is defined!" do
+      let(:state) { defined!(1) }
 
       it "invokes block with value" do
         expect(state.bind { |v, s| s.set(v + 1) }).to contain(2)
       end
     end
 
-    context "when value not defined" do
-      let(:state) { undefined }
+    context "when value not defined!" do
+      let(:state) { undefined! }
 
       it "invokes block with value" do
         expect { |block| state.bind(&block) }.not_to yield_control
@@ -710,9 +707,10 @@ describe Remap::State::Extension do
 
       let(:key) { :key }
       let(:value) { "value" }
-      let(:state) { defined(value) }
+      let(:state) { defined!(value) }
+      let(:problems) { [{ path: [key], reason: "error", value: value}] }
 
-      it { is_expected.to include(problems: { key: [include({ reason: "error" })] }) }
+      it { is_expected.to include(problems: problems) }
     end
 
     context "when error block is invoked" do
@@ -722,7 +720,7 @@ describe Remap::State::Extension do
         end
       end
 
-      let(:state) { defined }
+      let(:state) { defined! }
       let(:reason) { "reason" }
 
       it { is_expected.not_to have_key(:value) }
@@ -736,16 +734,16 @@ describe Remap::State::Extension do
     let(:path) { [:key1] }
     let(:reason) { "reason" }
     let(:value) { "value" }
-    let(:state) { defined(value, path: path) }
+    let(:state) { defined!(value, path: path) }
 
-    let(:problems) { { key1: [include({ reason: reason })] } }
+    let(:problems) { [{ path: path, value: value, reason: reason }] }
 
     it { is_expected.to include(problems: problems) }
     it { is_expected.not_to have_key(:value) }
   end
 
   describe "#inspect" do
-    subject { defined.inspect }
+    subject { defined!.inspect }
 
     it { is_expected.to be_a(String) }
     it { is_expected.to include("#<State") }

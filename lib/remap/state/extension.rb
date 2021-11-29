@@ -102,14 +102,7 @@ module Remap
         #
         # @return [State]
         def merged(other)
-          all_problems = problems.deep_merge(other.problems) do |key, a, b|
-            case [a, b]
-            in [Array, Array]
-              a + b
-            else
-              raise ArgumentError, "Can't merge #{a.inspect} with #{b.inspect} @ #{key}"
-            end
-          end
+          all_problems = problems + other.problems
 
           catch :undefined do
             value = recursive_merge(other) do |reason|
@@ -273,10 +266,12 @@ module Remap
           # end
         end
 
+        # Number of current problems
+        # Mainly used for debugging
+        #
+        # @return [Integer]
         def no_of_problems
-          a = problems.except(:base).paths.count
-          b = problems.fetch(:base, []).count
-          a + b
+          problems.count
         end
 
         # Passes {#value} to block, if defined
@@ -358,11 +353,22 @@ module Remap
         end
 
         def problem(message)
-          merge(problems: explaination(message, problems)).except(:value)
+          problem = { reason: message, path: path, value: dig(:value) }.reject do |_, value|
+            value.blank?
+          end
+
+          merge(problems: problems + [problem]).except(:value)
         end
 
         def problems
           fetch(:problems)
+        end
+
+        # A list of keys representing the path to {#value}
+        #
+        # @return [Array<Symbol, Integer, String>]
+        def path
+          fetch(:path)
         end
 
         def options

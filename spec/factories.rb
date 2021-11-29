@@ -106,10 +106,10 @@ FactoryBot.define do
   end
 
   factory :state, class: Hash do
-    initialize_with { attributes }
+    initialize_with { attributes._ }
 
     options { {} }
-    problems { {} }
+    problems { [] }
     input { {} }
     values { input }
     path { [] }
