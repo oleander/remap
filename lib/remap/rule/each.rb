@@ -5,7 +5,7 @@ module Remap
     class Each < Value
       using State::Extension
 
-      attribute :rule, Types.Interface(:call)
+      attribute :rule, Types::Rule
 
       # Iterates over {state} and passes each value to {rule}
       # Restores {path} before returning state

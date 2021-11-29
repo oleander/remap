@@ -5,7 +5,7 @@ module Remap
     class Map < self
       using State::Extension
 
-      attribute :rule, Types.Interface(:call)
+      attribute :rule, Types::Rule
       attribute :path, Path
 
       # Maps {input} in 4 steps

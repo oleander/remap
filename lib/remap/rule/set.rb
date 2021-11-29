@@ -5,7 +5,7 @@ module Remap
     class Set < self
       using State::Extension
 
-      attribute :value, Types.Interface(:call)
+      attribute :value, Types::Rule, alias: :rule
       attribute :path, Path
 
       # Returns {value} mapped to {path} regardless of input
@@ -35,7 +35,7 @@ module Remap
       # @return [State]
       def call(state)
         path.call(state) do
-          value.call(state)
+          rule.call(state)
         end
       end
     end

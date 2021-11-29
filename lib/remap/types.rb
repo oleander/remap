@@ -12,6 +12,7 @@ module Remap
     Enumerable = Any.constrained(type: Enumerable)
     Nothing    = Constant(Remap::Nothing)
     Mapper     = Interface(:call!)
+    Rule       = Interface(:call)
     Key        = Interface(:hash)
 
     State = Hash.constructor do |value, type, &error|
