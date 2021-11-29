@@ -1,21 +1,17 @@
 # frozen_string_literal: true
 
 describe Remap::Base do
-  it_behaves_like described_class, key: "KEY" do
-    let(:mapper) do
-      mapper! do
-        option :key
+  let(:mapper) do
+    mapper! do
+      option :key
 
-        define do
-          set :value, to: option(:does_not_exist)
-        end
+      define do
+        set :value, to: option(:does_not_exist)
       end
     end
+  end
 
-    let(:input) { hash! }
-
-    let(:output) do
-      { failure: { base: be_a(Array) } }
-    end
+  it "raises an argument error" do
+    expect { Mapper.call(hash!, key: "KEY") }.to raise_error(ArgumentError)
   end
 end

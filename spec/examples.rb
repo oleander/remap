@@ -8,5 +8,5 @@ end
 shared_examples Remap::Base do |options = {}|
   subject { mapper.call(input, **options) }
 
-  it { is_expected.to have_attributes(to_hash: include(output).or(include(success: output))) }
+  it { is_expected.to match(output) }
 end

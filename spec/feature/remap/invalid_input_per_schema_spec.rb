@@ -15,7 +15,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      { failure: { people: be_a(Array) } }
+      be_a_failure.and(have_attributes(reasons: { people: be_a(Array) }))
     end
   end
 end

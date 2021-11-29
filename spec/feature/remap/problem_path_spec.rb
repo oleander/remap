@@ -15,7 +15,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      { failure: be_a(Hash) }
+      be_a_failure.and(have_attributes(reasons: { a: { b: { c: { missing: be_a(Array) } } } }))
     end
   end
 end

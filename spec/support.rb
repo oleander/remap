@@ -4,6 +4,10 @@ module Support
   include Dry::Core::Constants
   include Remap
 
+  def Failure(**options)
+    Failure.new(reasons: options)
+  end
+
   # @return [Remap::Rule::Void]
   def void!
     Rule::Void.call(EMPTY_HASH)

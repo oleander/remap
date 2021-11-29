@@ -4,23 +4,18 @@ module Remap
   class Failure < Result
     attribute :reasons, Types::Hash
 
-    def inspect
-      format("Failure<[%<result>s]>", result: JSON.pretty_generate(to_h))
-    end
-
-    def to_hash
-      { failure: reasons, problems: problems }
-    end
-
-    def failure?(*)
+    # @return [true]
+    def failure?
       true
     end
 
-    def success?(*)
+    # @return [false]
+    def success?
       false
     end
 
-    def fmap
+    # @return [self]
+    def fmap(&block)
       self
     end
   end
