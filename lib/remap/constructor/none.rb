@@ -7,10 +7,8 @@ module Remap
       attribute :strategy, Types::Any
       attribute :method, Types::Any
 
-      # Just returns the input state
-      #
-      # Fails if {#target} does not respond to {#method}
-      # Fails if {#target} cannot be called with {state}
+      # Used by {Remap::Base} as a fallback constructor
+      # Using it does nothing but return its input state
       #
       # @param state [State]
       #

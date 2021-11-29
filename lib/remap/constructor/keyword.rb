@@ -12,6 +12,15 @@ module Remap
       # Fails if {#target} does not respond to {#method}
       # Fails if {#target} cannot be called with {state}
       #
+      # Used by {Remap::Base} to define constructors for mapped data
+      #
+      # @example Initialize a target with a state
+      #   target = OpenStruct
+      #   constructor = Remap::Constructor.call(strategy: :keyword, target: target, method: :new)
+      #   state = Remap::State.call({ foo: :bar })
+      #   new_state = constructor.call(state)
+      #   new_state.value # => #<OpenStruct foo=:bar>
+      #
       # @param state [State]
       #
       # @return [State]
