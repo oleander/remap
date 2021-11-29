@@ -278,13 +278,6 @@ module Remap
           raise ArgumentError, "Expected State#value not to be a State [#{value}] (#{value.class})"
         end
 
-        def to_hash
-          except(:options, :mapper, :problems, :value)
-        end
-
-        def value
-          fetch(:value)
-        end
 
         # Returns a new state that includes a new problem
         #
@@ -297,8 +290,6 @@ module Remap
           problem = { reason: message.to_s, path: path, value: dig(:value) }.reject do |_, value|
             value.blank?
           end
-
-          Remap::Types::Problem[problem]
 
           merge(problems: problems + [problem]).except(:value)
         end
@@ -319,8 +310,25 @@ module Remap
           fetch(:path)
         end
 
+        # Represents options to a mapper
+        #
+        # @see Rule::Embed
+        #
+        # @return [Hash]
         def options
           fetch(:options)
+        end
+
+        # Used by {#context} to create a limited context
+        #
+        # @return [Hash]
+        def to_hash
+          super.except(:options, :mapper, :problems, :value)
+        end
+
+        # @return [Any]
+        def value
+          fetch(:value)
         end
 
         # Creates a context containing {options} and {self}
