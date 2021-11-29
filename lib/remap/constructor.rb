@@ -2,8 +2,8 @@
 
 module Remap
   class Constructor < Dry::Interface
+    attribute :target, Types::Any, not_eql: Nothing
     attribute :method, Symbol, default: :new
-    attribute :target, Types::Any.constrained(not_eql: Nothing)
 
     # Ensures {#target} responds to {#method}
     # Returns an error state unless above is true
@@ -19,12 +19,16 @@ module Remap
       end
     end
 
-    def id
-      attributes.fetch(:method)
-    end
 
     def to_proc
       method(:call).to_proc
+    end
+
+    private
+
+    # @return [Symbol]
+    def id
+      attributes.fetch(:method)
     end
   end
 end
