@@ -36,7 +36,7 @@ describe Remap::Mapper::And do
       let(:input) { { a: [:A], b: [:B] } }
 
       it "returns the result of A" do
-        expect(result).to be_a_success([:A, :B])
+        expect(result).to be_a_success.and(have_attributes(result: [:A, :B] ))
       end
     end
 
