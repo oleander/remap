@@ -17,7 +17,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      { key: "value" }
+      be_a_success.and(have_attributes(result: { key: "value" }))
     end
   end
 end

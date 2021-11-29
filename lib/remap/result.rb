@@ -29,7 +29,7 @@ module Remap
     # @yieldreturn [U]
     #
     # @return [Result<Y>]
-    def fmap(&block)
+    def fmap
       raise NotImplementedError, "fmap not implemented"
     end
   end

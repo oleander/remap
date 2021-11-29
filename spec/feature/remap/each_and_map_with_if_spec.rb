@@ -40,18 +40,20 @@ describe Remap::Base do
     end
 
     let(:output) do
-      a = {
-        drive: %w[
-          John
-          Jane
-          Jack
-        ],
-        retire: [
-          "Jack"
-        ]
-      }
-
-      { success: a }
+      be_a_success.and(
+        have_attributes({
+          result: {
+            drive: %w[
+              John
+              Jane
+              Jack
+            ],
+            retire: [
+              "Jack"
+            ]
+          }
+        })
+      )
     end
   end
 end
