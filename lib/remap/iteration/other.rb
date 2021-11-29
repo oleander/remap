@@ -3,14 +3,14 @@
 module Remap
   class Iteration
     class Other < Concrete
+      attribute :value, Types::Any, alias: :other
       attribute :state, Types::State
-      attribute :value, Types::Any
 
       using State::Extension
 
       # @see Base#map
       def call(&block)
-        block[value]._
+        block[other]._
       end
     end
   end

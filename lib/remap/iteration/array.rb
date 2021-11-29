@@ -5,7 +5,7 @@ module Remap
     class Array < Concrete
       using State::Extension
 
-      attribute :value, Types::Array
+      attribute :value, Types::Array, alias: :array
       attribute :state, Types::State
 
       # Defines an array iterator that will iterate over {#value}
@@ -17,7 +17,7 @@ module Remap
       #
       # @return [State<Array<T>>]
       def call(&block)
-        value.each_with_index.reduce(init) do |input_state, (value, index)|
+        array.each_with_index.reduce(init) do |input_state, (value, index)|
           block[value, index: index]._.then do |new_state|
             new_state.fmap { [_1] }
           end.then do |new_array_state|

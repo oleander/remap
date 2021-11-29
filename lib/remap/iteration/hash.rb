@@ -3,14 +3,14 @@
 module Remap
   class Iteration
     class Hash < Concrete
-      attribute :value, Types::Hash
-      attribute :state, Types::State
-
       using State::Extension
+
+      attribute :value, Types::Hash, alias: :hash
+      attribute :state, Types::State
 
       # @see Base#map
       def call(&block)
-        value.reduce(init) do |input_state, (key, value)|
+        hash.reduce(init) do |input_state, (key, value)|
           block[value, key: key]._.then do |new_state|
             new_state.fmap { { key => _1 } }
           end.then do |new_hash_state|
