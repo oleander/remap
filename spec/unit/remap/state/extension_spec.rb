@@ -3,63 +3,6 @@
 describe Remap::State::Extension do
   using described_class
 
-  describe "#get" do
-    subject(:result) { receiver.get(*path) }
-
-    context "when receiver is a hash" do
-      let(:receiver) { { a: 1, b: 2 } }
-
-      context "when path is empty" do
-        let(:path) { [] }
-
-        it "raises an argument error" do
-          expect { subject }.to raise_error(ArgumentError)
-        end
-      end
-
-      context "when value exists" do
-        let(:path) { %i[a] }
-
-        it { is_expected.to eq(1) }
-      end
-
-      context "when value does not exist" do
-        let(:path) { %i[c] }
-
-        it "throws a symbol" do
-          expect { subject }.to throw_symbol(:missing, [:c])
-        end
-      end
-    end
-
-    context "when receiver is an array" do
-      let(:receiver) { [1, 2, 3] }
-
-      context "when value exists" do
-        let(:path) { [0] }
-
-        it { is_expected.to eq(1) }
-      end
-
-      context "when value does not exist" do
-        let(:path) { [4] }
-
-        it "throws a symbol" do
-          expect { subject }.to throw_symbol(:missing, [4])
-        end
-      end
-    end
-
-    context "when receiver is something else" do
-      let(:receiver) { "string" }
-      let(:path) { [0] }
-
-      it "throws a symbol" do
-        expect { subject }.to throw_symbol(:missing, [0])
-      end
-    end
-  end
-
   describe "#_" do
     context "when target is valid" do
       let(:state) { defined! }
@@ -177,9 +120,9 @@ describe Remap::State::Extension do
   end
 
   describe "#failure" do
-    let(:value) { "value" }
-
     subject { state!(value!, path: path).failure(reason) }
+
+    let(:value) { "value" }
 
     context "when state is without path" do
       let(:path) { [] }
@@ -362,7 +305,7 @@ describe Remap::State::Extension do
       end
 
       it "returns self" do
-        expect(state.tap { 100 }).to eq(state)
+        expect(state.tap { :a_value }).to eq(state)
       end
     end
   end
@@ -568,7 +511,7 @@ describe Remap::State::Extension do
 
         let(:value) { { a: { b: "value" } } }
         let(:state) { defined!(value) }
-        let(:problems) { [{ path: %i[a x], reason: be_a(String), value: value }] }
+        let(:problems) { [{ path: [:a, :x], reason: be_a(String), value: value }] }
 
         it { is_expected.to include(problems: problems) }
       end
@@ -674,7 +617,7 @@ describe Remap::State::Extension do
 
           let(:state) { defined!(1, path: [:key1]) }
           let(:reason) { "reason" }
-          let(:problems) { [{ path: %i[key1 key2], reason: reason, value: 1 }] }
+          let(:problems) { [{ path: [:key1, :key2], reason: reason, value: 1 }] }
 
           it { is_expected.to include(problems: problems) }
         end
@@ -757,7 +700,7 @@ describe Remap::State::Extension do
     end
 
     context "when path is defined" do
-      let(:path) { %i[key1 key2] }
+      let(:path) { [:key1, :key2] }
       let(:state) { defined!(value, path: path) }
       let(:problems) { [{ path: path, value: value, reason: reason }] }
 

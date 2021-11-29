@@ -135,3 +135,9 @@ Metrics/ModuleLength:
 
 Lint/ShadowedException:
   Enabled: false
+
+Lint/Void:
+  Exclude: ["spec/unit/remap/state/extension_spec.rb"]
+
+Style/SymbolArray:
+  EnforcedStyle: brackets

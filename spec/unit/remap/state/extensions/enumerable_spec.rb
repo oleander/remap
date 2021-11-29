@@ -93,7 +93,7 @@ describe Remap::State::Extensions::Enumerable do
     end
 
     context "when target is not empty" do
-      let(:target) { %i[a b] }
+      let(:target) { [:a, :b] }
 
       it { is_expected.to eq({ a: { b: value } }) }
     end
