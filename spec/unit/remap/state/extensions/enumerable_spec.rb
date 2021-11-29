@@ -32,7 +32,7 @@ describe Remap::State::Extensions::Enumerable do
         end
 
         context "when value does not exist" do
-          let(:receiver) { { a: { b: 'value' } } }
+          let(:receiver) { { a: { b: "value" } } }
           let(:path) { [:a, 0] }
 
           it "throws a symbol" do
