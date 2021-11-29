@@ -4,7 +4,7 @@ using Remap::State::Extension
 
 RSpec::Matchers.define :have do |count|
   match do |actual|
-    actual.no_of_problems == count
+    actual.problems.count == count
   end
 
   chain :problems do

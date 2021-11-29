@@ -176,7 +176,7 @@ module Remap
           end
         end
 
-        # Creates a single problem / failure
+        # Creates a failure to be used in {Remap::Base} & {Remap::Mapper}
         #
         # @param reason [#to_s]
         #
@@ -192,14 +192,6 @@ module Remap
           in [path, Hash => failures]
             path.hide(failures)
           end
-        end
-
-        # Number of current problems
-        # Mainly used for debugging
-        #
-        # @return [Integer]
-        def no_of_problems
-          problems.count
         end
 
         # Passes {#value} to block, if defined
