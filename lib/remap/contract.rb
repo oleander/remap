@@ -2,6 +2,14 @@
 
 module Remap
   class Contract < Dry::Validation::Contract
+    # Constructs a contract used to validate mapper input
+    #
+    # @param rules [Array<Proc>]
+    # @param options [Hash]
+    # @param contract [Proc]
+    # @param attributes [Hash]
+    #
+    # @return [Contract]
     def self.call(rules:, options:, contract:, attributes:)
       Class.new(self) do
         rules.each do |rule|
