@@ -69,7 +69,7 @@ module Support
   end
 
   def state!(value = value!, path: [], input: value, **options)
-    FactoryBot.build(:defined, value: value, path: path, input: input, options: options, input: value)
+    FactoryBot.build(:defined, value: value, path: path, input: input, options: options)
   end
   alias null! state!
 
