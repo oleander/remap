@@ -11,6 +11,7 @@ require "json"
 require "pry"
 
 module Remap
+  # Represents the current state of a mapping
   module State
     include Dry::Core::Constants
     using Extension

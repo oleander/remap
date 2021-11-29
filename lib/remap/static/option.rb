@@ -2,6 +2,18 @@
 
 module Remap
   class Static
+    # Maps a mapper argument to a path
+    #
+    # @example Maps a mapper argument to a path
+    #   class Mapper < Remap::Base
+    #     option :name
+    #
+    #     define do
+    #       set :nickname, to: option(:name)
+    #     end
+    #   end
+    #
+    #   Mapper.call(input, name: "John") # => { nickname: "John" }
     class Option < Concrete
       using State::Extension
 

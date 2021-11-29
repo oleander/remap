@@ -2,6 +2,10 @@
 
 module Remap
   class Selector
+    # Selects value at {#index} from {#state}
+    #
+    # @example Select the fith element from an array
+    #   map index(4)
     class Index < Unit
       using State::Extension
 

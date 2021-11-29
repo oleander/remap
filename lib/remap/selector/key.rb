@@ -2,6 +2,10 @@
 
 module Remap
   class Selector
+    # Selects value at {#key} from {#state}
+    #
+    # @example Select the value at key :name from a hash
+    #   map :key
     class Key < Unit
       using State::Extension
 

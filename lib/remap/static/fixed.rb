@@ -2,6 +2,10 @@
 
 module Remap
   class Static
+    # Maps a fixed value to {state}
+    #
+    # @example Map a fixed value to path
+    #   set :a, :b, to: value('a value')
     class Fixed < Concrete
       using State::Extension
 

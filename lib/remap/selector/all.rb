@@ -2,6 +2,10 @@
 
 module Remap
   class Selector
+    # Selects all elements from a state
+    #
+    # @example Select all elements
+    #   map [:people, all, :name]
     class All < Concrete
       using State::Extension
 

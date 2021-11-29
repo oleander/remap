@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Remap
+  # Represents a successful mapped result
   class Success < Result
     attribute :result, Types::Any
 

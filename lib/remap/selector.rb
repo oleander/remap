@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Remap
+  # Defines how a path element, or selector
+  # Specifies how a value is extracted from a state
   class Selector < Dry::Interface
     defines :requirement, type: Types::Any.constrained(type: Dry::Types::Type)
     requirement Types::Any
