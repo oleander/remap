@@ -3,7 +3,7 @@
 describe Remap::Result do
   subject(:result) { described_class.call(input) }
 
-  let(:input) { { problems: [{ value: value!, path: [1,2,3], reason: "my reason"}] } }
+  let(:input) { { problems: [{ value: value!, path: [1, 2, 3], reason: "my reason" }] } }
 
   describe "::call" do
     context "given valid input" do
@@ -17,7 +17,7 @@ describe Remap::Result do
     subject { described_class.call(input) }
 
     context "when problems exist" do
-      let(:input) { { problems: [{ value: value!, path: [1,2,3], reason: "my reason"}] } }
+      let(:input) { { problems: [{ value: value!, path: [1, 2, 3], reason: "my reason" }] } }
 
       it { is_expected.to be_problem }
     end
