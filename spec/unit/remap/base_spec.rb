@@ -25,6 +25,16 @@ describe Remap::Base do
     it { is_expected.to be_a(Remap::Mapper) }
   end
 
+  describe "::inspect" do
+    subject(:mapper) do
+      mapper! do
+        contract { required(:a) }
+      end
+    end
+
+    it { is_expected.to have_attributes(inspect: be_a(String)) }
+  end
+
   describe "::call" do
     context "when contract fails" do
       subject(:result) { mapper.call({ b: 1 }) }
