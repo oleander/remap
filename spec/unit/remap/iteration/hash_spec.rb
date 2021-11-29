@@ -13,7 +13,7 @@ describe Remap::Iteration::Hash do
 
     context "when called with a block" do
       subject do
-        iterator.map do |value, key:|
+        iterator.call do |value, key:|
           state.set(value, key: key)
         end
       end
@@ -27,7 +27,7 @@ describe Remap::Iteration::Hash do
 
     context "when no values are rejected" do
       subject(:result) do
-        iterator.map do |value|
+        iterator.call do |value|
           state.set(value.next)
         end
       end
@@ -41,7 +41,7 @@ describe Remap::Iteration::Hash do
 
     context "when all values are rejected" do
       subject(:result) do
-        iterator.map do |_value, key:|
+        iterator.call do |_value, key:|
           state.problem("P:#{key}")
         end
       end

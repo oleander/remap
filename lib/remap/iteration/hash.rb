@@ -9,7 +9,7 @@ module Remap
       using State::Extension
 
       # @see Base#map
-      def map(&block)
+      def call(&block)
         value.reduce(init) do |input_state, (key, value)|
           block[value, key: key]._.then do |new_state|
             new_state.fmap { { key => _1 } }
@@ -18,7 +18,6 @@ module Remap
           end
         end._
       end
-      alias call map
 
       private
 
