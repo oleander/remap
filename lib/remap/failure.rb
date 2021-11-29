@@ -15,7 +15,7 @@ module Remap
     end
 
     # @return [self]
-    def fmap(&block)
+    def fmap
       self
     end
   end
