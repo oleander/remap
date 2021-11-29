@@ -15,7 +15,6 @@ module Remap
     Mapper     = Interface(:call!)
     Nothing    = Constant(Remap::Nothing)
     Key        = Interface(:hash)
-    Value      = Any
 
     State = Hash.constructor do |value, type, &error|
       type[value, &error]._(&error)

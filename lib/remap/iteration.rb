@@ -2,8 +2,8 @@
 
 module Remap
   class Iteration < Dry::Interface
-    attribute :value, Types::Value
     attribute :state, Types::State
+    attribute :value, Types::Any
 
     # Maps every element in {#value} to {#block}
     #
