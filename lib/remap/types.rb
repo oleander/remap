@@ -7,7 +7,6 @@ require "dry/logic"
 module Remap
   module Types
     include Dry::Types()
-    include Dry::Logic::Operations
 
     using State::Extension
 
