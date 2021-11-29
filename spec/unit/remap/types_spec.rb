@@ -59,15 +59,6 @@ describe Remap::Types do
     end
   end
 
-  describe described_class::Selectors do
-    subject(:type) { described_class.call([all!, index!(10), :key]) }
-
-    specify do
-      expect(type).to contain_exactly(be_a(Remap::Selector::All), be_a(Remap::Selector::Index),
-                                      be_a(Remap::Selector::Key))
-    end
-  end
-
   describe "::not" do
     context "given a string type" do
       subject(:type) { described_class::String }
