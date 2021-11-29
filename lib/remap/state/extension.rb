@@ -70,7 +70,7 @@ module Remap
 
           set(problems: all_problems)
         end
-        alias combine merged
+        alias_method :combine, :merged
 
         # Resolves conflicts unsovable by ActiveSupport#deep_merge
         #
