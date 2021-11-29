@@ -13,6 +13,21 @@ module Remap
 
       alias execute instance_eval
 
+      # Builds an enum using the block context
+      #
+      # @example
+      #   enum = Enum.call do
+      #     from "B", to: "C"
+      #     value "A"
+      #     otherwise "D"
+      #   end
+      #
+      #   enum.get("A") # => "A"
+      #   enum.get("B") # => "C"
+      #   enum.get("C") # => "C"
+      #   enum.get("MISSING") # => "D"
+      #
+      # @return [Any]
       def self.call(&block)
         unless block
           raise ArgumentError, "no block given"
@@ -25,12 +40,20 @@ module Remap
         mappings[key]
       end
 
+      # Translate {key} into a value using pre-defined mappings
+      #
+      # @param key [#hash]
+      #
+      # @yield [String]
+      #   If the {key} is not found & no default value is set
+      #
+      # @return [Any]
       def get(key, &error)
         unless error
           return get(key) { raise Error, _1 }
         end
 
-        mappings[key].bind { return _1 }.or do
+        self[key].bind { return _1 }.or do
           error["Enum key [#{key}] not found among [#{mappings.keys.inspect}]"]
         end
       end
@@ -40,8 +63,11 @@ module Remap
       #
       # @return [VOID]
       def from(*keys, to:)
+        value = Some(to)
+
         keys.each do |key|
-          mappings[key] = Some(to)
+          mappings[key] = value
+          mappings[to] = value
         end
       end
 

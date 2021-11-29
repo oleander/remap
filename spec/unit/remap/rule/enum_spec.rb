@@ -152,6 +152,18 @@ describe Remap::Rule::Enum do
           end
         end
       end
+
+      context "when to: is found, but not from:" do
+        it_behaves_like described_class do
+          let(:output) { Some(lookup) }
+          let(:lookup) { :ID }
+          let(:enum) do
+            described_class.call do
+              from :MISSING, to: :ID
+            end
+          end
+        end
+      end
     end
   end
 end
