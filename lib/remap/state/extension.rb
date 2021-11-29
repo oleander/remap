@@ -5,51 +5,8 @@ require "active_support/core_ext/hash/deep_transform_values"
 module Remap
   module State
     module Extension
-      refine Object do
-        def _(&block)
-          unless block
-            return _ { raise _1 }
-          end
-
-          block["Expected a state, got [#{self}] (#{self.class})"]
-        end
-
-        def paths
-          EMPTY_ARRAY
-        end
-
-        def get(*path)
-          throw :missing, path
-        end
-      end
-
-      refine Array do
-        # Creates a hash using {self} as the {path} and {value} as the hash value
-        #
-        # @param value [Any] Hash value
-        #
-        # @example A hash from path
-        #   [:a, :b].hide('value') # => { a: { b: 'value' } }
-        #
-        # @return [Hash]
-        def hide(value)
-          reverse.reduce(value) do |element, key|
-            { key => element }
-          end
-        end
-
-        def get(*path, last)
-          if path.empty?
-            return fetch(last) do
-              throw :missing, path + [last]
-            end
-          end
-
-          dig(*path).fetch(last) do
-            throw :missing, path + [last]
-          end
-        end
-      end
+      using Extensions::Array
+      using Extensions::Object
 
       refine Hash do
         def _(&block)
