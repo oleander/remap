@@ -146,8 +146,6 @@ module Remap
           case [self, options]
           in [{path:}, {quantifier:, **rest}]
             merge(path: path + [quantifier]).set(**rest)
-          in [_, {mapper:, value:, **rest}]
-            merge(scope: value, value: value, mapper: mapper).set(**rest)
           in [{value:}, {mapper:, **rest}]
             merge(scope: value, mapper: mapper).set(**rest)
           in [{path:}, {key:, **rest}]
