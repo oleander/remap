@@ -32,7 +32,7 @@ module Remap
 
           target.public_send(id, **input)
         rescue ArgumentError => e
-          raise e.exception("Could not load target [#{target}] using the keyword strategy using [#{input}] (#{input.class})")
+          raise e.exception("Failed to create [#{target.inspect}] with input [#{input}] (#{input.class})")
         end
       end
     end

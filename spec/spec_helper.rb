@@ -77,10 +77,6 @@ module Support
     FactoryBot.build(Remap::Rule::Path, **{ input: input, output: output }.compact)
   end
 
-  def undefined!(*traits)
-    FactoryBot.build(:undefined, *traits)
-  end
-
   def void!
     Remap::Rule::Void.call({})
   end

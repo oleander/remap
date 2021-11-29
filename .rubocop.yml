@@ -141,3 +141,9 @@ Lint/Void:
 
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+Naming/PredicateName:
+  Exclude: ["lib/remap/result.rb"]
+
+Lint/EmptyClass:
+  Exclude: ["lib/remap/nothing.rb"]

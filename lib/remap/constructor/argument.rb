@@ -29,7 +29,7 @@ module Remap
         super.fmap do |input|
           target.public_send(id, input)
         rescue ArgumentError => e
-          raise e.exception("Could not load target [#{target}] using the argument strategy with [#{input}] (#{input.class})")
+          raise e.exception("Failed to create [#{target.inspect}] with input [#{input}] (#{input.class})")
         end
       end
     end

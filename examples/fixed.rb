@@ -4,7 +4,6 @@ require "bundler/setup"
 Bundler.require
 
 input = JSON.parse(Pathname(__FILE__).dirname.join("input.json").read).deep_symbolize_keys
-output = JSON.parse(Pathname(__FILE__).dirname.join("output.json").read).deep_symbolize_keys
 
 class Fixed < Remap::Base
   define do

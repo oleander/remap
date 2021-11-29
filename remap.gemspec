@@ -9,7 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Linus Oleander"]
   spec.email         = ["oleander@users.noreply.github.com"]
   spec.homepage      = "https://github.com/oleander/remap"
-  spec.summary       = "Re::map"
   spec.license       = "MIT"
   spec.summary       = "Makes mapping easy"
 
