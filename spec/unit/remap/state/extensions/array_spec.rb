@@ -24,8 +24,8 @@ describe Remap::State::Extensions::Array do
 
     context "when not empty" do
       context "when value exists" do
-        let(:receiver) { ["value"] }
-        let(:path) { [0] }
+        let(:receiver) { [{ a: "value" }] }
+        let(:path) { [0, :a] }
 
         it { is_expected.to eq("value") }
       end
@@ -38,6 +38,24 @@ describe Remap::State::Extensions::Array do
           expect { result }.to throw_symbol(:missing, [0, 1])
         end
       end
+    end
+  end
+
+  describe "#hide" do
+    subject { target.hide(value) }
+
+    let(:value) { value! }
+
+    context "when target is empty" do
+      let(:target) { [] }
+
+      it { is_expected.to eq(value) }
+    end
+
+    context "when target is not empty" do
+      let(:target) { %i[a b] }
+
+      it { is_expected.to eq({ a: { b: value } }) }
     end
   end
 end

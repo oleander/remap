@@ -19,6 +19,14 @@ module Remap
             end
           end
 
+          # Fetches value at {path}
+          #
+          # @example Fetch value at path
+          #   [[:a, :b], [:c, :d]].get(0, 1) # => :b
+          #
+          # @return [Any]
+          #
+          # @raise When path cannot be found
           def get(*path)
             _, result = path.reduce([[], self]) do |(current_path, element), key|
               value = element.fetch(key) do
