@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
-require "dry/struct"
-require "dry/validation"
 
 require "active_support/core_ext/module/delegation"
+require "dry/validation"
 require "dry/interface"
 require "dry/schema"
+require "dry/struct"
 require "dry/types"
 require "dry/monads"
-require "dry/logic"
 require "zeitwerk"
-
-Dry::Types.load_extensions(:maybe)
 
 loader = Zeitwerk::Loader.for_gem
 loader.collapse("#{__dir__}/remap/rule/support")
