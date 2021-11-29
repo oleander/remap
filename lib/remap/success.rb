@@ -23,7 +23,7 @@ module Remap
     end
 
     def fmap(&block)
-      block[result]
+      new(result: block[result])
     end
   end
 end
