@@ -20,20 +20,48 @@ module Remap
 
     schema schema.strict(false)
 
-    # Holds the current context
-    # @private
+    # Defines a schema for the mapper
+    # If the schema fail, the mapper will fail
+    #
+    # @example Guard against missing values
+    #   class Mapper < Remap::Base
+    #     contract do
+    #       required(:age).filled(:integer)
+    #     end
+    #
+    #     define do
+    #       map :age, to: [:person, :age]
+    #     end
+    #   end
+    #
+    #   Mapper.call(age: '10') # => Failure({ age: ["must be an integer"] })
+    #   Mapper.call(age: 50) # => Succcess({ person: { age: 50 } })
+    #
+    # @see https://dry-rb.org/gems/dry-schema/1.5/
+    #
+    # @return [void]
     def self.contract(&context)
       config.contract = Dry::Schema.JSON(&context)
     end
 
-    # Refines a rule for the mapper
+    # Defines a rule for the mapper
     # If the rule fail, the mapper will fail
     #
-    # class Mapper < Remap::Base
-    #   rule(:age) do
-    #     value
+    # @example Guard against values
+    #   class Mapper < Remap::Base
+    #     rule(:age) do
+    #       unless value >= 18
+    #         key.failure("must be at least 18 years old")
+    #       end
+    #     end
+    #
+    #     define do
+    #       map :age, to: [:person, :age]
+    #     end
     #   end
-    # end
+    #
+    #   Mapper.call(age: 10) # => Failure({ age: ["must be at least 18 years old"] })
+    #   Mapper.call(age: 50) # => Succcess({ person: { age: 50 } })
     #
     # @see https://dry-rb.org/gems/dry-validation/1.6/rules/
     #
@@ -69,18 +97,19 @@ module Remap
       config.options << ->(*) { option(field, type: key) }
     end
 
-    # Pretty print the mapper
-    #
     # @return [String]
     def self.inspect
       "<#{self.class} #{rule}, #{self}>"
     end
 
-    # Defines a mapper with a constructor used to wrap the output
+    # Defines a mapper rules and possible constructor
     #
-    # @param constructor [#call]
+    # @param constructor (Nothing) [#call]
     #
-    # @example A mapper from path :a to path :b
+    # @option method (:new) [Symbol]
+    # @option strategy (:argument) [:argument, :keywords, :none]
+    #
+    # @example A mapper, which mapps a value at [:a] to [:b]
     #   class Mapper < Remap
     #     define do
     #       map :a, to: :b
@@ -88,6 +117,21 @@ module Remap
     #   end
     #
     #   Mapper.call(a: 1) # => { b: 1 }
+    #
+    # @example A mapper with an output constructor
+    #   class Person < Dry::Struct
+    #     attribute :first_name, Types::String
+    #   end
+    #
+    #   class Mapper < Remap
+    #     define(Person) do
+    #       map :name, to: :first_name
+    #     end
+    #   end
+    #
+    #   Mapper.call(name: "John") # => Person<first_name="John">
+    #
+    # @return [void]
     def self.define(target = Nothing, method: :new, strategy: :argument, &context)
       unless context
         raise ArgumentError, "Missing block"
