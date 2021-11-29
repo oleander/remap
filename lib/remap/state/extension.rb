@@ -20,7 +20,7 @@ module Remap
         # @return [self]
         def _(&block)
           unless block
-            return _ { raise "Input: #{self} output: #{JSON.pretty_generate(_1)}" }
+            return _ { raise ArgumentError, "Input: #{self} output: #{JSON.pretty_generate(_1)}" }
           end
 
           unless (result = Schema.call(self)).success?

@@ -15,7 +15,15 @@ module Remap
     include Dry::Core::Constants
     using Extension
 
-    def state(value, mapper:, options: {})
+    # Creates a valid state
+    #
+    # @param value [Any] Internal state value
+    #
+    # @option mapper [Mapper::Class] Mapper class
+    # @option options [Hash] Mapper options / arguments
+    #
+    # @return [Hash] A valid state
+    def state(value, mapper:, options: EMPTY_HASH)
       {
         problems: EMPTY_ARRAY,
         path: EMPTY_ARRAY,
