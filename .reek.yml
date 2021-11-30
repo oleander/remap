@@ -18,9 +18,34 @@ detectors:
     exclude:
     - Remap::Rule::Map#if
     - Remap::Rule::Map#if_not
+  IrresponsibleModule:
+    exclude:
+    - Support
+    - Fixed
+    - Remap::Base
+    - Remap::Constructor
+    - Remap::Contract
+    - Remap::Error
+    - Remap::Failure
+    - Remap::Iteration
+    - Remap::Mapper
+    - Remap::Mapper::Binary
+    - Remap::Mapper::Operations
+    - Remap::Nothing
+    - Remap
+    - Remap::Path
+    - Remap::Result
+    - Remap::Rule
+    - Remap::Rule::Collection
+    - Remap::Rule::Enum
+    - Remap::Selector
+    - Remap::State::Extension
+    - Remap::State::Extensions
+    - Remap::State::Extensions::Enumerable
+    - Remap::State::Extensions::Object
+    - Remap::Static
   LongParameterList:
     exclude:
-    - Support#state!
     - Remap::Contract#self.call
   ManualDispatch:
     exclude:
@@ -37,12 +62,11 @@ detectors:
     - Remap::Mapper::And#call!
     - Remap::Mapper::Or#call!
     - Remap::Mapper::Xor#call!
-    - Remap::Rule::Map#call
+    - Remap::Path::Input#call
+    - Remap::Rule::Map#callback
     - Remap::Rule::Map#enum
     - Remap::Rule::Map#if
     - Remap::Rule::Map#if_not
-    - Remap::Rule::Path#call
-    - Remap::Rule::Path#selector
     - Hash#bind
     - Hash#map
   RepeatedConditional:
@@ -59,8 +83,8 @@ detectors:
     - Remap::Mapper::Xor#call!
     - Remap::Selector::Index#call
     - Remap::Selector::Key#call
-    - Hash#execute
     - Hash#combine
+    - Hash#execute
   UncommunicativeMethodName:
     exclude:
     - Support#Failure
@@ -88,7 +112,9 @@ detectors:
     - Support#array!
     - Support#hash!
     - Support#index!
+    - Support#input_path!
     - Support#int!
+    - Support#output_path!
     - Support#static!
     - Support#string!
     - Support#void!
