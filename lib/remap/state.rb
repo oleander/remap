@@ -17,6 +17,7 @@ module Remap
     include Dry::Core::Constants
 
     class Dummy < Remap::Base
+      # NOP
     end
 
     # Creates a valid state
