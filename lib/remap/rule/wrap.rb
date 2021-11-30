@@ -2,6 +2,14 @@
 
 module Remap
   class Rule
+    # Wraps rule in a type
+    #
+    # @example Maps { name: "Ford" } to { cars: ["Ford"] }
+    #   to :cars do
+    #     wrap(:array) do
+    #       map :name
+    #     end
+    #   end
     class Wrap < self
       using State::Extension
 
@@ -10,16 +18,9 @@ module Remap
 
       # Wraps the output from {#rule} in a {#type}
       #
-      # @param state [State]
+      # @param state [State<T>]
       #
-      # @example mapps { car: "Volvo" } to { cars: ["Volvo"] }
-      #   to :cars do
-      #     wrap(:array) do
-      #       map :car
-      #     end
-      #   end
-      #
-      # @return [State]
+      # @return [State<Array<T>>]
       def call(state)
         rule.call(state).fmap { Array.wrap(_1) }
       end
