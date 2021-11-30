@@ -10,7 +10,7 @@ module Remap
     #   Mapper1 & Mapper2
     class And < Binary
       # Succeeds if both left and right succeed
-      # Returnes the combined result of left and right
+      # Returns the combined result of left and right
       #
       # @param state [State]
       #

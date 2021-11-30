@@ -55,7 +55,7 @@ module Remap
         end
       end
 
-      # An enum processor
+      # An enumeration processor
       #
       # @example Maps { a: { b: "A" } } to "A"
       #   map(:a, :b).enum do
