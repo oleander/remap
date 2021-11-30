@@ -8,7 +8,7 @@ module Remap
     # @param state [State]
     #
     # @abstract
-    def call(state)
+    def call(_state)
       raise NotImplementedError, "#{self.class}#call not implemented"
     end
 
