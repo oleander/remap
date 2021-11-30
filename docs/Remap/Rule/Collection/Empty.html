@@ -119,9 +119,15 @@
 <p>Map any value to undefined</p>
 </div></p>
       
-      <pre class="example code"><code>map <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#777"># NOP</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#080;font-weight:bold">do</span>
+      <span style="color:#777"># NOP</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>).success? <span style="color:#777"># =&gt; false</span></code></pre>
     
   </div>
 
@@ -229,12 +235,12 @@
       <pre class="lines">
 
 
-22
-23
-24</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/empty.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/empty.rb', line 28</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
   state.problem(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No rules, empty block</span><span style="color:#710">&quot;</span></span>)
@@ -249,7 +255,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 06:45:43 2021 by
+  Generated on Tue Nov 30 08:09:49 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

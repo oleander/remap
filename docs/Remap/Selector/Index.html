@@ -104,25 +104,13 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Selects value at given index</p>
+<p>Mapper.call([1, 2, 3]).result # =&gt; 2</p>
 
 
   </div>
 </div>
 <div class="tags">
   
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'>
-<p>Select the fith element from an array</p>
-</div></p>
-      
-      <pre class="example code"><code>map index(<span style="color:#00D">4</span>)</code></pre>
-    
-  </div>
-
 
 </div>
 
@@ -277,12 +265,6 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
-29
-30
 31
 32
 33
@@ -293,10 +275,16 @@
 38
 39
 40
-41</pre>
+41
+42
+43
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 31</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;block)
   <span style="color:#080;font-weight:bold">unless</span> block
@@ -357,10 +345,10 @@
       <pre class="lines">
 
 
-13</pre>
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 19</span>
 
 attribute <span style="color:#A60">:index</span>, <span style="color:#036;font-weight:bold">Integer</span></pre>
     </td>
@@ -373,7 +361,7 @@ attribute <span style="color:#A60">:index</span>, <span style="color:#036;font-w
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 06:45:43 2021 by
+  Generated on Tue Nov 30 08:09:49 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

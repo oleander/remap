@@ -119,7 +119,9 @@
 <p>Select the value at key :name from a hash</p>
 </div></p>
       
-      <pre class="example code"><code>map <span style="color:#A60">:key</span></code></pre>
+      <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call({ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> })
+result = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">Key</span>.new(<span style="color:#A60">:name</span>).call(state)
+result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; &quot;John&quot;</span></code></pre>
     
   </div>
 
@@ -279,8 +281,6 @@
       <pre class="lines">
 
 
-25
-26
 27
 28
 29
@@ -295,10 +295,12 @@
 38
 39
 40
-41</pre>
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 27</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;block)
   <span style="color:#080;font-weight:bold">unless</span> block
@@ -366,10 +368,10 @@
       <pre class="lines">
 
 
-13</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 15</span>
 
 attribute <span style="color:#A60">:key</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Key</span></pre>
     </td>
@@ -382,7 +384,7 @@ attribute <span style="color:#A60">:key</span>, <span style="color:#036;font-wei
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 06:45:43 2021 by
+  Generated on Tue Nov 30 08:09:49 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

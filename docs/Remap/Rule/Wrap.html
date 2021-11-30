@@ -119,11 +119,17 @@
 <p>Maps { name: “Ford” } to { cars: [“Ford”] }</p>
 </div></p>
       
-      <pre class="example code"><code>to <span style="color:#A60">:cars</span> <span style="color:#080;font-weight:bold">do</span>
-  wrap(<span style="color:#A60">:array</span>) <span style="color:#080;font-weight:bold">do</span>
-    map <span style="color:#A60">:name</span>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    to <span style="color:#A60">:cars</span> <span style="color:#080;font-weight:bold">do</span>
+      wrap(<span style="color:#A60">:array</span>) <span style="color:#080;font-weight:bold">do</span>
+        map <span style="color:#A60">:name</span>
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Ford</span><span style="color:#710">&quot;</span></span> }).result <span style="color:#777"># =&gt; { cars: [&quot;Ford&quot;] }</span></code></pre>
     
   </div>
 
@@ -275,12 +281,12 @@
       <pre class="lines">
 
 
-27
-28
-29</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 33</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
   rule.call(state).fmap { <span style="color:#036;font-weight:bold">Array</span>.wrap(_1) }
@@ -327,10 +333,10 @@
       <pre class="lines">
 
 
-20</pre>
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 26</span>
 
 attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-weight:bold">Rule</span></pre>
     </td>
@@ -375,10 +381,10 @@ attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-we
       <pre class="lines">
 
 
-17</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 23</span>
 
 attribute <span style="color:#A60">:type</span>, Value(<span style="color:#A60">:array</span>)</pre>
     </td>
@@ -391,7 +397,7 @@ attribute <span style="color:#A60">:type</span>, Value(<span style="color:#A60">
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 06:45:43 2021 by
+  Generated on Tue Nov 30 08:09:49 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

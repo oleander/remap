@@ -93,14 +93,14 @@
   
   <dl>
       <dt>Extended by:</dt>
-      <dd>Dry::Configurable, <span class='object_link'><a href="Operation.html" title="Remap::Operation (module)">Operation</a></span></dd>
+      <dd><span class='object_link'><a href="Operation.html" title="Remap::Operation (module)">Operation</a></span></dd>
   </dl>
   
   
   
   <dl>
       <dt>Includes:</dt>
-      <dd>Dry::Core::Constants</dd>
+      <dd>ActiveSupport::Configurable, Dry::Core::Constants</dd>
   </dl>
   
   
@@ -115,6 +115,10 @@
   
 </div>
 
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="State/Dummy.html" title="Remap::State::Dummy (class)">State::Dummy</a></span></p>
+</div>
 
   
     <h2>
@@ -419,14 +423,14 @@
       <pre class="lines">
 
 
-150
-151
-152
-153
-154</pre>
+174
+175
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 174</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call!</span>(state, &amp;error)
   new(state.options).call(state._.set(<span style="color:#606">mapper</span>: <span style="color:#069">self</span>), &amp;error)
@@ -475,8 +479,8 @@
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="color:#606">age</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">10</span><span style="color:#710">'</span></span>) <span style="color:#777"># =&gt; Failure({ age: [&quot;must be an integer&quot;] })</span>
-<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="color:#606">age</span>: <span style="color:#00D">50</span>) <span style="color:#777"># =&gt; Succcess({ person: { age: 50 } })</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">10</span><span style="color:#710">'</span></span>}).success? <span style="color:#777"># =&gt; false</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">50</span>}).success? <span style="color:#777"># =&gt; true</span></code></pre>
     
   </div>
 
@@ -494,15 +498,15 @@
       <pre class="lines">
 
 
-43
-44
-45</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 63</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">contract</span>(&amp;context)
-  config.contract = <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Schema</span>.JSON(&amp;context)
+  <span style="color:#069">self</span>.contract = <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Schema</span>.JSON(&amp;context)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -536,13 +540,13 @@
 <p>A mapper, which mapps a value at [:a] to [:b]</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   define <span style="color:#080;font-weight:bold">do</span>
     map <span style="color:#A60">:a</span>, <span style="color:#606">to</span>: <span style="color:#A60">:b</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="color:#606">a</span>: <span style="color:#00D">1</span>) <span style="color:#777"># =&gt; { b: 1 }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">a</span>: <span style="color:#00D">1</span>}).result <span style="color:#777"># =&gt; { b: 1 }</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -550,16 +554,16 @@
 </div></p>
       
       <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Person</span> &lt; <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>
-  attribute <span style="color:#A60">:first_name</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">String</span>
+  attribute <span style="color:#A60">:first_name</span>, <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Types</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">strict.string</span><span style="color:#710">'</span></span>]
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   define(<span style="color:#036;font-weight:bold">Person</span>) <span style="color:#080;font-weight:bold">do</span>
     map <span style="color:#A60">:name</span>, <span style="color:#606">to</span>: <span style="color:#A60">:first_name</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; Person&lt;first_name=&quot;John&quot;&gt;</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>}).result.first_name <span style="color:#777"># =&gt; &quot;John&quot;</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -666,27 +670,27 @@
       <pre class="lines">
 
 
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139</pre>
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 154</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">define</span>(target = <span style="color:#036;font-weight:bold">Nothing</span>, <span style="color:#606">method</span>: <span style="color:#A60">:new</span>, <span style="color:#606">strategy</span>: <span style="color:#A60">:argument</span>, &amp;context)
   <span style="color:#080;font-weight:bold">unless</span> context
     raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Missing block</span><span style="color:#710">&quot;</span></span>
   <span style="color:#080;font-weight:bold">end</span>
 
-  config.context = <span style="color:#036;font-weight:bold">Compiler</span>.call(&amp;context)
-  config.constructor = <span style="color:#036;font-weight:bold">Constructor</span>.call(<span style="color:#606">method</span>: method, <span style="color:#606">strategy</span>: strategy, <span style="color:#606">target</span>: target)
+  <span style="color:#069">self</span>.context = <span style="color:#036;font-weight:bold">Compiler</span>.call(&amp;context)
+  <span style="color:#069">self</span>.constructor = <span style="color:#036;font-weight:bold">Constructor</span>.call(<span style="color:#606">method</span>: method, <span style="color:#606">strategy</span>: strategy, <span style="color:#606">target</span>: target)
 <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
   raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.message
 <span style="color:#080;font-weight:bold">end</span></pre>
@@ -730,7 +734,7 @@
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call(input, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; { name: &quot;John&quot; }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>).result <span style="color:#777"># =&gt; { name: &quot;John&quot; }</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -794,18 +798,18 @@
       <pre class="lines">
 
 
-90
-91
-92
-93
-94
-95
-96
-97
-98</pre>
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 114</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">option</span>(field, <span style="color:#606">type</span>: <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Any</span>)
   attribute(field, type)
@@ -814,7 +818,7 @@
     raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">[BUG] Could not locate [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>field<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] in [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">]</span><span style="color:#710">&quot;</span></span>
   <span style="color:#080;font-weight:bold">end</span>
 
-  config.options &lt;&lt; -&gt; * { option(field, <span style="color:#606">type</span>: key) }
+  <span style="color:#069">self</span>.options = options + [-&gt; * { option(field, <span style="color:#606">type</span>: key) }]
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -849,6 +853,10 @@
 </div></p>
       
       <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  contract <span style="color:#080;font-weight:bold">do</span>
+    required(<span style="color:#A60">:age</span>)
+  <span style="color:#080;font-weight:bold">end</span>
+
   rule(<span style="color:#A60">:age</span>) <span style="color:#080;font-weight:bold">do</span>
     <span style="color:#080;font-weight:bold">unless</span> value &gt;= <span style="color:#00D">18</span>
       key.failure(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">must be at least 18 years old</span><span style="color:#710">&quot;</span></span>)
@@ -860,8 +868,8 @@
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="color:#606">age</span>: <span style="color:#00D">10</span>) <span style="color:#777"># =&gt; Failure({ age: [&quot;must be at least 18 years old&quot;] })</span>
-<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="color:#606">age</span>: <span style="color:#00D">50</span>) <span style="color:#777"># =&gt; Succcess({ person: { age: 50 } })</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">10</span>}).success? <span style="color:#777"># =&gt; false</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">50</span>}).success? <span style="color:#777"># =&gt; true</span></code></pre>
     
   </div>
 
@@ -879,15 +887,15 @@
       <pre class="lines">
 
 
-69
-70
-71</pre>
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 93</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">rule</span>(...)
-  config.rules &lt;&lt; -&gt; * { rule(...) }
+  <span style="color:#069">self</span>.rules = rules + [-&gt; * { rule(...) }]
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -972,24 +980,24 @@
       <pre class="lines">
 
 
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179</pre>
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 189</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;error)
   <span style="color:#080;font-weight:bold">unless</span> error
@@ -997,14 +1005,14 @@
   <span style="color:#080;font-weight:bold">end</span>
 
   state.tap <span style="color:#080;font-weight:bold">do</span> |input|
-    contract.call(input, state.options).tap <span style="color:#080;font-weight:bold">do</span> |result|
+    validation.call(input, state.options).tap <span style="color:#080;font-weight:bold">do</span> |result|
       <span style="color:#080;font-weight:bold">unless</span> result.success?
         <span style="color:#080;font-weight:bold">return</span> error[state.failure(result.errors.to_h)]
       <span style="color:#080;font-weight:bold">end</span>
     <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 
-  state.then(&amp;config.context).then(&amp;config.constructor)
+  state.then(&amp;context).then(&amp;constructor)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -1016,7 +1024,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 06:45:42 2021 by
+  Generated on Tue Nov 30 08:09:48 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

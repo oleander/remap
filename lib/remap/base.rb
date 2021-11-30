@@ -6,7 +6,6 @@ module Remap
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants
-    extend Dry::Monads[:result]
     using State::Extension
     extend Operation
 

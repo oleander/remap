@@ -115,9 +115,20 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>map <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#777"># ...</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+        <p class="example_title"><div class='inline'>
+<p>A non-empty collection</p>
+</div></p>
+      
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#080;font-weight:bold">do</span>
+      map <span style="color:#A60">:a1</span>, <span style="color:#606">to</span>: <span style="color:#A60">:b1</span>
+      map <span style="color:#A60">:a2</span>, <span style="color:#606">to</span>: <span style="color:#A60">:b2</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a1</span>: <span style="color:#00D">1</span>, <span style="color:#606">a2</span>: <span style="color:#00D">2</span> }).result <span style="color:#777"># =&gt; { b1: 1, b2: 2 }</span></code></pre>
     
   </div>
 
@@ -247,14 +258,14 @@
       <pre class="lines">
 
 
-24
-25
-26
-27
-28</pre>
+31
+32
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 31</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
   rules.map <span style="color:#080;font-weight:bold">do</span> |rule|
@@ -303,10 +314,10 @@
       <pre class="lines">
 
 
-16</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 23</span>
 
 attribute <span style="color:#A60">:rules</span>, [<span style="color:#036;font-weight:bold">Types</span>.Interface(<span style="color:#A60">:call</span>)], <span style="color:#606">min_size</span>: <span style="color:#00D">1</span></pre>
     </td>
@@ -319,7 +330,7 @@ attribute <span style="color:#A60">:rules</span>, [<span style="color:#036;font-
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 06:45:43 2021 by
+  Generated on Tue Nov 30 08:09:49 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
