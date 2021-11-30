@@ -116,20 +116,13 @@
     
       
         <p class="example_title"><div class='inline'>
-<p>Map { people: [{ name: “John” }] } to { names: [“John”] }</p>
+<p>Upcase each value in an array</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
-  define <span style="color:#080;font-weight:bold">do</span>
-    map <span style="color:#A60">:people</span>, <span style="color:#606">to</span>: <span style="color:#A60">:names</span> <span style="color:#080;font-weight:bold">do</span>
-      each <span style="color:#080;font-weight:bold">do</span>
-        map <span style="color:#A60">:name</span>
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
-
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] }).result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span></code></pre>
+      <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>])
+upcase = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>.call({}).then(&amp;<span style="color:#A60">:upcase</span>)
+each = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Each</span>.call(<span style="color:#606">rule</span>: upcase)
+each.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; [&quot;JOHN&quot;, &quot;JANE&quot;]</span></code></pre>
     
   </div>
 
@@ -259,12 +252,12 @@
       <pre class="lines">
 
 
-31
-32
-33</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 24</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
   state.map(&amp;rule)
@@ -311,10 +304,10 @@
       <pre class="lines">
 
 
-23</pre>
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 16</span>
 
 attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-weight:bold">Rule</span></pre>
     </td>
@@ -327,7 +320,7 @@ attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-we
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 09:13:54 2021 by
+  Generated on Tue Nov 30 10:08:40 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

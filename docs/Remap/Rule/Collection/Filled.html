@@ -116,19 +116,13 @@
     
       
         <p class="example_title"><div class='inline'>
-<p>A non-empty collection</p>
+<p>A collection containing a single rule</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
-  define <span style="color:#080;font-weight:bold">do</span>
-    map <span style="color:#080;font-weight:bold">do</span>
-      map <span style="color:#A60">:a1</span>, <span style="color:#606">to</span>: <span style="color:#A60">:b1</span>
-      map <span style="color:#A60">:a2</span>, <span style="color:#606">to</span>: <span style="color:#A60">:b2</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
-
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a1</span>: <span style="color:#00D">1</span>, <span style="color:#606">a2</span>: <span style="color:#00D">2</span> }).result <span style="color:#777"># =&gt; { b1: 1, b2: 2 }</span></code></pre>
+      <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>)
+void = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Void</span>.call({})
+rule = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Collection</span>.call([void])
+rule.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; &quot;A&quot;</span></code></pre>
     
   </div>
 
@@ -258,14 +252,14 @@
       <pre class="lines">
 
 
-31
-32
-33
-34
-35</pre>
+25
+26
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 25</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
   rules.map <span style="color:#080;font-weight:bold">do</span> |rule|
@@ -314,10 +308,10 @@
       <pre class="lines">
 
 
-23</pre>
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 17</span>
 
 attribute <span style="color:#A60">:rules</span>, [<span style="color:#036;font-weight:bold">Types</span>.Interface(<span style="color:#A60">:call</span>)], <span style="color:#606">min_size</span>: <span style="color:#00D">1</span></pre>
     </td>
@@ -330,7 +324,7 @@ attribute <span style="color:#A60">:rules</span>, [<span style="color:#036;font-
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 09:13:55 2021 by
+  Generated on Tue Nov 30 10:08:41 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
