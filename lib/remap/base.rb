@@ -16,6 +16,18 @@ module Remap
   #   end
   #
   #   Mapper.call({ people: [{ name: "John" }] }).result # => { names: ["John"] }
+  #
+  # @example Map "Hello" to "Hello!"
+  #   class Mapper < Remap::Base
+  #     define do
+  #       map.adjust do
+  #         "#{value}!"
+  #       end
+  #     end
+  #   end
+  #
+  #   Mapper.call("Hello").result # => "Hello!"
+  #
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants

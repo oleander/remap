@@ -38,17 +38,6 @@ module Remap
 
       # A post-processor method
       #
-      # @example Map "Hello" to "Hello!"
-      #   class Mapper < Remap::Base
-      #     define do
-      #       map.adjust do
-      #         "#{value}!"
-      #       end
-      #     end
-      #   end
-      #
-      #   Mapper.call("Hello").result # => "Hello!"
-      #
       # @example Upcase mapped value
       #   state = Remap::State.call("Hello World")
       #   map = Remap::Rule::Map.call({})
