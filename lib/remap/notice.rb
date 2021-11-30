@@ -10,7 +10,6 @@ module Remap
       extend Dry::Initializer
 
       option :notice, type: Notice
-      delegate :inspect, :to_s, to: :notice
     end
 
     def inspect
