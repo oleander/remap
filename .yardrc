@@ -1,0 +1,7 @@
+load_plugins: true
+autoload_plugins:
+  - yard-rspec
+  - yard-coderay
+  - yard-doctest
+  - yard-spellcheck
+
