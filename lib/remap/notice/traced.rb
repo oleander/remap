@@ -10,6 +10,8 @@ module Remap
       end
 
       def exception
+        return super if backtrace.blank?
+
         super.tap { _1.set_backtrace(backtrace) }
       end
     end
