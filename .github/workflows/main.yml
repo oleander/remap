@@ -10,3 +10,10 @@ jobs:
           bundler-cache: true
           ruby-version: 3.0
       - run: bundle exec rspec --format RSpec::Github::Formatter
+      - name: badge-it
+        uses: rocktimsaikia/badge-it@2.0.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          badges: 'gh_license, gh_version, gh_stars'
+          badge-style: 'flat-square'
+
