@@ -2,13 +2,13 @@
 
 module Remap
   class Rule
+    using State::Extension
+
     # Represents a mapping without block
     #
     # @example Maps "A" to "A"
     #   map
     class Void < Concrete
-      using State::Extension
-
       # @param state [State<T>]
       #
       # @return [State<T>]

@@ -2,6 +2,8 @@
 
 module Remap
   class Rule
+    using State::Extension
+
     # Wraps rule in a type
     #
     # @example Maps { name: "Ford" } to { cars: ["Ford"] }
@@ -11,8 +13,6 @@ module Remap
     #     end
     #   end
     class Wrap < Concrete
-      using State::Extension
-
       attribute :type, Value(:array)
       attribute :rule, Types::Any
 
