@@ -18,7 +18,7 @@ module Remap
       # Fails if {#target} cannot be called with state
       #
       # @example Initialize a target with a state
-      #   target = Struct.new(:foo)
+      #   target = ::Struct.new(:foo)
       #   constructor = Remap::Constructor.call(strategy: :argument, target: target, method: :new)
       #   state = Remap::State.call(foo: :bar)
       #   new_state = constructor.call(state)
