@@ -16,4 +16,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           badges: 'gh_license, gh_version, gh_stars'
           badge-style: 'flat-square'
+      - run: bundle exec yard doctest
 
