@@ -111,7 +111,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call(a: 1) # => { b: 1 }
+    #   Mapper.call(a: 1).result # => { b: 1 }
     #
     # @example A mapper with an output constructor
     #   class Person < Dry::Struct
@@ -124,7 +124,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call(name: "John") # => Person<first_name="John">
+    #   Mapper.call(name: "John").result # => Person<first_name="John">
     #
     # @return [void]
     def self.define(target = Nothing, method: :new, strategy: :argument, &context)

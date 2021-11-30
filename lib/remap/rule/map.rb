@@ -39,7 +39,9 @@ module Remap
       # @example Map "Hello" to "Hello!"
       #   class Mapper < Remap::Base
       #     define do
-      #       map.adjust { "#{value}!" }
+      #       map.adjust do
+      #         "#{value}!"
+      #       end
       #     end
       #   end
       #
@@ -58,7 +60,13 @@ module Remap
       # @param reason [String]
       #
       # @example Ignore rule for input { a: { b: "A" } }
-      #   map(:a, :b).pending
+      #   class Mapper < Remap::Base
+      #     define do
+      #       map(:a, :b).pending
+      #     end
+      #   end
+      #
+      #   Mapper.call({ a: { b: "A" } }).result # => {}
       #
       # @return [Map]
       def pending(reason = "Pending mapping")
@@ -93,9 +101,17 @@ module Remap
       # Keeps map, only if block is true
       #
       # @example Maps ["A", "B", "C"] to ["B"]
-      #   each do
-      #     map.if { value.include?("B") }
+      #   class Mapper < Remap::Base
+      #     define do
+      #       each do
+      #         map.if do
+      #           value.include?("B")
+      #         end
+      #       end
+      #     end
       #   end
+      #
+      #   Mapper.call(["A", "B", "C"]).result # => ["B"]
       #
       # @return [Map]
       def if(&block)
@@ -109,9 +125,17 @@ module Remap
       # Keeps map, only if block is false
       #
       # @example Maps ["A", "B", "C"] to ["A", "C"]
-      #   each do
-      #     map.if_not { value.include?("B") }
+      #   class Mapper < Remap::Base
+      #     define do
+      #       each do
+      #         map.if_not do
+      #           value.include?("B")
+      #         end
+      #       end
+      #     end
       #   end
+
+      #   Mapper.call(["A", "B", "C"]).result # => ["A", "C"]
       #
       # @return [Map]
       def if_not(&block)

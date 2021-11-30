@@ -7,7 +7,21 @@ module Remap
     # Represents two mappers that are combined with the & operator
     #
     # @example Combine two mappers
-    #   Mapper1 & Mapper2
+    #   class Mapper1 < Remap::Base
+    #     contract do
+    #       required(:a1)
+    #     end
+    #   end
+    #
+    #   class Mapper2 < Remap::Base
+    #     contract do
+    #       required(:a2)
+    #     end
+    #   end
+    #
+    #   state = Remap::State.call({ a2: 2, a1: 1 })
+    #   output = (Mapper1 & Mapper2).call(state)
+    #   output.result # => { a2: 2, a1: 1 }
     class And < Binary
       # Succeeds if both left and right succeed
       # Returns the combined result of left and right
