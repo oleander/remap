@@ -6,15 +6,14 @@ module Remap
 
     # Selects all elements from a state
     #
-    # @example Select all elements
-    #   class Mapper < Remap::Base
-    #     define do
-    #       map [all, :name]
-    #     end
+    # @example Select all keys from array hash
+    #   state = Remap::State.call([{a: "A1"}, {a: "A2"}])
+    #   all = Remap::Selector::All.new
+    #   result = all.call(state) do |other_state|
+    #     value = other_state.fetch(:value).class
+    #     other_state.merge(value: value)
     #   end
-    #
-    #   output = Mapper.call([{ name: "John" }, { name: "Jane" }])
-    #   output.result # => ["John", "Jane"]
+    #   result.fetch(:value) # => [Hash, Hash]
     class All < Concrete
       requirement Types::Enumerable
 

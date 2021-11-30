@@ -4,6 +4,16 @@ require "active_support/configurable"
 require "active_support/core_ext/object/with_options"
 
 module Remap
+  # @example Select all elements
+  #   class Mapper < Remap::Base
+  #     define do
+  #       map [all, :name]
+  #     end
+  #   end
+  #
+  #   output = Mapper.call([{ name: "John" }, { name: "Jane" }])
+  #   output.result # => ["John", "Jane"]
+  #
   # @example Given an option
   #   class Mapper < Remap::Base
   #     option :name

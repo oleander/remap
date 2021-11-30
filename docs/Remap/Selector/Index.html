@@ -104,13 +104,27 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Mapper.call([1, 2, 3]).result # =&gt; 2</p>
+<p>Selects value at given index</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Select the value at index 1 from a array</p>
+</div></p>
+      
+      <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call([<span style="color:#A60">:one</span>, <span style="color:#A60">:two</span>, <span style="color:#A60">:tree</span>])
+result = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">Index</span>.new(<span style="color:#00D">1</span>).call(state)
+result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; :two</span></code></pre>
+    
+  </div>
+
 
 </div>
 
@@ -265,6 +279,10 @@
       <pre class="lines">
 
 
+27
+28
+29
+30
 31
 32
 33
@@ -277,14 +295,10 @@
 40
 41
 42
-43
-44
-45
-46
-47</pre>
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 27</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;block)
   <span style="color:#080;font-weight:bold">unless</span> block
@@ -345,10 +359,10 @@
       <pre class="lines">
 
 
-19</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 15</span>
 
 attribute <span style="color:#A60">:index</span>, <span style="color:#036;font-weight:bold">Integer</span></pre>
     </td>
@@ -361,7 +375,7 @@ attribute <span style="color:#A60">:index</span>, <span style="color:#036;font-w
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 10:16:36 2021 by
+  Generated on Tue Nov 30 11:07:16 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
