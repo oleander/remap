@@ -3,7 +3,6 @@
 module Remap
   class Rule
     class Enum < Proxy
-      include Dry::Core::Constants
       include Dry::Monads[:maybe]
 
       option :mappings, default: -> { Hash.new { default } }

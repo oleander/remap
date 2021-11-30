@@ -7,6 +7,7 @@ module Remap
       ::Object.const_get(name)
     end
 
+    include Dry::Core::Constants
     extend Dry::Initializer
   end
 end
