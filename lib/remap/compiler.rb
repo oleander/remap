@@ -27,7 +27,10 @@ module Remap
     # @return [Rule::Map]
     def map(*path, to: EMPTY_ARRAY, &block)
       add Rule::Map.new(
-        path: { output: [to].flatten, input: path.flatten },
+        path: {
+          output: [to].flatten,
+          input: path.flatten
+        },
         rule: call(&block)
       )
     end
