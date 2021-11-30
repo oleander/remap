@@ -10,9 +10,10 @@ module Remap
       end
 
       def exception
-        return super if backtrace.blank?
+        super
+        # return super if backtrace.blank?
 
-        super.tap { _1.set_backtrace(backtrace.map(&:to_s)) }
+        # super.tap { _1.set_backtrace(backtrace.map(&:to_s)) }
       end
     end
   end
