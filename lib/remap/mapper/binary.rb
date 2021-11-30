@@ -2,6 +2,7 @@
 
 module Remap
   class Mapper
+    # @abstract
     class Binary < self
       include Operation
 

@@ -2,6 +2,10 @@
 
 module Remap
   class Mapper
+    # Represents two mappers that are combined with the {|} operator
+    #
+    # @example Combine two mappers
+    #   Mapper1 | Mapper2
     class Or < Binary
       using State::Extension
 
