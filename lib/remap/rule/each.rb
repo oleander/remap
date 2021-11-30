@@ -9,9 +9,7 @@ module Remap
 
     # @example Upcase each value in an array
     #   state = Remap::State.call(["John", "Jane"])
-    #   upcase = Remap::Rule::Map.call({}).then do
-    #     value.upcase
-    #   end
+    #   upcase = Remap::Rule::Map.call({}).then(&:upcase)
     #   each = Remap::Rule::Each.call(rule: upcase)
     #   each.call(state).fetch(:value) # => ["JOHN", "JANE"]
     class Each < Unit
