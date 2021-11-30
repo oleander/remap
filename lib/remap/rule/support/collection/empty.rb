@@ -11,7 +11,6 @@ module Remap
       #   map do
       #     # NOP
       #   end
-      #
       class Empty < Unit
         attribute? :rules, Value(EMPTY_ARRAY), default: EMPTY_ARRAY
 
