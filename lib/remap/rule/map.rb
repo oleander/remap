@@ -70,6 +70,12 @@ module Remap
         end
       end
 
+      # Keeps map, only if block is true
+      #
+      # @example Maps ["A", "B", "C"] to ["B"]
+      #   map.if { value.include?("B") }
+      #
+      # @return [Map]
       def if(&block)
         add do |state|
           state.execute(&block).fmap do |bool, &error|
