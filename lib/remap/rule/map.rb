@@ -2,35 +2,21 @@
 
 module Remap
   class Rule
+    # Maps an input path to an output path
+    #
+    # @example Map { name: "Ford" } to { person: { name: "Ford" } }
+    #   map :name, to: [:person, :name]
     class Map < self
       using State::Extension
 
       attribute :rule, Types::Rule
       attribute :path, Path
 
-      # Maps {input} in 4 steps
+      # Maps {state} using {#path} & {#rule}
       #
-      # 1. Extract value from {input} using {path}
-      # 2. For each yielded value
-      #   2.1. Map value using {#rule}
-      #   2.2. Map value using {#fn}
-
-      # @example Map :a, to :b and add 5
-      #  map = Map.new({
-      #    path: { map: :a, to: :b },
-      #    rule: Void.new,
-      #  })
+      # @param state [State<T>]
       #
-      #  map.adjust do |value|
-      #    value + 5
-      #  end
-      #
-      #  map.call(a: 10) # => Success({ b: 15 })
-      #
-      # @param input [Any] Value to be mapped
-      # @param state [State] Current state
-      #
-      # @return [Monad::Result]
+      # @return [State<U>]
       def call(state)
         path.call(state) do |inner_state|
           rule.call(inner_state).then do |init|
@@ -43,21 +29,10 @@ module Remap
 
       # Post-processor for {#call}
       #
-      # @example Add 5 to mapped value
-      #  class Mapper < Remap
-      #    define do
-      #      map.adjust do |value|
-      #        value + 5
-      #      end
-      #    end
-      #  end
+      # @yieldparam value [U]
+      # @yieldreturn [T]
       #
-      #  Mapper.call(10) # => 15
-      #
-      # @yieldparam value [Any] Mapped value
-      # @yieldreturn [Monad::Result, Any]
-      #
-      # @return [void]
+      # @return [Map]
       def adjust(&block)
         add do |state|
           state.execute(&block)
@@ -65,12 +40,28 @@ module Remap
       end
       alias then adjust
 
+      # A pending rule
+      #
+      # @param reason [String]
+
+      # @example A pending rule
+      #   map(:a, :b).pending
+      #
+      # @return [Map]
       def pending(reason = "Pending mapping")
         add do |state|
           state.problem(reason)
         end
       end
 
+      # An enum processor
+      #
+      # @example Maps { a: { b: "A" } } to "A"
+      #   map(:a, :b).enum do
+      #     value "A", "B"
+      #   end
+      #
+      # @return [Map]
       def enum(&block)
         add do |state|
           state.fmap do |id, &error|

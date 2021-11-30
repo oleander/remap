@@ -83,8 +83,10 @@ module Remap
       # Maps {var} to {var}
       #
       # @return [VOID]
-      def value(id)
-        from(id, to: id)
+      def value(*ids)
+        ids.each do |id|
+          from(id, to: id)
+        end
       end
 
       # Fallback value when {#call} fails
