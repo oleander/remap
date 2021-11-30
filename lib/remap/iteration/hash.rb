@@ -15,12 +15,12 @@ module Remap
       # @see Base#map
       def call(&block)
         hash.reduce(init) do |input_state, (key, value)|
-          block[value, key: key]._.then do |new_state|
+          block[value, key: key].then do |new_state|
             new_state.fmap { { key => _1 } }
           end.then do |new_hash_state|
             input_state.combine(new_hash_state)
           end
-        end._
+        end
       end
 
       private

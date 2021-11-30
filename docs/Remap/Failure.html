@@ -69,14 +69,12 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></span>
+      <span class="inheritName">Result::Concrete</span>
       
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Dry::Struct</li>
-          
-            <li class="next"><span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></li>
+            <li class="next">Result::Concrete</li>
           
             <li class="next">Remap::Failure</li>
           
@@ -187,6 +185,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#has_problem%3F-instance_method" title="#has_problem? (instance method)">#<strong>has_problem?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#merge-instance_method" title="#merge (instance method)">#<strong>merge</strong>(other)  &#x21d2; Failure </a>
     
 
@@ -235,17 +255,6 @@
 
 
   
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Result.html#problem%3F-instance_method" title="Remap::Result#problem? (method)">#problem?</a></span></p>
-
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -288,12 +297,12 @@
       <pre class="lines">
 
 
-45
-46
-47</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 50</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">exception</span>
   <span style="color:#036;font-weight:bold">Error</span>.new(<span style="color:#036;font-weight:bold">JSON</span>.pretty_generate(attributes))
@@ -340,12 +349,12 @@
       <pre class="lines">
 
 
-8
 9
-10</pre>
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 9</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">failure?</span>
   <span style="color:#069">true</span>
@@ -392,15 +401,67 @@
       <pre class="lines">
 
 
-18
 19
-20</pre>
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 19</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fmap</span>
   <span style="color:#069">self</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="has_problem?-instance_method">
+  
+    #<strong>has_problem?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 23</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">has_problem?</span>
+  <span style="color:#080;font-weight:bold">super</span> || failures.any?
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -461,11 +522,6 @@
       <pre class="lines">
 
 
-27
-28
-29
-30
-31
 32
 33
 34
@@ -476,10 +532,15 @@
 39
 40
 41
-42</pre>
+42
+43
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 32</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">merge</span>(other)
   <span style="color:#080;font-weight:bold">unless</span> other.is_a?(<span style="color:#036;font-weight:bold">Failure</span>)
@@ -539,12 +600,12 @@
       <pre class="lines">
 
 
-13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/failure.rb', line 14</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">success?</span>
   <span style="color:#069">false</span>
@@ -559,7 +620,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:37 2021 by
+  Generated on Wed Dec  1 00:20:54 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

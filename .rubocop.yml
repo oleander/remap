@@ -143,7 +143,7 @@ Style/SymbolArray:
   EnforcedStyle: brackets
 
 Naming/PredicateName:
-  Exclude: ["lib/remap/result.rb"]
+  Exclude: ["lib/remap/result.rb", "lib/remap/failure.rb"]
 
 Lint/EmptyClass:
   Exclude: ["lib/remap/nothing.rb"]

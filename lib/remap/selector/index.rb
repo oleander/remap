@@ -18,27 +18,25 @@ module Remap
 
       # Selects the {#index}th element from state and passes it to block
       #
-      # @param state [State<Array<T>>]
+      # @param outer_state [State<Array<T>>]
       #
       # @yieldparam [State<T>]
       # @yieldreturn [State<U>]
       #
       # @return [State<U>]
-      def call(state, &block)
-        unless block
-          return call(state, &:itself)
-        end
+      def call(outer_state, &block)
+        return call(outer_state, &:itself) unless block
 
-        state.bind(index: index) do |array, inner_state, &error|
+        outer_state.bind(index: index) do |array, state|
           requirement[array] do
-            return error["Expected an array"]
+            state.fatal!("Expected array but got %p (%s)", array, array.class)
           end
 
           element = array.fetch(index) do
-            return error["No element on index at index #{index}"]
+            state.ignore!("Index %s in array %p (%s) not found", index, array, array.class)
           end
 
-          block[inner_state.set(element, index: index)]
+          state.set(element, index: index).then(&block)
         end
       end
     end

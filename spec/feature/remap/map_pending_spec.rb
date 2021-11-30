@@ -5,7 +5,7 @@ describe Remap::Base do
     let(:mapper) do
       mapper! do
         define do
-          map(:age).pending
+          map?(:age).pending
           map(:name, to: :name)
         end
       end
@@ -16,7 +16,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: { name: "John" }, problems: be_present))
+      be_a_success.and(have_attributes(value: { name: "John" }, notices: be_present))
     end
   end
 end

@@ -4,11 +4,10 @@
 
 describe Remap::Rule::Collection::Empty do
   describe "#call" do
-    subject { rule.call(state) }
-
     let(:rule) { described_class.new({}) }
-    let(:state) { state! }
 
-    it { is_expected.to have(1).problems }
+    it "throws a symbol" do
+      expect { rule.call(state!) }.to throw_symbol(:notice, be_a(Remap::Notice))
+    end
   end
 end

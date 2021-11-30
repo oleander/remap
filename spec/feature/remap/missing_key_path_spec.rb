@@ -7,8 +7,8 @@ describe Remap::Base do
         define do
           set :good, to: value("<VALUE>")
 
-          map :missing1, to: []
-          to [], map: :missing2
+          map? :missing1, to: []
+          to? [], map: :missing2
         end
       end
     end

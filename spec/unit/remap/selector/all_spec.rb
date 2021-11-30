@@ -36,7 +36,7 @@ describe Remap::Selector::All do
 
         let(:input) { 100 }
 
-        it { is_expected.to have(1).problems }
+        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
       end
     end
   end

@@ -69,12 +69,12 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName">Dry::Struct</span>
+      <span class="inheritName">Dry::Interface</span>
       
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Dry::Struct</li>
+            <li class="next">Dry::Interface</li>
           
             <li class="next">Remap::Result</li>
           
@@ -101,10 +101,6 @@
   
 </div>
 
-<div id="subclasses">
-  <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="Failure.html" title="Remap::Failure (class)">Failure</a></span>, <span class='object_link'><a href="Success.html" title="Remap::Success (class)">Success</a></span></p>
-</div>
 
 
 
@@ -632,7 +628,7 @@
       <pre class="code"><span class="info file"># File 'lib/remap/result.rb', line 8</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">problem?</span>
-  !problems.blank?
+  !notices.blank?
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -713,7 +709,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:37 2021 by
+  Generated on Wed Dec  1 00:20:54 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

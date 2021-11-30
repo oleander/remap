@@ -229,7 +229,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }).problems.count <span style="color:#777"># =&gt; 1</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }).failures.count <span style="color:#777"># =&gt; 1</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -571,17 +571,13 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 
 261
 262
-263
-264
-265</pre>
+263</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 261</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call!</span>(state, &amp;error)
   new(state.options).call(state._.set(<span style="color:#606">mapper</span>: <span style="color:#069">self</span>), &amp;error)
-<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Option missing to mapper [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">]: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>e<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -1126,6 +1122,8 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
+274
+275
 276
 277
 278
@@ -1134,22 +1132,12 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 281
 282
 283
-284
-285
-286
-287
-288
-289
-290</pre>
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 274</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;error)
-  <span style="color:#080;font-weight:bold">unless</span> error
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Missing block</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-
   state.tap <span style="color:#080;font-weight:bold">do</span> |input|
     validation.call(input, state.options).tap <span style="color:#080;font-weight:bold">do</span> |result|
       <span style="color:#080;font-weight:bold">unless</span> result.success?
@@ -1170,7 +1158,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:37 2021 by
+  Generated on Wed Dec  1 00:20:54 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

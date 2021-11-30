@@ -15,10 +15,14 @@ describe Remap::Rule::Collection do
 
   describe "#call" do
     context "without rules" do
-      it_behaves_like described_class do
-        let(:rules) { [] }
-        let(:input) { { foo: :bar } }
-        let(:output) { have(1).problems }
+      subject(:rule) { described_class.call(rules: rules) }
+
+      let(:rules) { [] }
+      let(:input) { { foo: :bar } }
+      let(:state) { state!(input) }
+
+      it "throws a notice symbol" do
+        expect { rule.call(state) }.to throw_symbol(:notice, be_a(Remap::Notice))
       end
     end
 

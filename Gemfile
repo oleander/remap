@@ -28,5 +28,6 @@ group :test do
   gem "faker"
   gem "rspec"
   gem "rspec-github"
+  gem "rspec-its"
   gem "simplecov"
 end

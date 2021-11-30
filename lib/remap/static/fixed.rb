@@ -14,7 +14,7 @@ module Remap
     #   end
     #
     #   Mapper.call({}).result # => { a: { b: 'a value' } }
-    class Fixed < Unit
+    class Fixed < Concrete
       # @return [Any]
       attribute :value, Types::Any
 

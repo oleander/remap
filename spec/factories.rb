@@ -33,6 +33,7 @@ FactoryBot.define do
 
   factory Remap::Rule::Map, aliases: [Remap::Rule::Map] do
     path { { input: input, output: output } }
+    backtrace { ["<backtrace>"] }
 
     transient do
       input { generate(:path) }
@@ -54,9 +55,7 @@ FactoryBot.define do
     # NOP
   end
 
-  factory :problem, class: Hash do
-    initialize_with { Remap::Types::Problem[attributes] }
-
+  factory :notice, class: "Remap::Notice::Untraced" do
     reason { Faker::Lorem.sentence }
     path
     value
@@ -65,7 +64,8 @@ FactoryBot.define do
   factory :state, class: Hash, aliases: [:undefined] do
     initialize_with { attributes }
 
-    problems { EMPTY_ARRAY }
+    failures { EMPTY_ARRAY }
+    notices { EMPTY_ARRAY }
     options { EMPTY_HASH }
     values { input }
 
@@ -83,7 +83,11 @@ FactoryBot.define do
     end
 
     trait :with_problems do
-      problems { build_list(:problem, 1) }
+      notices { build_list(:notice, 1) }
+    end
+
+    trait :with_failures do
+      failures { build_list(:notice, 1) }
     end
   end
 end

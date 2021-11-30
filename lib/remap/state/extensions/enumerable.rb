@@ -29,10 +29,10 @@ module Remap
           # @return [Any]
           #
           # @raise When path cannot be found
-          def get(*path)
-            _, result = path.reduce([[], self]) do |(current_path, element), key|
+          def get(*path, &error)
+            _, result = path.reduce([EMPTY_ARRAY, self]) do |(current_path, element), key|
               value = element.fetch(key) do
-                throw :missing, current_path + [key]
+                raise PathError, current_path + [key]
               end
 
               [current_path + [key], value]

@@ -3,13 +3,14 @@
 describe Remap::Failure do
   subject(:failure) { described_class.call(input) }
 
-  let(:input) { { problems: [], reasons: { base: ["reason"] } } }
+  let(:problem) { { value: value!, path: [:a], reason: string! } }
+  let(:input) { { notices: [], failures: [problem] } }
 
   describe "::call" do
     context "given valid input" do
       subject { described_class.call(input) }
 
-      let(:input) { { problems: [], reasons: { base: ["reason"] } } }
+      let(:input) { { notices: [], failures: [problem] } }
 
       it { is_expected.to be_a(described_class) }
     end
@@ -36,24 +37,24 @@ describe Remap::Failure do
   describe "#merge" do
     subject(:result) { left.merge(right) }
 
-    let(:reason1) { { base: ["reason1"] } }
-    let(:problem1) { { reason: "problem1" } }
+    let(:reason1) { notice! }
+    let(:notice1) { notice! }
 
-    let(:left) { described_class.call(problems: [problem1], reasons: reason1) }
+    let(:left) { described_class.call(notices: [notice1], failures: [reason1]) }
 
     context "when right is a failure" do
-      let(:reason2) { { base: ["reason2"] } }
-      let(:problem2) { { reason: "problem2" } }
+      let(:reason2) { notice! }
+      let(:notice2) { notice! }
 
-      let(:right) { described_class.call(problems: [problem2], reasons: reason2) }
+      let(:right) { described_class.call(notices: [notice2], failures: [reason2]) }
 
       it { is_expected.to be_a(described_class) }
-      it { is_expected.to have_attributes(problems: [problem1, problem2]) }
-      it { is_expected.to have_attributes(reasons: { base: ["reason1", "reason2"] }) }
+      it { is_expected.to have_attributes(notices: contain_exactly(notice1, notice2)) }
+      it { is_expected.to have_attributes(failures: be_a(Array)) }
     end
 
     context "when right is a success" do
-      let(:right) { Remap::Success.new(result: value!) }
+      let(:right) { Remap::Success.new(value: value!) }
 
       it "raises an error" do
         expect { result }.to raise_error(ArgumentError)

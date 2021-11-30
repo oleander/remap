@@ -19,23 +19,21 @@ module Remap
 
       # Iterates over state and passes each value to block
       #
-      # @param state [State<Enumerable<T>>]
+      # @param outer_state [State<Enumerable<T>>]
       #
       # @yieldparam [State<T>]
       # @yieldreturn [State<U>]
       #
       # @return [State<U>]
-      def call(state, &block)
-        unless block
-          return call(state, &:itself)
-        end
+      def call(outer_state, &block)
+        return call(outer_state, &:itself) unless block
 
-        state.bind(quantifier: "*") do |enumerable, inner_state, &error|
-          requirement[enumerable] do
-            return error["Expected an enumeration"]
+        outer_state.bind(quantifier: "*") do |enum, state|
+          requirement[enum] do
+            state.fatal!("Expected enumeration but got %p (%s)", enum, enum.class)
           end
 
-          inner_state.map(&block)
+          state.map(&block)
         end
       end
     end

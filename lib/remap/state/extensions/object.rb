@@ -25,11 +25,7 @@ module Remap
           #
           # @param path [Array<Key>]
           def get(*path, &block)
-            if block
-              return yield
-            end
-
-            throw :missing, path
+            raise PathError, []
           end
           alias_method :fetch, :get
         end

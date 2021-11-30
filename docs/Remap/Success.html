@@ -69,14 +69,12 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></span>
+      <span class="inheritName">Result::Concrete</span>
       
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Dry::Struct</li>
-          
-            <li class="next"><span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></li>
+            <li class="next">Result::Concrete</li>
           
             <li class="next">Remap::Success</li>
           
@@ -154,6 +152,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#failures-instance_method" title="#failures (instance method)">#<strong>failures</strong>  &#x21d2; Array&lt;Notice&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#fmap-instance_method" title="#fmap (instance method)">#<strong>fmap</strong> {|| ... } &#x21d2; Success&lt;U&gt; </a>
     
 
@@ -169,7 +189,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Calls block with <span class='object_link'><a href="#result-instance_method" title="Remap::Success#result (method)">#result</a></span> and returns a other success.</p>
+<p>Calls block with <span class='object_link'><a href="#value-instance_method" title="Remap::Success#value (method)">#value</a></span> and returns a other success.</p>
 </div></span>
   
 </li>
@@ -178,7 +198,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#result-instance_method" title="#result (instance method)">#<strong>result</strong>  &#x21d2; Any </a>
+      <a href="#notices-instance_method" title="#notices (instance method)">#<strong>notices</strong>  &#x21d2; Array&lt;Notice&gt; </a>
     
 
     
@@ -219,20 +239,31 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>  &#x21d2; Any </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Result.html#exception-instance_method" title="Remap::Result#exception (method)">#exception</a></span>, <span class='object_link'><a href="Result.html#merge-instance_method" title="Remap::Result#merge (method)">#merge</a></span>, <span class='object_link'><a href="Result.html#problem%3F-instance_method" title="Remap::Result#problem? (method)">#problem?</a></span></p>
 
   
 
@@ -277,16 +308,64 @@
       <pre class="lines">
 
 
-10
-11
-12</pre>
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 16</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">failure?</span>
   <span style="color:#069">false</span>
 <span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="failures-instance_method">
+  
+    #<strong>failures</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="Notice.html" title="Remap::Notice (class)">Notice</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Notice.html" title="Remap::Notice (class)">Notice</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 7</span>
+
+attribute? <span style="color:#A60">:failures</span>, [<span style="color:#036;font-weight:bold">Notice</span>], <span style="color:#606">size</span>: <span style="color:#00D">0</span>, <span style="color:#606">default</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span></pre>
     </td>
   </tr>
 </table>
@@ -304,7 +383,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Calls block with <span class='object_link'><a href="#result-instance_method" title="Remap::Success#result (method)">#result</a></span> and returns a other success</p>
+<p>Calls block with <span class='object_link'><a href="#value-instance_method" title="Remap::Success#value (method)">#value</a></span> and returns a other success</p>
 
 
   </div>
@@ -359,15 +438,15 @@
       <pre class="lines">
 
 
-25
-26
-27</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 31</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fmap</span>(&amp;block)
-  new(<span style="color:#606">result</span>: block[result])
+  new(<span style="color:#606">value</span>: block[value])
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -375,9 +454,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="result-instance_method">
+  <h3 class="signature " id="notices-instance_method">
   
-    #<strong>result</strong>  &#x21d2; <tt>Any</tt> 
+    #<strong>notices</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="Notice.html" title="Remap::Notice (class)">Notice</a></span>&gt;</tt> 
   
 
   
@@ -397,7 +476,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Any</tt>)</span>
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Notice.html" title="Remap::Notice (class)">Notice</a></span>&gt;</tt>)</span>
       
       
       
@@ -411,12 +490,12 @@
       <pre class="lines">
 
 
-7</pre>
+10</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 10</span>
 
-attribute <span style="color:#A60">:result</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Any</span></pre>
+attribute? <span style="color:#A60">:notices</span>, [<span style="color:#036;font-weight:bold">Notice</span>], <span style="color:#606">default</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span></pre>
     </td>
   </tr>
 </table>
@@ -459,16 +538,64 @@ attribute <span style="color:#A60">:result</span>, <span style="color:#036;font-
       <pre class="lines">
 
 
-15
-16
-17</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 21</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">success?</span>
   <span style="color:#069">true</span>
 <span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="value-instance_method">
+  
+    #<strong>value</strong>  &#x21d2; <tt>Any</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Any</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 13</span>
+
+attribute <span style="color:#A60">:value</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Any</span>, <span style="color:#606">alias</span>: <span style="color:#A60">:result</span></pre>
     </td>
   </tr>
 </table>
@@ -479,7 +606,7 @@ attribute <span style="color:#A60">:result</span>, <span style="color:#036;font-
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:37 2021 by
+  Generated on Wed Dec  1 00:20:54 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

@@ -124,7 +124,7 @@ describe Remap::Compiler do
     end
 
     context "when outside range" do
-      let(:block) { -> * { map [at(100)] } }
+      let(:block) { -> * { map? [at(100)] } }
 
       it { is_expected.to have(1).problems }
     end
@@ -174,7 +174,7 @@ describe Remap::Compiler do
       it { is_expected.to contain({ a: { b: "a value" } }) }
     end
 
-    xcontext "given an invalid path" do
+    context "given an invalid path" do
       let(:block) { -> * { set :a, to: nil } }
 
       it "raises an argument error" do

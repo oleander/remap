@@ -76,7 +76,7 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call({ a: { b: "A" } }).problems.count # => 1
+  #   Mapper.call({ a: { b: "A" } }).failures.count # => 1
   #
   # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
   #   class Mapper < Remap::Base
@@ -260,8 +260,6 @@ module Remap
     # @private
     def self.call!(state, &error)
       new(state.options).call(state._.set(mapper: self), &error)
-    rescue Dry::Struct::Error => e
-      raise ArgumentError, "Option missing to mapper [#{self}]: #{e}"
     end
 
     # Mappers state according to the mapper rules
@@ -274,10 +272,6 @@ module Remap
     #
     # @private
     def call(state, &error)
-      unless error
-        raise ArgumentError, "Missing block"
-      end
-
       state.tap do |input|
         validation.call(input, state.options).tap do |result|
           unless result.success?

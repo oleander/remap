@@ -6,8 +6,8 @@ describe Remap::State::Extensions::Object do
   let(:target) { string! }
 
   describe "#get" do
-    it "throws a symbol containing the path" do
-      expect { target.get(:a) }.to throw_symbol(:missing, [:a])
+    it "raises a path error" do
+      expect { target.get(:a) }.to raise_error(Remap::PathError)
     end
   end
 

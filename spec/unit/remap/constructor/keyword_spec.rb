@@ -11,7 +11,7 @@ RSpec.describe Remap::Constructor::Keyword do
     context "when state is not a hash" do
       let(:state) { state!(:foo) }
 
-      it { is_expected.to have(1).problems }
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
 
     context "when state is a hash" do

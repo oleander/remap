@@ -119,7 +119,7 @@
 <p>Set path [:a, :b] to value “C”</p>
 </div></p>
       
-      <pre class="example code"><code>value = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Fixed</span>.new(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">a value</span><span style="color:#710">&quot;</span></span>)
+      <pre class="example code"><code>value = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Fixed</span>.new(<span style="color:#606">value</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">a value</span><span style="color:#710">&quot;</span></span>)
 set = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Set</span>.new(<span style="color:#606">value</span>: value, <span style="color:#606">path</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>])
 state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ANY VALUE</span><span style="color:#710">&quot;</span></span>)
 set.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; { a: { b: &quot;a value&quot; } }</span></code></pre>
@@ -129,7 +129,7 @@ set.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color
 <p>Set path [:a, :b] to option :c</p>
 </div></p>
       
-      <pre class="example code"><code>value = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Option</span>.new(<span style="color:#A60">:c</span>)
+      <pre class="example code"><code>value = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Option</span>.new(<span style="color:#606">name</span>: <span style="color:#A60">:c</span>)
 set = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Set</span>.new(<span style="color:#606">value</span>: value, <span style="color:#606">path</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>])
 state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ANY VALUE</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">options</span>: { <span style="color:#606">c</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span> })
 set.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; { a: { b: &quot;C&quot; } }</span></code></pre>
@@ -400,7 +400,7 @@ attribute <span style="color:#A60">:value</span>, <span style="color:#036;font-w
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:38 2021 by
+  Generated on Wed Dec  1 00:20:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

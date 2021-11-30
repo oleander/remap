@@ -32,13 +32,9 @@ module Remap
       #
       # @return [Result]
       def call!(state, &error)
-        unless error
-          return call!(state, &exception)
-        end
-
         state1 = left.call!(state) do |failure1|
           return right.call!(state) do |failure2|
-            return error[failure1.merge(failure2)]
+            return error[failure1.combine(failure2)]
           end
         end
 

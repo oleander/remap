@@ -5,7 +5,7 @@ describe Remap::Base do
     let(:mapper) do
       mapper! do
         define do
-          map(:a, :b, :c, :missing).then { skip! }
+          map?(:a, :b, :c, :missing).then { skip! }
         end
       end
     end
@@ -15,7 +15,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_failure.and(have_attributes(reasons: { a: { b: { c: { missing: be_a(Array) } } } }))
+      be_a_failure.and(have_attributes(failures: be_present))
     end
   end
 end

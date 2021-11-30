@@ -333,7 +333,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#map-instance_method" title="#map (instance method)">#<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; Rule::Map </a>
+      <a href="#map-instance_method" title="#map (instance method)">#<strong>map</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; Rule::Map </a>
     
 
     
@@ -357,7 +357,29 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#option-instance_method" title="#option (instance method)">#<strong>option</strong>(id)  &#x21d2; Rule::Static::Option </a>
+      <a href="#map%3F-instance_method" title="#map? (instance method)">#<strong>map?</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#option-instance_method" title="#option (instance method)">#<strong>option</strong>(id, backtrace: Kernel.caller)  &#x21d2; Rule::Static::Option </a>
     
 
     
@@ -449,7 +471,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to-instance_method" title="#to (instance method)">#<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; Rule::Map </a>
+      <a href="#to-instance_method" title="#to (instance method)">#<strong>to</strong>(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; Rule::Map </a>
     
 
     
@@ -466,6 +488,28 @@
     <span class="summary_desc"><div class='inline'>
 <p>Maps to path from map with block in between.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to%3F-instance_method" title="#to? (instance method)">#<strong>to?</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -648,12 +692,12 @@
       <pre class="lines">
 
 
-107
-108
-109</pre>
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 123</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">all</span>
   <span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">All</span>.new(<span style="color:#036;font-weight:bold">EMPTY_HASH</span>)
@@ -735,14 +779,14 @@
       <pre class="lines">
 
 
-135
-136
-137
-138
-139</pre>
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 151</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">at</span>(index)
   <span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">Index</span>.new(<span style="color:#606">index</span>: index)
@@ -864,16 +908,16 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <pre class="lines">
 
 
-78
-79
-80
-81
-82
-83
-84</pre>
+94
+95
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 94</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">each</span>(&amp;block)
   <span style="color:#080;font-weight:bold">unless</span> block
@@ -941,14 +985,14 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <pre class="lines">
 
 
-44
-45
-46
-47
-48</pre>
+56
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 56</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">embed</span>(mapper)
   add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Embed</span>.new(<span style="color:#606">mapper</span>: mapper)
@@ -1008,12 +1052,12 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <pre class="lines">
 
 
-144
-145
-146</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 160</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">first</span>
   at(<span style="color:#00D">0</span>)
@@ -1062,12 +1106,12 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <pre class="lines">
 
 
-152
-153
-154</pre>
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 168</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">last</span>
   at(<span style="color:#00D">-1</span>)
@@ -1080,7 +1124,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <div class="method_details ">
   <h3 class="signature " id="map-instance_method">
   
-    #<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
+    #<strong>map</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
   
 
   
@@ -1162,17 +1206,85 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
 34
 35
 36
-37</pre>
+37
+38</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 29</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, &amp;block)
-  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>.new(
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller, &amp;block)
+  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>::<span style="color:#036;font-weight:bold">Strict</span>.call(
     <span style="color:#606">path</span>: {
       <span style="color:#606">output</span>: [to].flatten,
       <span style="color:#606">input</span>: path.flatten
     },
+    <span style="color:#606">backtrace</span>: backtrace,
+    <span style="color:#606">rule</span>: call(&amp;block)
+  )
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="map?-instance_method">
+  
+    #<strong>map?</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 40</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map?</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller, &amp;block)
+  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>::<span style="color:#036;font-weight:bold">Loose</span>.call(
+    <span style="color:#606">path</span>: {
+      <span style="color:#606">output</span>: [to].flatten,
+      <span style="color:#606">input</span>: path.flatten
+    },
+    <span style="color:#606">backtrace</span>: backtrace,
     <span style="color:#606">rule</span>: call(&amp;block)
   )
 <span style="color:#080;font-weight:bold">end</span></pre>
@@ -1184,7 +1296,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <div class="method_details ">
   <h3 class="signature " id="option-instance_method">
   
-    #<strong>option</strong>(id)  &#x21d2; <tt>Rule::Static::Option</tt> 
+    #<strong>option</strong>(id, backtrace: Kernel.caller)  &#x21d2; <tt>Rule::Static::Option</tt> 
   
 
   
@@ -1235,15 +1347,15 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <pre class="lines">
 
 
-125
-126
-127</pre>
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 141</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">option</span>(id)
-  <span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Option</span>.new(<span style="color:#606">name</span>: id)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">option</span>(id, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller)
+  <span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Option</span>.new(<span style="color:#606">name</span>: id, <span style="color:#606">backtrace</span>: backtrace)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -1289,12 +1401,12 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <pre class="lines">
 
 
-159
-160
-161</pre>
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 175</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">rule</span>
   <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Collection</span>.call(<span style="color:#606">rules</span>: rules)
@@ -1463,14 +1575,14 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
       <pre class="lines">
 
 
-57
-58
-59
-60
-61</pre>
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 69</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">set</span>(*path, <span style="color:#606">to</span>:)
   add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Set</span>.new(<span style="color:#606">path</span>: path.flatten, <span style="color:#606">value</span>: to)
@@ -1485,7 +1597,7 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
       <div class="method_details ">
   <h3 class="signature " id="to-instance_method">
   
-    #<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
+    #<strong>to</strong>(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
   
 
   
@@ -1549,15 +1661,67 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
       <pre class="lines">
 
 
-69
-70
-71</pre>
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 81</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to</span>(*path, <span style="color:#606">map</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, &amp;block)
-  map(*map, <span style="color:#606">to</span>: path, &amp;block)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to</span>(*path, <span style="color:#606">map</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller, &amp;block)
+  map(*map, <span style="color:#606">to</span>: path, <span style="color:#606">backtrace</span>: backtrace, &amp;block)
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to?-instance_method">
+  
+    #<strong>to?</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 85</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to?</span>(*path, <span style="color:#606">map</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, &amp;block)
+  map?(*map, <span style="color:#606">to</span>: path, &amp;block)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -1618,12 +1782,12 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
       <pre class="lines">
 
 
-116
-117
-118</pre>
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 132</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">value</span>(value)
   <span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Fixed</span>.new(<span style="color:#606">value</span>: value)
@@ -1718,18 +1882,18 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
       <pre class="lines">
 
 
-94
-95
-96
-97
-98
-99
-100
-101
-102</pre>
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 110</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">wrap</span>(type, &amp;block)
   <span style="color:#080;font-weight:bold">unless</span> block
@@ -1750,7 +1914,7 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:38 2021 by
+  Generated on Wed Dec  1 00:20:54 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

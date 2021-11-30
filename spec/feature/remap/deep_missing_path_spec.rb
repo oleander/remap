@@ -5,8 +5,8 @@ describe Remap::Base do
     let(:mapper) do
       mapper! do
         define do
-          map :ok1, :ok2, :ok3, :missing
-          map :ok1, :missing
+          map? :ok1, :ok2, :ok3, :missing
+          map? :ok1, :missing
           map :ok1
         end
       end

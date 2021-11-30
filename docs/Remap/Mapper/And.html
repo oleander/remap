@@ -195,11 +195,6 @@ output.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
   
   
   
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Binary.html" title="Remap::Mapper::Binary (class)">Binary</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Binary.html#exception-instance_method" title="Remap::Mapper::Binary#exception (method)">#exception</a></span></p>
-
-  
-  
   
   
   
@@ -324,20 +319,12 @@ output.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
 45
 46
 47
-48
-49
-50
-51
-52</pre>
+48</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/mapper/and.rb', line 34</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call!</span>(state, &amp;error)
-  <span style="color:#080;font-weight:bold">unless</span> error
-    <span style="color:#080;font-weight:bold">return</span> call!(state, &amp;exception)
-  <span style="color:#080;font-weight:bold">end</span>
-
   state1 = left.call!(state) <span style="color:#080;font-weight:bold">do</span> |failure1|
     right.call!(state) <span style="color:#080;font-weight:bold">do</span> |failure2|
       <span style="color:#080;font-weight:bold">return</span> error[failure1.merge(failure2)]
@@ -362,7 +349,7 @@ output.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:38 2021 by
+  Generated on Wed Dec  1 00:20:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

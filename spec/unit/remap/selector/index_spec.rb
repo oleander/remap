@@ -28,7 +28,7 @@ describe Remap::Selector::Index do
       let(:input) { "foo" }
       let(:index) { 0 }
 
-      it { is_expected.to have(1).problems }
+      its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
     end
 
     context "when the index exist" do
@@ -52,7 +52,7 @@ describe Remap::Selector::Index do
       let(:input) { [1, 2, 3] }
       let(:index) { 4 }
 
-      it { is_expected.to have(1).problems }
+      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
     end
 
     context "when index is in bounds" do
@@ -66,7 +66,7 @@ describe Remap::Selector::Index do
       let(:input) { [] }
       let(:index) { 0 }
 
-      it { is_expected.to have(1).problems }
+      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
     end
   end
 end

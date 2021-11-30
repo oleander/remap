@@ -34,9 +34,13 @@ module Remap
       #
       # @return [State<U>]
       def call(state)
-        mapper.call!(state.set(mapper: mapper)) do |error|
-          return state.problem(error)
+        notice = catch :fatal do
+          return mapper.call!(state.set(mapper: mapper)) do |failed_state|
+            return failed_state.except(:value, :mapper)
+          end
         end
+
+        state.failure(notice).except(:mapper)
       end
     end
   end

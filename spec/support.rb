@@ -4,6 +4,10 @@ module Support
   include Dry::Core::Constants
   include Remap
 
+  def me(&block)
+    its(:itself, &block)
+  end
+
   def Failure(**options)
     Failure.new(reasons: options)
   end
@@ -16,12 +20,16 @@ module Support
 
   # @return [Remap::Rule::Map]
   def map!(&block)
-    Rule::Map.call(path: path!, rule: void!).adjust(&block)
+    Rule::Map.call(path: path!, rule: void!, backtrace: ["<BACKTRACE>"]).adjust(&block)
+  end
+
+  def notice!
+    Notice.call(value: value!, path: [:a], reason: string!)
   end
 
   # @return [Remap::Rule::Map]
   def pending!(*args)
-    Rule::Map.call(path: path!, rule: void!).pending(*args)
+    Rule::Map.call(path: path!, rule: void!, backtrace: ["<BACKTRACE>"]).pending(*args)
   end
 
   # @return [Hash]

@@ -6,13 +6,8 @@ module Remap
       required(:input)
 
       required(:mapper).filled(Remap::Types::Mapper)
-
-      required(:problems).array(:hash) do
-        optional(:path).filled(:array)
-        required(:reason).filled(:string)
-        optional(:value)
-      end
-
+      required(:notices).array(Types.Instance(Notice))
+      required(:failures).array(Types.Instance(Notice))
       required(:options).value(:hash)
       required(:path).array(Types::Key)
 

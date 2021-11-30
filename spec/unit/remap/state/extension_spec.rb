@@ -26,8 +26,93 @@ describe Remap::State::Extension do
     end
   end
 
+  describe "#notice" do
+    context "when state is undefined" do
+      subject { state.notice("%s", "a value") }
+
+      let(:state) { undefined! }
+
+      it { is_expected.to be_a(Remap::Notice) }
+    end
+
+    context "when state is defined" do
+      subject { state.notice("%s", "a value") }
+
+      let(:state) { defined! }
+
+      it { is_expected.to be_a(Remap::Notice) }
+    end
+  end
+
+  describe "#fatal" do
+    let(:state) { defined! }
+
+    it "throws a symbol" do
+      expect { state.fatal!("%s", "a value") }.to throw_symbol(:fatal, be_kind_of(Remap::Notice))
+    end
+  end
+
+  describe "#notice!" do
+    let(:state) { defined! }
+
+    it "throws a symbol" do
+      expect { state.notice!("%s", "a value") }.to throw_symbol(:notice, be_kind_of(Remap::Notice))
+    end
+  end
+
+  describe "#ignore!" do
+    let(:state) { defined! }
+
+    it "throws a symbol" do
+      expect { state.ignore!("%s", "a value") }.to throw_symbol(:ignore, be_kind_of(Remap::Notice))
+    end
+  end
+
+  describe "#only" do
+    subject(:result) { target.only(*keys) }
+
+    context "when keys are empty" do
+      let(:target) { hash! }
+      let(:keys) { [] }
+
+      it { is_expected.to be_empty }
+    end
+
+    context "when keys are not empty" do
+      let(:keys) { [:a, :b] }
+
+      context "when all keys exists" do
+        let(:target) { { a: 1, b: 2 } }
+
+        it { is_expected.to eq(target) }
+      end
+
+      context "when some keys exists" do
+        let(:target) { { a: 1, c: 2 } }
+
+        it { is_expected.to eq(target.except(:c)) }
+      end
+
+      context "when no keys exists" do
+        let(:target) { { d: 1, e: 2 } }
+
+        it { is_expected.to be_empty }
+      end
+    end
+  end
+
   describe "#combine" do
     subject { left.combine(right) }
+
+    context "when left has failures" do
+      let(:left) { defined!({}, :with_failures) }
+
+      context "when right has no failures" do
+        let(:right) { defined!({}) }
+
+        it { is_expected.not_to have_key(:value) }
+      end
+    end
 
     context "when left is undefined!" do
       let(:left) { undefined!(:with_problems) }
@@ -62,8 +147,7 @@ describe Remap::State::Extension do
       let(:left) { defined!(10) }
       let(:right) { defined!(:hello) }
 
-      it { is_expected.to have(1).problems }
-      it { is_expected.not_to have_key(:value) }
+      its(:itself) { will throw_symbol(:fatal, be_kind_of(Remap::Notice)) }
     end
 
     context "when same type" do
@@ -90,25 +174,8 @@ describe Remap::State::Extension do
     end
   end
 
-  describe "#to_result" do
-    subject { state.to_result }
-
-    context "without value" do
-      let(:state) { undefined!(:with_problems) }
-
-      it { is_expected.to be_a_failure.and(have_attributes(problems: be_present)) }
-    end
-
-    context "with value" do
-      let(:value) { "value" }
-      let(:state) { defined!(value, :with_problems) }
-
-      it { is_expected.to be_a_success.and(have_attributes(problems: be_present, result: value)) }
-    end
-  end
-
   describe "#failure" do
-    subject { state!(value!, path: path).failure(reason) }
+    subject { state!(value, path: path).failure(reason) }
 
     let(:value) { "value" }
 
@@ -118,19 +185,21 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to be_a_failure.and(have_attributes(reasons: { base: [reason] })) }
+        it { is_expected.to include(failures: [have_attributes(reason: "reason", value: value)]) }
+        it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is an array" do
         let(:reason) { ["reason"] }
 
-        it { is_expected.to be_a_failure.and(have_attributes(reasons: { base: reason })) }
+        it { is_expected.to include(failures: [have_attributes(reason: "reason", value: value)]) }
+        it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is a hash" do
         let(:reason) { { key: ["error"] } }
 
-        it { is_expected.to be_a_failure.and(have_attributes(reasons: reason)) }
+        it { is_expected.to include(failures: [have_attributes(reason: "error", path: [:key], value: value)]) }
       end
     end
 
@@ -140,146 +209,22 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to be_a_failure.and(have_attributes(reasons: { a: { b: [reason] } })) }
+        it { is_expected.to include(failures: [have_attributes(reason: reason, value: value, path: [:a, :b])]) }
+        it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is an array" do
         let(:reason) { ["reason"] }
 
-        it { is_expected.to be_a_failure.and(have_attributes(reasons: { a: { b: reason } })) }
+        it { is_expected.to include(failures: [have_attributes(reason: "reason", value: value, path: [:a, :b])]) }
+        it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is a hash" do
         let(:reason) { { c: ["reason"] } }
 
-        it { is_expected.to be_a_failure.and(have_attributes(reasons: { a: { b: { c: ["reason"] } } })) }
-      end
-    end
-  end
-
-  describe "#recursive_merge" do
-    context "when left is undefined!" do
-      let(:left) { undefined!(:with_problems) }
-
-      context "when right is undefined!" do
-        let(:right) { undefined!(:with_problems) }
-
-        it "throws undefined! symbol" do
-          expect { left.recursive_merge(right) }.to throw_symbol(:undefined)
-        end
-      end
-
-      context "when right is defined!" do
-        let(:right) { defined!(1, :with_problems) }
-
-        it "returns the right hand site" do
-          expect(left.recursive_merge(right)).to eq(1)
-        end
-      end
-    end
-
-    context "when left is defined!" do
-      let(:left) { defined!(1) }
-
-      context "when right is undefined!" do
-        let(:right) { undefined! }
-
-        it "returns the left hand site" do
-          expect(left.recursive_merge(right)).to eq(1)
-        end
-      end
-    end
-
-    context "when left is a hash" do
-      let(:left) { defined!({ a: 1, b: 2 }) }
-
-      context "when right is a hash" do
-        let(:right) { defined!({ c: 3, d: 4 }) }
-
-        let(:output) { { a: 1, b: 2, c: 3, d: 4 } }
-
-        it "does not invoke block" do
-          expect { |b| left.recursive_merge(right, &b) }.not_to yield_control
-        end
-
-        it "returns a combined hash" do
-          expect(left.recursive_merge(right)).to eq(output)
-        end
-      end
-
-      context "when right is a string" do
-        let(:right) { defined!("hello") }
-
-        it "calls block with problem" do
-          expect { |b| left.recursive_merge(right, &b) }.to yield_control
-        end
-      end
-
-      context "when right is an array" do
-        let(:right) { defined!([1, 2]) }
-
-        it "calls block with problem" do
-          expect { |b| left.recursive_merge(right, &b) }.to yield_control
-        end
-      end
-    end
-
-    context "when left is an array" do
-      let(:left) { defined!([1, 2, 3]) }
-
-      context "when right is a hash" do
-        let(:right) { defined!({ c: 3, d: 4 }) }
-
-        it "does invoke block" do
-          expect { |b| left.recursive_merge(right, &b) }.to yield_control
-        end
-      end
-
-      context "when right is a string" do
-        let(:right) { defined!("hello") }
-
-        it "calls block with problem" do
-          expect { |b| left.recursive_merge(right, &b) }.to yield_control
-        end
-      end
-
-      context "when right is an array" do
-        let(:right) { defined!([4, 5, 6]) }
-
-        it "does not invoke block" do
-          expect { |b| left.recursive_merge(right, &b) }.not_to yield_control
-        end
-
-        it "returns a combined array" do
-          expect(left.recursive_merge(right)).to eq([1, 2, 3, 4, 5, 6])
-        end
-      end
-    end
-  end
-
-  describe "#conflicts" do
-    let(:state) { defined!([100, 200]) }
-    let(:key) { symbol! }
-
-    context "when both are arrays" do
-      let(:left) { [1, 2] }
-      let(:right) { [3, 4] }
-
-      it "does not invoke the block" do
-        expect { |b| state.conflicts(key, left, right, &b) }.not_to yield_control
-      end
-
-      it "adds the two arrays" do
-        expect(state.conflicts(key, left, right)).to contain_exactly(1, 2, 3, 4)
-      end
-    end
-
-    context "when one is not an array" do
-      let(:left) { { key: "value" } }
-      let(:right) { [3, 4] }
-
-      it "does invoke the block" do
-        expect { |b| state.conflicts(key, left, right, &b) }.to yield_control
+        it { is_expected.to include(failures: [have_attributes(reason: "reason", path: [:a, :b, :c], value: value)]) }
+        it { is_expected.not_to have_key(:value) }
       end
     end
   end
@@ -310,6 +255,43 @@ describe Remap::State::Extension do
       it { is_expected.to include(element: value) }
       it { is_expected.to contain(value) }
       it { is_expected.to include(path: state.path + [index]) }
+    end
+
+    context "when given a notice" do
+      subject(:result) { state.set(notice: notice) }
+
+      let(:notice) { notice! }
+
+      it { is_expected.to include(notices: [notice]) }
+      it { is_expected.not_to have_key(:value) }
+    end
+
+    context "when given a failure" do
+      subject(:result) { state.set(failure: notice) }
+
+      let(:notice) { notice! }
+
+      it { is_expected.to include(failures: [notice]) }
+      it { is_expected.not_to have_key(:value) }
+    end
+
+    context "when given failure" do
+      subject(:result) { state.set(failures: [notice]) }
+
+      let(:notice) { notice! }
+
+      it { is_expected.to include(failures: [notice]) }
+      it { is_expected.not_to have_key(:value) }
+    end
+
+    context "when given a notice twice" do
+      subject(:result) { state.set(notice: notice1).set(notice: notice2) }
+
+      let(:notice1) { notice! }
+      let(:notice2) { notice! }
+
+      it { is_expected.to include(notices: [notice1, notice2]) }
+      it { is_expected.not_to have_key(:value) }
     end
 
     context "when given just an index" do
@@ -420,8 +402,7 @@ describe Remap::State::Extension do
 
       let(:state) { defined! }
 
-      it { is_expected.to have(1).problems }
-      it { is_expected.not_to have_key(:value) }
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
 
     context "when #values is accessed" do
@@ -445,27 +426,29 @@ describe Remap::State::Extension do
     end
 
     context "when skip! is called" do
-      subject do
+      subject(:result) do
         state.execute { skip!("This is skipped!") }
       end
 
       let(:value) { "value" }
       let(:state) { defined!(value, path: [:key1]) }
-      let(:problems) { [{ path: [:key1], reason: "This is skipped!", value: value }] }
+      let(:notice) { { path: [:key1], reason: "This is skipped!", value: value } }
 
-      it { is_expected.to include(problems: problems) }
-      it { is_expected.not_to have_key(:value) }
+      it "throws symbol notice" do
+        expect { result }.to throw_symbol(:ignore, be_a(Remap::Notice))
+      end
     end
 
     context "when undefined! is returned" do
-      subject do
+      subject(:result) do
         state.execute { undefined! }
       end
 
       let(:state) { defined! }
 
-      it { is_expected.to have(1).problems }
-      it { is_expected.not_to have_key(:value) }
+      it "throws symbol notice" do
+        expect { result }.to throw_symbol(:notice, be_a(Remap::Notice))
+      end
     end
 
     context "when #get is used" do
@@ -489,11 +472,9 @@ describe Remap::State::Extension do
           end
         end
 
-        let(:value) { { a: { b: "value" } } }
-        let(:state) { defined!(value) }
-        let(:problems) { [{ path: [:a, :x], reason: be_a(String), value: value }] }
+        let(:state) { defined! }
 
-        it { is_expected.to include(problems: problems) }
+        its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
       end
     end
 
@@ -507,8 +488,7 @@ describe Remap::State::Extension do
       let(:value) { { key: "value" } }
       let(:state) { defined!(value) }
 
-      it { is_expected.to have(1).problems }
-      it { is_expected.not_to have_key(:value) }
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
 
     context "when IndexError is raised" do
@@ -521,8 +501,7 @@ describe Remap::State::Extension do
       let(:value) { [1, 2, 3] }
       let(:state) { defined!(value) }
 
-      it { is_expected.to have(1).problems }
-      it { is_expected.not_to have_key(:value) }
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
   end
 
@@ -543,11 +522,9 @@ describe Remap::State::Extension do
       end
 
       let(:key) { :key }
-      let(:value) { "value" }
-      let(:state) { defined!(value, path: []) }
-      let(:problems) { [{ path: [key], reason: "message", value: value }] }
+      let(:state) { defined!(value!, path: []) }
 
-      it { is_expected.to include(problems: problems) }
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
 
     context "when value not defined!" do
@@ -569,23 +546,21 @@ describe Remap::State::Extension do
         let(:state) { defined! }
         let(:reason) { "reason" }
 
-        it { is_expected.not_to have_key(:value) }
-        it { is_expected.to have(1).problems }
+        its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
       end
 
       context "with pre-existing path" do
         context "without key argument" do
           subject do
-            state.fmap do |_value, &error|
-              error[reason]
+            state.fmap do
+              state.notice!(reason)
             end
           end
 
           let(:state) { defined!(1, path: [:key]) }
           let(:reason) { "reason" }
-          let(:problems) { [{ path: [:key], reason: reason, value: 1 }] }
 
-          it { is_expected.to include(problems: problems) }
+          its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
         end
 
         context "with key argument" do
@@ -597,9 +572,8 @@ describe Remap::State::Extension do
 
           let(:state) { defined!(1, path: [:key1]) }
           let(:reason) { "reason" }
-          let(:problems) { [{ path: [:key1, :key2], reason: reason, value: 1 }] }
 
-          it { is_expected.to include(problems: problems) }
+          its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
         end
       end
     end
@@ -636,9 +610,8 @@ describe Remap::State::Extension do
       let(:key) { :key }
       let(:value) { "value" }
       let(:state) { defined!(value) }
-      let(:problems) { [{ path: state.path + [key], reason: "error", value: value }] }
 
-      it { is_expected.to include(problems: problems) }
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
 
     context "when error block is invoked" do
@@ -651,66 +624,7 @@ describe Remap::State::Extension do
       let(:state) { defined! }
       let(:reason) { "reason" }
 
-      it { is_expected.not_to have_key(:value) }
-      it { is_expected.to have(1).problems }
-    end
-  end
-
-  describe "#problem" do
-    subject { state.problem(reason) }
-
-    let(:path) { [:key1] }
-    let(:reason) { "reason" }
-    let(:value) { "value" }
-
-    context "when value is defined" do
-      let(:state) { defined!(value, path: path) }
-      let(:problems) { [{ path: path, value: value, reason: reason }] }
-
-      it { is_expected.to include(problems: problems) }
-      it { is_expected.not_to have_key(:value) }
-    end
-
-    context "when value is undefined" do
-      let(:state) { undefined!(path: path) }
-      let(:problems) { [{ path: path, reason: reason }] }
-
-      it { is_expected.to include(problems: problems) }
-      it { is_expected.not_to have_key(:value) }
-    end
-
-    context "when path is defined" do
-      let(:path) { [:key1, :key2] }
-      let(:state) { defined!(value, path: path) }
-      let(:problems) { [{ path: path, value: value, reason: reason }] }
-
-      it { is_expected.to include(problems: problems) }
-      it { is_expected.not_to have_key(:value) }
-    end
-
-    context "when path is undefined" do
-      let(:state) { defined!(value, path: []) }
-      let(:problems) { [{ value: value, reason: reason }] }
-
-      it { is_expected.to include(problems: problems) }
-      it { is_expected.not_to have_key(:value) }
-    end
-
-    context "when problems already exists" do
-      let(:init_problems) { [{ path: [:key1], value: value, reason: "reason1" }] }
-      let(:state) { defined!(value, path: [:key1], problems: init_problems) }
-      let(:problems) { init_problems + [{ path: [:key1], value: value, reason: reason }] }
-
-      it { is_expected.to include(problems: problems) }
-      it { is_expected.not_to have_key(:value) }
-    end
-
-    context "when problems does not exist" do
-      let(:state) { defined!(value, path: [:key1], problems: []) }
-      let(:problems) { [{ path: [:key1], value: value, reason: reason }] }
-
-      it { is_expected.to include(problems: problems) }
-      it { is_expected.not_to have_key(:value) }
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
   end
 
@@ -719,5 +633,49 @@ describe Remap::State::Extension do
 
     it { is_expected.to be_a(String) }
     it { is_expected.to include("#<State") }
+  end
+
+  describe "#paths" do
+    context "when empty" do
+      it "has no paths" do
+        expect({}.paths).to eq([])
+      end
+    end
+
+    context "when shallow" do
+      it "has paths" do
+        expect({ key: "value" }.paths).to eq([[:key]])
+      end
+    end
+
+    context "when deep" do
+      let(:input) do
+        {
+          shallow: "value",
+          deep1: {
+            deep2: "value"
+          },
+          deeper1: {
+            deeper2: {
+              deeper3: "value",
+              deeper4: "value"
+            },
+            deeper5: {
+              deeper6: "value"
+            }
+          }
+        }.paths
+      end
+
+      it "has paths" do
+        expect(input).to match_array([
+                                       [:shallow],
+                                       [:deep1, :deep2],
+                                       [:deeper1, :deeper2, :deeper3],
+                                       [:deeper1, :deeper2, :deeper4],
+                                       [:deeper1, :deeper5, :deeper6]
+                                     ])
+      end
+    end
   end
 end

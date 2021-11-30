@@ -27,7 +27,7 @@ module Remap
           end.then do |new_array_state|
             input_state.combine(new_array_state)
           end
-        end._
+        end
       end
 
       private

@@ -14,31 +14,29 @@ module Remap
       # @return [#hash
       attribute :key, Types::Key
 
-      requirement Types::Hash.constrained(min_size: 1)
+      requirement Types::Hash
 
       # Selects {#key} from state and passes it to block
       #
-      # @param state [State<Hash<K, V>>]
+      # @param outer_state [State<Hash<K, V>>]
       #
       # @yieldparam [State<V>]
       # @yieldreturn [State<U>]
       #
       # @return [State<U>]
-      def call(state, &block)
-        unless block
-          return call(state, &:itself)
-        end
+      def call(outer_state, &block)
+        return call(outer_state, &:itself) unless block
 
-        state.bind(key: key) do |hash, inner_state, &error|
+        outer_state.bind(key: key) do |hash, state|
           requirement[hash] do
-            return error["Expected a hash"]
+            state.fatal!("Expected hash but got %p (%s)", hash, hash.class)
           end
 
           value = hash.fetch(key) do
-            return error["Key [#{key}] not found"]
+            state.ignore!("Key %p (%s) not found in hash %p (%s)", key, key.class, hash, hash.class)
           end
 
-          block[inner_state.set(value, key: key)]
+          state.set(value, key: key).then(&block)
         end
       end
     end

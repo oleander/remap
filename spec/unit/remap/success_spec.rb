@@ -3,13 +3,13 @@
 describe Remap::Success do
   subject(:success) { described_class.call(input) }
 
-  let(:input) { { problems: [], result: value! } }
+  let(:input) { { notices: [], value: value! } }
 
   describe "::call" do
     context "given valid input" do
       subject { described_class.call(input) }
 
-      let(:input) { { problems: [], result: value! } }
+      let(:input) { { notices: [], value: value! } }
 
       it { is_expected.to be_a(described_class) }
     end

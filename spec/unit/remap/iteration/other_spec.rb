@@ -18,8 +18,7 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        it { is_expected.to have(1).problems }
-        it { is_expected.not_to have_key(:value) }
+        its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
       end
 
       context "when error block is not invoked" do

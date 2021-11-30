@@ -12,7 +12,7 @@ describe Remap::Base do
             value.get(:a, :b, 1)
           end
 
-          to(:missing).then do
+          to?(:missing).then do
             value.get(:a, :e, 1)
           end
         end

@@ -15,10 +15,7 @@ module Remap
     #   end
     #
     #   Mapper.call({ name: "Ford" }).result # => { person: { name: "Ford" } }
-    class Map < Concrete
-      # @return [Rule]
-      attribute :rule, Rule.default { Void.call({}) }
-
+    class Map < Abstract
       class LocalPath < Struct
         attribute :output, Path::Output.default { Path::Output.call([]) }
         attribute :input, Path::Input.default { Path::Input.call([]) }
@@ -26,14 +23,25 @@ module Remap
 
       # @return [Hash]
       attribute? :path, LocalPath.default { LocalPath.call({}) }
+      attribute :rule, Rule.default { Void.call({}) }
+      attribute? :backtrace, [String], default: EMPTY_ARRAY
 
-      # Maps state using {#path} & {#rule}
-      #
-      # @param state [State<T>]
-      #
-      # @return [State<U>]
       def call(state)
         (path.input >> rule >> callback >> path.output).call(state)
+      end
+
+      def fatal(state, id: :fatal, &block)
+        fatal = catch(id, &block)
+        raise fatal.traced(backtrace).exception
+      end
+
+      def notice(state, &block)
+        notice = catch(:notice, &block).traced(backtrace)
+        state.set(notice: notice).except(:value)
+      end
+
+      def ignore(...)
+        raise NotImplementedError, "#{self.class}#ignore"
       end
 
       # A post-processor method
@@ -65,7 +73,7 @@ module Remap
       # @return [Map]
       def pending(reason = "Pending mapping")
         add do |state|
-          state.problem(reason)
+          state.notice!(reason)
         end
       end
 
@@ -91,9 +99,11 @@ module Remap
       #
       # @return [Map]
       def enum(&block)
-        add do |state|
-          state.fmap do |id, &error|
-            Enum.call(&block).get(id, &error)
+        add do |outer_state|
+          outer_state.fmap do |id, state|
+            Enum.call(&block).get(id) do
+              state.ignore!("Enum value %p (%s) not defined", id, id.class)
+            end
           end
         end
       end
@@ -116,9 +126,9 @@ module Remap
       #
       # @return [Map]
       def if(&block)
-        add do |state|
-          state.execute(&block).fmap do |bool, &error|
-            bool ? state.value : error["#if returned false"]
+        add do |outer_state|
+          outer_state.execute(&block).fmap do |bool, state|
+            bool ? outer_state.value : state.notice!("#if returned false")
           end
         end
       end
@@ -142,9 +152,9 @@ module Remap
       #
       # @return [Map]
       def if_not(&block)
-        add do |state|
-          state.execute(&block).fmap do |bool, &error|
-            bool ? error["#if_not returned true"] : state.value
+        add do |outer_state|
+          outer_state.execute(&block).fmap do |bool, state|
+            bool ? state.notice!("#if_not returned false") : outer_state.value
           end
         end
       end

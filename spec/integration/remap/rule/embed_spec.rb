@@ -71,7 +71,7 @@ describe Remap::Rule::Embed do
       let(:state) { state! }
 
       it "raises an argument error" do
-        expect { rule }.to raise_error(ArgumentError)
+        expect { rule }.to raise_error(Dry::Struct::Error)
       end
     end
 

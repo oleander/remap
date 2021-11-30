@@ -2,9 +2,15 @@
 
 module Remap
   # Represents a successful mapped result
-  class Success < Result
+  class Success < Result::Concrete
+    # @return [Array<Notice>]
+    attribute? :failures, [Notice], size: 0, default: EMPTY_ARRAY
+
+    # @return [Array<Notice>]
+    attribute? :notices, [Notice], default: EMPTY_ARRAY
+
     # @return [Any]
-    attribute :result, Types::Any
+    attribute :value, Types::Any, alias: :result
 
     # @return [false]
     def failure?
@@ -16,14 +22,14 @@ module Remap
       true
     end
 
-    # Calls block with {#result} and returns a other success
+    # Calls block with {#value} and returns a other success
     #
     # @yieldparam [T]
     # @yieldreturn [U]
     #
     # @return [Success<U>]
     def fmap(&block)
-      new(result: block[result])
+      new(value: block[value])
     end
   end
 end

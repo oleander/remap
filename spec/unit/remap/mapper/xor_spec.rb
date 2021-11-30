@@ -50,11 +50,15 @@ describe Remap::Mapper::Xor do
     end
 
     context "when both A and B fails" do
+      subject { mapper.call!(state, &:itself) }
+
       let(:input) { { c: 1 } }
 
       it "invokes block with problem" do
         expect { |b| mapper.call!(state, &b) }.to yield_control
       end
+
+      it { is_expected.not_to have_key(:value) }
     end
   end
 end

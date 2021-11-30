@@ -111,20 +111,6 @@
 </div>
 <div class="tags">
   
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'>
-<p>A collection containing no rule</p>
-</div></p>
-      
-      <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>)
-rule = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Collection</span>.call({})
-rule.call(state).key?(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; false</span></code></pre>
-    
-  </div>
-
 
 </div>
 
@@ -229,15 +215,15 @@ rule.call(state).key?(<span style="color:#A60">:value</span>) <span style="color
       <pre class="lines">
 
 
-22
-23
-24</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/empty.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/empty.rb', line 17</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
-  state.problem(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No rules, empty block</span><span style="color:#710">&quot;</span></span>)
+  state.notice!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No rules, empty block</span><span style="color:#710">&quot;</span></span>)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -249,7 +235,7 @@ rule.call(state).key?(<span style="color:#A60">:value</span>) <span style="color
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:39 2021 by
+  Generated on Wed Dec  1 00:20:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

@@ -26,12 +26,24 @@ module Remap
     # @param to ([]) [Array<Symbol>, Symbol]
     #
     # @return [Rule::Map]
-    def map(*path, to: EMPTY_ARRAY, &block)
-      add Rule::Map.new(
+    def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+      add Rule::Map::Strict.call(
         path: {
           output: [to].flatten,
           input: path.flatten
         },
+        backtrace: backtrace,
+        rule: call(&block)
+      )
+    end
+
+    def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+      add Rule::Map::Loose.call(
+        path: {
+          output: [to].flatten,
+          input: path.flatten
+        },
+        backtrace: backtrace,
         rule: call(&block)
       )
     end
@@ -66,8 +78,12 @@ module Remap
     # @param map [Array<Segment>, Segment]
     #
     # @return [Rule::Map]
-    def to(*path, map: EMPTY_ARRAY, &block)
-      map(*map, to: path, &block)
+    def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+      map(*map, to: path, backtrace: backtrace, &block)
+    end
+
+    def to?(*path, map: EMPTY_ARRAY, &block)
+      map?(*map, to: path, &block)
     end
 
     # Iterates over the input value, passes each value
@@ -122,8 +138,8 @@ module Remap
     # @param id [Symbol]
     #
     # @return [Rule::Static::Option]
-    def option(id)
-      Static::Option.new(name: id)
+    def option(id, backtrace: Kernel.caller)
+      Static::Option.new(name: id, backtrace: backtrace)
     end
 
     # Selects index element in input

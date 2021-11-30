@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Remap
-  class Result < Dry::Struct
-    attribute? :problems, Types.Array(Types::Problem).default { EMPTY_ARRAY }
+  class Result < Dry::Interface
+    attribute? :notices, [Notice], default: EMPTY_ARRAY
 
     # @return [Boolean]
     def problem?
-      !problems.blank?
+      !notices.blank?
     end
     alias has_problem? problem?
 

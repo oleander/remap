@@ -40,17 +40,11 @@ describe Remap::Iteration::Array do
     context "when all values are rejected" do
       subject(:result) do
         iterator.call do |index:|
-          state.problem("P:#{index}")
+          state.ignore!("P:#{index}")
         end
       end
 
-      it "contains the correct problems" do
-        expect(result).to have(3).problems
-      end
-
-      it "has an empty array as output" do
-        expect(result).to contain([])
-      end
+      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
     end
   end
 end

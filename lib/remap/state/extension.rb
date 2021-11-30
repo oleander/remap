@@ -6,7 +6,78 @@ module Remap
       using Extensions::Enumerable
       using Extensions::Object
 
+      refine Object do
+        # @see Extension::Paths::Hash
+        def paths
+          EMPTY_ARRAY
+        end
+      end
+
       refine Hash do
+        # Returns a list of all key paths
+        #
+        # @example Get paths
+        #   {
+        #     a: {
+        #       b: :c
+        #     },
+        #     d: :e
+        #   }.hur_paths # => [[:a, :b], [:d]]
+        #
+        # @return [Array<Array<Symbol>>] a list of key paths
+        def paths
+          reduce(EMPTY_ARRAY) do |acc, (path, leaves)|
+            if (paths = leaves.paths).empty?
+              next acc + [[path]]
+            end
+
+            acc + paths.map { |inner| [path] + inner }
+          end
+        end
+
+        # Restrict hash to passed key path
+        #
+        # @param key [Symbol] to be kept
+        # @param rest [Array<Symbol>] of the key path
+        #
+        # @example Select key path
+        #   {
+        #     a: {
+        #       b: :c
+        #     },
+        #     d: :e
+        #   }.hur_only(:a, :b) # => { a: { b: :c } }
+        #
+        # @returns [Hash] a hash containing the given path
+        # @raise Europace::Error when path doesn't exist
+        def only(*path)
+          path.reduce(EMPTY_HASH) do |hash, key|
+            next hash unless key?(key)
+
+            hash.deep_merge(key => fetch(key))
+          end
+        end
+
+        # Throws :fatal with a Problem::Untraced
+        def fatal!(...)
+          throw :fatal, notice(...)
+        end
+
+        # Throws :warn with a Problem::Untraced
+        def notice!(...)
+          throw :notice, notice(...)
+        end
+
+        # Throws :ignore with a Problem::Untraced
+        def ignore!(...)
+          throw :ignore, notice(...)
+        end
+
+        # Stores a notice
+        def notice(template, *values)
+          Notice.call(only(:value, :path).merge(reason: template % values))
+        end
+
         # Validates {self} against {Schema}
         #
         # Only used during development
@@ -41,7 +112,7 @@ module Remap
           bind do |value, state|
             Iteration.call(state: state, value: value).call do |other, **options|
               state.set(other, **options)._.then(&block)._
-            end
+            end.except(:index, :element, :key)
           end
         end
 
@@ -58,70 +129,30 @@ module Remap
         #
         # @return [State]
         def combine(other)
-          all_problems = problems + other.problems
-
-          catch :undefined do
-            value = recursive_merge(other) do |reason|
-              return merge(problems: all_problems).problem(reason)
-            end
-
-            return set(value, problems: all_problems)
-          end
-
-          set(problems: all_problems)
-        end
-
-        # Resolves conflicts unsovable by ActiveSupport#deep_merge
-        #
-        # @param key [Symbol] the key that cannot be combine
-        # @param left [Any] the left value that cannot be combine
-        # @param right [Any] the right value that cannot be combine
-        #
-        # @yieldparam reason [String] if {left} and {right} cannot be combine
-        # @yieldreturn [State]
-        #
-        # @return [Any]
-        def conflicts(key, left, right, &error)
-          case [left, right]
-          in [Array, Array]
-            left + right
-          in [value, ^value]
-            value
-          in [left, right]
-            reason(left, right) do |reason|
-              [reason, "[#{key}]"].join(" @ ").then(&error)
+          state = deep_merge(other) do |key, value1, value2|
+            case [key, value1, value2]
+            in [:value, Array => list1, Array => list2]
+              list1 + list2
+            in [:value, l, r]
+              fatal!("Could not merge [%p] (%s) with [%p] (%s) @ %s", l, l.class, r, r.class, (path + [key]).join("."))
+            in [:failures, Array => f1, Array => f2]
+              f1 + f2
+            in [:notices, Array => n1, Array => n2]
+              n1 + n2
+            in [Symbol, _, value]
+              value
             end
           end
+
+          if state.failures.any?
+            return state.except(:value)
+          end
+
+          state
         end
 
-        # Recursively merges {self} with {other}
-        # Invokes {error} when a conflict is detected
-        #
-        # @param other [State]
-        #
-        # @yieldparam key [Symbol]
-        # @yieldparam left [Any]
-        # @yieldparam right [Any]
-        # @yieldparam error [Proc]
-        #
-        # @yieldreturn [Any]
-        #
-        # @return [Any] Merge result (not a state)
-        def recursive_merge(other, &error)
-          case [self, other]
-          in [{value: Hash => left}, {value: Hash => right}]
-            left.deep_merge(right) { |*args| conflicts(*args, &error) }
-          in [{value: Array => left}, {value: Array => right}]
-            left + right
-          in [{value: left}, {value: right}]
-            reason(left, right, &error)
-          in [{value: left}, _]
-            left
-          in [_, {value: right}]
-            right
-          in [_, _]
-            throw :undefined
-          end
+        def failures
+          fetch(:failures)
         end
 
         # Creates a new state with params
@@ -136,8 +167,12 @@ module Remap
           end
 
           case [self, options]
-          in [{path:}, {quantifier:, **rest}]
-            merge(path: path + [quantifier]).set(**rest)
+          in [{notices:}, {notice: notice, **rest}]
+            merge(notices: notices + [notice]).except(:value).set(**rest)
+          in [_, {failure:, **rest}]
+            set(failures: [failure], **rest)
+          in [{failures: Array => left}, {failures: Array => right, **rest}]
+            merge(failures: left + right).set(**rest).except(:value)
           in [{value:}, {mapper:, **rest}]
             merge(scope: value, mapper: mapper).set(**rest)
           in [{path:}, {key:, **rest}]
@@ -175,35 +210,25 @@ module Remap
         # @see State::Schema
         #
         # @return [Failure]
-        def failure(reason)
-          reasons = case [path, reason]
-          in [EMPTY_ARRAY, Array | String => message]
-            { base: Array.wrap(message) }
-          in [path, String | Array => message]
-            path.hide(Array.wrap(message))
-          in [path, Hash => failures]
-            path.hide(failures)
+        def failure(reason = Undefined)
+          failures = case [path, reason]
+          in [_, Notice => notice]
+            [notice]
+          in [path, Array => reasons]
+            reasons.map do |inner_reason|
+              Notice.call(path: path, reason: inner_reason, **only(:value))
+            end
+          in [path, String => reason]
+            [Notice.call(path: path, reason: reason, **only(:value))]
+          in [path, Hash => errors]
+            errors.paths.flat_map do |sufix|
+              Array.wrap(errors.dig(*sufix)).map do |inner_reason|
+                Notice.call(path: path + sufix, reason: inner_reason, **only(:value))
+              end
+            end
           end
 
-          Failure.new(reasons: reasons, problems: problems)
-        end
-
-        # Creates a problem from state
-        #
-        # @yield [Failure] if {#value} is undefined
-        #
-        # @return [Success] if {#value} is defined
-        # @return [Failure] unless {#value} is defined
-        def to_result(&error)
-          unless error
-            return to_result(&:itself)
-          end
-
-          value = fetch(:value) do
-            return error[failure("No mapped data")]
-          end
-
-          Success.new(problems: problems, result: value)
+          set(failures: failures)
         end
 
         # Passes {#value} to block, if defined
@@ -237,13 +262,7 @@ module Remap
         # @return [State<U>]
         def execute(&block)
           bind do |value, &error|
-            result = catch :success do
-              path = catch :missing do
-                throw :success, context(value, &error).instance_exec(value, &block)
-              end
-
-              return error["Could not fetch value at", path: path]
-            end
+            result = context(value, &error).instance_exec(value, &block)
 
             if result.equal?(Dry::Core::Constants::Undefined)
               return error["Undefined returned, skipping!"]
@@ -256,6 +275,8 @@ module Remap
             e.name == :Undefined ? error["Undefined returned, skipping!: #{e}"] : raise
           rescue KeyError, IndexError => e
             error[e.message]
+          rescue PathError => e
+            ignore!("Path %s not defined for %p (%s)", e.path.join("."), value, value.class)
           end
         end
 
@@ -266,35 +287,22 @@ module Remap
           super { fmap(&block) }
         end
 
-        # Returns a new state that includes a new problem
-        #
-        # Removes {#value} as problems cannot contain values
-        #
-        # @param message [#to_s]
-        #
-        # @return [State]
-        def problem(message)
-          problem = { reason: message.to_s, path: path, value: dig(:value) }.reject do |_, value|
-            value.blank?
-          end
-
-          merge(problems: problems + [problem]).except(:value)
-        end
+        alias_method :problem, :notice!
 
         # A list of problems
         #
         # @see State::Schema
         #
         # @return [Hash]
-        def problems
-          fetch(:problems)
-        end
+        # def problems
+        #   raise NotImplementedError, "problems not implemented"
+        # end
 
         # A list of keys representing the path to {#value}
         #
         # @return [Array<Symbol, Integer, String>]
         def path
-          fetch(:path)
+          fetch(:path, EMPTY_ARRAY)
         end
 
         # Represents options to a mapper
@@ -310,13 +318,18 @@ module Remap
         #
         # @return [Hash]
         def to_hash
-          super.except(:options, :mapper, :problems, :value)
+          super.except(:options, :mapper, :notices, :value)
         end
 
         # @return [Any]
         def value
           fetch(:value)
         end
+
+        def notices
+          fetch(:notices)
+        end
+        alias_method :problems, :notices
 
         private
 
@@ -327,29 +340,16 @@ module Remap
         # @yieldparam reason [T]
         #
         # @return [Struct]
-        def context(value, &error)
+        def context(value, context: self, &error)
           ::Struct.new(*keys, *options.keys, keyword_init: true) do
             define_method :method_missing do |name, *|
               error["Method [#{name}] not defined"]
             end
 
             define_method :skip! do |message = "Manual skip!"|
-              error[message]
+              context.ignore!(message)
             end
           end.new(**to_hash, **options, value: value)
-        end
-
-        # Creates an error message used to describe a merge error
-        #
-        # @param left [Any]
-        # @param right [Any]
-        #
-        # @yieldparam [String]
-        # @yieldreturn [String]
-        #
-        # @return [String]
-        def reason(left, right, &error)
-          error["Could not merge [%p] (%s) with [%p] (%s)" % [left, left.class, right, right.class]]
         end
       end
     end

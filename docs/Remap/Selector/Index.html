@@ -144,7 +144,7 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(state) {|| ... } &#x21d2; State&lt;U&gt; </a>
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(outer_state) {|| ... } &#x21d2; State&lt;U&gt; </a>
     
 
     
@@ -200,7 +200,7 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
       <div class="method_details first">
   <h3 class="signature first" id="call-instance_method">
   
-    #<strong>call</strong>(state) {|| ... } &#x21d2; <tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;U&gt;</tt> 
+    #<strong>call</strong>(outer_state) {|| ... } &#x21d2; <tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;U&gt;</tt> 
   
 
   
@@ -220,7 +220,7 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
   
     <li>
       
-        <span class='name'>state</span>
+        <span class='name'>outer_state</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;Array&lt;T&gt;&gt;</tt>)</span>
@@ -293,28 +293,24 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
 38
 39
 40
-41
-42
-43</pre>
+41</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 27</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;block)
-  <span style="color:#080;font-weight:bold">unless</span> block
-    <span style="color:#080;font-weight:bold">return</span> call(state, &amp;<span style="color:#A60">:itself</span>)
-  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(outer_state, &amp;block)
+  <span style="color:#080;font-weight:bold">return</span> call(outer_state, &amp;<span style="color:#A60">:itself</span>) <span style="color:#080;font-weight:bold">unless</span> block
 
-  state.bind(<span style="color:#606">index</span>: index) <span style="color:#080;font-weight:bold">do</span> |array, inner_state, &amp;error|
+  outer_state.bind(<span style="color:#606">index</span>: index) <span style="color:#080;font-weight:bold">do</span> |array, state|
     requirement[array] <span style="color:#080;font-weight:bold">do</span>
-      <span style="color:#080;font-weight:bold">return</span> error[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Expected an array</span><span style="color:#710">&quot;</span></span>]
+      state.fatal!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Expected array but got %p (%s)</span><span style="color:#710">&quot;</span></span>, array, array.class)
     <span style="color:#080;font-weight:bold">end</span>
 
     element = array.fetch(index) <span style="color:#080;font-weight:bold">do</span>
-      <span style="color:#080;font-weight:bold">return</span> error[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No element on index at index </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>index<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>]
+      state.ignore!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Index %s in array %p (%s) not found</span><span style="color:#710">&quot;</span></span>, index, array, array.class)
     <span style="color:#080;font-weight:bold">end</span>
 
-    block[inner_state.set(element, <span style="color:#606">index</span>: index)]
+    state.set(element, <span style="color:#606">index</span>: index).then(&amp;block)
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
@@ -375,7 +371,7 @@ attribute <span style="color:#A60">:index</span>, <span style="color:#036;font-w
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:38 2021 by
+  Generated on Wed Dec  1 00:20:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

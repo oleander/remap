@@ -42,17 +42,11 @@ describe Remap::Iteration::Hash do
     context "when all values are rejected" do
       subject(:result) do
         iterator.call do |_value, key:|
-          state.problem("P:#{key}")
+          state.notice!("P:#{key}")
         end
       end
 
-      it "has problems" do
-        expect(result).to have(3).problems
-      end
-
-      it "has an empty array as output" do
-        expect(result).to contain({})
-      end
+      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
   end
 end

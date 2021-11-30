@@ -6,11 +6,6 @@ module Remap
       using State::Extension
 
       # Represents an empty rule block
-      #
-      # @example A collection containing no rule
-      #   state = Remap::State.call("A")
-      #   rule = Remap::Rule::Collection.call({})
-      #   rule.call(state).key?(:value) # => false
       class Empty < Unit
         attribute? :rules, Value(EMPTY_ARRAY), default: EMPTY_ARRAY
 
@@ -20,7 +15,7 @@ module Remap
         #
         # @return [State<T>]
         def call(state)
-          state.problem("No rules, empty block")
+          state.notice!("No rules, empty block")
         end
       end
     end

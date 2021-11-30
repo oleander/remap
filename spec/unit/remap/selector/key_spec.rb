@@ -34,7 +34,7 @@ describe Remap::Selector::Key do
       context "when input is not a hash" do
         let(:input) { [] }
 
-        it { is_expected.to have(1).problems }
+        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
       end
 
       context "when input is a hash" do
@@ -47,21 +47,23 @@ describe Remap::Selector::Key do
         context "when input does not key" do
           let(:input) { {} }
 
-          it { is_expected.to have(1).problems }
+          its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
         end
       end
     end
 
     context "with block" do
       context "when input is not a hash" do
+        subject { selector.call(state) }
+
         let(:input) { [] }
 
-        it "does not invoke block" do
-          expect { |block| selector.call(state, &block) }.not_to yield_control
-        end
+        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
       end
 
       context "when input is a hash" do
+        subject { selector.call(state) }
+
         context "when input contains key" do
           let(:input) { { key => value } }
 
@@ -70,12 +72,10 @@ describe Remap::Selector::Key do
           end
         end
 
-        context "when input does not key" do
+        context "when input does not contain the key" do
           let(:input) { {} }
 
-          it "does not invokes block" do
-            expect { |b| selector.call(state, &b) }.not_to yield_control
-          end
+          its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
         end
       end
     end

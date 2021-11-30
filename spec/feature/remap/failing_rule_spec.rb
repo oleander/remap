@@ -28,7 +28,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_failure.and(have_attributes(reasons: { age: ["too young"] }))
+      be_a_failure.and(have_attributes(failures: be_present))
     end
   end
 end

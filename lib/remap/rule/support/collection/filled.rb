@@ -23,9 +23,13 @@ module Remap
         #
         # @return [State]
         def call(state)
-          rules.map do |rule|
-            rule.call(state)
-          end.reduce(&:combine)
+          notice = catch :fatal do
+            return rules.map do |rule|
+              rule.call(state)
+            end.reduce(&:combine)
+          end
+
+          state.failure(notice)
         end
       end
     end

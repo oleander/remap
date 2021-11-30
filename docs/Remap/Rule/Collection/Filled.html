@@ -256,15 +256,23 @@ rule.call(state).fetch(<span style="color:#A60">:value</span>) <span style="colo
 26
 27
 28
-29</pre>
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 25</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
-  rules.map <span style="color:#080;font-weight:bold">do</span> |rule|
-    rule.call(state)
-  <span style="color:#080;font-weight:bold">end</span>.reduce(&amp;<span style="color:#A60">:combine</span>)
+  notice = catch <span style="color:#A60">:fatal</span> <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#080;font-weight:bold">return</span> rules.map <span style="color:#080;font-weight:bold">do</span> |rule|
+      rule.call(state)
+    <span style="color:#080;font-weight:bold">end</span>.reduce(&amp;<span style="color:#A60">:combine</span>)
+  <span style="color:#080;font-weight:bold">end</span>
+
+  state.failure(notice)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -324,7 +332,7 @@ attribute <span style="color:#A60">:rules</span>, [<span style="color:#036;font-
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:50:39 2021 by
+  Generated on Wed Dec  1 00:20:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

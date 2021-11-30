@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Remap
-  class Failure < Result
-    attribute :reasons, Types::Hash
+  class Failure < Result::Concrete
+    attribute :failures, [Notice], min_size: 1
+    attribute? :notices, [Notice], default: EMPTY_ARRAY
 
     # @return [true]
     def failure?
@@ -17,6 +18,10 @@ module Remap
     # @return [self]
     def fmap
       self
+    end
+
+    def has_problem?
+      super || failures.any?
     end
 
     # Merges two failures
