@@ -1,17 +1,10 @@
 # Add to: .github/workflows/spellcheck.yml
-name: Typo CI
-
-on:
-  push:
-    branches-ignore:
-      - master
+name: Spellcheck
+on: [push]
 jobs:
   spellcheck:
-
-    name: Typo CI (GitHub Action)
+    name: Spellcheck
     runs-on: ubuntu-latest
-    timeout-minutes: 4
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     steps:
     - uses: actions/checkout@v2
     - name: TypoCheck
