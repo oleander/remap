@@ -3,10 +3,17 @@
 module Remap
   class Rule
     class Collection
-      class Empty < Unit
-        using State::Extension
+      using State::Extension
 
-        attribute? :rules, Value(EMPTY_ARRAY).default { EMPTY_ARRAY }
+      # Represents an empty rule block
+      #
+      # @example Map any value to undefined
+      #   map do
+      #     # NOP
+      #   end
+      #
+      class Empty < Unit
+        attribute? :rules, Value(EMPTY_ARRAY), default: EMPTY_ARRAY
 
         # Represents an empty define block, without any rules
         #

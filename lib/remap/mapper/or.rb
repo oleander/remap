@@ -2,13 +2,13 @@
 
 module Remap
   class Mapper
+    using State::Extension
+
     # Represents two mappers that are combined with the {|} operator
     #
     # @example Combine two mappers
     #   Mapper1 | Mapper2
     class Or < Binary
-      using State::Extension
-
       # Succeedes if {left} or {right} succeeds
       # Returns which ever succeeds first
       #
