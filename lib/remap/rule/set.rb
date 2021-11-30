@@ -27,7 +27,7 @@ module Remap
       using State::Extension
 
       attribute :value, Types::Rule, alias: :rule
-      attribute :path, Path
+      attribute :path, Path::Output
 
       # Returns {value} mapped to {path} regardless of input
       #
@@ -35,9 +35,7 @@ module Remap
       #
       # @return [State<U>]
       def call(state)
-        path.call(state) do
-          rule.call(state)
-        end
+        rule.call(state).then(&path)
       end
     end
   end

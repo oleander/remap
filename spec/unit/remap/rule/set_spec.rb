@@ -4,7 +4,7 @@ describe Remap::Rule::Set do
   describe "::call" do
     subject(:rule) { described_class.call(path: path, value: static) }
 
-    let(:path) { path! }
+    let(:path) { output_path! }
 
     context "given option" do
       let(:static) { build(Remap::Static::Option) }

@@ -70,8 +70,16 @@ module Support
   end
 
   # @return [Array<Key>]
-  def path!(**options)
-    build("remap/path", **options)
+  def path!(input: [], output: [])
+    { input_path: input_path!(input), output_path: output_path!(output) }
+  end
+
+  def input_path!(path = [])
+    Path::Input.new(path)
+  end
+
+  def output_path!(path = [])
+    Path::Output.new(path)
   end
 
   # A mapper class with {options} as required attributes
