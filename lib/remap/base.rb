@@ -4,6 +4,18 @@ require "active_support/configurable"
 require "active_support/core_ext/object/with_options"
 
 module Remap
+  # @example Maps ["A", "B", "C"] to ["A", "C"]
+  #   class Mapper < Remap::Base
+  #     define do
+  #       each do
+  #         map.if_not do
+  #           value.include?("B")
+  #         end
+  #       end
+  #     end
+  #   end
+  #
+  #   Mapper.call(["A", "B", "C"]).result # => ["A", "C"]
   # @example Maps ["A", "B", "C"] to ["B"]
   #   class Mapper < Remap::Base
   #     define do

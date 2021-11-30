@@ -125,18 +125,20 @@ module Remap
 
       # Keeps map, only if block is false
       #
-      # @example Maps ["A", "B", "C"] to ["A", "C"]
-      #   class Mapper < Remap::Base
-      #     define do
-      #       each do
-      #         map.if_not do
-      #           value.include?("B")
-      #         end
-      #       end
-      #     end
-      #   end
 
-      #   Mapper.call(["A", "B", "C"]).result # => ["A", "C"]
+      # @example Keep unless value contains "A"
+      #   map = Remap::Rule::Map.call({}).if_not do
+      #     value.include?("A")
+      #   end
+      #
+      #   a = Remap::State.call("A")
+      #   map.call(a).key?(:value) # => false
+      #
+      #   b = Remap::State.call("BA")
+      #   map.call(b).key?(:value) # => false
+      #
+      #   c = Remap::State.call("C")
+      #   map.call(c).fetch(:value) # => "C"
       #
       # @return [Map]
       def if_not(&block)
