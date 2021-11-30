@@ -16,12 +16,12 @@ module Support
 
   # @return [Remap::Rule::Map]
   def map!(&block)
-    Rule::Map.call(path: path!(input: [], output: []), rule: void!).adjust(&block)
+    Rule::Map.call(path: { map: [], to: [] }, rule: void!).adjust(&block)
   end
 
   # @return [Remap::Rule::Map]
   def pending!(*args)
-    Rule::Map.call(path: path!(input: [], output: []), rule: void!).pending(*args)
+    Rule::Map.call(rule: void!).pending(*args)
   end
 
   # @return [Hash]

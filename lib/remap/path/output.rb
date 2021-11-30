@@ -1,13 +1,16 @@
 module Remap
   class Path
     class Output < Value
-      attribute :selectors, Types.Array(Selector)
+      attribute :segments, Types.Array(Types::Key)
+
+      using State::Extensions::Enumerable
+      using State::Extension
 
       # @return [State]
       def call(state)
-        selectors.reverse.reduce(IDENTITY) do |fn, selector|
-          ->(st) { selector.call(st, &fn) }
-        end.call(state)
+        state.fmap do |value|
+          segments.hide(value)
+        end
       end
     end
   end

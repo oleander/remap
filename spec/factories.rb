@@ -31,19 +31,9 @@ FactoryBot.define do
     end
   end
 
-  factory "remap/path", aliases: [Remap::Path] do
-    initialize_with do
-      { map: Remap::Path::Input.new(input), to: Remap::Path::Output.new(output) }
-    end
-
-   transient do
-     input { generate(:path) }
-     output { generate(:path) }
-   end
-  end
-
   factory Remap::Rule::Map, aliases: [Remap::Rule::Map] do
-    path { { to: output, from: input } }
+    input_path { input }
+    output_path { output }
 
     transient do
       input { generate(:path) }
