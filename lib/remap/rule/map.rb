@@ -17,13 +17,15 @@ module Remap
     #   Mapper.call({ name: "Ford" }).result # => { person: { name: "Ford" } }
     class Map < Concrete
       # @return [Rule]
-      attribute :rule, Rule
+      attribute :rule, Rule.default { Void.call({}) }
+
+      class Inner < Struct
+        attribute :output, Path::Output.default { Path::Output.call([]) }
+        attribute :input, Path::Input.default { Path::Input.call([]) }
+      end
 
       # @return [Hash]
-      attribute :path do
-        attribute :output, Path::Output
-        attribute :input, Path::Input
-      end
+      attribute? :path, Inner.default { Inner.call({}) }
 
       # Maps state using {#path} & {#rule}
       #

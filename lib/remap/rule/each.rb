@@ -28,7 +28,7 @@ module Remap
     #       input: [],
     #       output: []
     #     }
-    #   }).then { value.upcase }
+    #   }).then { _1.upcase }
     #   each = Remap::Rule::Each.new(map)
     #   each.call(state).fetch(:value) # => ["JOHN", "JANE"]
     class Each < Unit
