@@ -27,8 +27,8 @@ module Remap
       # @return [State]
       def call(state)
         state.set(state.options.fetch(name))
-      rescue KeyError
-        halt("Option [%s] not found in input [%p]", name, state.options)
+      rescue KeyError => e
+        raise ArgumentError, e.exception("Option [%s] not found in input [%p]" % [name, state.options])
       end
     end
   end

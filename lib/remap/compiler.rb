@@ -26,7 +26,7 @@ module Remap
     # @param to ([]) [Array<Symbol>, Symbol]
     #
     # @return [Rule::Map]
-    def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &block)
       add Rule::Map::Strict.call(
         path: {
           output: [to].flatten,
@@ -37,7 +37,7 @@ module Remap
       )
     end
 
-    def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &block)
       add Rule::Map::Loose.call(
         path: {
           output: [to].flatten,
@@ -78,7 +78,7 @@ module Remap
     # @param map [Array<Segment>, Segment]
     #
     # @return [Rule::Map]
-    def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &block)
       map(*map, to: path, backtrace: backtrace, &block)
     end
 
@@ -138,7 +138,7 @@ module Remap
     # @param id [Symbol]
     #
     # @return [Rule::Static::Option]
-    def option(id, backtrace: Kernel.caller)
+    def option(id, backtrace: Kernel.caller_locations)
       Static::Option.new(name: id, backtrace: backtrace)
     end
 

@@ -10,6 +10,7 @@ module Remap
     include Dry::Types()
     using State::Extension
 
+    Backtrace  = Array(Instance(Thread::Backtrace::Location) | String)
     Enumerable = Any.constrained(type: Enumerable)
     Nothing    = Constant(Remap::Nothing)
     Mapper     = Interface(:call!)

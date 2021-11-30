@@ -24,7 +24,7 @@ module Remap
       # @return [Hash]
       attribute? :path, LocalPath.default { LocalPath.call({}) }
       attribute :rule, Rule.default { Void.call({}) }
-      attribute? :backtrace, [String], default: EMPTY_ARRAY
+      attribute? :backtrace, Types::Backtrace, default: EMPTY_ARRAY
 
       def call(state)
         (path.input >> rule >> callback >> path.output).call(state)

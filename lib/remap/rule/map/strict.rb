@@ -6,7 +6,7 @@ module Remap
       using State::Extension
 
       class Strict < Concrete
-        attribute :backtrace, [String]
+        attribute :backtrace,Types::Backtrace
 
         def call(state)
           fatal(state, id: :ignore) do
