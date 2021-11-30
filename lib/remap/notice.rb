@@ -9,7 +9,7 @@ module Remap
     class Error < Remap::Error
       extend Dry::Initializer
 
-      option :notice, type: Notice
+      param :notice, type: Notice
     end
 
     def inspect
@@ -23,7 +23,7 @@ module Remap
 
     # @return [Error]
     def exception
-      Error.new(notice: self)
+      Error.new(self)
     end
   end
 end
