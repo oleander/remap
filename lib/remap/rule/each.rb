@@ -6,7 +6,6 @@ module Remap
 
     # Iterates over a rule, even if the rule is not a collection
     #
-
     # @example Upcase each value in an array
     #   state = Remap::State.call(["John", "Jane"])
     #   upcase = Remap::Rule::Map.call({}).then(&:upcase)

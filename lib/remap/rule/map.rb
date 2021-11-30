@@ -49,6 +49,12 @@ module Remap
       #
       #   Mapper.call("Hello").result # => "Hello!"
       #
+      # @example Upcase mapped value
+      #   state = Remap::State.call("Hello World")
+      #   map = Remap::Rule::Map.call({})
+      #   upcase = map.adjust(&:upcase)
+      #   upcase.call(state).fetch(:value) # => "HELLO WORLD"
+      #
       # @return [Map]
       def adjust(&block)
         add do |state|
