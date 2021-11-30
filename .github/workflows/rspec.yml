@@ -9,5 +9,5 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: 3.0
-      - run: bundle exec rspec --format RSpec::Github::Formatter
+      - run: bundle exec rspec
 
