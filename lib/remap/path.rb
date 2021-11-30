@@ -6,5 +6,10 @@ module Remap
     def call(state)
       raise NotImplementedError, "#{self.class}#call not implemented"
     end
+
+    # @return [Proc]
+    def to_proc
+      method(:call).to_proc
+    end
   end
 end

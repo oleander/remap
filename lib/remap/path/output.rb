@@ -1,6 +1,6 @@
 module Remap
   class Path
-    class Output < Value
+    class Output < Unit
       attribute :segments, Types.Array(Types::Key)
 
       using State::Extensions::Enumerable

@@ -23,7 +23,7 @@ describe Remap::Rule::Set do
     subject { rule.call(state) }
 
     let(:key) { symbol! }
-    let(:rule) { described_class.call(path: path!(output: [key]), value: static) }
+    let(:rule) { described_class.call(path: [key], value: static) }
     let(:value) { value! }
 
     context "given option" do
