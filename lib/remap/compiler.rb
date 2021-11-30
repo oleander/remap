@@ -20,7 +20,7 @@ module Remap
       new.tap { _1.instance_exec(&block) }.rule
     end
 
-    # Maps path to to with block inbetween
+    # Maps path to to with block in between
     #
     # @param path ([]) [Array<Segment>, Segment]
     # @param to ([]) [Array<Symbol>, Symbol]
@@ -60,7 +60,7 @@ module Remap
       raise ArgumentError, e.message
     end
 
-    # Maps to path from map with block inbetween
+    # Maps to path from map with block in between
     #
     # @param path [Array<Symbol>, Symbol]
     # @param map [Array<Segment>, Segment]

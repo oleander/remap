@@ -36,7 +36,7 @@ module Remap
         new.tap { _1.execute(&block) }
       end
 
-      # Translates key into a value using pre-defined mappings
+      # Translates key into a value using predefined mappings
       #
       # @param key [#hash]
       #

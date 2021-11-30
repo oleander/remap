@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: Remap::Compiler
-  
+
     &mdash; Documentation by YARD 0.9.26
-  
+
 </title>
 
   <link rel="stylesheet" href="../css/style.css" type="text/css" />
@@ -35,16 +35,16 @@
     <div id="main" tabindex="-1">
       <div id="header">
         <div id="menu">
-  
+
     <a href="../_index.html">Index (C)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../Remap.html" title="Remap (module)">Remap</a></span></span>
-     &raquo; 
+     &raquo;
     <span class="title">Compiler</span>
-  
+
 </div>
 
         <div id="search">
-  
+
     <a class="full_list_link" id="class_list_link"
         href="../class_list.html">
 
@@ -54,65 +54,65 @@
           <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
         </svg>
     </a>
-  
+
 </div>
         <div class="clear"></div>
       </div>
 
       <div id="content"><h1>Class: Remap::Compiler
-  
-  
-  
+
+
+
 </h1>
 <div class="box_info">
-  
+
   <dl>
     <dt>Inherits:</dt>
     <dd>
       <span class="inheritName"><span class='object_link'><a href="Proxy.html" title="Remap::Proxy (class)">Proxy</a></span></span>
-      
+
         <ul class="fullTree">
           <li>Object</li>
-          
+
             <li class="next">ActiveSupport::ProxyObject</li>
-          
+
             <li class="next"><span class='object_link'><a href="Proxy.html" title="Remap::Proxy (class)">Proxy</a></span></li>
-          
+
             <li class="next">Remap::Compiler</li>
-          
+
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
-      
+
     </dd>
   </dl>
-  
 
-  
-  
-  
-  
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/remap/compiler.rb</dd>
   </dl>
-  
+
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
+
 <p>Constructs a <span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span> from the block passed to Base.define</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 
 </div>
 
@@ -121,435 +121,435 @@
 
 
 
-  
+
     <h2>
       Class Method Summary
       <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#call-class_method" title="call (class method)">.<strong>call</strong>(&amp;block)  &#x21d2; Rule </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Constructs a rule tree given block.</p>
 </div></span>
-  
+
 </li>
 
-      
+
     </ul>
-  
+
     <h2>
       Instance Method Summary
       <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#all-instance_method" title="#all (instance method)">#<strong>all</strong>  &#x21d2; Rule::Path::Segment::Quantifier::All </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Selects all elements.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#at-instance_method" title="#at (instance method)">#<strong>at</strong>(index)  &#x21d2; Path::Segment::Key </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Selects index element in input.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>  &#x21d2; Rule </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'></div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong>(&amp;block)  &#x21d2; Rule::Each </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Iterates over the input value, passes each value to its block and merges the result back together.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#embed-instance_method" title="#embed (instance method)">#<strong>embed</strong>(mapper)  &#x21d2; Rule::Embed </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Maps using mapper.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#first-instance_method" title="#first (instance method)">#<strong>first</strong>  &#x21d2; Path::Segment::Key </a>
-    
 
-    
+
+
       (also: #any)
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+  </span>
+
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Selects first element in input.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#last-instance_method" title="#last (instance method)">#<strong>last</strong>  &#x21d2; Path::Segment::Key </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Selects last element in input.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#map-instance_method" title="#map (instance method)">#<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; Rule::Map </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
-<p>Maps path to <span class='object_link'><a href="#to-instance_method" title="Remap::Compiler#to (method)">#to</a></span> with block inbetween.</p>
+<p>Maps path to <span class='object_link'><a href="#to-instance_method" title="Remap::Compiler#to (method)">#to</a></span> with block in between.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#option-instance_method" title="#option (instance method)">#<strong>option</strong>(id)  &#x21d2; Rule::Static::Option </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Static option to be selected.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#rule-instance_method" title="#rule (instance method)">#<strong>rule</strong>  &#x21d2; Rule </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>The final rule.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#set-instance_method" title="#set (instance method)">#<strong>set</strong>(*path, to:)  &#x21d2; Rule::Set </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'></div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#to-instance_method" title="#to (instance method)">#<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; Rule::Map </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
-<p>Maps to path from <span class='object_link'><a href="#map-instance_method" title="Remap::Compiler#map (method)">#map</a></span> with block inbetween.</p>
+<p>Maps to path from <span class='object_link'><a href="#map-instance_method" title="Remap::Compiler#map (method)">#map</a></span> with block in between.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>(value)  &#x21d2; Rule::Static::Fixed </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Static value to be selected.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#wrap-instance_method" title="#wrap (instance method)">#<strong>wrap</strong>(type, &amp;block)  &#x21d2; Rule::Wrap </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Wraps output in type.</p>
 </div></span>
-  
+
 </li>
 
-      
+
     </ul>
-  
 
 
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Proxy.html" title="Remap::Proxy (class)">Proxy</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Proxy.html#const_missing-class_method" title="Remap::Proxy.const_missing (method)">const_missing</a></span>, <span class='object_link'><a href="Proxy.html#tap-instance_method" title="Remap::Proxy#tap (method)">#tap</a></span></p>
 
-  
-  
-  
+
+
+
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
 
-    
+
       <div class="method_details first">
   <h3 class="signature first" id="call-class_method">
-  
-    .<strong>call</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt> 
-  
 
-  
+    .<strong>call</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Constructs a rule tree given block</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -580,44 +580,44 @@
   </tr>
 </table>
 </div>
-    
+
   </div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
 
-    
+
       <div class="method_details first">
   <h3 class="signature first" id="all-instance_method">
-  
-    #<strong>all</strong>  &#x21d2; <tt>Rule::Path::Segment::Quantifier::All</tt> 
-  
 
-  
+    #<strong>all</strong>  &#x21d2; <tt>Rule::Path::Segment::Quantifier::All</tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Selects all elements</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>Rule::Path::Segment::Quantifier::All</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -640,19 +640,19 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="at-instance_method">
-  
-    #<strong>at</strong>(index)  &#x21d2; <tt>Path::Segment::Key</tt> 
-  
 
-  
+    #<strong>at</strong>(index)  &#x21d2; <tt>Path::Segment::Key</tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Selects index element in input</p>
 
 
@@ -661,50 +661,50 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>index</span>
-      
-      
+
+
         <span class='type'>(<tt>Integer</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>Path::Segment::Key</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>if index is not an Integer</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -731,36 +731,36 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="call-instance_method">
-  
-    #<strong>call</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt> 
-  
 
-  
+    #<strong>call</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -779,61 +779,61 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="each-instance_method">
-  
-    #<strong>each</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Each.html" title="Remap::Rule::Each (class)">Rule::Each</a></span></tt> 
-  
 
-  
+    #<strong>each</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Each.html" title="Remap::Rule::Each (class)">Rule::Each</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Iterates over the input value, passes each value to its block and merges the result back together</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Each.html" title="Remap::Rule::Each (class)">Rule::Each</a></span></tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>]</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>if no block given</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -864,19 +864,19 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="embed-instance_method">
-  
-    #<strong>embed</strong>(mapper)  &#x21d2; <tt><span class='object_link'><a href="Rule/Embed.html" title="Remap::Rule::Embed (class)">Rule::Embed</a></span></tt> 
-  
 
-  
+    #<strong>embed</strong>(mapper)  &#x21d2; <tt><span class='object_link'><a href="Rule/Embed.html" title="Remap::Rule::Embed (class)">Rule::Embed</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Maps using mapper</p>
 
 
@@ -885,32 +885,32 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>mapper</span>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="../Remap.html" title="Remap (module)">Remap</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Embed.html" title="Remap::Rule::Embed (class)">Rule::Embed</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -937,47 +937,47 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="first-instance_method">
-  
-    #<strong>first</strong>  &#x21d2; <tt>Path::Segment::Key</tt> 
-  
 
-  
+    #<strong>first</strong>  &#x21d2; <tt>Path::Segment::Key</tt>
+
+
+
     <span class="aliases">Also known as:
     <span class="names"><span id='any-instance_method'>any</span></span>
     </span>
-  
 
-  
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Selects first element in input</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>Path::Segment::Key</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>]</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1000,38 +1000,38 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="last-instance_method">
-  
-    #<strong>last</strong>  &#x21d2; <tt>Path::Segment::Key</tt> 
-  
 
-  
+    #<strong>last</strong>  &#x21d2; <tt>Path::Segment::Key</tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Selects last element in input</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>Path::Segment::Key</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1054,20 +1054,20 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="map-instance_method">
-  
-    #<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
-  
 
-  
+    #<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Maps path to <span class='object_link'><a href="#to-instance_method" title="Remap::Compiler#to (method)">#to</a></span> with block inbetween</p>
+
+<p>Maps path to <span class='object_link'><a href="#to-instance_method" title="Remap::Compiler#to (method)">#to</a></span> with block in between</p>
 
 
   </div>
@@ -1075,55 +1075,55 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>path</span>
-      
-      
+
+
         <span class='type'>(<tt>[]</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'><dl class="rdoc-list label-list"><dt>Array&lt;Segment&gt;, Segment
 <dd></dd></dl>
 </div>
-      
+
     </li>
-  
+
     <li>
-      
+
         <span class='name'>to</span>
-      
-      
+
+
         <span class='type'>(<tt>[]</tt>)</span>
-      
-      
+
+
         <em class="default">(defaults to: <tt>EMPTY_ARRAY</tt>)</em>
-      
-      
+
+
         &mdash;
         <div class='inline'><dl class="rdoc-list label-list"><dt>Array&lt;Symbol&gt;, Symbol
 <dd></dd></dl>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1158,19 +1158,19 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="option-instance_method">
-  
-    #<strong>option</strong>(id)  &#x21d2; <tt>Rule::Static::Option</tt> 
-  
 
-  
+    #<strong>option</strong>(id)  &#x21d2; <tt>Rule::Static::Option</tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Static option to be selected</p>
 
 
@@ -1179,32 +1179,32 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>id</span>
-      
-      
+
+
         <span class='type'>(<tt>Symbol</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>Rule::Static::Option</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1227,38 +1227,38 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="rule-instance_method">
-  
-    #<strong>rule</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt> 
-  
 
-  
+    #<strong>rule</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>The final rule</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1281,110 +1281,110 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="set-instance_method">
-  
-    #<strong>set</strong>(*path, to:)  &#x21d2; <tt><span class='object_link'><a href="Rule/Set.html" title="Remap::Rule::Set (class)">Rule::Set</a></span></tt> 
-  
 
-  
+    #<strong>set</strong>(*path, to:)  &#x21d2; <tt><span class='object_link'><a href="Rule/Set.html" title="Remap::Rule::Set (class)">Rule::Set</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 
   </div>
 </div>
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>*path</span>
-      
-      
+
+
         <span class='type'>(<tt>[]</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'><dl class="rdoc-list label-list"><dt>Symbol, Array&lt;Symbol&gt;
 <dd></dd></dl>
 </div>
-      
+
     </li>
-  
+
     <li>
-      
+
         <span class='name'>to</span>
-      
-      
+
+
         <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>a customizable set of options</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
-  
-    
-    
-    
-    
+
+
+
+
+
     <p class="tag_title">Options Hash (<tt>to:</tt>):</p>
     <ul class="option">
-      
+
         <li>
           <span class="name"></span>
           <span class="type">(<tt><span class='object_link'><a href="Static.html" title="Remap::Static (class)">Remap::Static</a></span></tt>)</span>
           <span class="default">
-            
+
           </span>
-          
+
         </li>
-      
+
     </ul>
-  
+
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Set.html" title="Remap::Rule::Set (class)">Rule::Set</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>if no path given if path is not a Symbol or Array&lt;Symbol&gt;</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1411,20 +1411,20 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="to-instance_method">
-  
-    #<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
-  
 
-  
+    #<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Maps to path from <span class='object_link'><a href="#map-instance_method" title="Remap::Compiler#map (method)">#map</a></span> with block inbetween</p>
+
+<p>Maps to path from <span class='object_link'><a href="#map-instance_method" title="Remap::Compiler#map (method)">#map</a></span> with block in between</p>
 
 
   </div>
@@ -1432,45 +1432,45 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>path</span>
-      
-      
+
+
         <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>Symbol</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
     <li>
-      
+
         <span class='name'>map</span>
-      
-      
+
+
         <span class='type'>(<tt>Array&lt;Segment&gt;</tt>, <tt>Segment</tt>)</span>
-      
-      
+
+
         <em class="default">(defaults to: <tt>EMPTY_ARRAY</tt>)</em>
-      
-      
+
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1493,19 +1493,19 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="value-instance_method">
-  
-    #<strong>value</strong>(value)  &#x21d2; <tt>Rule::Static::Fixed</tt> 
-  
 
-  
+    #<strong>value</strong>(value)  &#x21d2; <tt>Rule::Static::Fixed</tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Static value to be selected</p>
 
 
@@ -1514,32 +1514,32 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>value</span>
-      
-      
+
+
         <span class='type'>(<tt>Any</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>Rule::Static::Fixed</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1562,19 +1562,19 @@
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="wrap-instance_method">
-  
-    #<strong>wrap</strong>(type, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Wrap.html" title="Remap::Rule::Wrap (class)">Rule::Wrap</a></span></tt> 
-  
 
-  
+    #<strong>wrap</strong>(type, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Wrap.html" title="Remap::Rule::Wrap (class)">Rule::Wrap</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Wraps output in type</p>
 
 
@@ -1583,63 +1583,63 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>type</span>
-      
-      
+
+
         <span class='type'>(<tt>:array</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Wrap.html" title="Remap::Rule::Wrap (class)">Rule::Wrap</a></span></tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>if type is not :array</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -1674,7 +1674,7 @@
   </tr>
 </table>
 </div>
-    
+
   </div>
 
 </div>
