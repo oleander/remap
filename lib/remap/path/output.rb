@@ -12,7 +12,7 @@ module Remap
     #   result = Output.new([:a, :b, :c]).call(state)
     #   result # => { a: { b: { c: "A" } } }
     class Output < Unit
-      attribute :segments, Types.Array(Types::Key)
+      attribute :segments, [Types::Key]
 
       # @return [State]
       def call(state)
