@@ -24,7 +24,7 @@ module Remap
         Failure.call(failures: [other.failure("No data avalible")])
       in { failures: [], notices: }
         Failure.call(failures: notices, notices: [])
-      in { failures: , notices: }
+      in { failures:, notices: }
         Failure.call(failures: failures, notices: notices)
       end
     rescue Notice::Error => e
