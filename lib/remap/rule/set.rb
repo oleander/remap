@@ -15,7 +15,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({}, name: "John") # => { person: { name: "John" } }
+    #   Mapper.call({}, name: "John").result # => { person: { name: "John" } }
     #
     # @example Given a value
     #   class Mapper < Remap::Base
@@ -24,7 +24,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({}) # => { api_key: "ABC-123" }
+    #   Mapper.call({}).result # => { api_key: "ABC-123" }
     class Set < Concrete
       # @return [Static]
       attribute :value, Static, alias: :rule

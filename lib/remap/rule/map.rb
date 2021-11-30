@@ -66,7 +66,7 @@ module Remap
       #     end
       #   end
       #
-      #   Mapper.call({ a: { b: "A" } }).result # => {}
+      #   Mapper.call({ a: { b: "A" } }).problems.count # => 1
       #
       # @return [Map]
       def pending(reason = "Pending mapping")

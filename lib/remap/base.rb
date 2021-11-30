@@ -60,8 +60,8 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call(age: 10) # => Failure({ age: ["must be at least 18 years old"] })
-    #   Mapper.call(age: 50) # => Succcess({ person: { age: 50 } })
+    #   Mapper.call({age: 10}).success? # => false
+    #   Mapper.call({age: 50}).success? # => true
     #
     # @see https://dry-rb.org/gems/dry-validation/1.6/rules/
     #
@@ -81,7 +81,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call(input, name: "John").result # => { name: "John" }
+    #   Mapper.call({}, name: "John").result # => { name: "John" }
     #
     # @param field [Symbol]
     # @option type (Types::Any) [#call]

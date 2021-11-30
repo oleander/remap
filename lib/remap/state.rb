@@ -16,6 +16,9 @@ module Remap
 
     include Dry::Core::Constants
 
+    class Dummy < Remap::Base
+    end
+
     # Creates a valid state
     #
     # @param value [Any] Internal state value
@@ -24,7 +27,7 @@ module Remap
     # @option options [Hash] Mapper options / arguments
     #
     # @return [Hash] A valid state
-    def self.call(value, mapper:, options: EMPTY_HASH)
+    def self.call(value, mapper: Dummy, options: EMPTY_HASH)
       {
         problems: EMPTY_ARRAY,
         path: EMPTY_ARRAY,

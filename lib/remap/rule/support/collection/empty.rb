@@ -8,9 +8,15 @@ module Remap
       # Represents an empty rule block
       #
       # @example Map any value to undefined
-      #   map do
-      #     # NOP
+      #   class Mapper < Remap::Base
+      #     define do
+      #       map do
+      #         # NOP
+      #       end
+      #     end
       #   end
+      #
+      #   Mapper.call("A").success? # => false
       class Empty < Unit
         attribute? :rules, Value(EMPTY_ARRAY), default: EMPTY_ARRAY
 

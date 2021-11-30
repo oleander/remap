@@ -7,7 +7,13 @@ module Remap
     # Represents a mapping without block
     #
     # @example Maps "A" to "A"
-    #   map
+    #   class Mapper < Remap::Base
+    #     define do
+    #       map
+    #     end
+    #   end
+    #
+    #  Mapper.call("A").result # => "A"
     class Void < Concrete
       # @param state [State<T>]
       #

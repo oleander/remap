@@ -9,12 +9,12 @@ module Remap
     # @example Select all elements
     #   class Mapper < Remap::Base
     #     define do
-    #       map [:people, all, :name]
+    #       map [all, :name]
     #     end
     #   end
     #
-    #   output = Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] })
-    #   output.result # => { people: [{ name: "John" }, { name: "Jane" }] }
+    #   output = Mapper.call([{ name: "John" }, { name: "Jane" }])
+    #   output.result # => ["John", "Jane"]
     class All < Concrete
       requirement Types::Enumerable
 

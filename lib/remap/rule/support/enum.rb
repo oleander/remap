@@ -16,7 +16,7 @@ module Remap
       # Builds an enumeration using the block as context
       #
       # @example
-      #   enum = Enum.call do
+      #   enum = Remap::Rule::Enum.call do
       #     from "B", to: "C"
       #     value "A"
       #     otherwise "D"
