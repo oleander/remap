@@ -21,6 +21,7 @@ module Remap
     #
     # @example Upcase each value in an array
     #   state = Remap::State.call(["John", "Jane"])
+    #   void = Remap::Rule::Void.new
     #   map = Remap::Rule::Map.new({
     #     rule: void,
     #     path: {
