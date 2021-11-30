@@ -6,7 +6,7 @@ module Remap
     #
     # @example Maps "A" to "A"
     #   map
-    class Void < self
+    class Void < Concrete
       using State::Extension
 
       # @param state [State<T>]

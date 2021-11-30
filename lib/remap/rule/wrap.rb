@@ -10,7 +10,7 @@ module Remap
     #       map :name
     #     end
     #   end
-    class Wrap < self
+    class Wrap < Concrete
       using State::Extension
 
       attribute :type, Value(:array)

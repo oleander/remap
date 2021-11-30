@@ -3,7 +3,7 @@
 module Remap
   class Rule
     # Represents a block defined by a rule
-    class Collection < Dry::Interface
+    class Collection < Abstract
       attribute :rules, Array
 
       # @param state [State]

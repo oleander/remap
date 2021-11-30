@@ -6,7 +6,7 @@ module Remap
     #
     # @example Map { name: "Ford" } to { person: { name: "Ford" } }
     #   map :name, to: [:person, :name]
-    class Map < self
+    class Map < Concrete
       using State::Extensions::Enumerable
       using State::Extension
 

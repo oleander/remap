@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Remap
-  class Rule < Dry::Concrete
+  class Rule < Dry::Interface
     defines :requirement
     requirement Types::Any
 

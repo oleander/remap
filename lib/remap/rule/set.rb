@@ -23,7 +23,7 @@ module Remap
     #   end
     #
     #   Mapper.call(input) # => { api_key: "ABC-123" }
-    class Set < self
+    class Set < Concrete
       using State::Extension
 
       attribute :value, Types::Rule, alias: :rule

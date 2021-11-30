@@ -2,6 +2,8 @@
 
 module Remap
   class Rule
+    using State::Extension
+
     # Iterates over a rule, even if the rule is not a collection
     #
     # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
@@ -10,9 +12,7 @@ module Remap
     #       map :name
     #     end
     #   end
-    class Each < Value
-      using State::Extension
-
+    class Each < Unit
       attribute :rule, Types::Rule
 
       # Iterates over {state} and passes each value to {rule}
@@ -22,9 +22,7 @@ module Remap
       #
       # @return [State<Enumerable>]
       def call(state)
-        state.map do |inner_state|
-          rule.call(inner_state)
-        end
+        state.map(&rule)
       end
     end
   end

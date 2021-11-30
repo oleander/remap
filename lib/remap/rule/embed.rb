@@ -22,7 +22,7 @@ module Remap
     #   end
     #
     #   Person.call(name: "Volvo") # => { person: { car: { name: "Volvo" } } }
-    class Embed < Value
+    class Embed < Unit
       using State::Extension
 
       attribute :mapper, Types::Mapper
