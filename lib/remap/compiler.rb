@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Remap
-  class Compiler
+  # Constructs a {Rule} from the block passed to {Remap::Base.define}
+  class Compiler < Proxy
     include Dry::Core::Constants
-    extend Dry::Initializer
     extend Forwardable
 
     param :rules, default: -> { EMPTY_ARRAY.dup }
@@ -19,7 +19,9 @@ module Remap
         return Rule::Void.new
       end
 
-      new.tap { _1.instance_eval(&block) }.rule
+      compiler = new
+      compiler.instance_exec(&block)
+      compiler.rule
     end
 
     # Maps {path} to {to} with {block} inbetween

@@ -2,15 +2,9 @@
 
 module Remap
   class Rule
-    class Enum < ActiveSupport::ProxyObject
-      def self.const_missing(name)
-        ::Object.const_get(name)
-      end
-
+    class Enum < Proxy
       include Dry::Core::Constants
       include Dry::Monads[:maybe]
-
-      extend Dry::Initializer
 
       option :mappings, default: -> { Hash.new { default } }
       option :default, default: -> { None() }
