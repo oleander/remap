@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require "active_support/configurable"
+
 module Remap
   class Base < Mapper
+    include ActiveSupport::Configurable
     include Dry::Core::Constants
     extend Dry::Monads[:result]
-    extend Dry::Configurable
     using State::Extension
     extend Operation
 
@@ -12,11 +14,35 @@ module Remap
       # NOP
     end
 
-    setting :constructor, default: IDENTITY
-    setting :options, default: EMPTY_ARRAY
-    setting :rules, default: EMPTY_ARRAY
-    setting :contract, default: CONTRACT
-    setting :context, default: IDENTITY
+    config_accessor :constructor, instance_accessor: true do
+      IDENTITY
+    end
+
+    config_accessor :options, instance_accessor: true do
+      EMPTY_HASH
+    end
+
+    config_accessor :rules, instance_accessor: true do
+      EMPTY_ARRAY
+    end
+
+    config_accessor :contract, instance_accessor: true do
+      CONTRACT
+    end
+
+    config_accessor :context, instance_accessor: true do
+      IDENTITY
+    end
+
+    # config.constructor = IDENTITY
+    # config.options = EMPTY_HASH
+    # config.rules = EMPTY_ARRAY
+    # config.contract = CONTRACT
+    #  config.context = IDENTITY
+    # setting :options, default: EMPTY_ARRAY
+    # setting :rules, default: EMPTY_ARRAY
+    # setting :contract, default: CONTRACT
+    # setting :context, default: IDENTITY
 
     schema schema.strict(false)
 
@@ -41,7 +67,7 @@ module Remap
     #
     # @return [void]
     def self.contract(&context)
-      config.contract = Dry::Schema.JSON(&context)
+      self.contract = Dry::Schema.JSON(&context)
     end
 
     # Defines a rule for the mapper
@@ -67,7 +93,7 @@ module Remap
     #
     # @return [void]
     def self.rule(...)
-      config.rules << -> * { rule(...) }
+      self.rules << -> * { rule(...) }
     end
 
     # Defines a required option for the mapper
@@ -94,7 +120,7 @@ module Remap
         raise ArgumentError, "[BUG] Could not locate [#{field}] in [#{self}]"
       end
 
-      config.options << -> * { option(field, type: key) }
+      self.options << -> * { option(field, type: key) }
     end
 
     # Defines a mapper rules and possible constructor
@@ -132,8 +158,8 @@ module Remap
         raise ArgumentError, "Missing block"
       end
 
-      config.context = Compiler.call(&context)
-      config.constructor = Constructor.call(method: method, strategy: strategy, target: target)
+      self.context = Compiler.call(&context)
+      self.constructor = Constructor.call(method: method, strategy: strategy, target: target)
     rescue Dry::Struct::Error => e
       raise ArgumentError, e.message
     end
@@ -168,31 +194,26 @@ module Remap
       end
 
       state.tap do |input|
-        contract.call(input, state.options).tap do |result|
+        validation.call(input, state.options).tap do |result|
           unless result.success?
             return error[state.failure(result.errors.to_h)]
           end
         end
       end
 
-      state.then(&config.context).then(&config.constructor)
+      state.then(&context).then(&constructor)
     end
 
     private
 
     # @return [Contract]
-    def contract
+    def validation
       Contract.call(
-        contract: config.contract,
+        contract: contract,
         attributes: attributes,
-        options: config.options,
-        rules: config.rules
+        options: options,
+        rules: rules
       )
-    end
-
-    # @return [Dry::Configurable]
-    def config
-      self.class.config
     end
   end
 end
