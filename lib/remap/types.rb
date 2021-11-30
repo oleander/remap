@@ -5,7 +5,7 @@ require "dry/logic/operations/negation"
 require "dry/logic"
 
 module Remap
-  # Defines callable types used troughout the application
+  # Defines callable types used throughout the application
   module Types
     include Dry::Types()
     using State::Extension

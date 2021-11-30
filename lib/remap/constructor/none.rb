@@ -8,7 +8,7 @@ module Remap
       attribute :strategy, Types::Any
       attribute :method, Types::Any
 
-      # Used by {Remap::Base} as a fallback constructor
+      # Used by {Remap::Base} as a default constructor
       # Using it does nothing but return its input state
       #
       # @param state [State]

@@ -13,7 +13,7 @@ module Remap
 
       alias execute instance_eval
 
-      # Builds an enum using the block context
+      # Builds an enumeration using the block as context
       #
       # @example
       #   enum = Enum.call do

@@ -9,7 +9,7 @@ module Remap
     # @example Combine two mappers
     #   Mapper1 | Mapper2
     class Or < Binary
-      # Succeedes if left or right succeeds
+      # Succeeds if left or right succeeds
       # Returns which ever succeeds first
       #
       # @param state [State]
