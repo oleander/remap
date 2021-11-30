@@ -1,0 +1,4 @@
+--plugin yard-rspec
+--plugin yard-coderay
+--plugin yard-doctest
+--plugin yard-spellcheck
