@@ -2,14 +2,15 @@
 
 module Remap
   class Rule
-    class Path < Struct
+    class Path < Dry::Concrete
       using State::Extension
+      using State::Extensions::Enumerable
 
       # @example [:a, :b, :c]
-      attribute :to, Types.Array(Types::Key)
+      attribute :to, Types.Array(Types::Key), alias: :output_path
 
       # @example [:a, 0, :b, ALL]
-      attribute :map, Types.Array(Selector)
+      attribute :map, Types.Array(Selector), alias: :input_path
 
       # Maps {state} from {map} to {block} to {to}
       #
@@ -25,10 +26,8 @@ module Remap
         end
 
         selector(state).then(&block).fmap do |value|
-          to.reverse.reduce(value) do |val, key|
-            { key => val }
-          end
-        end._
+          output_path.hide(value)
+        end
       end
 
       private
