@@ -177,3 +177,6 @@ Style/StabbyLambdaParentheses:
 
 Lint/UnusedMethodArgument:
   Enabled: false
+
+Lint/EmptyBlock:
+  Exclude: ["lib/remap/base.rb"]
