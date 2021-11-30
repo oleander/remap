@@ -18,6 +18,18 @@ module Remap
     #   end
     #
     #   Mapper.call({ people: [{ name: "John" }] }).result # => { names: ["John"] }
+    #
+    # @example Upcase each value in an array
+    #   state = Remap::State.call(["John", "Jane"])
+    #   map = Remap::Rule::Map.new({
+    #     rule: void,
+    #     path: {
+    #       input: [],
+    #       output: []
+    #     }
+    #   }).then { value.upcase }
+    #   each = Remap::Rule::Each.new(map)
+    #   each.call(state).fetch(:value) # => ["JOHN", "JANE"]
     class Each < Unit
       # @return [Rule]
       attribute :rule, Rule
