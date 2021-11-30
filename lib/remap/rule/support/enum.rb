@@ -61,16 +61,12 @@ module Remap
       end
       alias call get
 
-      # @param key [Key]
-      #
       # @return [Maybe]
       def [](key)
         mappings[key]
       end
 
-      # Map all keys in {keys} to {to}
-      #
-      # @return [VOID]
+      # @return [void]
       def from(*keys, to:)
         value = Some(to)
 
@@ -80,18 +76,14 @@ module Remap
         end
       end
 
-      # Maps {var} to {var}
-      #
-      # @return [VOID]
+      # @return [void]
       def value(*ids)
         ids.each do |id|
           from(id, to: id)
         end
       end
 
-      # Fallback value when {#call} fails
-      #
-      # @return [Void]
+      # @return [void]
       def otherwise(value)
         mappings.default = Some(value)
       end
