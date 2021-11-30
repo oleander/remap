@@ -4,6 +4,27 @@ require "active_support/configurable"
 require "active_support/core_ext/object/with_options"
 
 module Remap
+  # @example Maps { a: { b: "A" } } to "A"
+  #   class Mapper < Remap::Base
+  #     define do
+  #       map(:a, :b).enum do
+  #         value "A", "B"
+  #       end
+  #     end
+  #   end
+  #
+  #   Mapper.call({ a: { b: "A" } }).result # => "A"
+  #   Mapper.call({ a: { b: "B" } }).result # => "B"
+  #
+  # @example Ignore rule for input { a: { b: "A" } }
+  #   class Mapper < Remap::Base
+  #     define do
+  #       map(:a, :b).pending
+  #     end
+  #   end
+  #
+  #   Mapper.call({ a: { b: "A" } }).problems.count # => 1
+  #
   # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
   #   class Mapper < Remap::Base
   #     define do

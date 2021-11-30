@@ -56,14 +56,11 @@ module Remap
       #
       # @param reason [String]
       #
-      # @example Ignore rule for input { a: { b: "A" } }
-      #   class Mapper < Remap::Base
-      #     define do
-      #       map(:a, :b).pending
-      #     end
-      #   end
-      #
-      #   Mapper.call({ a: { b: "A" } }).problems.count # => 1
+      # @example Pending mapping
+      #   state = Remap::State.call(:value)
+      #   map = Remap::Rule::Map.call({})
+      #   pending = map.pending("this is pending")
+      #   pending.call(state).key?(:value) # => false
       #
       # @return [Map]
       def pending(reason = "Pending mapping")
@@ -74,17 +71,23 @@ module Remap
 
       # An enumeration processor
       #
-      # @example Maps { a: { b: "A" } } to "A"
-      #   class Mapper < Remap::Base
-      #     define do
-      #       map(:a, :b).enum do
-      #         value "A", "B"
-      #       end
-      #     end
+      # @example A mapped enum
+      #   enum = Remap::Rule::Map.call({}).enum do
+      #     value "A", "B"
+      #     otherwise "C"
       #   end
       #
-      #   Mapper.call({ a: { b: "A" } }).result # => "A"
-      #   Mapper.call({ a: { b: "B" } }).result # => "B"
+      #   a = Remap::State.call("A")
+      #   enum.call(a).fetch(:value) # => "A"
+      #
+      #   b = Remap::State.call("B")
+      #   enum.call(b).fetch(:value) # => "B"
+      #
+      #   c = Remap::State.call("C")
+      #   enum.call(c).fetch(:value) # => "C"
+      #
+      #   d = Remap::State.call("D")
+      #   enum.call(d).fetch(:value) # => "C"
       #
       # @return [Map]
       def enum(&block)
