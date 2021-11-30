@@ -142,6 +142,8 @@ output = Mapper.call(["A", "B", "C"])
 output.result # => ["A", "C"]
 ```
 
+> or use `if` to reverse
+
 ``` ruby
 class Mapper < Remap::Base
   define do
