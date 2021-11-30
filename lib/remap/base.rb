@@ -125,7 +125,7 @@ module Remap
     # @option strategy (:argument) [:argument, :keywords, :none]
     #
     # @example A mapper, which mapps a value at [:a] to [:b]
-    #   class Mapper < Remap
+    #   class Mapper < Remap::Base
     #     define do
     #       map :a, to: :b
     #     end
@@ -138,13 +138,13 @@ module Remap
     #     attribute :first_name, Types::String
     #   end
     #
-    #   class Mapper < Remap
+    #   class Mapper < Remap::Base
     #     define(Person) do
     #       map :name, to: :first_name
     #     end
     #   end
     #
-    #   Mapper.call(name: "John").result # => Person<first_name="John">
+    #   Mapper.call(name: "John").result # => Person
     #
     # @return [void]
     def self.define(target = Nothing, method: :new, strategy: :argument, &context)

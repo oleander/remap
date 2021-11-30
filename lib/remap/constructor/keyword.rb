@@ -21,7 +21,7 @@ module Remap
       #   constructor = Remap::Constructor.call(strategy: :keyword, target: target, method: :new)
       #   state = Remap::State.call({ foo: :bar })
       #   new_state = constructor.call(state)
-      #   new_state.result # => #<OpenStruct foo=:bar>
+      #   new_state.fetch(:value) # => #<OpenStruct foo=:bar>
       #
       # @param state [State]
       #

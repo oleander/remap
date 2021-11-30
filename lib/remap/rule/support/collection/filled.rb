@@ -17,7 +17,7 @@ module Remap
       #     end
       #   end
       #
-      #   Mapper.call({ a1: 1, a2: 2 }) # => { b1: 1, b2: 2 }
+      #   Mapper.call({ a1: 1, a2: 2 }).result # => { b1: 1, b2: 2 }
       class Filled < Unit
         # @return [Array<Rule>]
         attribute :rules, [Types.Interface(:call)], min_size: 1
