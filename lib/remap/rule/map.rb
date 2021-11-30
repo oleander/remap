@@ -19,13 +19,13 @@ module Remap
       # @return [Rule]
       attribute :rule, Rule.default { Void.call({}) }
 
-      class Inner < Struct
+      class LocalPath < Struct
         attribute :output, Path::Output.default { Path::Output.call([]) }
         attribute :input, Path::Input.default { Path::Input.call([]) }
       end
 
       # @return [Hash]
-      attribute? :path, Inner.default { Inner.call({}) }
+      attribute? :path, LocalPath.default { LocalPath.call({}) }
 
       # Maps state using {#path} & {#rule}
       #
