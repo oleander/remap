@@ -34,8 +34,8 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call(age: '10') # => Failure({ age: ["must be an integer"] })
-    #   Mapper.call(age: 50) # => Succcess({ person: { age: 50 } })
+    #   Mapper.call(age: '10').success? # => false
+    #   Mapper.call(age: 50).success? # => true
     #
     # @see https://dry-rb.org/gems/dry-schema/1.5/
     #
