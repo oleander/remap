@@ -13,7 +13,7 @@ group :development do
   gem "reek", require: false
   gem "yard", require: false
   gem "yard-coderay", require: false
-  gem "yard-doctest", require: false
+  gem "yard-doctest"
   gem "yard-rspec", require: false
   gem "yard-spellcheck", require: false
 end
