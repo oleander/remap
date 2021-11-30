@@ -7,17 +7,11 @@ module Remap
 
       # Represents a non-empty rule block
       #
-      # @example A non-empty collection
-      #   class Mapper < Remap::Base
-      #     define do
-      #       map do
-      #         map :a1, to: :b1
-      #         map :a2, to: :b2
-      #       end
-      #     end
-      #   end
-      #
-      #   Mapper.call({ a1: 1, a2: 2 }).result # => { b1: 1, b2: 2 }
+      # @example A collection containing a single rule
+      #   state = Remap::State.call("A")
+      #   void = Remap::Rule::Void.call({})
+      #   rule = Remap::Rule::Collection.call([void])
+      #   rule.call(state).fetch(:value) # => "A"
       class Filled < Unit
         # @return [Array<Rule>]
         attribute :rules, [Types.Interface(:call)], min_size: 1

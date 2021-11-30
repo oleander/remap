@@ -7,16 +7,10 @@ module Remap
 
       # Represents an empty rule block
       #
-      # @example Map any value to undefined
-      #   class Mapper < Remap::Base
-      #     define do
-      #       map do
-      #         # NOP
-      #       end
-      #     end
-      #   end
-      #
-      #   Mapper.call("A").success? # => false
+      # @example A collection containing no rule
+      #   state = Remap::State.call("A")
+      #   rule = Remap::Rule::Collection.call({})
+      #   rule.call(state).key?(:value) # => false
       class Empty < Unit
         attribute? :rules, Value(EMPTY_ARRAY), default: EMPTY_ARRAY
 
