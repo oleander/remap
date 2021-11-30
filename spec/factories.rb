@@ -32,13 +32,7 @@ FactoryBot.define do
   end
 
   factory Remap::Rule::Path, aliases: [Remap::Rule::Path] do
-    map { input }
-    to { output }
-
-    transient do
-      input { generate(:path) }
-      output { generate(:path) }
-    end
+    selectors { generate(:path) }
   end
 
   factory Remap::Rule::Map, aliases: [Remap::Rule::Map] do
@@ -74,7 +68,7 @@ FactoryBot.define do
   end
 
   factory :state, class: Hash, aliases: [:undefined] do
-    initialize_with { attributes._ }
+    initialize_with { attributes }
 
     problems { EMPTY_ARRAY }
     options { EMPTY_HASH }

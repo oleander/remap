@@ -31,4 +31,6 @@ group :test do
   gem "simplecov"
 end
 
-gem "dry-interface", path: ".."
+path "../dry-interface" do
+  gem "dry-interface"
+end

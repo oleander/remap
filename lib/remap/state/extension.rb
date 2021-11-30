@@ -17,6 +17,8 @@ module Remap
         #
         # @return [self]
         def _(&block)
+          return self
+
           unless block
             return _ { raise ArgumentError, "Input: #{self} output: #{JSON.pretty_generate(_1)}" }
           end
