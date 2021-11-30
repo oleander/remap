@@ -11,8 +11,8 @@ module Remap
       using State::Extension
 
       attribute :path do
-        attribute :to, Types.Array(Types::Key), alias: :output
-        attribute :map, Path, alias: :input
+        attribute :to, Remap::Path::Output, alias: :output
+        attribute :map, Remap::Path::Input, alias: :input
       end
 
       attribute :rule, Types::Rule
@@ -30,9 +30,7 @@ module Remap
             end
           end
         end.then do |state|
-          state.fmap do |value|
-            path.output.hide(value)
-          end
+          path.output.call(state)
         end
       end
 

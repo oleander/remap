@@ -65,13 +65,13 @@ module Support
   end
 
   # @return [Hash]
-  def state!(value = value!, path: [], input: value, **options)
-    build(:defined, value: value, path: path, input: input, options: options)
+  def state!(value = value!, input: value, **options)
+    build(:defined, value: value, input: input, **options)
   end
 
   # @return [Array<Key>]
   def path!(**options)
-    build(Rule::Path, **options)
+    build("remap/path", **options)
   end
 
   # A mapper class with {options} as required attributes
