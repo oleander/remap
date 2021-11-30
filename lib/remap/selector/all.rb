@@ -2,13 +2,13 @@
 
 module Remap
   class Selector
+    using State::Extension
+
     # Selects all elements from a state
     #
     # @example Select all elements
     #   map [:people, all, :name]
     class All < Concrete
-      using State::Extension
-
       requirement Types::Enumerable
 
       # Iterates over {state} and passes each value to {block}

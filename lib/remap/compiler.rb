@@ -4,12 +4,11 @@ module Remap
   # Constructs a {Rule} from the block passed to {Remap::Base.define}
   class Compiler < Proxy
     include Dry::Core::Constants
-    extend Forwardable
 
     param :rules, default: -> { EMPTY_ARRAY.dup }
 
     # @return [Rule]
-    delegate call: self
+    delegate :call, to: Compiler
 
     # Constructs a rule tree given {block}
     #

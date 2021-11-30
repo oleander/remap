@@ -2,13 +2,13 @@
 
 module Remap
   class Selector
+    using State::Extension
+
     # Selects value at {#key} from {#state}
     #
     # @example Select the value at key :name from a hash
     #   map :key
     class Key < Unit
-      using State::Extension
-
       attribute :key, Types::Key
       requirement Types::Hash.constrained(min_size: 1)
 

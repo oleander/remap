@@ -2,15 +2,14 @@
 
 module Remap
   class Selector
+    using State::Extension
+
     # Selects value at {#index} from {#state}
     #
     # @example Select the fith element from an array
     #   map index(4)
     class Index < Unit
-      using State::Extension
-
       attribute :index, Integer
-
       requirement Types::Array
 
       # Selects the {#index}th element from {state} and passes it to {block}
