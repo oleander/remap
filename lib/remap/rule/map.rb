@@ -10,14 +10,16 @@ module Remap
     # @example Map { name: "Ford" } to { person: { name: "Ford" } }
     #   map :name, to: [:person, :name]
     class Map < Concrete
+      # @return [Rule]
       attribute :rule, Rule
 
+      # @return [Hash]
       attribute :path do
         attribute :output, Path::Output
         attribute :input, Path::Input
       end
 
-      # Maps {state} using {#path} & {#rule}
+      # Maps state using {#path} & {#rule}
       #
       # @param state [State<T>]
       #

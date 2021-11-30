@@ -3,7 +3,7 @@
 module Remap
   # A static mapped value either represented by an option or a value
   class Static < Dry::Interface
-    # Maps a static value to {state}
+    # Maps a static value to state
     #
     # @param state [State<T>]
     #

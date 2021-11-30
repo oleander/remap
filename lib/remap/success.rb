@@ -3,6 +3,7 @@
 module Remap
   # Represents a successful mapped result
   class Success < Result
+    # @return [Any]
     attribute :result, Types::Any
 
     # @return [false]
@@ -15,7 +16,7 @@ module Remap
       true
     end
 
-    # Calls {block} with {#result} and returns a other success
+    # Calls block with {#result} and returns a other success
     #
     # @yieldparam [T]
     # @yieldreturn [U]

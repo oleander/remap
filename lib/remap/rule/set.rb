@@ -26,10 +26,13 @@ module Remap
     #
     #   Mapper.call(input) # => { api_key: "ABC-123" }
     class Set < Concrete
+      # @return [Static]
       attribute :value, Static, alias: :rule
+
+      # @return [Path::Output]
       attribute :path, Path::Output
 
-      # Returns {value} mapped to {path} regardless of input
+      # Returns value mapped to path regardless of input
       #
       # @param state [State<T>]
       #

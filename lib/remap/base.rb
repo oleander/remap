@@ -72,7 +72,7 @@ module Remap
 
     # Defines a required option for the mapper
     #
-    # @example A mapper that takes an argument {#name}
+    # @example A mapper that takes an argument name
     #   class Mapper < Remap::Base
     #     option :name
     #

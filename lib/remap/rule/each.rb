@@ -13,10 +13,11 @@ module Remap
     #     end
     #   end
     class Each < Unit
+      # @return [Rule]
       attribute :rule, Rule
 
-      # Iterates over {state} and passes each value to {rule}
-      # Restores {element}, {key} & {index} before returning state
+      # Iterates over state and passes each value to rule
+      # Restores element, key & index before returning state
       #
       # @param state [State<Enumerable>]
       #

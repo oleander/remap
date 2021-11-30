@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Remap
-  # Used by {Enum} & {Compiler} to create a clean context
+  # Used by Enum & Compiler to create a clean context
   class Proxy < ActiveSupport::ProxyObject
     def self.const_missing(name)
       ::Object.const_get(name)
@@ -10,6 +10,7 @@ module Remap
     include Dry::Core::Constants
     extend Dry::Initializer
 
+    # See Object#tap
     def tap(&block)
       block[self]
       self

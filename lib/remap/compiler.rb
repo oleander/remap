@@ -3,12 +3,13 @@
 module Remap
   # Constructs a {Rule} from the block passed to {Remap::Base.define}
   class Compiler < Proxy
+    # @return [Array<Rule>]
     param :rules, default: -> { EMPTY_ARRAY.dup }
 
     # @return [Rule]
     delegate :call, to: Compiler
 
-    # Constructs a rule tree given {block}
+    # Constructs a rule tree given block
     #
     # @return [Rule]
     def self.call(&block)
@@ -19,7 +20,7 @@ module Remap
       new.tap { _1.instance_exec(&block) }.rule
     end
 
-    # Maps {path} to {to} with {block} inbetween
+    # Maps path to to with block inbetween
     #
     # @param path ([]) [Array<Segment>, Segment]
     # @param to ([]) [Array<Symbol>, Symbol]
@@ -35,7 +36,7 @@ module Remap
       )
     end
 
-    # Maps using {mapper}
+    # Maps using mapper
     #
     # @param mapper [Remap]
     #
@@ -59,7 +60,7 @@ module Remap
       raise ArgumentError, e.message
     end
 
-    # Maps to {path} from {map} with {block} inbetween
+    # Maps to path from map with block inbetween
     #
     # @param path [Array<Symbol>, Symbol]
     # @param map [Array<Segment>, Segment]
@@ -82,7 +83,7 @@ module Remap
       add Rule::Each.new(rule: call(&block))
     end
 
-    # Wraps output in {type}
+    # Wraps output in type
     #
     # @param type [:array]
     #
@@ -125,7 +126,7 @@ module Remap
       Static::Option.new(name: id)
     end
 
-    # Selects {index} element in input
+    # Selects index element in input
     #
     # @param index [Integer]
     #
