@@ -54,8 +54,8 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call(age: '10').success? # => false
-    #   Mapper.call(age: 50).success? # => true
+    #   Mapper.call({age: '10'}).success? # => false
+    #   Mapper.call({age: 50}).success? # => true
     #
     # @see https://dry-rb.org/gems/dry-schema/1.5/
     #
@@ -69,6 +69,10 @@ module Remap
     #
     # @example Guard against values
     #   class Mapper < Remap::Base
+    #     contract do
+    #       required(:age)
+    #     end
+    #
     #     rule(:age) do
     #       unless value >= 18
     #         key.failure("must be at least 18 years old")
@@ -135,7 +139,7 @@ module Remap
     #
     # @example A mapper with an output constructor
     #   class Person < Dry::Struct
-    #     attribute :first_name, Types::String
+    #     attribute :first_name, Dry::Types['strict.string']
     #   end
     #
     #   class Mapper < Remap::Base
@@ -144,7 +148,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({name: "John"}).result # => Person
+    #   Mapper.call({name: "John"}).result.first_name # => "John"
     #
     # @return [void]
     def self.define(target = Nothing, method: :new, strategy: :argument, &context)

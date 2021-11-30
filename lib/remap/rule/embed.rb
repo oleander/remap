@@ -23,7 +23,7 @@ module Remap
     #     end
     #   end
     #
-    #   Person.call(name: "Volvo").result # => { person: { car: { name: "Volvo" } } }
+    #   Person.call({name: "Volvo"}).result # => { person: { car: { model: "Volvo" } } }
     class Embed < Unit
       # @return [#call!]
       attribute :mapper, Types::Mapper

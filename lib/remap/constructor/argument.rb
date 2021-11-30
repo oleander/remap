@@ -20,9 +20,9 @@ module Remap
       # @example Initialize a target with a state
       #   target = ::Struct.new(:foo)
       #   constructor = Remap::Constructor.call(strategy: :argument, target: target, method: :new)
-      #   state = Remap::State.call(foo: :bar)
+      #   state = Remap::State.call(:bar)
       #   new_state = constructor.call(state)
-      #   new_state.result # => #<struct foo=:bar>
+      #   new_state.fetch(:value).foo # => :bar
       #
       # @param state [State]
       #
