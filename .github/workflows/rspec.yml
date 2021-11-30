@@ -1,4 +1,4 @@
-name: Main
+name: RSpec
 on: [push]
 jobs:
   test:
@@ -10,6 +10,4 @@ jobs:
           bundler-cache: true
           ruby-version: 3.0
       - run: bundle exec rspec --format RSpec::Github::Formatter
-      - run: bundle exec yard doc -o docs
-      - run: bundle exec yard doctest
 
