@@ -21,7 +21,7 @@ module Remap
           block[value, index: index]._.then do |new_state|
             new_state.fmap { [_1] }
           end.then do |new_array_state|
-            input_state.merged(new_array_state)
+            input_state.combine(new_array_state)
           end
         end._
       end

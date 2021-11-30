@@ -60,7 +60,7 @@ detectors:
     - Remap::Selector::Index#call
     - Remap::Selector::Key#call
     - Hash#execute
-    - Hash#merged
+    - Hash#combine
   UncommunicativeMethodName:
     exclude:
     - Support#Failure

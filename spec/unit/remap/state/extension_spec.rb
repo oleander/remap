@@ -26,8 +26,8 @@ describe Remap::State::Extension do
     end
   end
 
-  describe "#merged" do
-    subject { left.merged(right) }
+  describe "#combine" do
+    subject { left.combine(right) }
 
     context "when left is undefined!" do
       let(:left) { undefined!(:with_problems) }
@@ -232,7 +232,7 @@ describe Remap::State::Extension do
           expect { |b| left.recursive_merge(right, &b) }.not_to yield_control
         end
 
-        it "returns a merged hash" do
+        it "returns a combined hash" do
           expect(left.recursive_merge(right)).to eq(output)
         end
       end
@@ -280,7 +280,7 @@ describe Remap::State::Extension do
           expect { |b| left.recursive_merge(right, &b) }.not_to yield_control
         end
 
-        it "returns a merged array" do
+        it "returns a combined array" do
           expect(left.recursive_merge(right)).to eq([1, 2, 3, 4, 5, 6])
         end
       end

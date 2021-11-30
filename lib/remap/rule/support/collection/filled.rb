@@ -18,7 +18,7 @@ module Remap
           rules.map do |rule|
             rule.call(state)
           end.reduce do |acc, inner_state|
-            acc.merged(inner_state)
+            acc.combine(inner_state)
           end
         end
       end

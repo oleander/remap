@@ -57,7 +57,7 @@ module Remap
         # @param other [State]
         #
         # @return [State]
-        def merged(other)
+        def combine(other)
           all_problems = problems + other.problems
 
           catch :undefined do
@@ -70,15 +70,14 @@ module Remap
 
           set(problems: all_problems)
         end
-        alias_method :combine, :merged
 
         # Resolves conflicts unsovable by ActiveSupport#deep_merge
         #
-        # @param key [Symbol] the key that cannot be merged
-        # @param left [Any] the left value that cannot be merged
-        # @param right [Any] the right value that cannot be merged
+        # @param key [Symbol] the key that cannot be combine
+        # @param left [Any] the left value that cannot be combine
+        # @param right [Any] the right value that cannot be combine
         #
-        # @yieldparam reason [String] if {left} and {right} cannot be merged
+        # @yieldparam reason [String] if {left} and {right} cannot be combine
         # @yieldreturn [State]
         #
         # @return [Any]
@@ -128,7 +127,7 @@ module Remap
         # Creates a new state with params
         #
         # @param value [Any, Undefined] Used as {value:}
-        # @options [Hash] To be merged into {self}
+        # @options [Hash] To be combine into {self}
         #
         # @return [State]
         def set(value = Undefined, **options)
@@ -154,7 +153,7 @@ module Remap
 
         # Passes {#value} to block, if defined
         # The return value is then wrapped in a state
-        # and returned with {options} merged into the state
+        # and returned with {options} combine into the state
         #
         # @yieldparam value [T]
         # @yieldparam self [State]
@@ -208,7 +207,7 @@ module Remap
         end
 
         # Passes {#value} to block, if defined
-        # {options} are merged into the final state
+        # {options} are combine into the final state
         #
         # @yieldparam value [T]
         # @yieldparam self [State]

@@ -14,7 +14,7 @@ module Remap
           block[value, key: key]._.then do |new_state|
             new_state.fmap { { key => _1 } }
           end.then do |new_hash_state|
-            input_state.merged(new_hash_state)
+            input_state.combine(new_hash_state)
           end
         end._
       end
