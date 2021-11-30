@@ -6,30 +6,13 @@ module Remap
 
     # Iterates over a rule, even if the rule is not a collection
     #
-    # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
-    #   class Mapper < Remap::Base
-    #     define do
-    #       map :people, to: :names do
-    #         each do
-    #           map :name
-    #         end
-    #       end
-    #     end
-    #   end
-    #
-    #   Mapper.call({ people: [{ name: "John" }] }).result # => { names: ["John"] }
-    #
+
     # @example Upcase each value in an array
     #   state = Remap::State.call(["John", "Jane"])
-    #   void = Remap::Rule::Void.new
-    #   map = Remap::Rule::Map.new({
-    #     rule: void,
-    #     path: {
-    #       input: [],
-    #       output: []
-    #     }
-    #   }).then { _1.upcase }
-    #   each = Remap::Rule::Each.new(map)
+    #   upcase = Remap::Rule::Map.call({}).then do
+    #     value.upcase
+    #   end
+    #   each = Remap::Rule::Each.call(rule: upcase)
     #   each.call(state).fetch(:value) # => ["JOHN", "JANE"]
     class Each < Unit
       # @return [Rule]

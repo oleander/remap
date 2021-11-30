@@ -4,6 +4,18 @@ require "active_support/configurable"
 require "active_support/core_ext/object/with_options"
 
 module Remap
+  # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
+  #   class Mapper < Remap::Base
+  #     define do
+  #       map :people, to: :names do
+  #         each do
+  #           map :name
+  #         end
+  #       end
+  #     end
+  #   end
+  #
+  #   Mapper.call({ people: [{ name: "John" }] }).result # => { names: ["John"] }
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants
