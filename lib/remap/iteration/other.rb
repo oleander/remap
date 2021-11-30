@@ -2,15 +2,16 @@
 
 module Remap
   class Iteration
+    using State::Extension
+
+    # Fallback iterator which doesn't do anything
     class Other < Concrete
       attribute :value, Types::Any, alias: :other
       attribute :state, Types::State
 
-      using State::Extension
-
       # @see Base#map
       def call(&block)
-        block[other]._
+        block[other]
       end
     end
   end

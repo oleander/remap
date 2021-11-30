@@ -2,9 +2,9 @@
 
 module Remap
   class Iteration
-    class Hash < Concrete
-      using State::Extension
+    using State::Extension
 
+    class Hash < Concrete
       attribute :value, Types::Hash, alias: :hash
       attribute :state, Types::State
 

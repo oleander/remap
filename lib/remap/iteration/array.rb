@@ -2,9 +2,9 @@
 
 module Remap
   class Iteration
-    class Array < Concrete
-      using State::Extension
+    using State::Extension
 
+    class Array < Concrete
       attribute :value, Types::Array, alias: :array
       attribute :state, Types::State
 
