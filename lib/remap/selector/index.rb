@@ -4,7 +4,7 @@ module Remap
   class Selector
     using State::Extension
 
-    # Selects value at {#index} from {#state}
+    # Selects value at given index
     #
     # @example Select the fith element from an array
     #   map index(4)
