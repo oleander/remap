@@ -24,7 +24,7 @@ RSpec.configure do |config|
   end
 
   config.expect_with :rspec do |c|
-    c.max_formatted_output_length = nil
+    c.max_formatted_output_length = 100
   end
 
   config.example_status_persistence_file_path = ".rspec_status"
