@@ -270,9 +270,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Mapper.call([“A”, “B”, “C”]).result # =&gt; [“A”, “C”].</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -687,13 +685,34 @@ map.call(c).key?(<span style="color:#A60">:value</span>) <span style="color:#777
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Mapper.call([“A”, “B”, “C”]).result # =&gt; [“A”, “C”]</p>
-
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Keep unless value contains “A”</p>
+</div></p>
+      
+      <pre class="example code"><code>map = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>.call({}).if_not <span style="color:#080;font-weight:bold">do</span>
+  value.include?(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span>
+
+a = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>)
+map.call(a).key?(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; false</span>
+
+b = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">BA</span><span style="color:#710">&quot;</span></span>)
+map.call(b).key?(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; false</span>
+
+c = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>)
+map.call(c).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; &quot;C&quot;</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -714,16 +733,16 @@ map.call(c).key?(<span style="color:#A60">:value</span>) <span style="color:#777
       <pre class="lines">
 
 
-142
-143
 144
 145
 146
 147
-148</pre>
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 144</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">if_not</span>(&amp;block)
   add <span style="color:#080;font-weight:bold">do</span> |state|
@@ -928,7 +947,7 @@ attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-we
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 10:08:40 2021 by
+  Generated on Tue Nov 30 10:10:52 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

@@ -4,6 +4,25 @@ require "active_support/configurable"
 require "active_support/core_ext/object/with_options"
 
 module Remap
+  # @example Given an option
+  #   class Mapper < Remap::Base
+  #     option :name
+  #
+  #     define do
+  #       set [:person, :name], to: option(:name)
+  #     end
+  #   end
+  #
+  #   Mapper.call({}, name: "John").result # => { person: { name: "John" } }
+  #
+  # @example Given a value
+  #   class Mapper < Remap::Base
+  #     define do
+  #       set [:api_key], to: value("ABC-123")
+  #     end
+  #   end
+  #
+  #   Mapper.call({}).result # => { api_key: "ABC-123" }
   # @example Maps ["A", "B", "C"] to ["A", "C"]
   #   class Mapper < Remap::Base
   #     define do

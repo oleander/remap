@@ -16,7 +16,7 @@ module Remap
     #   end
     #
     #   Mapper.call({}, name: "John").result # => { nickname: "John" }
-    class Option < Concrete
+    class Option < Unit
       # @return [Symbol]
       attribute :name, Symbol
 
