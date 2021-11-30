@@ -17,6 +17,9 @@ describe Remap::Rule::Each do
 
       let(:input) { [3, 2, 1] }
       let(:state) { state!(input) }
+      let(:rule) { described_class.call(rule: rule!) }
+
+      it { is_expected.not_to include(:element, :index, :key) }
 
       context "when accessing #value" do
         let(:rule) { map!(&:to_s) }
