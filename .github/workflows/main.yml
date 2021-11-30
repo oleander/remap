@@ -17,3 +17,7 @@ jobs:
           badges: 'gh_license, gh_version, gh_stars'
           badge-style: 'flat-square'
 
+      - name: RuboCop
+        uses: andrewmcodes-archive/rubocop-linter-action@v3.3.0
+
+
