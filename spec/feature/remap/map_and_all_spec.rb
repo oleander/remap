@@ -15,7 +15,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: { names: %w[Skip John] }))
+      be_a_success.and(have_attributes(result: { names: ["Skip", "John"] }))
     end
   end
 end

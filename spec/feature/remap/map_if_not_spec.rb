@@ -14,10 +14,10 @@ describe Remap::Base do
       end
     end
 
-    let(:input) { %w[A B C] }
+    let(:input) { ["A", "B", "C"] }
 
     let(:output) do
-      be_a_success.and(have_attributes(result: %w[B C]))
+      be_a_success.and(have_attributes(result: ["B", "C"]))
     end
   end
 end

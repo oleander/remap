@@ -43,11 +43,7 @@ describe Remap::Base do
       be_a_success.and(
         have_attributes({
           result: {
-            drive: %w[
-              John
-              Jane
-              Jack
-            ],
+            drive: ["John", "Jane", "Jack"],
             retire: [
               "Jack"
             ]

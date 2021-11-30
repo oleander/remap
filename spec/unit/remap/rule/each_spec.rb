@@ -23,7 +23,7 @@ describe Remap::Rule::Each do
 
       context "when accessing #value" do
         let(:rule) { map!(&:to_s) }
-        let(:output) { %w[1 2 3] }
+        let(:output) { ["1", "2", "3"] }
 
         it { is_expected.to contain(output) }
       end

@@ -49,7 +49,7 @@ describe Remap::Failure do
 
       it { is_expected.to be_a(described_class) }
       it { is_expected.to have_attributes(problems: [problem1, problem2]) }
-      it { is_expected.to have_attributes(reasons: { base: %w[reason1 reason2] }) }
+      it { is_expected.to have_attributes(reasons: { base: ["reason1", "reason2"] }) }
     end
 
     context "when right is a success" do

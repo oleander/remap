@@ -27,9 +27,7 @@ module Remap
               fn[inner]
             end
           end
-        end.then do |state|
-          output_path.call(state)
-        end
+        end.then(&output_path)
       end
 
       # A post-processor method

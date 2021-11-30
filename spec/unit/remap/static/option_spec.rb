@@ -13,7 +13,7 @@ describe Remap::Static::Option do
     let(:id) { :id }
 
     context "when state includes the option" do
-      let(:state) { state!(options: { id: id}) }
+      let(:state) { state!(options: { id: id }) }
 
       it { is_expected.to contain(id) }
     end

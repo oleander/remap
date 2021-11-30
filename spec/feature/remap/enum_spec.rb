@@ -19,11 +19,11 @@ describe Remap::Base do
     end
 
     let(:input) do
-      { constants: %w[A B C D E F] }
+      { constants: ["A", "B", "C", "D", "E", "F"] }
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: %w[A B D D E E]))
+      be_a_success.and(have_attributes(result: ["A", "B", "D", "D", "E", "E"]))
     end
   end
 end

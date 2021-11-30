@@ -16,15 +16,13 @@ module Remap
     Rule       = Interface(:call)
     Key        = Interface(:hash)
 
-    State = Hash.constructor do |input, type, &error|
+    State = Hash.constructor do |input, _type, &error|
       result = Remap::State::Schema.call(input)
-      error ||= ->(error) { raise error }
+      error ||= -> { raise _1 }
 
-      if result.success?
-        next input
-      else
-        next error[JSON.pretty_generate(result.errors.to_h)]
-      end
+      next input if result.success?
+
+      error[JSON.pretty_generate(result.errors.to_h)]
     end
 
     Problem = Hash.schema(

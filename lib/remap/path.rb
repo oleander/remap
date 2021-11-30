@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Remap
   class Path < Dry::Interface
     attribute :segments, Types::Array
 
     # @return [State]
-    def call(state)
+    def call(_state)
       raise NotImplementedError, "#{self.class}#call not implemented"
     end
 

@@ -45,7 +45,7 @@ describe Remap::Iteration do
           end
         end
 
-        let(:input) { %w[ONE TWO] }
+        let(:input) { ["ONE", "TWO"] }
         let(:output) { input.map(&:downcase) }
 
         it "invokes block" do
