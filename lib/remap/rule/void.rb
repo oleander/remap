@@ -2,25 +2,16 @@
 
 module Remap
   class Rule
+    # Represents a mapping without block
+    #
+    # @example Maps "A" to "A"
+    #   map
     class Void < self
       using State::Extension
 
-      # Returns its input
+      # @param state [State<T>]
       #
-      # @param state [State]
-      #
-      # @example An empty rule
-      #   class Mapper < Remap::Base
-      #     define do
-      #       map do
-      #         # Empty ...
-      #       end
-      #     end
-      #   end
-      #
-      #   Mapper.call(input) # => input
-      #
-      # @return [State]
+      # @return [State<T>]
       def call(state)
         state.bind do |value, inner_state|
           inner_state.set(value)
