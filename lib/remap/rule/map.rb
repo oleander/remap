@@ -11,8 +11,8 @@ module Remap
       using State::Extension
 
       attribute :path do
-        attribute :output, Remap::Path::Output, default: -> { Path::Output.new(EMPTY_ARRAY) }
-        attribute :input, Remap::Path::Input, default: -> { Path::Input.new(EMPTY_ARRAY) }
+        attribute :output, Path::Output, default: -> { Path::Output.new(EMPTY_ARRAY) }
+        attribute :input, Path::Input, default: -> { Path::Input.new(EMPTY_ARRAY) }
       end
 
       attribute :rule, Types::Rule
