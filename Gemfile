@@ -10,11 +10,6 @@ group :development do
   gem "guard-rspec", require: false
   gem "guard-rubocop", require: false
 
-  gem "rubocop", require: false
-  gem "rubocop-performance", require: false
-  gem "rubocop-rake", require: false
-  gem "rubocop-rspec", require: false
-
   gem "reek", require: false
 end
 
