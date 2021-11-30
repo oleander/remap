@@ -31,7 +31,13 @@ module Remap
       # A post-processor method
       #
       # @example Map "Hello" to "Hello!"
-      #   map.adjust { "#{value}!" }
+      #   class Mapper < Remap::Base
+      #     define do
+      #       map.adjust { "#{value}!" }
+      #     end
+      #   end
+      #
+      #   Mapper.call("Hello").result # => "Hello!"
       #
       # @return [Map]
       def adjust(&block)
@@ -58,9 +64,16 @@ module Remap
       # An enumeration processor
       #
       # @example Maps { a: { b: "A" } } to "A"
-      #   map(:a, :b).enum do
-      #     value "A", "B"
+      #   class Mapper < Remap::Base
+      #     define do
+      #       map(:a, :b).enum do
+      #         value "A", "B"
+      #       end
+      #     end
       #   end
+      #
+      #   Mapper.call({ a: { b: "A" } }).result # => "A"
+      #   Mapper.call({ a: { b: "B" } }).result # => "B"
       #
       # @return [Map]
       def enum(&block)

@@ -81,7 +81,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call(input, name: "John") # => { name: "John" }
+    #   Mapper.call(input, name: "John").result # => { name: "John" }
     #
     # @param field [Symbol]
     # @option type (Types::Any) [#call]
