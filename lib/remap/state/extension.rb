@@ -175,7 +175,7 @@ module Remap
         #
         # @see State::Schema
         #
-        # @return [Hash]
+        # @return [Failure]
         def failure(reason)
           reasons = case [path, reason]
           in [EMPTY_ARRAY, Array | String => message]
@@ -190,6 +190,8 @@ module Remap
         end
 
         # Creates a problem from state
+        #
+        # @yield [Failure] if {#value} is undefined
         #
         # @return [Success] if {#value} is defined
         # @return [Failure] unless {#value} is defined
