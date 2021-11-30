@@ -16,12 +16,12 @@ module Support
 
   # @return [Remap::Rule::Map]
   def map!(&block)
-    Rule::Map.call(rule: void!).adjust(&block)
+    Rule::Map.call(path: path!, rule: void!).adjust(&block)
   end
 
   # @return [Remap::Rule::Map]
   def pending!(*args)
-    Rule::Map.call(rule: void!).pending(*args)
+    Rule::Map.call(path: path!, rule: void!).pending(*args)
   end
 
   # @return [Hash]
@@ -70,8 +70,11 @@ module Support
   end
 
   # @return [Array<Key>]
-  def path!(input: [], output: [])
-    { input_path: input_path!(input), output_path: output_path!(output) }
+  def path!(input = Undefined, output = Undefined, **options)
+    input_path = Undefined.default(input, options.fetch(:input, EMPTY_ARRAY))
+    output_path = Undefined.default(output, options.fetch(:output, EMPTY_ARRAY))
+
+    { input: input_path!(input_path), output: output_path!(output_path) }
   end
 
   def input_path!(path = [])

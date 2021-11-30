@@ -10,8 +10,10 @@ module Remap
       using State::Extensions::Enumerable
       using State::Extension
 
-      attribute :output_path, Remap::Path::Output, default: -> { Path::Output.new(EMPTY_ARRAY) }
-      attribute :input_path, Remap::Path::Input, default: -> { Path::Input.new(EMPTY_ARRAY) }
+      attribute :path do
+        attribute :output, Remap::Path::Output, default: -> { Path::Output.new(EMPTY_ARRAY) }
+        attribute :input, Remap::Path::Input, default: -> { Path::Input.new(EMPTY_ARRAY) }
+      end
 
       attribute :rule, Types::Rule
 
@@ -21,11 +23,11 @@ module Remap
       #
       # @return [State<U>]
       def call(state)
-        input_path.call(state).then(&rule).then do |init|
+        path.input.call(state).then(&rule).then do |init|
           fn.reduce(init) do |inner, fn|
             fn[inner]
           end
-        end.then(&output_path)
+        end.then(&path.output)
       end
 
       # A post-processor method

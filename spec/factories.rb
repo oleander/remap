@@ -32,8 +32,7 @@ FactoryBot.define do
   end
 
   factory Remap::Rule::Map, aliases: [Remap::Rule::Map] do
-    input_path { input }
-    output_path { output }
+    path { { input: input, output: output } }
 
     transient do
       input { generate(:path) }
