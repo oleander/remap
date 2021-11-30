@@ -159,19 +159,31 @@ output = Mapper.call(["A", "B", "C"])
 output.result # => ["B"]
 ```
 
-### Enum mapping
+### Map to a fixed set of values
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    map(:a, :b).enum do
-      value "A", "B"
+    to :names do
+      map(:countries, all, :name).enum do
+        from "USA", to: "US"
+        value "SWE", "DE"
+        otherwise "OTHER"
+      end
     end
   end
 end
 
-Mapper.call({ a: { b: "A" } }).result # => "A"
-Mapper.call({ a: { b: "B" } }).result # => "B"
+output = Mapper.call({
+  countries: [
+    { name: "SWE" },
+    { name: "DE" },
+    { name: "USA" },
+    { name: "IT" }
+  ]
+})
+
+output.result # => { names: ["SWE", "DE", "US", "OTHER"] }
 ```
 
 ### Pending mapping
@@ -179,11 +191,13 @@ Mapper.call({ a: { b: "B" } }).result # => "B"
 ``` ruby
 class Mapper < Remap::Base
   define do
-    map(:a, :b).pending
+    map(:workplace, to: :job).pending
+    map(:name, to: :nickname)
   end
 end
 
-Mapper.call({ a: { b: "A" } }).problems.count # => 1
+output = Mapper.call({ workplace: "Apple", name: "John" })
+output.result # => { nickname: "John" }
 ```
 
 ### Iterate over an enumerable
@@ -311,3 +325,27 @@ end
 output = Mapper.call({ name: "John" })
 output.result # => { names: ["John"] }
 ```
+
+### Manually skip a mapping
+
+``` ruby
+class Mapper < Remap::Base
+  define do
+    map.then do
+      skip!("I'll do this later")
+    end
+  end
+end
+```
+
+### Validate with ::contract using Dry::Schema
+
+### Validate with ::rule using Dry::Validation
+
+### Combine mappers using operators
+
+#### Xor
+#### And
+#### Or
+
+### Constructors using ::define

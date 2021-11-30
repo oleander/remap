@@ -203,6 +203,10 @@ output = <span style="color:#036;font-weight:bold">Mapper</span>.call([<span sty
 output.result <span style="color:#777"># =&gt; [&quot;A&quot;, &quot;C&quot;]</span>
 </code></pre>
 
+<blockquote>
+<p>or use <code>if</code> to reverse</p>
+</blockquote>
+
 <pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   define <span style="color:#080;font-weight:bold">do</span>
     each <span style="color:#080;font-weight:bold">do</span>
@@ -217,29 +221,43 @@ output = <span style="color:#036;font-weight:bold">Mapper</span>.call([<span sty
 output.result <span style="color:#777"># =&gt; [&quot;B&quot;]</span>
 </code></pre>
 
-<h3 id="label-Enum+mapping">Enum mapping</h3>
+<h3 id="label-Map+to+a+fixed+set+of+values">Map to a fixed set of values</h3>
 
 <pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   define <span style="color:#080;font-weight:bold">do</span>
-    map(<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>).enum <span style="color:#080;font-weight:bold">do</span>
-      value <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>
+    to <span style="color:#A60">:names</span> <span style="color:#080;font-weight:bold">do</span>
+      map(<span style="color:#A60">:countries</span>, all, <span style="color:#A60">:name</span>).enum <span style="color:#080;font-weight:bold">do</span>
+        from <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">USA</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">to</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">US</span><span style="color:#710">&quot;</span></span>
+        value <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">SWE</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">DE</span><span style="color:#710">&quot;</span></span>
+        otherwise <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">OTHER</span><span style="color:#710">&quot;</span></span>
+      <span style="color:#080;font-weight:bold">end</span>
     <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }).result <span style="color:#777"># =&gt; &quot;A&quot;</span>
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span> } }).result <span style="color:#777"># =&gt; &quot;B&quot;</span>
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({
+  <span style="color:#606">countries</span>: [
+    { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">SWE</span><span style="color:#710">&quot;</span></span> },
+    { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">DE</span><span style="color:#710">&quot;</span></span> },
+    { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">USA</span><span style="color:#710">&quot;</span></span> },
+    { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">IT</span><span style="color:#710">&quot;</span></span> }
+  ]
+})
+
+output.result <span style="color:#777"># =&gt; { names: [&quot;SWE&quot;, &quot;DE&quot;, &quot;US&quot;, &quot;OTHER&quot;] }</span>
 </code></pre>
 
 <h3 id="label-Pending+mapping">Pending mapping</h3>
 
 <pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   define <span style="color:#080;font-weight:bold">do</span>
-    map(<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>).pending
+    map(<span style="color:#A60">:workplace</span>, <span style="color:#606">to</span>: <span style="color:#A60">:job</span>).pending
+    map(<span style="color:#A60">:name</span>, <span style="color:#606">to</span>: <span style="color:#A60">:nickname</span>)
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }).problems.count <span style="color:#777"># =&gt; 1</span>
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">workplace</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Apple</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> })
+output.result <span style="color:#777"># =&gt; { nickname: &quot;John&quot; }</span>
 </code></pre>
 
 <h3 id="label-Iterate+over+an+enumerable">Iterate over an enumerable</h3>
@@ -367,10 +385,21 @@ output.result <span style="color:#777"># =&gt; &quot;Jane&quot;</span>
 output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> })
 output.result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span>
 </code></pre>
+
+<h3 id="label-Manually+skip+a+mapping">Manually skip a mapping</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map.then <span style="color:#080;font-weight:bold">do</span>
+      skip!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">I'll do this later</span><span style="color:#710">&quot;</span></span>)
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:40:08 2021 by
+  Generated on Tue Nov 30 11:50:37 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
