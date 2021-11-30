@@ -266,22 +266,6 @@ module Remap
           super { fmap(&block) }
         end
 
-        # Ensures {value:} is not a state
-        #
-        # @param options [Hash]
-        #
-        # @return [Hash]
-        def merge(options)
-          case options
-          in {value:}
-            value._ { return super }
-          else
-            return super
-          end
-
-          raise ArgumentError, "Expected State#value not to be a State [#{value}] (#{value.class})"
-        end
-
         # Returns a new state that includes a new problem
         #
         # Removes {#value} as problems cannot contain values

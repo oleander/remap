@@ -107,36 +107,6 @@ describe Remap::State::Extension do
     end
   end
 
-  describe "#merge" do
-    let(:state) { undefined! }
-
-    context "when value is undefined!" do
-      subject { state.merge(key: :key) }
-
-      it { is_expected.to have_key(:key) }
-      it { is_expected.to include(path: state.path) }
-    end
-
-    context "when value is a state" do
-      subject(:result) { state.merge(value: invalid) }
-
-      let(:invalid) { defined! }
-
-      it "raises an argument error" do
-        expect { result }.to raise_error(ArgumentError)
-      end
-    end
-
-    context "when value is not a state" do
-      subject { state.merge(value: valid) }
-
-      let(:valid) { { key: :value } }
-
-      it { is_expected.to have_key(:value) }
-      it { is_expected.to have_value(valid) }
-    end
-  end
-
   describe "#failure" do
     subject { state!(value!, path: path).failure(reason) }
 
@@ -332,14 +302,6 @@ describe Remap::State::Extension do
     let(:state) { defined! }
     let(:index) { 1 }
     let(:value) { "value" }
-
-    context "when value is an invalid state" do
-      let(:value) { defined! }
-
-      it "sets value" do
-        expect { state.set(value) }.to raise_error(ArgumentError)
-      end
-    end
 
     context "when given an index" do
       subject(:result) { state.set(value, index: index) }
