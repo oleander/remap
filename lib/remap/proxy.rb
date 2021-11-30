@@ -9,5 +9,10 @@ module Remap
 
     include Dry::Core::Constants
     extend Dry::Initializer
+
+    def tap(&block)
+      block[self]
+      self
+    end
   end
 end

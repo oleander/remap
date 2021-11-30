@@ -16,9 +16,7 @@ module Remap
         return Rule::Void.new
       end
 
-      compiler = new
-      compiler.instance_exec(&block)
-      compiler.rule
+      new.tap { _1.instance_exec(&block) }.rule
     end
 
     # Maps {path} to {to} with {block} inbetween

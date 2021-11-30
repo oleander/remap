@@ -30,9 +30,7 @@ module Remap
           raise ArgumentError, "no block given"
         end
 
-        enum = new
-        enum.execute(&block)
-        enum
+        new.tap { _1.execute(&block) }
       end
 
       # Translate {key} into a value using pre-defined mappings
