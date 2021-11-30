@@ -16,23 +16,4 @@ describe Support do
       expect(rule.call(state)).to contain(value)
     end
   end
-
-  describe "#path!" do
-    subject(:result) do
-      path.call(state) do |state|
-        state.fmap do |value|
-          value.class
-        end
-      end
-    end
-
-    let(:value) { { a: "value" } }
-    let(:state) { state!(value) }
-
-    let(:path) { path!(input: [:a], output: [:b]) }
-
-    it "returns its input value" do
-      expect(result).to contain(b: String)
-    end
-  end
 end

@@ -184,7 +184,7 @@ describe Remap::Compiler do
 
     context "given using #option" do
       let(:id) { symbol! }
-      let(:state) { state!(id: id) }
+      let(:state) { state!(options: { id: id }) }
 
       context "when value exists" do
         let(:block) { ->(*) { set :a, :b, to: option(:id) } }

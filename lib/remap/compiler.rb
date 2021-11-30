@@ -57,7 +57,7 @@ module Remap
     #   if no path given
     #   if path is not a Symbol or Array<Symbol>
     def set(*path, to:)
-      add Rule::Set.new(path: { to: path.flatten, map: EMPTY_ARRAY }, value: to)
+      add Rule::Set.new(path: path.flatten, value: to)
     rescue Dry::Struct::Error => e
       raise ArgumentError, e.message
     end
