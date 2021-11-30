@@ -13,5 +13,9 @@ module Remap
     def to_proc
       method(:call).to_proc
     end
+
+    def >>(other)
+      to_proc >> other
+    end
   end
 end

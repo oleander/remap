@@ -23,7 +23,7 @@ module Remap
       #
       # @return [State<U>]
       def call(state)
-        path.input.call(state).then(&rule).then(&callback).then(&path.output)
+        (path.input >> rule >> callback >> path.output).call(state)
       end
 
       # A post-processor method
