@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module Remap
-  module Operation
-    using State::Extension
+  using State::Extension
 
+  # Class interface for {Remap::Base} and instance interface for {Mapper}
+  module Operation
     # Public interface for mappers
     #
     # @param input [Any] Data to be mapped
