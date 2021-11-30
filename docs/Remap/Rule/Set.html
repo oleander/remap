@@ -116,31 +116,23 @@
     
       
         <p class="example_title"><div class='inline'>
-<p>Given an option</p>
+<p>Set path [:a, :b] to value “C”</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
-  option <span style="color:#A60">:name</span>
-
-  define <span style="color:#080;font-weight:bold">do</span>
-    set [<span style="color:#A60">:person</span>, <span style="color:#A60">:name</span>], <span style="color:#606">to</span>: option(<span style="color:#A60">:name</span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
-
-<span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>).result <span style="color:#777"># =&gt; { person: { name: &quot;John&quot; } }</span></code></pre>
+      <pre class="example code"><code>value = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Fixed</span>.new(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">a value</span><span style="color:#710">&quot;</span></span>)
+set = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Set</span>.new(<span style="color:#606">value</span>: value, <span style="color:#606">path</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>])
+state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ANY VALUE</span><span style="color:#710">&quot;</span></span>)
+set.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; { a: { b: &quot;a value&quot; } }</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
-<p>Given a value</p>
+<p>Set path [:a, :b] to option :c</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
-  define <span style="color:#080;font-weight:bold">do</span>
-    set [<span style="color:#A60">:api_key</span>], <span style="color:#606">to</span>: value(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ABC-123</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
-
-<span style="color:#036;font-weight:bold">Mapper</span>.call({}).result <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }</span></code></pre>
+      <pre class="example code"><code>value = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Option</span>.new(<span style="color:#A60">:c</span>)
+set = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Set</span>.new(<span style="color:#606">value</span>: value, <span style="color:#606">path</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>])
+state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ANY VALUE</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">options</span>: { <span style="color:#606">c</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span> })
+set.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; { a: { b: &quot;C&quot; } }</span></code></pre>
     
   </div>
 
@@ -292,12 +284,12 @@
       <pre class="lines">
 
 
-40
-41
-42</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 32</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
   rule.call(state).then(&amp;path)
@@ -344,10 +336,10 @@
       <pre class="lines">
 
 
-33</pre>
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 25</span>
 
 attribute <span style="color:#A60">:path</span>, <span style="color:#036;font-weight:bold">Path</span>::<span style="color:#036;font-weight:bold">Output</span></pre>
     </td>
@@ -392,10 +384,10 @@ attribute <span style="color:#A60">:path</span>, <span style="color:#036;font-we
       <pre class="lines">
 
 
-30</pre>
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 22</span>
 
 attribute <span style="color:#A60">:value</span>, <span style="color:#036;font-weight:bold">Static</span>, <span style="color:#606">alias</span>: <span style="color:#A60">:rule</span></pre>
     </td>
@@ -408,7 +400,7 @@ attribute <span style="color:#A60">:value</span>, <span style="color:#036;font-w
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 10:10:52 2021 by
+  Generated on Tue Nov 30 10:16:36 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

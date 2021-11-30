@@ -92,6 +92,14 @@ module Remap
   #
   #   Mapper.call("Hello").result # => "Hello!"
   #
+  # @example Select the second element from an array
+  #   class Mapper < Remap::Base
+  #     define do
+  #       map [at(1)]
+  #     end
+  #   end
+  #
+  #   Mapper.call([1, 2, 3]).result # => 2
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants

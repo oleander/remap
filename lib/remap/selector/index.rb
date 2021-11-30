@@ -6,14 +6,10 @@ module Remap
 
     # Selects value at given index
     #
-    # @example Select the second element from an array
-    #   class Mapper < Remap::Base
-    #     define do
-    #       map index(1)
-    #     end
-    #   end
-
-    #   Mapper.call([1, 2, 3]).result # => 2
+    # @example Select the value at index 1 from a array
+    #   state = Remap::State.call([:one, :two, :tree])
+    #   result = Remap::Selector::Index.new(1).call(state)
+    #   result.fetch(:value) # => :two
     class Index < Unit
       # @return [Integer]
       attribute :index, Integer
