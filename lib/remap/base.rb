@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/configurable"
+require "active_support/core_ext/object/with_options"
 
 module Remap
   class Base < Mapper
@@ -9,32 +10,33 @@ module Remap
     using State::Extension
     extend Operation
 
-    CONTRACT = Dry::Schema.JSON do
-      # NOP
-    end
 
-    config_accessor :constructor, instance_accessor: true do
-      IDENTITY
-    end
+    with_options instance_accessor: true do |scope|
+      scope.config_accessor :constructor do
+        IDENTITY
+      end
 
-    config_accessor :options, instance_accessor: true do
-      EMPTY_HASH
-    end
+      scope.config_accessor :options do
+        EMPTY_HASH
+      end
 
-    config_accessor :rules, instance_accessor: true do
-      EMPTY_ARRAY
-    end
+      scope.config_accessor :rules do
+        EMPTY_ARRAY
+      end
 
-    config_accessor :contract, instance_accessor: true do
-      CONTRACT
-    end
+      scope.config_accessor :contract do
+        Dry::Schema.JSON do
+          # NOP
+        end
+      end
 
-    config_accessor :context, instance_accessor: true do
-      IDENTITY
-    end
+      scope.config_accessor :context do
+        IDENTITY
+      end
 
-    config_accessor :options, instance_accessor: true do
-      EMPTY_ARRAY
+      scope.config_accessor :options do
+        EMPTY_ARRAY
+      end
     end
 
     schema schema.strict(false)
