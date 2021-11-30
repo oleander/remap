@@ -11,8 +11,8 @@ jobs:
           ruby-version: 3.0
       - run: bundle exec rspec --format RSpec::Github::Formatter
       - run: bundle exec yard doc -o docs
-      - run: bundle exec yard-doctest
-      - run: bundle exec yard-spellcheck
+      - run: bundle exec yard doctest
+      - run: bundle exec yard spellcheck
       - name: badge-it
         uses: rocktimsaikia/badge-it@2.0.0
         with:
