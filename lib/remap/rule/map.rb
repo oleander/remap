@@ -7,10 +7,15 @@ module Remap
     # @example Map { name: "Ford" } to { person: { name: "Ford" } }
     #   map :name, to: [:person, :name]
     class Map < self
+      using State::Extensions::Enumerable
       using State::Extension
 
+      attribute :path do
+        attribute :to, Types.Array(Types::Key), alias: :output
+        attribute :map, Path, alias: :input
+      end
+
       attribute :rule, Types::Rule
-      attribute :path, Path
 
       # Maps {state} using {#path} & {#rule}
       #
@@ -18,11 +23,15 @@ module Remap
       #
       # @return [State<U>]
       def call(state)
-        path.call(state) do |inner_state|
+        path.input.call(state).then do |inner_state|
           rule.call(inner_state).then do |init|
             fn.reduce(init) do |inner, fn|
               fn[inner]
             end
+          end
+        end.then do |state|
+          state.fmap do |value|
+            path.output.hide(value)
           end
         end
       end

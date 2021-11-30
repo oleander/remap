@@ -30,3 +30,5 @@ group :test do
   gem "rspec-github"
   gem "simplecov"
 end
+
+gem "dry-interface", path: ".."
