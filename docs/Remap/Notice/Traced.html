@@ -187,13 +187,17 @@
 
 12
 13
-14</pre>
+14
+15
+16</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/notice/traced.rb', line 12</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">exception</span>
-  <span style="color:#080;font-weight:bold">super</span>.tap { _1.set_backtrace(backtrace) }
+  <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">super</span> <span style="color:#080;font-weight:bold">if</span> backtrace.blank?
+
+  <span style="color:#080;font-weight:bold">super</span>.tap { _1.set_backtrace(backtrace.map(&amp;<span style="color:#A60">:to_s</span>)) }
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -257,7 +261,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:20:55 2021 by
+  Generated on Wed Dec  1 00:40:09 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

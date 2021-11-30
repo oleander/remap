@@ -268,8 +268,8 @@
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
   state.set(state.options.fetch(name))
-<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">KeyError</span>
-  halt(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Option [%s] not found in input [%p]</span><span style="color:#710">&quot;</span></span>, name, state.options)
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">KeyError</span> =&gt; e
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.exception(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Option [%s] not found in input [%p]</span><span style="color:#710">&quot;</span></span> % [name, state.options])
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -329,7 +329,7 @@ attribute <span style="color:#A60">:name</span>, <span style="color:#036;font-we
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:20:55 2021 by
+  Generated on Wed Dec  1 00:40:09 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

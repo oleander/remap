@@ -333,7 +333,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#map-instance_method" title="#map (instance method)">#<strong>map</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; Rule::Map </a>
+      <a href="#map-instance_method" title="#map (instance method)">#<strong>map</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &amp;block)  &#x21d2; Rule::Map </a>
     
 
     
@@ -357,7 +357,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#map%3F-instance_method" title="#map? (instance method)">#<strong>map?</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; Boolean </a>
+      <a href="#map%3F-instance_method" title="#map? (instance method)">#<strong>map?</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &amp;block)  &#x21d2; Boolean </a>
     
 
     
@@ -379,7 +379,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#option-instance_method" title="#option (instance method)">#<strong>option</strong>(id, backtrace: Kernel.caller)  &#x21d2; Rule::Static::Option </a>
+      <a href="#option-instance_method" title="#option (instance method)">#<strong>option</strong>(id, backtrace: Kernel.caller_locations)  &#x21d2; Rule::Static::Option </a>
     
 
     
@@ -471,7 +471,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to-instance_method" title="#to (instance method)">#<strong>to</strong>(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; Rule::Map </a>
+      <a href="#to-instance_method" title="#to (instance method)">#<strong>to</strong>(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &amp;block)  &#x21d2; Rule::Map </a>
     
 
     
@@ -1124,7 +1124,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <div class="method_details ">
   <h3 class="signature " id="map-instance_method">
   
-    #<strong>map</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
+    #<strong>map</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
   
 
   
@@ -1212,7 +1212,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 29</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller, &amp;block)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller_locations, &amp;block)
   add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>::<span style="color:#036;font-weight:bold">Strict</span>.call(
     <span style="color:#606">path</span>: {
       <span style="color:#606">output</span>: [to].flatten,
@@ -1230,7 +1230,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <div class="method_details ">
   <h3 class="signature " id="map?-instance_method">
   
-    #<strong>map?</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; <tt>Boolean</tt> 
+    #<strong>map?</strong>(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &amp;block)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -1278,7 +1278,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 40</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map?</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller, &amp;block)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map?</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller_locations, &amp;block)
   add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>::<span style="color:#036;font-weight:bold">Loose</span>.call(
     <span style="color:#606">path</span>: {
       <span style="color:#606">output</span>: [to].flatten,
@@ -1296,7 +1296,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
       <div class="method_details ">
   <h3 class="signature " id="option-instance_method">
   
-    #<strong>option</strong>(id, backtrace: Kernel.caller)  &#x21d2; <tt>Rule::Static::Option</tt> 
+    #<strong>option</strong>(id, backtrace: Kernel.caller_locations)  &#x21d2; <tt>Rule::Static::Option</tt> 
   
 
   
@@ -1354,7 +1354,7 @@ delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</spa
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 141</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">option</span>(id, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">option</span>(id, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller_locations)
   <span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Option</span>.new(<span style="color:#606">name</span>: id, <span style="color:#606">backtrace</span>: backtrace)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
@@ -1597,7 +1597,7 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
       <div class="method_details ">
   <h3 class="signature " id="to-instance_method">
   
-    #<strong>to</strong>(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
+    #<strong>to</strong>(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
   
 
   
@@ -1668,7 +1668,7 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 81</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to</span>(*path, <span style="color:#606">map</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller, &amp;block)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to</span>(*path, <span style="color:#606">map</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, <span style="color:#606">backtrace</span>: <span style="color:#036;font-weight:bold">Kernel</span>.caller_locations, &amp;block)
   map(*map, <span style="color:#606">to</span>: path, <span style="color:#606">backtrace</span>: backtrace, &amp;block)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
@@ -1914,7 +1914,7 @@ param <span style="color:#A60">:rules</span>, <span style="color:#606">default</
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:20:54 2021 by
+  Generated on Wed Dec  1 00:40:08 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
