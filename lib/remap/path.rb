@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 module Remap
+  # Represents a sequence of keys and selects or maps a value given a path
   class Path < Dry::Interface
     attribute :segments, Types::Array
 
     delegate :>>, to: :to_proc
 
     # @return [State]
+    #
+    # @abstract
     def call(_state)
       raise NotImplementedError, "#{self.class}#call not implemented"
     end
