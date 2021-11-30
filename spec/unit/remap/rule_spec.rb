@@ -3,11 +3,11 @@
 describe Remap::Rule do
   describe "::call" do
     context "when passed a rule" do
-      subject { described_class.call(rule) }
+      let(:rule) { described_class.call(void!) }
+      let(:state) { state! }
+      subject { rule.call(state) }
 
-      let(:rule) { void! }
-
-      it { is_expected.to eq(rule) }
+      it { is_expected.to eq(state) }
     end
   end
 end
