@@ -2,14 +2,15 @@
 
 module Remap
   class Rule
+    # Represents a block defined by a rule
     class Collection < Dry::Interface
       attribute :rules, Array
 
-      # @abstract
-      #
       # @param state [State]
       #
       # @return [State]
+      #
+      # @abstract
       def call(_state)
         raise NotImplementedError, "#{self.class}#call not implemented"
       end
