@@ -14,6 +14,9 @@ module Remap
     # @yieldreturn [Array<V>, Hash<V, K>]
     #
     # @return [Array<V>, Hash<V, K>]
+    def call(state)
+      raise NotImplementedError, "#{self.class}#call not implemented"
+    end
 
     order :Hash, :Array, :Other
   end

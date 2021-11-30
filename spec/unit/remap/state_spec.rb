@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 describe Remap::State do
-  include described_class
-
   describe "::state" do
     context "given valid input" do
-      subject { state(input, mapper: mapper) }
+      subject { described_class.call(input, mapper: mapper) }
 
       let(:input) { value! }
       let(:mapper) { mapper! }
@@ -16,7 +14,7 @@ describe Remap::State do
     end
 
     context "given invalid input" do
-      subject(:result) { state(value!, mapper: nil) }
+      subject(:result) { described_class.call(value!, mapper: nil) }
 
       it "raises an argument error" do
         expect { result }.to raise_error(ArgumentError)

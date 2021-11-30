@@ -8,7 +8,6 @@ require "dry/logic"
 require "dry/logic/operations"
 require "dry/logic/predicates"
 require "json"
-require "pry"
 
 module Remap
   # Represents the current state of a mapping
@@ -25,7 +24,7 @@ module Remap
     # @option options [Hash] Mapper options / arguments
     #
     # @return [Hash] A valid state
-    def state(value, mapper:, options: EMPTY_HASH)
+    def self.call(value, mapper:, options: EMPTY_HASH)
       {
         problems: EMPTY_ARRAY,
         path: EMPTY_ARRAY,
@@ -36,7 +35,5 @@ module Remap
         input: value
       }._
     end
-    alias call state
-    module_function :state, :call
   end
 end

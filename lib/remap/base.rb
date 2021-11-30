@@ -83,8 +83,8 @@ module Remap
     #
     #   Mapper.call(input, name: "John") # => { name: "John" }
     #
-    # @param name [Symbol]
-    # @param type (Types::Any) [#call]
+    # @param field [Symbol]
+    # @option type (Types::Any) [#call]
     #
     # @return [void]
     def self.option(field, type: Types::Any)
@@ -99,7 +99,7 @@ module Remap
 
     # Defines a mapper rules and possible constructor
     #
-    # @param constructor (Nothing) [#call]
+    # @param target (Nothing) [#call]
     #
     # @option method (:new) [Symbol]
     # @option strategy (:argument) [:argument, :keywords, :none]

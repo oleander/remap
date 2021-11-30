@@ -174,3 +174,6 @@ Layout/SpaceInLambdaLiteral:
 
 Style/StabbyLambdaParentheses:
   EnforcedStyle: require_no_parentheses
+
+Lint/UnusedMethodArgument:
+  Enabled: false

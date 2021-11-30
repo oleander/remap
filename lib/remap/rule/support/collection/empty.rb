@@ -16,10 +16,9 @@ module Remap
 
         # Represents an empty define block, without any rules
         #
-        # @param input [Any]
-        # @param state [State]
+        # @param state [State<T>]
         #
-        # @return [Monad::Failure]
+        # @return [State<T>]
         def call(state)
           state.problem("No rules, empty block")
         end

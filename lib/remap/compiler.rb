@@ -46,7 +46,7 @@ module Remap
       raise ArgumentError, "Embeded mapper must be [Remap::Mapper], got [#{mapper}]"
     end
 
-    # @param *path ([]) [Symbol, Array<Symbol>]
+    # @param path ([]) [Symbol, Array<Symbol>]
     # @option to [Remap::Static]
     #
     # @return [Rule::Set]

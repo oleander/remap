@@ -17,7 +17,7 @@ module Remap
     # @return [State]
     #
     # @abstract
-    def call(_state)
+    def call(state)
       raise NotImplementedError, "#{self.class}#call not implemented"
     end
 
