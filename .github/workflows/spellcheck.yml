@@ -10,4 +10,4 @@ jobs:
     - name: TypoCheck
       uses: typoci/spellcheck-action@master
       env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
