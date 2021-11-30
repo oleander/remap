@@ -10,9 +10,7 @@ module Remap
     using State::Extension
     extend Operation
 
-    EMPTY_SCHEMA = Dry::Schema.JSON do
-      # NOP
-    end
+    EMPTY_SCHEMA = Dry::Schema.JSON {}.freeze
 
     with_options instance_accessor: true do |scope|
       scope.config_accessor(:contract) { EMPTY_SCHEMA }
