@@ -23,6 +23,8 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  config.full_backtrace = true
+
   config.example_status_persistence_file_path = ".rspec_status"
   config.order = :random
 end
