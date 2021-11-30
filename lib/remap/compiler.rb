@@ -76,7 +76,7 @@ module Remap
     # @raise [ArgumentError] if no block given
     def each(&block)
       unless block
-        raise ArgumentError, "no block given"
+        raise ArgumentError, "#each requires a block"
       end
 
       add Rule::Each.new(rule: call(&block))
@@ -92,7 +92,7 @@ module Remap
     # @raise [ArgumentError] if type is not :array
     def wrap(type, &block)
       unless block
-        raise ArgumentError, "no block given"
+        raise ArgumentError, "#wrap requires a block"
       end
 
       add Rule::Wrap.new(type: type, rule: call(&block))
