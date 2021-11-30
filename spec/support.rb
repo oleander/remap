@@ -16,7 +16,7 @@ module Support
 
   # @return [Remap::Rule::Map]
   def map!(&block)
-    Rule::Map.call(path: { map: [], to: [] }, rule: void!).adjust(&block)
+    Rule::Map.call(rule: void!).adjust(&block)
   end
 
   # @return [Remap::Rule::Map]
