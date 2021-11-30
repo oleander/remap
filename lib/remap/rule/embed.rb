@@ -25,9 +25,10 @@ module Remap
     #
     #   Person.call(name: "Volvo") # => { person: { car: { name: "Volvo" } } }
     class Embed < Unit
+      # @return [#call!]
       attribute :mapper, Types::Mapper
 
-      # Evaluates {input} against {mapper} and returns the result
+      # Evaluates input against mapper and returns the result
       #
       # @param state [State<T>]
       #

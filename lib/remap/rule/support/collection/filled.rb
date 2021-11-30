@@ -12,10 +12,11 @@ module Remap
       #     # ...
       #   end
       class Filled < Unit
+        # @return [Array<Rule>]
         attribute :rules, [Types.Interface(:call)], min_size: 1
 
         # Represents a non-empty define block with one or more rules
-        # Calls every {#rules} with {input} and merges the output
+        # Calls every {#rules} with state and merges the output
         #
         # @param state [State]
         #

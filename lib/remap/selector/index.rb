@@ -9,10 +9,12 @@ module Remap
     # @example Select the fith element from an array
     #   map index(4)
     class Index < Unit
+      # @return [Integer]
       attribute :index, Integer
+
       requirement Types::Array
 
-      # Selects the {#index}th element from {state} and passes it to {block}
+      # Selects the {#index}th element from state and passes it to block
       #
       # @param state [State<Array<T>>]
       #

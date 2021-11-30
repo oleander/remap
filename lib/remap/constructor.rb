@@ -2,7 +2,10 @@
 
 module Remap
   class Constructor < Dry::Interface
+    # @return [Any]
     attribute :target, Types::Any, not_eql: Nothing
+
+    # @return [Symbol]
     attribute :method, Symbol, default: :new
 
     # Ensures {#target} responds to {#method}

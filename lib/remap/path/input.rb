@@ -10,6 +10,7 @@ module Remap
     #   result = Input.new([:a, :b, :c, first]).call(state)
     #   result # => ["A"]
     class Input < Unit
+      # @return [Array<Selector>]
       attribute :segments, [Selector]
 
       # Selects the value at the path {#segments}

@@ -4,12 +4,12 @@ module Remap
   class Mapper
     using State::Extension
 
-    # Represents two mappers that are combined with the {^} operator
+    # Represents two mappers that are combined with the ^ operator
     #
     # @example Combine two mappers
     #   Mapper1 ^ Mapper2
     class Xor < Binary
-      # Succeedes if {left} or {right} succeeds, but not both
+      # Succeedes if left or right succeeds, but not both
       #
       # @param state [State]
       #

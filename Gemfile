@@ -11,6 +11,11 @@ group :development do
   gem "guard-rubocop", require: false
 
   gem "reek", require: false
+  gem "yard", require: false
+  gem "yard-rspec", require: false
+  gem "yard-coderay", require: false
+  gem "yard-doctest", require: false
+  gem "yard-spellcheck", require: false
 end
 
 group :test, :development do

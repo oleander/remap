@@ -6,12 +6,13 @@ module Remap
 
     # Allows a class (target) to be called with keyword arguments
     class Keyword < Concrete
+      # @return [:keyword]
       attribute :strategy, Value(:keyword)
 
       # Calls {#target} as with keyword arguments
       #
       # Fails if {#target} does not respond to {#method}
-      # Fails if {#target} cannot be called with {state}
+      # Fails if {#target} cannot be called with state
       #
       # Used by {Remap::Base} to define constructors for mapped data
       #

@@ -4,13 +4,13 @@ module Remap
   class Mapper
     using State::Extension
 
-    # Represents two mappers that are combined with the {&} operator
+    # Represents two mappers that are combined with the & operator
     #
     # @example Combine two mappers
     #   Mapper1 & Mapper2
     class And < Binary
-      # Succeedes if both {left} and {right} succeed
-      # Returnes the combined result of {left} and {right}
+      # Succeedes if both left and right succeed
+      # Returnes the combined result of left and right
       #
       # @param state [State]
       #

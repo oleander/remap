@@ -11,7 +11,7 @@ module Remap
     class All < Concrete
       requirement Types::Enumerable
 
-      # Iterates over {state} and passes each value to {block}
+      # Iterates over state and passes each value to block
       #
       # @param state [State<Enumerable<T>>]
       #

@@ -17,9 +17,10 @@ module Remap
     #
     #   Mapper.call(input, name: "John") # => { nickname: "John" }
     class Option < Concrete
+      # @return [Symbol]
       attribute :name, Symbol
 
-      # Selects {#value} from {state#params}
+      # Selects {#name} from state
       #
       # @param state [State]
       #

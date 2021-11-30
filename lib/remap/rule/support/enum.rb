@@ -5,7 +5,10 @@ module Remap
     class Enum < Proxy
       include Dry::Monads[:maybe]
 
+      # @return [Hash]
       option :mappings, default: -> { Hash.new { default } }
+
+      # @return [Maybe]
       option :default, default: -> { None() }
 
       alias execute instance_eval
@@ -33,12 +36,12 @@ module Remap
         new.tap { _1.execute(&block) }
       end
 
-      # Translate {key} into a value using pre-defined mappings
+      # Translates key into a value using pre-defined mappings
       #
       # @param key [#hash]
       #
       # @yield [String]
-      #   If the {key} is not found & no default value is set
+      #   If the key is not found & no default value is set
       #
       # @return [Any]
       def get(key, &error)

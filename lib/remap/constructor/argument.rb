@@ -6,15 +6,16 @@ module Remap
 
     # Allows a class (target) to be called with a regular argument
     class Argument < Concrete
+      # @return [:argument]
       attribute :strategy, Value(:argument), default: :argument
 
-      # Uses the {#method} method to initialize {#target} with {state}
-      # Target is only called if {state} is defined
+      # Uses the {#method} method to initialize {#target} with state
+      # Target is only called if state is defined
       #
       # Used by {Remap::Base} to define constructors for mapped data
       #
       # Fails if {#target} does not respond to {#method}
-      # Fails if {#target} cannot be called with {state}
+      # Fails if {#target} cannot be called with state
       #
       # @example Initialize a target with a state
       #   target = Struct.new(:foo)
