@@ -27,10 +27,10 @@ module Remap
         end
       end
 
-      # Post-processor for {#call}
+      # A post-processor method
       #
-      # @yieldparam value [U]
-      # @yieldreturn [T]
+      # @example Map "Hello" to "Hello!"
+      #   map.adjust { "#{value}!" }
       #
       # @return [Map]
       def adjust(&block)
@@ -43,8 +43,8 @@ module Remap
       # A pending rule
       #
       # @param reason [String]
-
-      # @example A pending rule
+      #
+      # @example Ignore rule for input { a: { b: "A" } }
       #   map(:a, :b).pending
       #
       # @return [Map]
@@ -73,7 +73,9 @@ module Remap
       # Keeps map, only if block is true
       #
       # @example Maps ["A", "B", "C"] to ["B"]
-      #   map.if { value.include?("B") }
+      #   each do
+      #     map.if { value.include?("B") }
+      #   end
       #
       # @return [Map]
       def if(&block)
@@ -84,6 +86,14 @@ module Remap
         end
       end
 
+      # Keeps map, only if block is false
+      #
+      # @example Maps ["A", "B", "C"] to ["A", "C"]
+      #   each do
+      #     map.if_not { value.include?("B") }
+      #   end
+      #
+      # @return [Map]
       def if_not(&block)
         add do |state|
           state.execute(&block).fmap do |bool, &error|
