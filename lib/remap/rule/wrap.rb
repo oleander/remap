@@ -13,8 +13,11 @@ module Remap
     #     end
     #   end
     class Wrap < Concrete
+      # @return [:array]
       attribute :type, Value(:array)
-      attribute :rule, Types::Any
+
+      # @return [Rule]
+      attribute :rule, Rule
 
       # Wraps the output from {#rule} in a {#type}
       #
