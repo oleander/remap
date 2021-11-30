@@ -116,17 +116,16 @@
     
       
         <p class="example_title"><div class='inline'>
-<p>Select all elements</p>
+<p>Select all keys from array hash</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
-  define <span style="color:#080;font-weight:bold">do</span>
-    map [all, <span style="color:#A60">:name</span>]
-  <span style="color:#080;font-weight:bold">end</span>
+      <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call([{<span style="color:#606">a</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A1</span><span style="color:#710">&quot;</span></span>}, {<span style="color:#606">a</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A2</span><span style="color:#710">&quot;</span></span>}])
+all = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">All</span>.new
+result = all.call(state) <span style="color:#080;font-weight:bold">do</span> |other_state|
+  value = other_state.fetch(<span style="color:#A60">:value</span>).class
+  other_state.merge(<span style="color:#606">value</span>: value)
 <span style="color:#080;font-weight:bold">end</span>
-
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call([{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span> }])
-output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quot;]</span></code></pre>
+result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; [Hash, Hash]</span></code></pre>
     
   </div>
 
@@ -262,6 +261,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
+28
 29
 30
 31
@@ -273,11 +273,10 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 37
 38
 39
-40
-41</pre>
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/all.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/all.rb', line 28</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;block)
   <span style="color:#080;font-weight:bold">unless</span> block
@@ -302,7 +301,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:07:16 2021 by
+  Generated on Tue Nov 30 11:40:09 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

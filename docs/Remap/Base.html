@@ -128,6 +128,20 @@
     
       
         <p class="example_title"><div class='inline'>
+<p>Select all elements</p>
+</div></p>
+      
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map [all, <span style="color:#A60">:name</span>]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call([{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span> }])
+output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quot;]</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
 <p>Given an option</p>
 </div></p>
       
@@ -555,14 +569,14 @@
       <pre class="lines">
 
 
-251
-252
-253
-254
-255</pre>
+261
+262
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 261</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call!</span>(state, &amp;error)
   new(state.options).call(state._.set(<span style="color:#606">mapper</span>: <span style="color:#069">self</span>), &amp;error)
@@ -630,12 +644,12 @@
       <pre class="lines">
 
 
-140
-141
-142</pre>
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 150</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">contract</span>(&amp;context)
   <span style="color:#069">self</span>.contract = <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Schema</span>.JSON(&amp;context)
@@ -802,19 +816,19 @@
       <pre class="lines">
 
 
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240</pre>
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 241</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">define</span>(target = <span style="color:#036;font-weight:bold">Nothing</span>, <span style="color:#606">method</span>: <span style="color:#A60">:new</span>, <span style="color:#606">strategy</span>: <span style="color:#A60">:argument</span>, &amp;context)
   <span style="color:#080;font-weight:bold">unless</span> context
@@ -930,18 +944,18 @@
       <pre class="lines">
 
 
-191
-192
-193
-194
-195
-196
-197
-198
-199</pre>
+201
+202
+203
+204
+205
+206
+207
+208
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 201</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">option</span>(field, <span style="color:#606">type</span>: <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Any</span>)
   attribute(field, type)
@@ -1019,12 +1033,12 @@
       <pre class="lines">
 
 
-170
-171
-172</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 180</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">rule</span>(...)
   <span style="color:#069">self</span>.rules = rules + [-&gt; * { rule(...) }]
@@ -1112,24 +1126,24 @@
       <pre class="lines">
 
 
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
 276
 277
 278
 279
-280</pre>
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 276</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;error)
   <span style="color:#080;font-weight:bold">unless</span> error
@@ -1156,7 +1170,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:07:15 2021 by
+  Generated on Tue Nov 30 11:40:08 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

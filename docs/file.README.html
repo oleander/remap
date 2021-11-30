@@ -76,9 +76,7 @@
     map <span style="color:#A60">:people</span> <span style="color:#080;font-weight:bold">do</span>
       map <span style="color:#A60">:name</span>, <span style="color:#606">to</span>: <span style="color:#A60">:nickname</span>
 
-      to(<span style="color:#A60">:car</span>, <span style="color:#606">map</span>: <span style="color:#A60">:cars</span>, first).then <span style="color:#080;font-weight:bold">do</span> |car|
-        car.upcase
-      <span style="color:#080;font-weight:bold">end</span>
+      to(<span style="color:#A60">:car</span>, <span style="color:#606">map</span>: <span style="color:#A60">:cars</span>, first).then(&amp;<span style="color:#A60">:upcase</span>)
     <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
@@ -86,10 +84,293 @@
 result = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">John</span><span style="color:#710">'</span></span>, <span style="color:#606">cars</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Volvo</span><span style="color:#710">'</span></span>] } }, <span style="color:#606">id</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ABC-123</span><span style="color:#710">'</span></span>)
 pp result <span style="color:#777"># =&gt; { key: 'ABC-123', nickname: 'John', car: 'VOLVO' }</span>
 </code></pre>
+
+<h2 id="label-Examples">Examples</h2>
+
+<h3 id="label-Map+a+value">Map a value</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:person</span>, <span style="color:#A60">:name</span>, <span style="color:#606">to</span>: <span style="color:#A60">:nickname</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+
+<blockquote>
+<p><code>map</code> and <code>to</code> can be flipped around</p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    to <span style="color:#A60">:nickname</span>, <span style="color:#606">map</span>: <span style="color:#A60">:person</span>, <span style="color:#A60">:name</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+
+<blockquote>
+<p>and deeply nested</p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    to <span style="color:#A60">:nickname</span> <span style="color:#080;font-weight:bold">do</span>
+      map <span style="color:#A60">:person</span> <span style="color:#080;font-weight:bold">do</span>
+        map <span style="color:#A60">:name</span>
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+
+<blockquote>
+<p>which works both ways</p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:person</span> <span style="color:#080;font-weight:bold">do</span>
+      map <span style="color:#A60">:name</span> <span style="color:#080;font-weight:bold">do</span>
+        to <span style="color:#A60">:nickname</span>
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+
+<blockquote>
+<p>to invoke do the following</p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby">output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">person</span>: { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">John</span><span style="color:#710">'</span></span> } })
+output.result <span style="color:#777"># =&gt; { nickname: 'John' }</span>
+</code></pre>
+
+<h3 id="label-Select+all+elements+in+an+array">Select all elements in an array</h3>
+
+<blockquote>
+<p>Similar to JSONPath&#39;s `[*] operator</p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map [all, <span style="color:#A60">:name</span>]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call([{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span> }])
+output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quot;]</span>
+</code></pre>
+
+<h3 id="label-Fixed+values+predefined+in+the+mapper">Fixed values predefined in the mapper</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  option <span style="color:#A60">:name</span>
+
+  define <span style="color:#080;font-weight:bold">do</span>
+    set [<span style="color:#A60">:person</span>, <span style="color:#A60">:name</span>], <span style="color:#606">to</span>: option(<span style="color:#A60">:name</span>)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>)
+output.result <span style="color:#777"># =&gt; { person: { name: &quot;John&quot; } }</span>
+</code></pre>
+
+<h3 id="label-Fixed+value+defined+in+the+mapper">Fixed value defined in the mapper</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    set [<span style="color:#A60">:api_key</span>], <span style="color:#606">to</span>: value(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ABC-123</span><span style="color:#710">&quot;</span></span>)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({})
+output.result <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }</span>
+</code></pre>
+
+<h3 id="label-Skip+mapping+rule-2C+unless+some+condition+is+fulfilled">Skip mapping rule, unless some condition is fulfilled</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    each <span style="color:#080;font-weight:bold">do</span>
+      map.if_not <span style="color:#080;font-weight:bold">do</span>
+        value.include?(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>)
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>])
+output.result <span style="color:#777"># =&gt; [&quot;A&quot;, &quot;C&quot;]</span>
+</code></pre>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    each <span style="color:#080;font-weight:bold">do</span>
+      map.if <span style="color:#080;font-weight:bold">do</span>
+        value.include?(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>)
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>])
+output.result <span style="color:#777"># =&gt; [&quot;B&quot;]</span>
+</code></pre>
+
+<h3 id="label-Enum+mapping">Enum mapping</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map(<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>).enum <span style="color:#080;font-weight:bold">do</span>
+      value <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }).result <span style="color:#777"># =&gt; &quot;A&quot;</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span> } }).result <span style="color:#777"># =&gt; &quot;B&quot;</span>
+</code></pre>
+
+<h3 id="label-Pending+mapping">Pending mapping</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map(<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>).pending
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }).problems.count <span style="color:#777"># =&gt; 1</span>
+</code></pre>
+
+<h3 id="label-Iterate+over+an+enumerable">Iterate over an enumerable</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:people</span>, <span style="color:#606">to</span>: <span style="color:#A60">:names</span> <span style="color:#080;font-weight:bold">do</span>
+      each <span style="color:#080;font-weight:bold">do</span>
+        map <span style="color:#A60">:name</span>
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] })
+output.result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span>
+</code></pre>
+
+<blockquote>
+<p><code>element</code>, <code>index</code> and <code>key</code> can be accessed in the block</p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:people</span>, <span style="color:#606">to</span>: <span style="color:#A60">:names</span> <span style="color:#080;font-weight:bold">do</span>
+      each <span style="color:#080;font-weight:bold">do</span>
+        map(<span style="color:#A60">:name</span>).then <span style="color:#080;font-weight:bold">do</span>
+          element
+        <span style="color:#080;font-weight:bold">end</span>
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] })
+output.result <span style="color:#777"># =&gt; [{ name: &quot;John&quot; }]</span>
+</code></pre>
+
+<blockquote>
+<p>or <code>index</code> to get access to <code>each</code>&#39;s index</p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:people</span>, <span style="color:#606">to</span>: <span style="color:#A60">:names</span> <span style="color:#080;font-weight:bold">do</span>
+      each <span style="color:#080;font-weight:bold">do</span>
+        map(<span style="color:#A60">:name</span>).then <span style="color:#080;font-weight:bold">do</span>
+          index
+        <span style="color:#080;font-weight:bold">end</span>
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] })
+output.result <span style="color:#777"># =&gt; [0]</span>
+</code></pre>
+
+<h3 id="label-Post-process+a+mapped+value">Post-process a mapped value</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map.adjust <span style="color:#080;font-weight:bold">do</span>
+      <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>value<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">!</span><span style="color:#710">&quot;</span></span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello</span><span style="color:#710">&quot;</span></span>)
+output.result <span style="color:#777"># =&gt; &quot;Hello!&quot;</span>
+</code></pre>
+
+<h3 id="label-Select+element+at+index">Select element at index</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:people</span>, at(<span style="color:#00D">0</span>), <span style="color:#A60">:name</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] })
+output.result <span style="color:#777"># =&gt; &quot;John&quot;</span>
+</code></pre>
+
+<blockquote>
+<p>or <code>first</code></p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:people</span>, first, <span style="color:#A60">:name</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] })
+output.result <span style="color:#777"># =&gt; &quot;John&quot;</span>
+</code></pre>
+
+<blockquote>
+<p>or <code>last</code></p>
+</blockquote>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:people</span>, last, <span style="color:#A60">:name</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] })
+output.result <span style="color:#777"># =&gt; &quot;Jane&quot;</span>
+</code></pre>
+
+<h3 id="label-Wrap+output+result+in+an+array">Wrap output result in an array</h3>
+
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    to <span style="color:#A60">:names</span> <span style="color:#080;font-weight:bold">do</span>
+      wrap(<span style="color:#A60">:array</span>) <span style="color:#080;font-weight:bold">do</span>
+        map <span style="color:#A60">:name</span>
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> })
+output.result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span>
+</code></pre>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Nov 30 11:07:14 2021 by
+  Generated on Tue Nov 30 11:40:08 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
