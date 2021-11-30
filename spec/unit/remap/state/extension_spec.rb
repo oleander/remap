@@ -4,7 +4,7 @@ describe Remap::State::Extension do
   using Remap::State::Extensions::Enumerable
   using described_class
 
-  xdescribe "#_" do
+  describe "#_" do
     context "when target is valid" do
       let(:state) { defined! }
 

@@ -15,7 +15,7 @@ describe Remap::State do
       it { is_expected.to include(options: {}) }
     end
 
-    xcontext "given invalid input" do
+    context "given invalid input" do
       subject(:result) { state(value!, mapper: nil) }
 
       it "raises an argument error" do
