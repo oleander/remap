@@ -188,8 +188,8 @@ module Remap
     # @return [Contract]
     def validation
       Contract.call(
-        contract: contract,
         attributes: attributes,
+        contract: contract,
         options: options,
         rules: rules
       )
