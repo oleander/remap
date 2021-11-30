@@ -1,5 +1,5 @@
 # Remap [![Main](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg)](https://github.com/oleander/remap/actions/workflows/main.yml)
-[![Github](<https://img.shields.io/github/license/oleander/remap>) [![Github](<https://img.shields.io/github/version/oleander/remap>)
+[![Github](<https://img.shields.io/github/license/oleander/remap>)
 
 ``` ruby
 class Mapper < Remap::Base
