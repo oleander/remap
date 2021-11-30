@@ -4,7 +4,6 @@ require "active_support/core_ext/module/delegation"
 require "active_support/core_ext/array/wrap"
 require "active_support/proxy_object"
 
-require "dry/configurable"
 require "dry/validation"
 require "dry/interface"
 require "dry/schema"
