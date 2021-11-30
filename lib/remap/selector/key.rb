@@ -7,7 +7,7 @@ module Remap
     # Selects value at key from state
     #
     # @example Select the value at key :name from a hash
-    #   state = State.call({ name: "John" })
+    #   state = Remap::State.call({ name: "John" })
     #   result = Selector::Key.new(:name).call(state)
     #   result.value # => "John"
     class Key < Unit

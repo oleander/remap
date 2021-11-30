@@ -8,8 +8,8 @@ module Remap
     # Sets the value to a given path
     #
     # @example Maps "A" to { a: { b: { c: "A" } } }
-    #   state = State.call("A")
-    #   result = Output.new([:a, :b, :c]).call(state)
+    #   state = Remap::State.call("A")
+    #   result = Remap::Output.new([:a, :b, :c]).call(state)
     #   result # => { a: { b: { c: "A" } } }
     class Output < Unit
       attribute :segments, [Types::Key]

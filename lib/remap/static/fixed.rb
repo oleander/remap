@@ -7,7 +7,13 @@ module Remap
     # Maps a fixed value to state
     #
     # @example Map a fixed value to path
-    #   set :a, :b, to: value('a value')
+    #   class Mapper < Remap::Base
+    #     define do
+    #       set :a, :b, to: value('a value')
+    #     end
+    #   end
+    #
+    #   Mapper.call({}).result # => { a: { b: 'a value' } }
     class Fixed < Concrete
       # @return [Any]
       attribute :value, Types::Any

@@ -7,11 +7,17 @@ module Remap
     # Iterates over a rule, even if the rule is not a collection
     #
     # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
-    #   map :people, to: :names do
-    #     each do
-    #       map :name
+    #   class Mapper < Remap::Base
+    #     define do
+    #       map :people, to: :names do
+    #         each do
+    #           map :name
+    #         end
+    #       end
     #     end
     #   end
+    #
+    #   Mapper.call({ people: [{ name: "John" }] }).result # => { names: ["John"] }
     class Each < Unit
       # @return [Rule]
       attribute :rule, Rule

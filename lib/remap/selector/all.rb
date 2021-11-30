@@ -7,7 +7,14 @@ module Remap
     # Selects all elements from a state
     #
     # @example Select all elements
-    #   map [:people, all, :name]
+    #   class Mapper < Remap::Base
+    #     define do
+    #       map [:people, all, :name]
+    #     end
+    #   end
+    #
+    #   output = Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] })
+    #   output.result # => { people: [{ name: "John" }, { name: "Jane" }] }
     class All < Concrete
       requirement Types::Enumerable
 

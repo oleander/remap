@@ -19,7 +19,7 @@ module Remap
     #     end
     #   end
     #
-    #   state = State.call({ a2: 2 })
+    #   state = Remap::State.call({ a2: 2 })
     #   result = (Mapper1 | Mapper2).call(state)
     #   result.success? # => true
     class Or < Binary

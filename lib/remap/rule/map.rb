@@ -8,7 +8,13 @@ module Remap
     # Maps an input path to an output path
     #
     # @example Map { name: "Ford" } to { person: { name: "Ford" } }
-    #   map :name, to: [:person, :name]
+    #   class Mapper < Remap::Base
+    #     define do
+    #       map :name, to: [:person, :name]
+    #     end
+    #   end
+    #
+    #   Mapper.call({ name: "Ford" }).result # => { person: { name: "Ford" } }
     class Map < Concrete
       # @return [Rule]
       attribute :rule, Rule
