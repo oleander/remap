@@ -6,8 +6,14 @@ module Remap
 
     # Selects value at given index
     #
-    # @example Select the fith element from an array
-    #   map index(4)
+    # @example Select the second element from an array
+    #   class Mapper < Remap::Base
+    #     define do
+    #       map index(1)
+    #     end
+    #   end
+
+    #   Mapper.call([1, 2, 3]).result # => 2
     class Index < Unit
       # @return [Integer]
       attribute :index, Integer

@@ -9,8 +9,9 @@ module Remap
     #
     # @example Maps "A" to { a: { b: { c: "A" } } }
     #   state = Remap::State.call("A")
-    #   result = Remap::Output.new([:a, :b, :c]).call(state)
-    #   result # => { a: { b: { c: "A" } } }
+    #   result = Remap::Path::Output.new([:a, :b, :c]).call(state)
+    #
+    #   result.fetch(:value) # => { a: { b: { c: "A" } } }
     class Output < Unit
       attribute :segments, [Types::Key]
 

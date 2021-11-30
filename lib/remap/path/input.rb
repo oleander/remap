@@ -5,10 +5,11 @@ module Remap
     # Returns the value at a given path
     #
     # @example Select "A" from { a: { b: { c: ["A"] } } }
-    #   state = State.call({ a: { b: { c: ["A"] } } })
-    #   first = Selector::Index.new(index: 0)
-    #   result = Input.new([:a, :b, :c, first]).call(state)
-    #   result # => ["A"]
+    #   state = Remap::State.call({ a: { b: { c: ["A"] } } })
+    #   first = Remap::Selector::Index.new(index: 0)
+    #   result = Remap::Path::Input.new([:a, :b, :c, first]).call(state)
+    #
+    #   result.fetch(:value) # => "A"
     class Input < Unit
       # @return [Array<Selector>]
       attribute :segments, [Selector]
