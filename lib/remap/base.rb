@@ -38,16 +38,6 @@ module Remap
       EMPTY_ARRAY
     end
 
-    # config.constructor = IDENTITY
-    # config.options = EMPTY_HASH
-    # config.rules = EMPTY_ARRAY
-    # config.contract = CONTRACT
-    #  config.context = IDENTITY
-    # setting :options, default: EMPTY_ARRAY
-    # setting :rules, default: EMPTY_ARRAY
-    # setting :contract, default: CONTRACT
-    # setting :context, default: IDENTITY
-
     schema schema.strict(false)
 
     # Defines a schema for the mapper
