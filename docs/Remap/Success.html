@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Success
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -169,8 +169,30 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Calls block with #result and returns a other success.</p>
+<p>Calls block with <span class='object_link'><a href="#result-instance_method" title="Remap::Success#result (method)">#result</a></span> and returns a other success.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#result-instance_method" title="#result (instance method)">#<strong>result</strong>  &#x21d2; Any </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -255,16 +277,16 @@
       <pre class="lines">
 
 
-9
 10
-11</pre>
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 10</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_failure?'>failure?</span>
-  <span class='kw'>false</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">failure?</span>
+  <span style="color:#069">false</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -282,7 +304,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Calls block with #result and returns a other success</p>
+<p>Calls block with <span class='object_link'><a href="#result-instance_method" title="Remap::Success#result (method)">#result</a></span> and returns a other success</p>
 
 
   </div>
@@ -337,16 +359,64 @@
       <pre class="lines">
 
 
-24
 25
-26</pre>
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_fmap'>fmap</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>result:</span> <span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='id identifier rubyid_result'>result</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fmap</span>(&amp;block)
+  new(<span style="color:#606">result</span>: block[result])
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="result-instance_method">
+  
+    #<strong>result</strong>  &#x21d2; <tt>Any</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Any</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 7</span>
+
+attribute <span style="color:#A60">:result</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Any</span></pre>
     </td>
   </tr>
 </table>
@@ -389,16 +459,16 @@
       <pre class="lines">
 
 
-14
 15
-16</pre>
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/success.rb', line 15</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_success?'>success?</span>
-  <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">success?</span>
+  <span style="color:#069">true</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -409,9 +479,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:21 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

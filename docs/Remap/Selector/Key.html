@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Selector::Key
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -104,7 +104,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Selects value at #key from #state</p>
+<p>Selects value at key from state</p>
 
 
   </div>
@@ -119,7 +119,7 @@
 <p>Select the value at key :name from a hash</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_map'>map</span> <span class='symbol'>:key</span></code></pre>
+      <pre class="example code"><code>map <span style="color:#A60">:key</span></code></pre>
     
   </div>
 
@@ -157,7 +157,31 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Selects #key from state and passes it to block.</p>
+<p>Selects <span class='object_link'><a href="#key-instance_method" title="Remap::Selector::Key#key (method)">#key</a></span> from state and passes it to block.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#key-instance_method" title="#key (instance method)">#<strong>key</strong>  &#x21d2; #hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>#hash.</p>
 </div></span>
   
 </li>
@@ -185,7 +209,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Selects #key from state and passes it to block</p>
+<p>Selects <span class='object_link'><a href="#key-instance_method" title="Remap::Selector::Key#key (method)">#key</a></span> from state and passes it to block</p>
 
 
   </div>
@@ -255,8 +279,6 @@
       <pre class="lines">
 
 
-23
-24
 25
 26
 27
@@ -271,28 +293,85 @@
 36
 37
 38
-39</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:itself</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;block)
+  <span style="color:#080;font-weight:bold">unless</span> block
+    <span style="color:#080;font-weight:bold">return</span> call(state, &amp;<span style="color:#A60">:itself</span>)
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='label'>key:</span> <span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_inner_state'>inner_state</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_error'>error</span><span class='op'>|</span>
-    <span class='id identifier rubyid_requirement'>requirement</span><span class='lbracket'>[</span><span class='id identifier rubyid_hash'>hash</span><span class='rbracket'>]</span> <span class='kw'>do</span>
-      <span class='kw'>return</span> <span class='id identifier rubyid_error'>error</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected a hash</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='kw'>end</span>
+  state.bind(<span style="color:#606">key</span>: key) <span style="color:#080;font-weight:bold">do</span> |hash, inner_state, &amp;error|
+    requirement[hash] <span style="color:#080;font-weight:bold">do</span>
+      <span style="color:#080;font-weight:bold">return</span> error[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Expected a hash</span><span style="color:#710">&quot;</span></span>]
+    <span style="color:#080;font-weight:bold">end</span>
 
-    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='kw'>do</span>
-      <span class='kw'>return</span> <span class='id identifier rubyid_error'>error</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Key [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>] not found</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='kw'>end</span>
+    value = hash.fetch(key) <span style="color:#080;font-weight:bold">do</span>
+      <span style="color:#080;font-weight:bold">return</span> error[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Key [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>key<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] not found</span><span style="color:#710">&quot;</span></span>]
+    <span style="color:#080;font-weight:bold">end</span>
 
-    <span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='id identifier rubyid_inner_state'>inner_state</span><span class='period'>.</span><span class='id identifier rubyid_set'>set</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='label'>key:</span> <span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+    block[inner_state.set(value, <span style="color:#606">key</span>: key)]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="key-instance_method">
+  
+    #<strong>key</strong>  &#x21d2; <tt>#hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns #hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>#hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>#hash</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 13</span>
+
+attribute <span style="color:#A60">:key</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Key</span></pre>
     </td>
   </tr>
 </table>
@@ -303,9 +382,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:21 2021 by
+  Generated on Tue Nov 30 06:45:43 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

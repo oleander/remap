@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Contract
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -254,19 +254,19 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/contract.rb', line 13</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='label'>rules:</span><span class='comma'>,</span> <span class='label'>options:</span><span class='comma'>,</span> <span class='label'>contract:</span><span class='comma'>,</span> <span class='label'>attributes:</span><span class='rparen'>)</span>
-  <span class='const'>Class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_rules'>rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
-      <span class='id identifier rubyid_class_eval'>class_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call</span>(<span style="color:#606">rules</span>:, <span style="color:#606">options</span>:, <span style="color:#606">contract</span>:, <span style="color:#606">attributes</span>:)
+  <span style="color:#036;font-weight:bold">Class</span>.new(<span style="color:#069">self</span>) <span style="color:#080;font-weight:bold">do</span>
+    rules.each <span style="color:#080;font-weight:bold">do</span> |rule|
+      class_eval(&amp;rule)
+    <span style="color:#080;font-weight:bold">end</span>
 
-    <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_option'>option</span><span class='op'>|</span>
-      <span class='id identifier rubyid_class_eval'>class_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_option'>option</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
+    options.each <span style="color:#080;font-weight:bold">do</span> |option|
+      class_eval(&amp;option)
+    <span style="color:#080;font-weight:bold">end</span>
 
-    <span class='id identifier rubyid_schema'>schema</span><span class='lparen'>(</span><span class='id identifier rubyid_contract'>contract</span><span class='rparen'>)</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_attributes'>attributes</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+    schema(contract)
+  <span style="color:#080;font-weight:bold">end</span>.new(**attributes)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -277,9 +277,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

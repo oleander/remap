@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Rule::Collection::Filled
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -115,9 +115,9 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span>
-  <span class='comment'># ...
-</span><span class='kw'>end</span></code></pre>
+      <pre class="example code"><code>map <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#777"># ...</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
     
   </div>
 
@@ -155,8 +155,30 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Represents a non-empty define block with one or more rules Calls every #rules with input and merges the output.</p>
+<p>Represents a non-empty define block with one or more rules Calls every <span class='object_link'><a href="#rules-instance_method" title="Remap::Rule::Collection::Filled#rules (method)">#rules</a></span> with state and merges the output.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rules-instance_method" title="#rules (instance method)">#<strong>rules</strong>  &#x21d2; Array&lt;Rule&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -183,7 +205,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Represents a non-empty define block with one or more rules Calls every #rules with input and merges the output</p>
+<p>Represents a non-empty define block with one or more rules Calls every <span class='object_link'><a href="#rules-instance_method" title="Remap::Rule::Collection::Filled#rules (method)">#rules</a></span> with state and merges the output</p>
 
 
   </div>
@@ -225,20 +247,68 @@
       <pre class="lines">
 
 
-23
 24
 25
 26
-27</pre>
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 24</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_rules'>rules</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
-    <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:combine</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
+  rules.map <span style="color:#080;font-weight:bold">do</span> |rule|
+    rule.call(state)
+  <span style="color:#080;font-weight:bold">end</span>.reduce(&amp;<span style="color:#A60">:combine</span>)
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rules-instance_method">
+  
+    #<strong>rules</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="../../Rule.html" title="Remap::Rule (class)">Rule</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="../../Rule.html" title="Remap::Rule (class)">Rule</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/filled.rb', line 16</span>
+
+attribute <span style="color:#A60">:rules</span>, [<span style="color:#036;font-weight:bold">Types</span>.Interface(<span style="color:#A60">:call</span>)], <span style="color:#606">min_size</span>: <span style="color:#00D">1</span></pre>
     </td>
   </tr>
 </table>
@@ -249,9 +319,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:21 2021 by
+  Generated on Tue Nov 30 06:45:43 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

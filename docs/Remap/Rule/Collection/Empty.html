@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Rule::Collection::Empty
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -119,9 +119,9 @@
 <p>Map any value to undefined</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span>
-  <span class='comment'># NOP
-</span><span class='kw'>end</span></code></pre>
+      <pre class="example code"><code>map <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#777"># NOP</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
     
   </div>
 
@@ -144,7 +144,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(state)  &#x21d2; Monad::Failure </a>
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(state)  &#x21d2; State&lt;T&gt; </a>
     
 
     
@@ -178,7 +178,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="call-instance_method">
   
-    #<strong>call</strong>(state)  &#x21d2; <tt>Monad::Failure</tt> 
+    #<strong>call</strong>(state)  &#x21d2; <tt><span class='object_link'><a href="../../State.html" title="Remap::State (module)">State</a></span>&lt;T&gt;</tt> 
   
 
   
@@ -198,21 +198,10 @@
   
     <li>
       
-        <span class='name'>input</span>
-      
-      
-        <span class='type'>(<tt>Any</tt>)</span>
-      
-      
-      
-    </li>
-  
-    <li>
-      
         <span class='name'>state</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../State.html" title="Remap::State (module)">State</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../State.html" title="Remap::State (module)">State</a></span>&lt;T&gt;</tt>)</span>
       
       
       
@@ -226,7 +215,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Monad::Failure</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../State.html" title="Remap::State (module)">State</a></span>&lt;T&gt;</tt>)</span>
       
       
       
@@ -240,16 +229,16 @@
       <pre class="lines">
 
 
+22
 23
-24
-25</pre>
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/empty.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/collection/empty.rb', line 22</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No rules, empty block</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
+  state.problem(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No rules, empty block</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -260,9 +249,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:21 2021 by
+  Generated on Tue Nov 30 06:45:43 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

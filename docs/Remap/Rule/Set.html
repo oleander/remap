@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Rule::Set
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -119,28 +119,28 @@
 <p>Given an option</p>
 </div></p>
       
-      <pre class="example code"><code><span class='kw'>class</span> <span class='const'><span class='object_link'><a href="../Mapper.html" title="Remap::Mapper (class)">Mapper</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="../../Remap.html" title="Remap (module)">Remap</a></span></span><span class='op'>::</span><span class='const'>Base</span>
-  <span class='id identifier rubyid_option'>option</span> <span class='symbol'>:name</span>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  option <span style="color:#A60">:name</span>
 
-  <span class='id identifier rubyid_define'>define</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_set'>set</span> <span class='lbracket'>[</span><span class='symbol'>:person</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    set [<span style="color:#A60">:person</span>, <span style="color:#A60">:name</span>], <span style="color:#606">to</span>: option(<span style="color:#A60">:name</span>)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class='const'><span class='object_link'><a href="../Mapper.html" title="Remap::Mapper (class)">Mapper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># =&gt; { person: { name: &quot;John&quot; } }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call(input, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; { person: { name: &quot;John&quot; } }</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
 <p>Given a value</p>
 </div></p>
       
-      <pre class="example code"><code><span class='kw'>class</span> <span class='const'><span class='object_link'><a href="../Mapper.html" title="Remap::Mapper (class)">Mapper</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="../../Remap.html" title="Remap (module)">Remap</a></span></span><span class='op'>::</span><span class='const'>Base</span>
-  <span class='id identifier rubyid_define'>define</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_set'>set</span> <span class='lbracket'>[</span><span class='symbol'>:api_key</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ABC-123</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  define <span style="color:#080;font-weight:bold">do</span>
+    set [<span style="color:#A60">:api_key</span>], <span style="color:#606">to</span>: value(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ABC-123</span><span style="color:#710">&quot;</span></span>)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class='const'><span class='object_link'><a href="../Mapper.html" title="Remap::Mapper (class)">Mapper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span> <span class='comment'># =&gt; { api_key: &quot;ABC-123&quot; }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call(input) <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }</span></code></pre>
     
   </div>
 
@@ -180,6 +180,50 @@
     <span class="summary_desc"><div class='inline'>
 <p>Returns value mapped to path regardless of input.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path-instance_method" title="#path (instance method)">#<strong>path</strong>  &#x21d2; Path::Output </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>  &#x21d2; Static </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -248,16 +292,112 @@
       <pre class="lines">
 
 
-37
-38
-39</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 40</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_then'>then</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
+  rule.call(state).then(&amp;path)
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="path-instance_method">
+  
+    #<strong>path</strong>  &#x21d2; <tt><span class='object_link'><a href="../Path/Output.html" title="Remap::Path::Output (class)">Path::Output</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Path/Output.html" title="Remap::Path::Output (class)">Path::Output</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 33</span>
+
+attribute <span style="color:#A60">:path</span>, <span style="color:#036;font-weight:bold">Path</span>::<span style="color:#036;font-weight:bold">Output</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="value-instance_method">
+  
+    #<strong>value</strong>  &#x21d2; <tt><span class='object_link'><a href="../Static.html" title="Remap::Static (class)">Static</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Static.html" title="Remap::Static (class)">Static</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/set.rb', line 30</span>
+
+attribute <span style="color:#A60">:value</span>, <span style="color:#036;font-weight:bold">Static</span>, <span style="color:#606">alias</span>: <span style="color:#A60">:rule</span></pre>
     </td>
   </tr>
 </table>
@@ -268,9 +408,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:21 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

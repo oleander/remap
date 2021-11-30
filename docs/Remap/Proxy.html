@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Proxy
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -114,7 +114,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Used by Enum &amp; <span class='object_link'><a href="Compiler.html" title="Remap::Compiler (class)">Compiler</a></span> to create a clean context</p>
+<p>Used by <span class='object_link'><a href="Rule/Enum.html" title="Remap::Rule::Enum (class)">Rule::Enum</a></span> &amp; <span class='object_link'><a href="Compiler.html" title="Remap::Compiler (class)">Compiler</a></span> to create a clean context</p>
 
 
   </div>
@@ -189,7 +189,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>See Object#tap.</p>
+</div></span>
   
 </li>
 
@@ -228,9 +230,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/proxy.rb', line 6</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_const_missing'>const_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
-  <span class='op'>::</span><span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">const_missing</span>(name)
+  ::<span style="color:#036;font-weight:bold">Object</span>.const_get(name)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -251,24 +253,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>See Object#tap</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-13
 14
 15
-16</pre>
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/proxy.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/proxy.rb', line 14</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_tap'>tap</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span>
-  <span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">tap</span>(&amp;block)
+  block[<span style="color:#069">self</span>]
+  <span style="color:#069">self</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -279,9 +292,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

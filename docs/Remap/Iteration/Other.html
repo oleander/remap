@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Iteration::Other
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -104,7 +104,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Fallback iterator which doesn&#39;t do anything</p>
+<p>Default iterator which doesn&#39;t do anything</p>
 
 
   </div>
@@ -197,9 +197,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/iteration/other.rb', line 13</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='id identifier rubyid_other'>other</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(&amp;block)
+  block[other]
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -210,9 +210,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:43 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

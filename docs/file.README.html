@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -57,40 +57,41 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'><h1 id="remap-mainhttpsgithubcomoleanderremapactionsworkflowsmainymlbadgesvghttpsgithubcomoleanderremapactionsworkflowsmainyml-githubhttpsimgshieldsiogithublicenseoleanderremap">Remap <a href="https://github.com/oleander/remap/actions/workflows/main.yml"><img src="https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg" alt="Main" /></a> <img src="https://img.shields.io/github/license/oleander/remap" alt="Github" /></h1>
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Remap+rdoc-image-3Ahttps-3A-2F-2Fgithub.com-2Foleander-2Fremap-2Factions-2Fworkflows-2Fmain.yml-2Fbadge.svg+rdoc-image-3Ahttps-3A-2F-2Fimg.shields.io-2Fgithub-2Flicense-2Foleander-2Fremap">Remap <a href="https://github.com/oleander/remap/actions/workflows/main.yml"><img src="https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg"></a> <img src="https://img.shields.io/github/license/oleander/remap"></h1>
 
-<p>``` ruby
-class Mapper &lt; Remap::Base
-  option :id</p>
+<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+  option <span style="color:#A60">:id</span>
 
-<p>contract do
-    required(:people).hash do
-      required(:name).filled
-      required(:cars).array
-    end
-  end</p>
+  contract <span style="color:#080;font-weight:bold">do</span>
+    required(<span style="color:#A60">:people</span>).hash <span style="color:#080;font-weight:bold">do</span>
+      required(<span style="color:#A60">:name</span>).filled
+      required(<span style="color:#A60">:cars</span>).array
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
 
-<p>define do
-    set :key, to: option(:id)</p>
+  define <span style="color:#080;font-weight:bold">do</span>
+    set <span style="color:#A60">:key</span>, <span style="color:#606">to</span>: option(<span style="color:#A60">:id</span>)
 
-<pre class="code ruby"><code class="ruby">map :people do
-  map :name, to: :nickname
+    map <span style="color:#A60">:people</span> <span style="color:#080;font-weight:bold">do</span>
+      map <span style="color:#A60">:name</span>, <span style="color:#606">to</span>: <span style="color:#A60">:nickname</span>
 
-  to(:car, map: :cars, first).then do |car|
-    car.upcase
-  end
-end   end end
+      to(<span style="color:#A60">:car</span>, <span style="color:#606">map</span>: <span style="color:#A60">:cars</span>, first).then <span style="color:#080;font-weight:bold">do</span> |car|
+        car.upcase
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+result = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">John</span><span style="color:#710">'</span></span>, <span style="color:#606">cars</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Volvo</span><span style="color:#710">'</span></span>] } }, <span style="color:#606">id</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ABC-123</span><span style="color:#710">'</span></span>)
+pp result <span style="color:#777"># =&gt; { key: 'ABC-123', nickname: 'John', car: 'VOLVO' }</span>
 </code></pre>
-
-<p>result = Mapper.call({ people: { name: ‘John’, cars: [‘Volvo’] } }, id: ‘ABC-123’)
-pp result # =&gt; { key: ‘ABC-123’, nickname: ‘John’, car: ‘VOLVO’ }
-```</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:19 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

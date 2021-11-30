@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Rule::Enum
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -136,7 +136,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Builds an enum using the block context.</p>
+<p>Builds an enumeration using the block as context.</p>
 </div></span>
   
 </li>
@@ -155,6 +155,28 @@
   <span class="summary_signature">
     
       <a href="#[]-instance_method" title="#[] (instance method)">#<strong>[]</strong>(key)  &#x21d2; Maybe </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default-instance_method" title="#default (instance method)">#<strong>default</strong>  &#x21d2; Maybe </a>
     
 
     
@@ -215,8 +237,30 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Translate key into a value using pre-defined mappings.</p>
+<p>Translates key into a value using predefined mappings.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mappings-instance_method" title="#mappings (instance method)">#<strong>mappings</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -300,7 +344,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Builds an enum using the block context</p>
+<p>Builds an enumeration using the block as context</p>
 
 
   </div>
@@ -311,16 +355,16 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_enum'>enum</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Remap::Rule::Enum (class)">Enum</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_from'>from</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>B</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>to:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>C</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_value'>value</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_otherwise'>otherwise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>D</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span>
+      <pre class="example code"><code>enum = <span style="color:#036;font-weight:bold">Enum</span>.call <span style="color:#080;font-weight:bold">do</span>
+  from <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">to</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>
+  value <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>
+  otherwise <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">D</span><span style="color:#710">&quot;</span></span>
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class='id identifier rubyid_enum'>enum</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># =&gt; &quot;A&quot;
-</span><span class='id identifier rubyid_enum'>enum</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>B</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># =&gt; &quot;C&quot;
-</span><span class='id identifier rubyid_enum'>enum</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>C</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># =&gt; &quot;C&quot;
-</span><span class='id identifier rubyid_enum'>enum</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>MISSING</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># =&gt; &quot;D&quot;</span></code></pre>
+enum.get(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; &quot;A&quot;</span>
+enum.get(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; &quot;C&quot;</span>
+enum.get(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; &quot;C&quot;</span>
+enum.get(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">MISSING</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; &quot;D&quot;</span></code></pre>
     
   </div>
 
@@ -344,24 +388,24 @@
       <pre class="lines">
 
 
-28
-29
-30
 31
 32
 33
-34</pre>
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 31</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>no block given</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call</span>(&amp;block)
+  <span style="color:#080;font-weight:bold">unless</span> block
+    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">no block given</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='lbrace'>{</span> <span class='id identifier rubyid__1'>_1</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-<span class='kw'>end</span></pre>
+  new.tap { _1.execute(&amp;block) }
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -410,16 +454,64 @@
       <pre class="lines">
 
 
-56
-57
-58</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 59</span>
 
-<span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_mappings'>mappings</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">[]</span>(key)
+  mappings[key]
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default-instance_method">
+  
+    #<strong>default</strong>  &#x21d2; <tt>Maybe</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Maybe</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 12</span>
+
+option <span style="color:#A60">:default</span>, <span style="color:#606">default</span>: -&gt; { None() }</pre>
     </td>
   </tr>
 </table>
@@ -449,26 +541,26 @@
       <pre class="lines">
 
 
-61
-62
-63
 64
 65
 66
 67
-68</pre>
+68
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 64</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='label'>to:</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'>Some</span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">from</span>(*keys, <span style="color:#606">to</span>:)
+  value = Some(to)
 
-  <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
-    <span class='id identifier rubyid_mappings'>mappings</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-    <span class='id identifier rubyid_mappings'>mappings</span><span class='lbracket'>[</span><span class='id identifier rubyid_to'>to</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+  keys.each <span style="color:#080;font-weight:bold">do</span> |key|
+    mappings[key] = value
+    mappings[to] = value
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -490,7 +582,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Translate key into a value using pre-defined mappings</p>
+<p>Translates key into a value using predefined mappings</p>
 
 
   </div>
@@ -550,28 +642,76 @@
       <pre class="lines">
 
 
-44
-45
-46
 47
 48
 49
 50
 51
-52</pre>
+52
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 47</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_error'>error</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_error'>error</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../Error.html" title="Remap::Error (class)">Error</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid__1'>_1</span> <span class='rbrace'>}</span>
-  <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">get</span>(key, &amp;error)
+  <span style="color:#080;font-weight:bold">unless</span> error
+    <span style="color:#080;font-weight:bold">return</span> get(key) { raise <span style="color:#036;font-weight:bold">Error</span>, _1 }
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span> <span class='lbrace'>{</span> <span class='kw'>return</span> <span class='id identifier rubyid__1'>_1</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_or'>or</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_error'>error</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Enum key [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>] not found among [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mappings'>mappings</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+  <span style="color:#069">self</span>[key].bind { <span style="color:#080;font-weight:bold">return</span> _1 }.or <span style="color:#080;font-weight:bold">do</span>
+    error[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Enum key [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>key<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] not found among [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>mappings.keys.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">]</span><span style="color:#710">&quot;</span></span>]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="mappings-instance_method">
+  
+    #<strong>mappings</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 9</span>
+
+option <span style="color:#A60">:mappings</span>, <span style="color:#606">default</span>: -&gt; { <span style="color:#036;font-weight:bold">Hash</span>.new { default } }</pre>
     </td>
   </tr>
 </table>
@@ -601,16 +741,16 @@
       <pre class="lines">
 
 
-78
-79
-80</pre>
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 81</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_otherwise'>otherwise</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_mappings'>mappings</span><span class='period'>.</span><span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='const'>Some</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">otherwise</span>(value)
+  mappings.default = Some(value)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -640,20 +780,20 @@
       <pre class="lines">
 
 
-71
-72
-73
 74
-75</pre>
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/support/enum.rb', line 74</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_ids'>ids</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_ids'>ids</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_id'>id</span><span class='op'>|</span>
-    <span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">value</span>(*ids)
+  ids.each <span style="color:#080;font-weight:bold">do</span> |id|
+    from(id, <span style="color:#606">to</span>: id)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -664,9 +804,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:21 2021 by
+  Generated on Tue Nov 30 06:45:43 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

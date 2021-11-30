@@ -6,7 +6,7 @@
 <title>
   Module: Remap
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/remap.rb<span class="defines">,<br />
-  lib/remap/compiler.rb,<br /> lib/remap/constructor.rb,<br /> lib/remap/constructor/argument.rb,<br /> lib/remap/constructor/keyword.rb,<br /> lib/remap/constructor/none.rb,<br /> lib/remap/contract.rb,<br /> lib/remap/error.rb,<br /> lib/remap/iteration.rb,<br /> lib/remap/iteration/array.rb,<br /> lib/remap/iteration/hash.rb,<br /> lib/remap/iteration/other.rb,<br /> lib/remap/mapper.rb,<br /> lib/remap/mapper/and.rb,<br /> lib/remap/mapper/binary.rb,<br /> lib/remap/mapper/or.rb,<br /> lib/remap/mapper/support/operations.rb,<br /> lib/remap/mapper/xor.rb,<br /> lib/remap/nothing.rb,<br /> lib/remap/operation.rb,<br /> lib/remap/path.rb,<br /> lib/remap/path/input.rb,<br /> lib/remap/path/output.rb,<br /> lib/remap/proxy.rb,<br /> lib/remap/result.rb,<br /> lib/remap/rule.rb,<br /> lib/remap/rule/each.rb,<br /> lib/remap/rule/embed.rb,<br /> lib/remap/rule/map.rb,<br /> lib/remap/rule/set.rb,<br /> lib/remap/rule/support/collection.rb,<br /> lib/remap/rule/support/collection/empty.rb,<br /> lib/remap/rule/support/collection/filled.rb,<br /> lib/remap/rule/support/enum.rb,<br /> lib/remap/rule/void.rb,<br /> lib/remap/rule/wrap.rb,<br /> lib/remap/selector.rb,<br /> lib/remap/selector/all.rb,<br /> lib/remap/selector/index.rb,<br /> lib/remap/selector/key.rb,<br /> lib/remap/state.rb,<br /> lib/remap/state/extensions/enumerable.rb,<br /> lib/remap/state/extensions/object.rb,<br /> lib/remap/state/schema.rb,<br /> lib/remap/static.rb,<br /> lib/remap/static/fixed.rb,<br /> lib/remap/static/option.rb,<br /> lib/remap/struct.rb,<br /> lib/remap/success.rb,<br /> lib/remap/types.rb</span>
+  lib/remap/base.rb,<br /> lib/remap/path.rb,<br /> lib/remap/rule.rb,<br /> lib/remap/error.rb,<br /> lib/remap/proxy.rb,<br /> lib/remap/state.rb,<br /> lib/remap/types.rb,<br /> lib/remap/mapper.rb,<br /> lib/remap/result.rb,<br /> lib/remap/static.rb,<br /> lib/remap/struct.rb,<br /> lib/remap/failure.rb,<br /> lib/remap/nothing.rb,<br /> lib/remap/success.rb,<br /> lib/remap/compiler.rb,<br /> lib/remap/contract.rb,<br /> lib/remap/rule/map.rb,<br /> lib/remap/rule/set.rb,<br /> lib/remap/selector.rb,<br /> lib/remap/iteration.rb,<br /> lib/remap/mapper/or.rb,<br /> lib/remap/operation.rb,<br /> lib/remap/rule/each.rb,<br /> lib/remap/rule/void.rb,<br /> lib/remap/rule/wrap.rb,<br /> lib/remap/mapper/and.rb,<br /> lib/remap/mapper/xor.rb,<br /> lib/remap/path/input.rb,<br /> lib/remap/rule/embed.rb,<br /> lib/remap/constructor.rb,<br /> lib/remap/path/output.rb,<br /> lib/remap/selector/all.rb,<br /> lib/remap/selector/key.rb,<br /> lib/remap/state/schema.rb,<br /> lib/remap/static/fixed.rb,<br /> lib/remap/mapper/binary.rb,<br /> lib/remap/static/option.rb,<br /> lib/remap/iteration/hash.rb,<br /> lib/remap/selector/index.rb,<br /> lib/remap/iteration/array.rb,<br /> lib/remap/iteration/other.rb,<br /> lib/remap/state/extension.rb,<br /> lib/remap/constructor/none.rb,<br /> lib/remap/rule/support/enum.rb,<br /> lib/remap/constructor/keyword.rb,<br /> lib/remap/constructor/argument.rb,<br /> lib/remap/rule/support/collection.rb,<br /> lib/remap/state/extensions/object.rb,<br /> lib/remap/mapper/support/operations.rb,<br /> lib/remap/state/extensions/enumerable.rb,<br /> lib/remap/rule/support/collection/empty.rb,<br /> lib/remap/rule/support/collection/filled.rb</span>
 </dd>
   </dl>
   
@@ -93,7 +93,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Remap/Compiler.html" title="Remap::Compiler (class)">Compiler</a></span>, <span class='object_link'><a href="Remap/Constructor.html" title="Remap::Constructor (class)">Constructor</a></span>, <span class='object_link'><a href="Remap/Contract.html" title="Remap::Contract (class)">Contract</a></span>, <span class='object_link'><a href="Remap/Error.html" title="Remap::Error (class)">Error</a></span>, <span class='object_link'><a href="Remap/Iteration.html" title="Remap::Iteration (class)">Iteration</a></span>, <span class='object_link'><a href="Remap/Mapper.html" title="Remap::Mapper (class)">Mapper</a></span>, <span class='object_link'><a href="Remap/Nothing.html" title="Remap::Nothing (class)">Nothing</a></span>, <span class='object_link'><a href="Remap/Path.html" title="Remap::Path (class)">Path</a></span>, <span class='object_link'><a href="Remap/Proxy.html" title="Remap::Proxy (class)">Proxy</a></span>, <span class='object_link'><a href="Remap/Result.html" title="Remap::Result (class)">Result</a></span>, <span class='object_link'><a href="Remap/Rule.html" title="Remap::Rule (class)">Rule</a></span>, <span class='object_link'><a href="Remap/Selector.html" title="Remap::Selector (class)">Selector</a></span>, <span class='object_link'><a href="Remap/Static.html" title="Remap::Static (class)">Static</a></span>, <span class='object_link'><a href="Remap/Struct.html" title="Remap::Struct (class)">Struct</a></span>, <span class='object_link'><a href="Remap/Success.html" title="Remap::Success (class)">Success</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Remap/Base.html" title="Remap::Base (class)">Base</a></span>, <span class='object_link'><a href="Remap/Compiler.html" title="Remap::Compiler (class)">Compiler</a></span>, <span class='object_link'><a href="Remap/Constructor.html" title="Remap::Constructor (class)">Constructor</a></span>, <span class='object_link'><a href="Remap/Contract.html" title="Remap::Contract (class)">Contract</a></span>, <span class='object_link'><a href="Remap/Error.html" title="Remap::Error (class)">Error</a></span>, <span class='object_link'><a href="Remap/Failure.html" title="Remap::Failure (class)">Failure</a></span>, <span class='object_link'><a href="Remap/Iteration.html" title="Remap::Iteration (class)">Iteration</a></span>, <span class='object_link'><a href="Remap/Mapper.html" title="Remap::Mapper (class)">Mapper</a></span>, <span class='object_link'><a href="Remap/Nothing.html" title="Remap::Nothing (class)">Nothing</a></span>, <span class='object_link'><a href="Remap/Path.html" title="Remap::Path (class)">Path</a></span>, <span class='object_link'><a href="Remap/Proxy.html" title="Remap::Proxy (class)">Proxy</a></span>, <span class='object_link'><a href="Remap/Result.html" title="Remap::Result (class)">Result</a></span>, <span class='object_link'><a href="Remap/Rule.html" title="Remap::Rule (class)">Rule</a></span>, <span class='object_link'><a href="Remap/Selector.html" title="Remap::Selector (class)">Selector</a></span>, <span class='object_link'><a href="Remap/Static.html" title="Remap::Static (class)">Static</a></span>, <span class='object_link'><a href="Remap/Struct.html" title="Remap::Struct (class)">Struct</a></span>, <span class='object_link'><a href="Remap/Success.html" title="Remap::Success (class)">Success</a></span>
     
   
 </p>
@@ -109,9 +109,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

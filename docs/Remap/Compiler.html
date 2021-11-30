@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: Remap::Compiler
-
-    &mdash; Documentation by YARD 0.9.26
-
+  
+    &mdash; Documentation by YARD 0.9.27
+  
 </title>
 
   <link rel="stylesheet" href="../css/style.css" type="text/css" />
@@ -35,16 +35,16 @@
     <div id="main" tabindex="-1">
       <div id="header">
         <div id="menu">
-
+  
     <a href="../_index.html">Index (C)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../Remap.html" title="Remap (module)">Remap</a></span></span>
-     &raquo;
+     &raquo; 
     <span class="title">Compiler</span>
-
+  
 </div>
 
         <div id="search">
-
+  
     <a class="full_list_link" id="class_list_link"
         href="../class_list.html">
 
@@ -54,65 +54,65 @@
           <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
         </svg>
     </a>
-
+  
 </div>
         <div class="clear"></div>
       </div>
 
       <div id="content"><h1>Class: Remap::Compiler
-
-
-
+  
+  
+  
 </h1>
 <div class="box_info">
-
+  
   <dl>
     <dt>Inherits:</dt>
     <dd>
       <span class="inheritName"><span class='object_link'><a href="Proxy.html" title="Remap::Proxy (class)">Proxy</a></span></span>
-
+      
         <ul class="fullTree">
           <li>Object</li>
-
+          
             <li class="next">ActiveSupport::ProxyObject</li>
-
+          
             <li class="next"><span class='object_link'><a href="Proxy.html" title="Remap::Proxy (class)">Proxy</a></span></li>
-
+          
             <li class="next">Remap::Compiler</li>
-
+          
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
-
+      
     </dd>
   </dl>
+  
 
+  
+  
+  
+  
+  
 
+  
 
-
-
-
-
-
-
-
-
+  
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/remap/compiler.rb</dd>
   </dl>
-
+  
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-
-<p>Constructs a <span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span> from the block passed to Base.define</p>
+    
+<p>Constructs a <span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span> from the block passed to <span class='object_link'><a href="Base.html#define-class_method" title="Remap::Base.define (method)">Base.define</a></span></p>
 
 
   </div>
 </div>
 <div class="tags">
-
+  
 
 </div>
 
@@ -121,435 +121,457 @@
 
 
 
-
+  
     <h2>
       Class Method Summary
       <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#call-class_method" title="call (class method)">.<strong>call</strong>(&amp;block)  &#x21d2; Rule </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Constructs a rule tree given block.</p>
 </div></span>
-
+  
 </li>
 
-
+      
     </ul>
-
+  
     <h2>
       Instance Method Summary
       <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#all-instance_method" title="#all (instance method)">#<strong>all</strong>  &#x21d2; Rule::Path::Segment::Quantifier::All </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Selects all elements.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#at-instance_method" title="#at (instance method)">#<strong>at</strong>(index)  &#x21d2; Path::Segment::Key </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Selects index element in input.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>  &#x21d2; Rule </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'></div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong>(&amp;block)  &#x21d2; Rule::Each </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Iterates over the input value, passes each value to its block and merges the result back together.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#embed-instance_method" title="#embed (instance method)">#<strong>embed</strong>(mapper)  &#x21d2; Rule::Embed </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Maps using mapper.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#first-instance_method" title="#first (instance method)">#<strong>first</strong>  &#x21d2; Path::Segment::Key </a>
+    
 
-
-
+    
       (also: #any)
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Selects first element in input.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#last-instance_method" title="#last (instance method)">#<strong>last</strong>  &#x21d2; Path::Segment::Key </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Selects last element in input.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#map-instance_method" title="#map (instance method)">#<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; Rule::Map </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
-<p>Maps path to <span class='object_link'><a href="#to-instance_method" title="Remap::Compiler#to (method)">#to</a></span> with block in between.</p>
+<p>Maps path to to with block in between.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#option-instance_method" title="#option (instance method)">#<strong>option</strong>(id)  &#x21d2; Rule::Static::Option </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Static option to be selected.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#rule-instance_method" title="#rule (instance method)">#<strong>rule</strong>  &#x21d2; Rule </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>The final rule.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
+    
+      <a href="#rules-instance_method" title="#rules (instance method)">#<strong>rules</strong>  &#x21d2; Array&lt;Rule&gt; </a>
+    
 
-      <a href="#set-instance_method" title="#set (instance method)">#<strong>set</strong>(*path, to:)  &#x21d2; Rule::Set </a>
-
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'></div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
+    
+      <a href="#set-instance_method" title="#set (instance method)">#<strong>set</strong>(*path, to:)  &#x21d2; Rule::Set </a>
+    
 
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to-instance_method" title="#to (instance method)">#<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; Rule::Map </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
-<p>Maps to path from <span class='object_link'><a href="#map-instance_method" title="Remap::Compiler#map (method)">#map</a></span> with block in between.</p>
+<p>Maps to path from map with block in between.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>(value)  &#x21d2; Rule::Static::Fixed </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Static value to be selected.</p>
 </div></span>
-
+  
 </li>
 
-
+      
         <li class="public ">
   <span class="summary_signature">
-
+    
       <a href="#wrap-instance_method" title="#wrap (instance method)">#<strong>wrap</strong>(type, &amp;block)  &#x21d2; Rule::Wrap </a>
+    
 
-
-
+    
   </span>
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
+  
     <span class="summary_desc"><div class='inline'>
 <p>Wraps output in type.</p>
 </div></span>
-
+  
 </li>
 
-
+      
     </ul>
+  
 
 
-
-
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
+  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Proxy.html" title="Remap::Proxy (class)">Proxy</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Proxy.html#const_missing-class_method" title="Remap::Proxy.const_missing (method)">const_missing</a></span>, <span class='object_link'><a href="Proxy.html#tap-instance_method" title="Remap::Proxy#tap (method)">#tap</a></span></p>
 
-
-
-
+  
+  
+  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
 
-
+    
       <div class="method_details first">
   <h3 class="signature first" id="call-class_method">
+  
+    .<strong>call</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt> 
+  
 
-    .<strong>call</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Constructs a rule tree given block</p>
 
 
   </div>
 </div>
 <div class="tags">
-
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -558,66 +580,66 @@
       <pre class="lines">
 
 
-14
 15
 16
 17
 18
 19
-20</pre>
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 15</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
-    <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Void.html" title="Remap::Rule::Void (class)">Void</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call</span>(&amp;block)
+  <span style="color:#080;font-weight:bold">unless</span> block
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Void</span>.new
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='lbrace'>{</span> <span class='id identifier rubyid__1'>_1</span><span class='period'>.</span><span class='id identifier rubyid_instance_exec'>instance_exec</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_rule'>rule</span>
-<span class='kw'>end</span></pre>
+  new.tap { _1.instance_exec(&amp;block) }.rule
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
   </div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
 
-
+    
       <div class="method_details first">
   <h3 class="signature first" id="all-instance_method">
+  
+    #<strong>all</strong>  &#x21d2; <tt>Rule::Path::Segment::Quantifier::All</tt> 
+  
 
-    #<strong>all</strong>  &#x21d2; <tt>Rule::Path::Segment::Quantifier::All</tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Selects all elements</p>
 
 
   </div>
 </div>
 <div class="tags">
-
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>Rule::Path::Segment::Quantifier::All</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -626,33 +648,33 @@
       <pre class="lines">
 
 
-106
 107
-108</pre>
+108
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 107</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_all'>all</span>
-  <span class='const'><span class='object_link'><a href="Selector.html" title="Remap::Selector (class)">Selector</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Selector/All.html" title="Remap::Selector::All (class)">All</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>EMPTY_HASH</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">all</span>
+  <span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">All</span>.new(<span style="color:#036;font-weight:bold">EMPTY_HASH</span>)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="at-instance_method">
+  
+    #<strong>at</strong>(index)  &#x21d2; <tt>Path::Segment::Key</tt> 
+  
 
-    #<strong>at</strong>(index)  &#x21d2; <tt>Path::Segment::Key</tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Selects index element in input</p>
 
 
@@ -661,50 +683,50 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
+      
         <span class='name'>index</span>
-
-
+      
+      
         <span class='type'>(<tt>Integer</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>Path::Segment::Key</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'>
 <p>if index is not an Integer</p>
 </div>
-
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -713,54 +735,54 @@
       <pre class="lines">
 
 
-134
 135
 136
 137
-138</pre>
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 135</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Selector.html" title="Remap::Selector (class)">Selector</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Selector/Index.html" title="Remap::Selector::Index (class)">Index</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Struct</span><span class='op'>::</span><span class='const'>Error</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Selector at(index) requires an integer argument, got [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_index'>index</span><span class='embexpr_end'>}</span><span class='tstring_content'>] (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_index'>index</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">at</span>(index)
+  <span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">Index</span>.new(<span style="color:#606">index</span>: index)
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span>
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Selector at(index) requires an integer argument, got [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>index<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>index.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="call-instance_method">
+  
+    #<strong>call</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt> 
+  
 
-    #<strong>call</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 
   </div>
 </div>
 <div class="tags">
-
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -769,71 +791,71 @@
       <pre class="lines">
 
 
-9</pre>
+10</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 10</span>
 
-<span class='id identifier rubyid_delegate'>delegate</span> <span class='symbol'>:call</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='const'><span class='object_link'><a href="" title="Remap::Compiler (class)">Compiler</a></span></span></pre>
+delegate <span style="color:#A60">:call</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">Compiler</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="each-instance_method">
+  
+    #<strong>each</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Each.html" title="Remap::Rule::Each (class)">Rule::Each</a></span></tt> 
+  
 
-    #<strong>each</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Each.html" title="Remap::Rule::Each (class)">Rule::Each</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Iterates over the input value, passes each value to its block and merges the result back together</p>
 
 
   </div>
 </div>
 <div class="tags">
-
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Each.html" title="Remap::Rule::Each (class)">Rule::Each</a></span></tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'>
 <p>]</p>
 </div>
-
+      
     </li>
-
+  
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'>
 <p>if no block given</p>
 </div>
-
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -842,41 +864,41 @@
       <pre class="lines">
 
 
-77
 78
 79
 80
 81
 82
-83</pre>
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 78</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#each requires a block</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">each</span>(&amp;block)
+  <span style="color:#080;font-weight:bold">unless</span> block
+    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#each requires a block</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='id identifier rubyid_add'>add</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Each.html" title="Remap::Rule::Each (class)">Each</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>rule:</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Each</span>.new(<span style="color:#606">rule</span>: call(&amp;block))
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="embed-instance_method">
+  
+    #<strong>embed</strong>(mapper)  &#x21d2; <tt><span class='object_link'><a href="Rule/Embed.html" title="Remap::Rule::Embed (class)">Rule::Embed</a></span></tt> 
+  
 
-    #<strong>embed</strong>(mapper)  &#x21d2; <tt><span class='object_link'><a href="Rule/Embed.html" title="Remap::Rule::Embed (class)">Rule::Embed</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Maps using mapper</p>
 
 
@@ -885,32 +907,32 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
+      
         <span class='name'>mapper</span>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="../Remap.html" title="Remap (module)">Remap</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Embed.html" title="Remap::Rule::Embed (class)">Rule::Embed</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -919,65 +941,65 @@
       <pre class="lines">
 
 
-43
 44
 45
 46
-47</pre>
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 44</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_embed'>embed</span><span class='lparen'>(</span><span class='id identifier rubyid_mapper'>mapper</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add'>add</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Embed.html" title="Remap::Rule::Embed (class)">Embed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>mapper:</span> <span class='id identifier rubyid_mapper'>mapper</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Struct</span><span class='op'>::</span><span class='const'>Error</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Embeded mapper must be [Remap::Mapper], got [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mapper'>mapper</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">embed</span>(mapper)
+  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Embed</span>.new(<span style="color:#606">mapper</span>: mapper)
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span>
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Embeded mapper must be [Remap::Mapper], got [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>mapper<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">]</span><span style="color:#710">&quot;</span></span>
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="first-instance_method">
+  
+    #<strong>first</strong>  &#x21d2; <tt>Path::Segment::Key</tt> 
+  
 
-    #<strong>first</strong>  &#x21d2; <tt>Path::Segment::Key</tt>
-
-
-
+  
     <span class="aliases">Also known as:
     <span class="names"><span id='any-instance_method'>any</span></span>
     </span>
+  
 
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Selects first element in input</p>
 
 
   </div>
 </div>
 <div class="tags">
-
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>Path::Segment::Key</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'>
 <p>]</p>
 </div>
-
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -986,52 +1008,52 @@
       <pre class="lines">
 
 
-143
 144
-145</pre>
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 144</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_first'>first</span>
-  <span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">first</span>
+  at(<span style="color:#00D">0</span>)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="last-instance_method">
+  
+    #<strong>last</strong>  &#x21d2; <tt>Path::Segment::Key</tt> 
+  
 
-    #<strong>last</strong>  &#x21d2; <tt>Path::Segment::Key</tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Selects last element in input</p>
 
 
   </div>
 </div>
 <div class="tags">
-
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>Path::Segment::Key</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1040,34 +1062,34 @@
       <pre class="lines">
 
 
-151
 152
-153</pre>
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 152</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_last'>last</span>
-  <span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">last</span>
+  at(<span style="color:#00D">-1</span>)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="map-instance_method">
+  
+    #<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
+  
 
-    #<strong>map</strong>(*path, to: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
-<p>Maps path to <span class='object_link'><a href="#to-instance_method" title="Remap::Compiler#to (method)">#to</a></span> with block in between</p>
+    
+<p>Maps path to to with block in between</p>
 
 
   </div>
@@ -1075,55 +1097,55 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
+      
         <span class='name'>path</span>
-
-
+      
+      
         <span class='type'>(<tt>[]</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'><dl class="rdoc-list label-list"><dt>Array&lt;Segment&gt;, Segment
 <dd></dd></dl>
 </div>
-
+      
     </li>
-
+  
     <li>
-
+      
         <span class='name'>to</span>
-
-
+      
+      
         <span class='type'>(<tt>[]</tt>)</span>
-
-
+      
+      
         <em class="default">(defaults to: <tt>EMPTY_ARRAY</tt>)</em>
-
-
+      
+      
         &mdash;
         <div class='inline'><dl class="rdoc-list label-list"><dt>Array&lt;Symbol&gt;, Symbol
 <dd></dd></dl>
 </div>
-
+      
     </li>
-
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1132,7 +1154,6 @@
       <pre class="lines">
 
 
-28
 29
 30
 31
@@ -1140,37 +1161,38 @@
 33
 34
 35
-36</pre>
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 29</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='const'>EMPTY_ARRAY</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add'>add</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Map</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
-    <span class='label'>path:</span> <span class='lbrace'>{</span>
-      <span class='label'>output:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_to'>to</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='comma'>,</span>
-      <span class='label'>input:</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>rule:</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">map</span>(*path, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, &amp;block)
+  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>.new(
+    <span style="color:#606">path</span>: {
+      <span style="color:#606">output</span>: [to].flatten,
+      <span style="color:#606">input</span>: path.flatten
+    },
+    <span style="color:#606">rule</span>: call(&amp;block)
+  )
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="option-instance_method">
+  
+    #<strong>option</strong>(id)  &#x21d2; <tt>Rule::Static::Option</tt> 
+  
 
-    #<strong>option</strong>(id)  &#x21d2; <tt>Rule::Static::Option</tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Static option to be selected</p>
 
 
@@ -1179,32 +1201,32 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
+      
         <span class='name'>id</span>
-
-
+      
+      
         <span class='type'>(<tt>Symbol</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>Rule::Static::Option</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1213,52 +1235,52 @@
       <pre class="lines">
 
 
-124
 125
-126</pre>
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 125</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Static.html" title="Remap::Static (class)">Static</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Static/Option.html" title="Remap::Static::Option (class)">Option</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">option</span>(id)
+  <span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Option</span>.new(<span style="color:#606">name</span>: id)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="rule-instance_method">
+  
+    #<strong>rule</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt> 
+  
 
-    #<strong>rule</strong>  &#x21d2; <tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>The final rule</p>
 
 
   </div>
 </div>
 <div class="tags">
-
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1267,124 +1289,172 @@
       <pre class="lines">
 
 
-158
 159
-160</pre>
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 159</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_rule'>rule</span>
-  <span class='const'><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Collection.html" title="Remap::Rule::Collection (class)">Collection</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'><span class='object_link'><a href="Rule/Collection.html#call-instance_method" title="Remap::Rule::Collection#call (method)">call</a></span></span><span class='lparen'>(</span><span class='label'>rules:</span> <span class='id identifier rubyid_rules'>rules</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">rule</span>
+  <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Collection</span>.call(<span style="color:#606">rules</span>: rules)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
-  <h3 class="signature " id="set-instance_method">
+  <h3 class="signature " id="rules-instance_method">
+  
+    #<strong>rules</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span>&gt;</tt> 
+  
 
-    #<strong>set</strong>(*path, to:)  &#x21d2; <tt><span class='object_link'><a href="Rule/Set.html" title="Remap::Rule::Set (class)">Rule::Set</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
+    
 
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 7</span>
+
+param <span style="color:#A60">:rules</span>, <span style="color:#606">default</span>: -&gt; { <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>.dup }</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set-instance_method">
+  
+    #<strong>set</strong>(*path, to:)  &#x21d2; <tt><span class='object_link'><a href="Rule/Set.html" title="Remap::Rule::Set (class)">Rule::Set</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
 
   </div>
 </div>
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
-        <span class='name'>*path</span>
-
-
+      
+        <span class='name'>path</span>
+      
+      
         <span class='type'>(<tt>[]</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'><dl class="rdoc-list label-list"><dt>Symbol, Array&lt;Symbol&gt;
 <dd></dd></dl>
 </div>
-
+      
     </li>
-
+  
     <li>
-
+      
         <span class='name'>to</span>
-
-
+      
+      
         <span class='type'>(<tt>Hash</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'>
 <p>a customizable set of options</p>
 </div>
-
+      
     </li>
-
+  
 </ul>
 
-
-
-
-
-
+  
+    
+    
+    
+    
     <p class="tag_title">Options Hash (<tt>to:</tt>):</p>
     <ul class="option">
-
+      
         <li>
           <span class="name"></span>
           <span class="type">(<tt><span class='object_link'><a href="Static.html" title="Remap::Static (class)">Remap::Static</a></span></tt>)</span>
           <span class="default">
-
+            
           </span>
-
+          
         </li>
-
+      
     </ul>
-
+  
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Set.html" title="Remap::Rule::Set (class)">Rule::Set</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'>
 <p>if no path given if path is not a Symbol or Array&lt;Symbol&gt;</p>
 </div>
-
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1393,38 +1463,38 @@
       <pre class="lines">
 
 
-56
 57
 58
 59
-60</pre>
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 57</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_set'>set</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>to:</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add'>add</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Set.html" title="Remap::Rule::Set (class)">Set</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>path:</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Struct</span><span class='op'>::</span><span class='const'>Error</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">set</span>(*path, <span style="color:#606">to</span>:)
+  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Set</span>.new(<span style="color:#606">path</span>: path.flatten, <span style="color:#606">value</span>: to)
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.message
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="to-instance_method">
+  
+    #<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt> 
+  
 
-    #<strong>to</strong>(*path, map: EMPTY_ARRAY, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
-<p>Maps to path from <span class='object_link'><a href="#map-instance_method" title="Remap::Compiler#map (method)">#map</a></span> with block in between</p>
+    
+<p>Maps to path from map with block in between</p>
 
 
   </div>
@@ -1432,45 +1502,45 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
+      
         <span class='name'>path</span>
-
-
+      
+      
         <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>Symbol</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
     <li>
-
+      
         <span class='name'>map</span>
-
-
+      
+      
         <span class='type'>(<tt>Array&lt;Segment&gt;</tt>, <tt>Segment</tt>)</span>
-
-
+      
+      
         <em class="default">(defaults to: <tt>EMPTY_ARRAY</tt>)</em>
-
-
+      
+      
     </li>
-
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Map.html" title="Remap::Rule::Map (class)">Rule::Map</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1479,33 +1549,33 @@
       <pre class="lines">
 
 
-68
 69
-70</pre>
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 69</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_to'>to</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>map:</span> <span class='const'>EMPTY_ARRAY</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_map'>map</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to</span>(*path, <span style="color:#606">map</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>, &amp;block)
+  map(*map, <span style="color:#606">to</span>: path, &amp;block)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="value-instance_method">
+  
+    #<strong>value</strong>(value)  &#x21d2; <tt>Rule::Static::Fixed</tt> 
+  
 
-    #<strong>value</strong>(value)  &#x21d2; <tt>Rule::Static::Fixed</tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Static value to be selected</p>
 
 
@@ -1514,32 +1584,32 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
+      
         <span class='name'>value</span>
-
-
+      
+      
         <span class='type'>(<tt>Any</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>Rule::Static::Fixed</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1548,33 +1618,33 @@
       <pre class="lines">
 
 
-115
 116
-117</pre>
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 116</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Static.html" title="Remap::Static (class)">Static</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Static/Fixed.html" title="Remap::Static::Fixed (class)">Fixed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>value:</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">value</span>(value)
+  <span style="color:#036;font-weight:bold">Static</span>::<span style="color:#036;font-weight:bold">Fixed</span>.new(<span style="color:#606">value</span>: value)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
       <div class="method_details ">
   <h3 class="signature " id="wrap-instance_method">
+  
+    #<strong>wrap</strong>(type, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Wrap.html" title="Remap::Rule::Wrap (class)">Rule::Wrap</a></span></tt> 
+  
 
-    #<strong>wrap</strong>(type, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Rule/Wrap.html" title="Remap::Rule::Wrap (class)">Rule::Wrap</a></span></tt>
+  
 
-
-
-
-
+  
 </h3><div class="docstring">
   <div class="discussion">
-
+    
 <p>Wraps output in type</p>
 
 
@@ -1583,63 +1653,63 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-
+  
     <li>
-
+      
         <span class='name'>type</span>
-
-
+      
+      
         <span class='type'>(<tt>:array</tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 
 <p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 <p class="tag_title">Returns:</p>
 <ul class="return">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt><span class='object_link'><a href="Rule/Wrap.html" title="Remap::Rule::Wrap (class)">Rule::Wrap</a></span></tt>)</span>
-
-
-
+      
+      
+      
     </li>
-
+  
 </ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
-
+  
     <li>
-
-
+      
+      
         <span class='type'>(<tt>ArgumentError</tt>)</span>
-
-
-
+      
+      
+      
         &mdash;
         <div class='inline'>
 <p>if type is not :array</p>
 </div>
-
+      
     </li>
-
+  
 </ul>
 
 </div><table class="source_code">
@@ -1648,7 +1718,6 @@
       <pre class="lines">
 
 
-93
 94
 95
 96
@@ -1656,33 +1725,34 @@
 98
 99
 100
-101</pre>
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/compiler.rb', line 94</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#wrap requires a block</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">wrap</span>(type, &amp;block)
+  <span style="color:#080;font-weight:bold">unless</span> block
+    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#wrap requires a block</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='id identifier rubyid_add'>add</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Remap::Rule (class)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Wrap.html" title="Remap::Rule::Wrap (class)">Wrap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>type:</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='label'>rule:</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Struct</span><span class='op'>::</span><span class='const'>Error</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
-<span class='kw'>end</span></pre>
+  add <span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Wrap</span>.new(<span style="color:#606">type</span>: type, <span style="color:#606">rule</span>: call(&amp;block))
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.message
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

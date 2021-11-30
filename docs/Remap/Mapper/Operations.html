@@ -6,7 +6,7 @@
 <title>
   Module: Remap::Mapper::Operations
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -247,11 +247,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/mapper/support/operations.rb', line 22</span>
 
-<span class='kw'>def</span> <span class='op'>&amp;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="And.html" title="Remap::Mapper::And (class)">And</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>left:</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Struct</span><span class='op'>::</span><span class='const'>Error</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">&amp;</span>(other)
+  <span style="color:#036;font-weight:bold">And</span>.new(<span style="color:#606">left</span>: <span style="color:#069">self</span>, <span style="color:#606">right</span>: other)
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.message
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -320,11 +320,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/mapper/support/operations.rb', line 33</span>
 
-<span class='kw'>def</span> <span class='op'>^</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Xor.html" title="Remap::Mapper::Xor (class)">Xor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>left:</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Struct</span><span class='op'>::</span><span class='const'>Error</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">^</span>(other)
+  <span style="color:#036;font-weight:bold">Xor</span>.new(<span style="color:#606">left</span>: <span style="color:#069">self</span>, <span style="color:#606">right</span>: other)
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.message
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -393,11 +393,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/mapper/support/operations.rb', line 11</span>
 
-<span class='kw'>def</span> <span class='op'>|</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Or.html" title="Remap::Mapper::Or (class)">Or</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>left:</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Struct</span><span class='op'>::</span><span class='const'>Error</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">|</span>(other)
+  <span style="color:#036;font-weight:bold">Or</span>.new(<span style="color:#606">left</span>: <span style="color:#069">self</span>, <span style="color:#606">right</span>: other)
+<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Struct</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.message
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -408,9 +408,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

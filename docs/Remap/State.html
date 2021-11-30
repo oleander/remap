@@ -6,7 +6,7 @@
 <title>
   Module: Remap::State
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -84,7 +84,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/remap/state.rb<span class="defines">,<br />
-  lib/remap/state/extensions/enumerable.rb,<br /> lib/remap/state/extensions/object.rb,<br /> lib/remap/state/schema.rb</span>
+  lib/remap/state/schema.rb,<br /> lib/remap/state/extension.rb,<br /> lib/remap/state/extensions/object.rb,<br /> lib/remap/state/extensions/enumerable.rb</span>
 </dd>
   </dl>
   
@@ -105,7 +105,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="State/Extensions.html" title="Remap::State::Extensions (module)">Extensions</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="State/Extension.html" title="Remap::State::Extension (module)">Extension</a></span>, <span class='object_link'><a href="State/Extensions.html" title="Remap::State::Extensions (module)">Extensions</a></span>
     
   
     
@@ -123,27 +123,27 @@
         <dt id="Schema-constant" class="">Schema =
           
         </dt>
-        <dd><pre class="code"><span class='const'>Dry</span><span class='op'>::</span><span class='const'>Schema</span><span class='period'>.</span><span class='id identifier rubyid_define'>define</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_required'>required</span><span class='lparen'>(</span><span class='symbol'>:input</span><span class='rparen'>)</span>
+        <dd><pre class="code"><span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Schema</span>.define <span style="color:#080;font-weight:bold">do</span>
+  required(<span style="color:#A60">:input</span>)
 
-  <span class='id identifier rubyid_required'>required</span><span class='lparen'>(</span><span class='symbol'>:mapper</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_filled'>filled</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Remap.html" title="Remap (module)">Remap</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Types.html" title="Remap::Types (module)">Types</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Types.html#Mapper-constant" title="Remap::Types::Mapper (constant)">Mapper</a></span></span><span class='rparen'>)</span>
+  required(<span style="color:#A60">:mapper</span>).filled(<span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Mapper</span>)
 
-  <span class='id identifier rubyid_required'>required</span><span class='lparen'>(</span><span class='symbol'>:problems</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_array'>array</span><span class='lparen'>(</span><span class='symbol'>:hash</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_optional'>optional</span><span class='lparen'>(</span><span class='symbol'>:path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_filled'>filled</span><span class='lparen'>(</span><span class='symbol'>:array</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_required'>required</span><span class='lparen'>(</span><span class='symbol'>:reason</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_filled'>filled</span><span class='lparen'>(</span><span class='symbol'>:string</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_optional'>optional</span><span class='lparen'>(</span><span class='symbol'>:value</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  required(<span style="color:#A60">:problems</span>).array(<span style="color:#A60">:hash</span>) <span style="color:#080;font-weight:bold">do</span>
+    optional(<span style="color:#A60">:path</span>).filled(<span style="color:#A60">:array</span>)
+    required(<span style="color:#A60">:reason</span>).filled(<span style="color:#A60">:string</span>)
+    optional(<span style="color:#A60">:value</span>)
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='id identifier rubyid_required'>required</span><span class='lparen'>(</span><span class='symbol'>:options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='symbol'>:hash</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_required'>required</span><span class='lparen'>(</span><span class='symbol'>:path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_array'>array</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Types.html" title="Remap::Types (module)">Types</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Types.html#Key-constant" title="Remap::Types::Key (constant)">Key</a></span></span><span class='rparen'>)</span>
+  required(<span style="color:#A60">:options</span>).value(<span style="color:#A60">:hash</span>)
+  required(<span style="color:#A60">:path</span>).array(<span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Key</span>)
 
-  <span class='id identifier rubyid_optional'>optional</span><span class='lparen'>(</span><span class='symbol'>:index</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_filled'>filled</span><span class='lparen'>(</span><span class='symbol'>:integer</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_optional'>optional</span><span class='lparen'>(</span><span class='symbol'>:element</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_filled'>filled</span>
-  <span class='id identifier rubyid_optional'>optional</span><span class='lparen'>(</span><span class='symbol'>:key</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_filled'>filled</span>
+  optional(<span style="color:#A60">:index</span>).filled(<span style="color:#A60">:integer</span>)
+  optional(<span style="color:#A60">:element</span>).filled
+  optional(<span style="color:#A60">:key</span>).filled
 
-  <span class='id identifier rubyid_optional'>optional</span><span class='lparen'>(</span><span class='symbol'>:scope</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_optional'>optional</span><span class='lparen'>(</span><span class='symbol'>:value</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre></dd>
+  optional(<span style="color:#A60">:scope</span>)
+  optional(<span style="color:#A60">:value</span>)
+<span style="color:#080;font-weight:bold">end</span></pre></dd>
       
     </dl>
   
@@ -165,31 +165,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-class_method" title="call (class method)">.<strong>call</strong>  &#x21d2; Hash </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Creates a valid state.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#state-class_method" title="state (class method)">.<strong>state</strong>(value, mapper:, options: EMPTY_HASH)  &#x21d2; Hash </a>
+      <a href="#call-class_method" title="call (class method)">.<strong>call</strong>(value, mapper:, options: EMPTY_HASH)  &#x21d2; Hash </a>
     
 
     
@@ -223,136 +199,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="call-class_method">
   
-    .<strong>call</strong>  &#x21d2; <tt>Hash</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Creates a valid state</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>value</span>
-      
-      
-        <span class='type'>(<tt>Any</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>Internal state value</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>mapper</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>a customizable set of options</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>a customizable set of options</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-  
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>A valid state</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/state.rb', line 39</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='label'>mapper:</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='const'>EMPTY_HASH</span><span class='rparen'>)</span>
-  <span class='lbrace'>{</span>
-    <span class='label'>problems:</span> <span class='const'>EMPTY_ARRAY</span><span class='comma'>,</span>
-    <span class='label'>path:</span> <span class='const'>EMPTY_ARRAY</span><span class='comma'>,</span>
-    <span class='label'>options:</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span>
-    <span class='label'>mapper:</span> <span class='id identifier rubyid_mapper'>mapper</span><span class='comma'>,</span>
-    <span class='label'>values:</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span>
-    <span class='label'>value:</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span>
-    <span class='label'>input:</span> <span class='id identifier rubyid_value'>value</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid__'>_</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="state-class_method">
-  
-    .<strong>state</strong>(value, mapper:, options: EMPTY_HASH)  &#x21d2; <tt>Hash</tt> 
+    .<strong>call</strong>(value, mapper:, options: EMPTY_HASH)  &#x21d2; <tt>Hash</tt> 
   
 
   
@@ -491,6 +338,7 @@
       <pre class="lines">
 
 
+27
 28
 29
 30
@@ -500,23 +348,22 @@
 34
 35
 36
-37
-38</pre>
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/state.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/state.rb', line 27</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='label'>mapper:</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='const'>EMPTY_HASH</span><span class='rparen'>)</span>
-  <span class='lbrace'>{</span>
-    <span class='label'>problems:</span> <span class='const'>EMPTY_ARRAY</span><span class='comma'>,</span>
-    <span class='label'>path:</span> <span class='const'>EMPTY_ARRAY</span><span class='comma'>,</span>
-    <span class='label'>options:</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span>
-    <span class='label'>mapper:</span> <span class='id identifier rubyid_mapper'>mapper</span><span class='comma'>,</span>
-    <span class='label'>values:</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span>
-    <span class='label'>value:</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span>
-    <span class='label'>input:</span> <span class='id identifier rubyid_value'>value</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid__'>_</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call</span>(value, <span style="color:#606">mapper</span>:, <span style="color:#606">options</span>: <span style="color:#036;font-weight:bold">EMPTY_HASH</span>)
+  {
+    <span style="color:#606">problems</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
+    <span style="color:#606">path</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
+    <span style="color:#606">options</span>: options,
+    <span style="color:#606">mapper</span>: mapper,
+    <span style="color:#606">values</span>: value,
+    <span style="color:#606">value</span>: value,
+    <span style="color:#606">input</span>: value
+  }._
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -527,9 +374,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

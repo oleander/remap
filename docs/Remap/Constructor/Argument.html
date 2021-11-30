@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Constructor::Argument
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -145,8 +145,30 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Uses the #method method to initialize #target with state Target is only called if state is defined.</p>
+<p>Uses the <span class='object_link'><a href="../Constructor.html#method-instance_method" title="Remap::Constructor#method (method)">#method</a></span> method to initialize <span class='object_link'><a href="../Constructor.html#target-instance_method" title="Remap::Constructor#target (method)">#target</a></span> with state Target is only called if state is defined.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#strategy-instance_method" title="#strategy (instance method)">#<strong>strategy</strong>  &#x21d2; :argument </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -173,11 +195,11 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Uses the #method method to initialize #target with state Target is only called if state is defined</p>
+<p>Uses the <span class='object_link'><a href="../Constructor.html#method-instance_method" title="Remap::Constructor#method (method)">Remap::Constructor#method</a></span> method to initialize <span class='object_link'><a href="../Constructor.html#target-instance_method" title="Remap::Constructor#target (method)">Remap::Constructor#target</a></span> with state Target is only called if state is defined</p>
 
-<p>Used by Base to define constructors for mapped data</p>
+<p>Used by <span class='object_link'><a href="../Base.html" title="Remap::Base (class)">Base</a></span> to define constructors for mapped data</p>
 
-<p>Fails if #target does not respond to #method Fails if #target cannot be called with state</p>
+<p>Fails if <span class='object_link'><a href="../Constructor.html#target-instance_method" title="Remap::Constructor#target (method)">Remap::Constructor#target</a></span> does not respond to <span class='object_link'><a href="../Constructor.html#method-instance_method" title="Remap::Constructor#method (method)">Remap::Constructor#method</a></span> Fails if <span class='object_link'><a href="../Constructor.html#target-instance_method" title="Remap::Constructor#target (method)">Remap::Constructor#target</a></span> cannot be called with state</p>
 
 
   </div>
@@ -192,11 +214,11 @@
 <p>Initialize a target with a state</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Struct.html" title="Remap::Struct (class)">Struct</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:foo</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_constructor'>constructor</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Remap.html" title="Remap (module)">Remap</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Constructor.html" title="Remap::Constructor (class)">Constructor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'><span class='object_link'><a href="../Constructor.html#call-instance_method" title="Remap::Constructor#call (method)">call</a></span></span><span class='lparen'>(</span><span class='label'>strategy:</span> <span class='symbol'>:argument</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='symbol'>:new</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_state'>state</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Remap.html" title="Remap (module)">Remap</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'><span class='object_link'><a href="../State.html#call-class_method" title="Remap::State.call (method)">call</a></span></span><span class='lparen'>(</span><span class='label'>foo:</span> <span class='symbol'>:bar</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_new_state'>new_state</span> <span class='op'>=</span> <span class='id identifier rubyid_constructor'>constructor</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_new_state'>new_state</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='comment'># =&gt; #&lt;struct foo=:bar&gt;</span></code></pre>
+      <pre class="example code"><code>target = <span style="color:#036;font-weight:bold">Struct</span>.new(<span style="color:#A60">:foo</span>)
+constructor = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Constructor</span>.call(<span style="color:#606">strategy</span>: <span style="color:#A60">:argument</span>, <span style="color:#606">target</span>: target, <span style="color:#606">method</span>: <span style="color:#A60">:new</span>)
+state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call(<span style="color:#606">foo</span>: <span style="color:#A60">:bar</span>)
+new_state = constructor.call(state)
+new_state.value <span style="color:#777"># =&gt; #&lt;struct foo=:bar&gt;</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -235,24 +257,72 @@
       <pre class="lines">
 
 
-29
 30
 31
 32
 33
 34
-35</pre>
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/constructor/argument.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/constructor/argument.rb', line 30</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='period'>.</span><span class='id identifier rubyid_fmap'>fmap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_input'>input</span><span class='op'>|</span>
-    <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_public_send'>public_send</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
-  <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_exception'>exception</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Failed to create [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>] with input [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input'>input</span><span class='embexpr_end'>}</span><span class='tstring_content'>] (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
+  <span style="color:#080;font-weight:bold">super</span>.fmap <span style="color:#080;font-weight:bold">do</span> |input|
+    target.public_send(id, input)
+  <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">ArgumentError</span> =&gt; e
+    raise e.exception(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Failed to create [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>target.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] with input [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>input<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>input.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="strategy-instance_method">
+  
+    #<strong>strategy</strong>  &#x21d2; <tt>:argument</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>:argument</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/constructor/argument.rb', line 10</span>
+
+attribute <span style="color:#A60">:strategy</span>, Value(<span style="color:#A60">:argument</span>), <span style="color:#606">default</span>: <span style="color:#A60">:argument</span></pre>
     </td>
   </tr>
 </table>
@@ -263,9 +333,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:43 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

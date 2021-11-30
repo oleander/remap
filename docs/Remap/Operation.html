@@ -6,7 +6,7 @@
 <title>
   Module: Remap::Operation
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -76,7 +76,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="Mapper/Binary.html" title="Remap::Mapper::Binary (class)">Mapper::Binary</a></span></dd>
+    <dd><span class='object_link'><a href="Base.html" title="Remap::Base (class)">Base</a></span>, <span class='object_link'><a href="Mapper/Binary.html" title="Remap::Mapper::Binary (class)">Mapper::Binary</a></span></dd>
   </dl>
   
 
@@ -91,7 +91,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Class interface for Base and instance interface for <span class='object_link'><a href="Mapper.html" title="Remap::Mapper (class)">Mapper</a></span></p>
+<p>Class interface for <span class='object_link'><a href="Base.html" title="Remap::Base (class)">Base</a></span> and instance interface for <span class='object_link'><a href="Mapper.html" title="Remap::Mapper (class)">Mapper</a></span></p>
 
 
   </div>
@@ -208,7 +208,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Failure</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Failure.html" title="Remap::Failure (class)">Failure</a></span></tt>)</span>
       
       
       
@@ -260,17 +260,17 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/operation.rb', line 16</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_error'>error</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_error'>error</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:itself</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(input, **options, &amp;error)
+  <span style="color:#080;font-weight:bold">unless</span> error
+    <span style="color:#080;font-weight:bold">return</span> call(input, **options, &amp;<span style="color:#A60">:itself</span>)
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class='id identifier rubyid_state'>state</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="State.html" title="Remap::State (module)">State</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'><span class='object_link'><a href="State.html#call-class_method" title="Remap::State.call (method)">call</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='label'>mapper:</span> <span class='kw'>self</span><span class='rparen'>)</span>
+  state = <span style="color:#036;font-weight:bold">State</span>.call(input, <span style="color:#606">options</span>: options, <span style="color:#606">mapper</span>: <span style="color:#069">self</span>)
 
-  <span class='id identifier rubyid_call!'>call!</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_failure'>failure</span><span class='op'>|</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_error'>error</span><span class='lbracket'>[</span><span class='id identifier rubyid_failure'>failure</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_result'>to_result</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_error'>error</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+  call!(state) <span style="color:#080;font-weight:bold">do</span> |failure|
+    <span style="color:#080;font-weight:bold">return</span> error[failure]
+  <span style="color:#080;font-weight:bold">end</span>.to_result(&amp;error)
+<span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
 </table>
@@ -281,9 +281,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

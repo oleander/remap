@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Rule::Each
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -119,11 +119,11 @@
 <p>Map { people: [{ name: “John” }] } to { names: [“John”] }</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_map'>map</span> <span class='symbol'>:people</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='symbol'>:names</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_map'>map</span> <span class='symbol'>:name</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></code></pre>
+      <pre class="example code"><code>map <span style="color:#A60">:people</span>, <span style="color:#606">to</span>: <span style="color:#A60">:names</span> <span style="color:#080;font-weight:bold">do</span>
+  each <span style="color:#080;font-weight:bold">do</span>
+    map <span style="color:#A60">:name</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
     
   </div>
 
@@ -163,6 +163,28 @@
     <span class="summary_desc"><div class='inline'>
 <p>Iterates over state and passes each value to rule Restores element, key &amp; index before returning state.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rule-instance_method" title="#rule (instance method)">#<strong>rule</strong>  &#x21d2; Rule </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -231,16 +253,64 @@
       <pre class="lines">
 
 
-24
 25
-26</pre>
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
+  state.map(&amp;rule)
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rule-instance_method">
+  
+    #<strong>rule</strong>  &#x21d2; <tt><span class='object_link'><a href="../Rule.html" title="Remap::Rule (class)">Rule</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Rule.html" title="Remap::Rule (class)">Rule</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 17</span>
+
+attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-weight:bold">Rule</span></pre>
     </td>
   </tr>
 </table>
@@ -251,9 +321,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>

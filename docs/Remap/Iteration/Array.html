@@ -6,7 +6,7 @@
 <title>
   Class: Remap::Iteration::Array
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -145,8 +145,52 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Defines an array iterator that will iterate over #value.</p>
+<p>Defines an array iterator that will iterate over <span class='object_link'><a href="#value-instance_method" title="Remap::Iteration::Array#value (method)">#value</a></span>.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#state-instance_method" title="#state (instance method)">#<strong>state</strong>  &#x21d2; State&lt;Array&lt;T&gt;&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>  &#x21d2; Array&lt;T&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -173,7 +217,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Defines an array iterator that will iterate over #value</p>
+<p>Defines an array iterator that will iterate over <span class='object_link'><a href="#value-instance_method" title="Remap::Iteration::Array#value (method)">#value</a></span></p>
 
 
   </div>
@@ -239,28 +283,124 @@
       <pre class="lines">
 
 
-20
-21
-22
 23
 24
 25
 26
 27
-28</pre>
+28
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/iteration/array.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/iteration/array.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_array'>array</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='id identifier rubyid_init'>init</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_input_state'>input_state</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span><span class='op'>|</span>
-    <span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='label'>index:</span> <span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid__'>_</span><span class='period'>.</span><span class='id identifier rubyid_then'>then</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_new_state'>new_state</span><span class='op'>|</span>
-      <span class='id identifier rubyid_new_state'>new_state</span><span class='period'>.</span><span class='id identifier rubyid_fmap'>fmap</span> <span class='lbrace'>{</span> <span class='lbracket'>[</span><span class='id identifier rubyid__1'>_1</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_then'>then</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_new_array_state'>new_array_state</span><span class='op'>|</span>
-      <span class='id identifier rubyid_input_state'>input_state</span><span class='period'>.</span><span class='id identifier rubyid_combine'>combine</span><span class='lparen'>(</span><span class='id identifier rubyid_new_array_state'>new_array_state</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid__'>_</span>
-<span class='kw'>end</span></pre>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(&amp;block)
+  array.each_with_index.reduce(init) <span style="color:#080;font-weight:bold">do</span> |input_state, (value, index)|
+    block[value, <span style="color:#606">index</span>: index]._.then <span style="color:#080;font-weight:bold">do</span> |new_state|
+      new_state.fmap { [_1] }
+    <span style="color:#080;font-weight:bold">end</span>.then <span style="color:#080;font-weight:bold">do</span> |new_array_state|
+      input_state.combine(new_array_state)
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>._
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="state-instance_method">
+  
+    #<strong>state</strong>  &#x21d2; <tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;<span class='object_link'><a href="" title="Remap::Iteration::Array (class)">Array</a></span>&lt;T&gt;&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;<span class='object_link'><a href="" title="Remap::Iteration::Array (class)">Array</a></span>&lt;T&gt;&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/iteration/array.rb', line 13</span>
+
+attribute <span style="color:#A60">:state</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">State</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="value-instance_method">
+  
+    #<strong>value</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="Remap::Iteration::Array (class)">Array</a></span>&lt;T&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Remap::Iteration::Array (class)">Array</a></span>&lt;T&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/remap/iteration/array.rb', line 10</span>
+
+attribute <span style="color:#A60">:value</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Array</span>, <span style="color:#606">alias</span>: <span style="color:#A60">:array</span></pre>
     </td>
   </tr>
 </table>
@@ -271,9 +411,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 05:35:20 2021 by
+  Generated on Tue Nov 30 06:45:43 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.6).
+  0.9.27 (ruby-3.0.3).
 </div>
 
     </div>
