@@ -104,10 +104,12 @@ module Remap
 
       private
 
+      # @return [self]
       def add(&block)
         tap { fn << block }
       end
 
+      # @return [Array<Proc>]
       def fn
         @fn ||= []
       end
