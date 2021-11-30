@@ -34,6 +34,10 @@ module Remap
       IDENTITY
     end
 
+    config_accessor :options, instance_accessor: true do
+      EMPTY_ARRAY
+    end
+
     # config.constructor = IDENTITY
     # config.options = EMPTY_HASH
     # config.rules = EMPTY_ARRAY
@@ -93,7 +97,7 @@ module Remap
     #
     # @return [void]
     def self.rule(...)
-      self.rules << -> * { rule(...) }
+      self.rules = rules + [-> * { rule(...) }]
     end
 
     # Defines a required option for the mapper
@@ -120,7 +124,7 @@ module Remap
         raise ArgumentError, "[BUG] Could not locate [#{field}] in [#{self}]"
       end
 
-      self.options << -> * { option(field, type: key) }
+      self.options = options + [-> * { option(field, type: key) }]
     end
 
     # Defines a mapper rules and possible constructor
