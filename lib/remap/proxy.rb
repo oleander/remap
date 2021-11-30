@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Remap
   class Proxy < ActiveSupport::ProxyObject
     def self.const_missing(name)
