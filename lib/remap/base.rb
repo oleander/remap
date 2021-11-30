@@ -10,33 +10,17 @@ module Remap
     using State::Extension
     extend Operation
 
+    EMPTY_SCHEMA = Dry::Schema.JSON do
+      # NOP
+    end
 
     with_options instance_accessor: true do |scope|
-      scope.config_accessor :constructor do
-        IDENTITY
-      end
-
-      scope.config_accessor :options do
-        EMPTY_HASH
-      end
-
-      scope.config_accessor :rules do
-        EMPTY_ARRAY
-      end
-
-      scope.config_accessor :contract do
-        Dry::Schema.JSON do
-          # NOP
-        end
-      end
-
-      scope.config_accessor :context do
-        IDENTITY
-      end
-
-      scope.config_accessor :options do
-        EMPTY_ARRAY
-      end
+      scope.config_accessor(:contract) { EMPTY_SCHEMA }
+      scope.config_accessor(:constructor) { IDENTITY }
+      scope.config_accessor(:options) { EMPTY_ARRAY }
+      scope.config_accessor(:option) { EMPTY_HASH }
+      scope.config_accessor(:rules) { EMPTY_ARRAY }
+      scope.config_accessor(:context) { IDENTITY }
     end
 
     schema schema.strict(false)
