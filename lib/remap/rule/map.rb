@@ -21,11 +21,9 @@ module Remap
       #
       # @return [State<U>]
       def call(state)
-        input_path.call(state).then do |inner_state|
-          rule.call(inner_state).then do |init|
-            fn.reduce(init) do |inner, fn|
-              fn[inner]
-            end
+        input_path.call(state).then(&rule).then do |init|
+          fn.reduce(init) do |inner, fn|
+            fn[inner]
           end
         end.then(&output_path)
       end
