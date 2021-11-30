@@ -10,13 +10,13 @@ describe Remap::Compiler do
     let(:input) { [{ a: 1 }, { a: 2 }] }
 
     context "with block" do
-      let(:block) { ->(*) { each { map :a } } }
+      let(:block) { -> * { each { map :a } } }
 
       it { is_expected.to contain([1, 2]) }
     end
 
     context "without block" do
-      let(:block) { ->(*) { each } }
+      let(:block) { -> * { each } }
 
       it "raises an argument error" do
         expect { rule.call(state) }.to raise_error(ArgumentError)
@@ -28,7 +28,7 @@ describe Remap::Compiler do
     let(:input) { { a: 100 } }
 
     context "with invalid type" do
-      let(:block) { ->(*) { wrap(:does_not_exist) { map :a } } }
+      let(:block) { -> * { wrap(:does_not_exist) { map :a } } }
 
       it "raises an argument error" do
         expect { rule.call(state) }.to raise_error(ArgumentError)
@@ -37,14 +37,14 @@ describe Remap::Compiler do
 
     context "with block" do
       let(:input) { { a: 100 } }
-      let(:block) { ->(*) { wrap(:array) { map :a } } }
+      let(:block) { -> * { wrap(:array) { map :a } } }
 
       it { is_expected.to contain([100]) }
     end
 
     context "without block" do
       let(:input) { { a: 100 } }
-      let(:block) { ->(*) { wrap(:array) } }
+      let(:block) { -> * { wrap(:array) } }
 
       it "raises an argument error" do
         expect { rule.call(state) }.to raise_error(ArgumentError)
@@ -55,14 +55,14 @@ describe Remap::Compiler do
   describe "#map" do
     context "without block" do
       let(:input) { { a: { b: 100 } } }
-      let(:block) { ->(*) { map :a, :b } }
+      let(:block) { -> * { map :a, :b } }
 
       it { is_expected.to contain(100) }
     end
 
     context "with block" do
       let(:input) { { a: { b: 100 } } }
-      let(:block) { ->(*) { map(:a) { map(:b) } } }
+      let(:block) { -> * { map(:a) { map(:b) } } }
 
       it { is_expected.to contain(100) }
     end
@@ -71,21 +71,21 @@ describe Remap::Compiler do
   describe "#to" do
     context "without block" do
       let(:input) { value! }
-      let(:block) { ->(*) { to :a, :b } }
+      let(:block) { -> * { to :a, :b } }
 
       it { is_expected.to contain({ a: { b: input } }) }
     end
 
     context "with block" do
       let(:input) { value! }
-      let(:block) { ->(*) { to(:a) { to(:b) } } }
+      let(:block) { -> * { to(:a) { to(:b) } } }
 
       it { is_expected.to contain({ a: { b: input } }) }
     end
   end
 
   describe "#all" do
-    let(:block) { ->(*) { map [all, :a] } }
+    let(:block) { -> * { map [all, :a] } }
 
     context "when non-empty" do
       let(:input) { [{ a: 1 }, { a: 2 }] }
@@ -95,7 +95,7 @@ describe Remap::Compiler do
   end
 
   describe "#first" do
-    let(:block) { ->(*) { map [first] } }
+    let(:block) { -> * { map [first] } }
 
     context "when non-empty" do
       let(:input) { array! }
@@ -105,7 +105,7 @@ describe Remap::Compiler do
   end
 
   describe "#last" do
-    let(:block) { ->(*) { map [last] } }
+    let(:block) { -> * { map [last] } }
 
     context "when non-empty" do
       let(:input) { array! }
@@ -118,19 +118,19 @@ describe Remap::Compiler do
     let(:input) { array! }
 
     context "when inside range" do
-      let(:block) { ->(*) { map [at(1)] } }
+      let(:block) { -> * { map [at(1)] } }
 
       it { is_expected.to contain(input[1]) }
     end
 
     context "when outside range" do
-      let(:block) { ->(*) { map [at(100)] } }
+      let(:block) { -> * { map [at(100)] } }
 
       it { is_expected.to have(1).problems }
     end
 
     context "when a non-int is passed" do
-      let(:block) { ->(*) { map [at(:not_an_index)] } }
+      let(:block) { -> * { map [at(:not_an_index)] } }
 
       it "raises an argument error" do
         expect { output }.to raise_error(ArgumentError)
@@ -140,7 +140,7 @@ describe Remap::Compiler do
 
   describe "#embed" do
     context "with a non-mapper as argument" do
-      let(:block) { ->(*) { embed Object.new } }
+      let(:block) { -> * { embed Object.new } }
       let(:input) { { a: 1 } }
 
       it "raises an argument error" do
@@ -156,7 +156,7 @@ describe Remap::Compiler do
       end
 
       let(:block) do |this: self|
-        ->(*) { embed this.mapper }
+        -> * { embed this.mapper }
       end
 
       let(:input) { { a: 1 } }
@@ -169,13 +169,13 @@ describe Remap::Compiler do
     let(:input) { {} }
 
     context "when using #value" do
-      let(:block) { ->(*) { set :a, :b, to: value("a value") } }
+      let(:block) { -> * { set :a, :b, to: value("a value") } }
 
       it { is_expected.to contain({ a: { b: "a value" } }) }
     end
 
     context "given an invalid path" do
-      let(:block) { ->(*) { set :a, to: nil } }
+      let(:block) { -> * { set :a, to: nil } }
 
       it "raises an argument error" do
         expect { rule.call(state) }.to raise_error(ArgumentError)
@@ -187,13 +187,13 @@ describe Remap::Compiler do
       let(:state) { state!(options: { id: id }) }
 
       context "when value exists" do
-        let(:block) { ->(*) { set :a, :b, to: option(:id) } }
+        let(:block) { -> * { set :a, :b, to: option(:id) } }
 
         it { is_expected.to contain({ a: { b: id } }) }
       end
 
       context "when value does not exist" do
-        let(:block) { ->(*) { set :a, :b, to: option(:does_not_exist) } }
+        let(:block) { -> * { set :a, :b, to: option(:does_not_exist) } }
 
         it "raises an argument error" do
           expect { rule.call(state) }.to raise_error(ArgumentError)

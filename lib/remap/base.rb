@@ -67,7 +67,7 @@ module Remap
     #
     # @return [void]
     def self.rule(...)
-      config.rules << ->(*) { rule(...) }
+      config.rules << -> * { rule(...) }
     end
 
     # Defines a required option for the mapper
@@ -94,7 +94,7 @@ module Remap
         raise ArgumentError, "[BUG] Could not locate [#{field}] in [#{self}]"
       end
 
-      config.options << ->(*) { option(field, type: key) }
+      config.options << -> * { option(field, type: key) }
     end
 
     # Defines a mapper rules and possible constructor

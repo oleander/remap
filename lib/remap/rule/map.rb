@@ -115,7 +115,7 @@ module Remap
 
       # @return [Proc]
       def callback
-        lambda do |state|
+        -> state do
           fn.reduce(state) do |inner, fn|
             fn[inner]
           end

@@ -10,7 +10,7 @@ module Remap
       attribute :right, Types::Mapper
 
       def exception
-        ->(failure) { raise failure.exception }
+        -> failure { raise failure.exception }
       end
     end
   end

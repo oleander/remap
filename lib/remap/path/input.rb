@@ -8,7 +8,7 @@ module Remap
       # @return [State]
       def call(state)
         segments.reverse.reduce(IDENTITY) do |fn, selector|
-          ->(st) { selector.call(st, &fn) }
+          -> st { selector.call(st, &fn) }
         end.call(state)
       end
     end

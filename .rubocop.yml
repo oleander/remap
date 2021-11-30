@@ -165,3 +165,12 @@ Style/FormatStringToken:
 
 Style/WordArray:
   EnforcedStyle: brackets
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Style/StabbyLambdaParentheses:
+  EnforcedStyle: require_no_parentheses

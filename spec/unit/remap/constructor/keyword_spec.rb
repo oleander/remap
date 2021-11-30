@@ -27,7 +27,7 @@ RSpec.describe Remap::Constructor::Keyword do
       end
 
       context "when target requires regular arguments" do
-        let(:target) { ->(a, b) { a + b } }
+        let(:target) { -> a, b { a + b } }
 
         context "when method is defined on object" do
           let(:method) { :call }
