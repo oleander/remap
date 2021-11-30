@@ -1,0 +1,8 @@
+dictionaries:
+  - en
+  - en_GB
+
+excluded_files:
+  - "docs"
+
+spellcheck_filenames: true
