@@ -10,12 +10,12 @@ module Remap
       using State::Extensions::Enumerable
       using State::Extension
 
+      attribute :rule, Types::Rule
+
       attribute :path do
         attribute :output, Path::Output
         attribute :input, Path::Input
       end
-
-      attribute :rule, Types::Rule
 
       # Maps {state} using {#path} & {#rule}
       #
@@ -23,11 +23,7 @@ module Remap
       #
       # @return [State<U>]
       def call(state)
-        path.input.call(state).then(&rule).then do |init|
-          fn.reduce(init) do |inner, fn|
-            fn[inner]
-          end
-        end.then(&path.output)
+        path.input.call(state).then(&rule).then(&callback).then(&path.output)
       end
 
       # A post-processor method
@@ -115,6 +111,14 @@ module Remap
       # @return [Array<Proc>]
       def fn
         @fn ||= []
+      end
+
+      def callback
+        -> state do
+          fn.reduce(state) do |inner, fn|
+            fn[inner]
+          end
+        end
       end
     end
   end
