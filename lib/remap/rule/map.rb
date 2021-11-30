@@ -2,15 +2,15 @@
 
 module Remap
   class Rule
+    using State::Extensions::Enumerable
+    using State::Extension
+
     # Maps an input path to an output path
     #
     # @example Map { name: "Ford" } to { person: { name: "Ford" } }
     #   map :name, to: [:person, :name]
     class Map < Concrete
-      using State::Extensions::Enumerable
-      using State::Extension
-
-      attribute :rule, Types::Rule
+      attribute :rule, Rule
 
       attribute :path do
         attribute :output, Path::Output

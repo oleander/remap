@@ -2,6 +2,8 @@
 
 module Remap
   class Rule
+    using State::Extension
+
     # Embed mappers into each other
     #
     # @example Embed Mapper A into B
@@ -23,8 +25,6 @@ module Remap
     #
     #   Person.call(name: "Volvo") # => { person: { car: { name: "Volvo" } } }
     class Embed < Unit
-      using State::Extension
-
       attribute :mapper, Types::Mapper
 
       # Evaluates {input} against {mapper} and returns the result
