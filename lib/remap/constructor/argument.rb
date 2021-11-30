@@ -2,9 +2,10 @@
 
 module Remap
   class Constructor
-    class Argument < Concrete
-      using State::Extension
+    using State::Extension
 
+    # Allows a class (target) to be called with a regular argument
+    class Argument < Concrete
       attribute :strategy, Value(:argument), default: :argument
 
       # Uses the {#method} method to initialize {#target} with {state}

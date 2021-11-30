@@ -4,6 +4,7 @@ module Remap
   class Iteration
     using State::Extension
 
+    # Implements a hash iterator which defines {key} in state
     class Hash < Concrete
       attribute :value, Types::Hash, alias: :hash
       attribute :state, Types::State

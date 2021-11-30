@@ -2,6 +2,7 @@
 
 module Remap
   class Constructor
+    # Fallback type used by {Remap::Base}
     class None < Concrete
       attribute :target, Types::Nothing
       attribute :strategy, Types::Any

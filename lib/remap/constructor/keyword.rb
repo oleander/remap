@@ -2,9 +2,10 @@
 
 module Remap
   class Constructor
-    class Keyword < Concrete
-      using State::Extension
+    using State::Extension
 
+    # Allows a class (target) to be called with keyword arguments
+    class Keyword < Concrete
       attribute :strategy, Value(:keyword)
 
       # Calls {#target} as with keyword arguments

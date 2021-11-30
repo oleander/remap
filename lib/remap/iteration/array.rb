@@ -4,6 +4,7 @@ module Remap
   class Iteration
     using State::Extension
 
+    # Implements an array iterator which defines {index} in state
     class Array < Concrete
       attribute :value, Types::Array, alias: :array
       attribute :state, Types::State
