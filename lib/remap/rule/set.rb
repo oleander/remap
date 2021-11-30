@@ -2,6 +2,8 @@
 
 module Remap
   class Rule
+    using State::Extension
+
     # Set path to a static value
     #
     # @example Given an option
@@ -24,7 +26,6 @@ module Remap
     #
     #   Mapper.call(input) # => { api_key: "ABC-123" }
     class Set < Concrete
-      using State::Extension
 
       attribute :value, Types::Rule, alias: :rule
       attribute :path, Path::Output
