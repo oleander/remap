@@ -113,6 +113,7 @@ module Remap
         @fn ||= []
       end
 
+      # @return [Proc]
       def callback
         -> state do
           fn.reduce(state) do |inner, fn|
