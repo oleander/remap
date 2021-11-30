@@ -20,8 +20,8 @@ module Remap
     #   end
     #
     #   state = Remap::State.call({ a2: 2 })
-    #   result = (Mapper1 | Mapper2).call(state)
-    #   result.success? # => true
+    #   result = (Mapper1 | Mapper2).call!(state)
+    #   result.fetch(:value) # => { a2: 2 }
     class Or < Binary
       # Succeeds if left or right succeeds
       # Returns which ever succeeds first

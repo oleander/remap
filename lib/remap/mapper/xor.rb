@@ -20,8 +20,8 @@ module Remap
     #   end
     #
     #   state = Remap::State.call({ a2: 2 })
-    #   output = (Mapper1 ^ Mapper2).call(state)
-    #   output.result # => { a2: 2 }
+    #   output = (Mapper1 ^ Mapper2).call!(state)
+    #   output.fetch(:value) # => { a2: 2 }
     class Xor < Binary
       # Succeeds if left or right succeeds, but not both
       #
