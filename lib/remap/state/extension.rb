@@ -231,7 +231,7 @@ module Remap
         # Execute {block} in the current context
         # Only calls {block} if {#value} is defined
         #
-        # @yieldparam value [T]
+        # @yieldparam [T]
         # @yieldreturn [U]
         #
         # @return [State<U>]
