@@ -12,10 +12,4 @@ describe Remap::Notice::Traced do
   describe "#exception" do
     it { is_expected.to have_attributes(exception: be_a(Remap::Error)) }
   end
-
-  describe "#traced" do
-    xit "raises an argument error" do
-      expect { notice.traced(["backtrace"]) }.to raise_error(ArgumentError)
-    end
-  end
 end
