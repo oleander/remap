@@ -7,7 +7,7 @@ describe Remap::Rule::Map do
 
   let(:input) { 10 }
   let(:context) { state!(input) }
-  let(:map) { described_class.new(path: path!, rule: void! ) }
+  let(:map) { described_class.new(path: path!, rule: void!) }
 
   describe "#enum" do
     before do
