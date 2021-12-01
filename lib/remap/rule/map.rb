@@ -31,15 +31,7 @@ module Remap
       end
 
       def fatal(state, id: :fatal, &block)
-        notice = catch(id, &block).traced(backtrace)
-
-        error = Notice::Error.new(notice)
-
-        if backtrace.any?
-          error.set_backtrace(backtrace.map(&:to_s))
-        end
-
-        raise error
+        raise catch(id, &block).traced(backtrace).exception
       end
 
       def notice(state, &block)

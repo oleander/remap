@@ -5,7 +5,7 @@ describe Remap::Notice do
 
   describe "::call" do
     context "when input contains a backtrace" do
-      subject { described_class.call(**input, backtrace: ["backtrace"]) }
+      subject { described_class.call(**input) }
 
       it { is_expected.to be_a(described_class::Traced) }
     end
@@ -13,7 +13,7 @@ describe Remap::Notice do
     context "when input does not contain a backtrace" do
       subject { described_class.call(**input) }
 
-      it { is_expected.to be_a(described_class::Untraced) }
+      it { is_expected.to be_a(described_class) }
     end
   end
 end

@@ -2,7 +2,7 @@
 
 describe Remap::Rule::Map do
   describe "::call" do
-    subject { described_class.call(rule: rule!, path: path!, backtrace: ["backtrace"]) }
+    subject { described_class.call(rule: rule!, path: path!) }
 
     it { is_expected.to be_a(described_class) }
   end
@@ -10,7 +10,7 @@ describe Remap::Rule::Map do
   describe "#call" do
     subject { rule.call(state) }
 
-    let(:rule) { described_class.call(path: path, rule: void!, backtrace: ["backtrace"]) }
+    let(:rule) { described_class.call(path: path, rule: void!) }
     let(:state) { state!({ a: 1 }) }
 
     context "without fn" do

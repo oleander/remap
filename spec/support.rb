@@ -20,7 +20,7 @@ module Support
 
   # @return [Remap::Rule::Map]
   def map!(&block)
-    Rule::Map.call(path: path!, rule: void!, backtrace: ["<BACKTRACE>"]).adjust(&block)
+    Rule::Map.call(path: path!, rule: void!).adjust(&block)
   end
 
   def notice!
@@ -29,7 +29,7 @@ module Support
 
   # @return [Remap::Rule::Map]
   def pending!(*args)
-    Rule::Map.call(path: path!, rule: void!, backtrace: ["<BACKTRACE>"]).pending(*args)
+    Rule::Map.call(path: path!, rule: void!).pending(*args)
   end
 
   # @return [Hash]

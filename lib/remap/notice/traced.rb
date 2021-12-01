@@ -3,17 +3,16 @@
 module Remap
   class Notice
     class Traced < Concrete
-      attribute :backtrace, Types::Backtrace
+      attribute? :backtrace, Types::Backtrace, default: EMPTY_ARRAY
 
-      def traced(_)
-        raise ArgumentError, "Traced notices are not supported"
+      def traced(backtrace)
+        Notice.call(**attributes, backtrace: backtrace)
       end
 
       def exception
-        super
-        # return super if backtrace.blank?
+        return super if backtrace.blank?
 
-        # super.tap { _1.set_backtrace(backtrace.map(&:to_s)) }
+        super.tap { _1.set_backtrace(backtrace.map(&:to_s)) }
       end
     end
   end
