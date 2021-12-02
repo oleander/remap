@@ -34,4 +34,3 @@ desc "Run all specs and generate documentation"
 task :rubocop do
   exec "bundle", "exec", "rubocop"
 end
-
