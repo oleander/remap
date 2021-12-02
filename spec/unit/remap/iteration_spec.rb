@@ -3,7 +3,9 @@
 describe Remap::Iteration do
   describe "#call" do
     using Remap::State::Extension
-    subject(:iteration) { described_class.call(state: state, value: state.value) }
+    subject(:iteration) do
+      described_class.call(state: state, value: state.value)
+    end
 
     let(:state) { state!(input) }
 

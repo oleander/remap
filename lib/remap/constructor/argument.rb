@@ -31,7 +31,10 @@ module Remap
         super.fmap do |input|
           target.public_send(id, input)
         rescue ArgumentError => e
-          raise e.exception("Failed to create [#{target.inspect}] with input [#{input}] (#{input.class})")
+          raise e.exception("Failed to create [%p] with input [%s] (%s)" % [
+            target, input,
+            input.class
+          ])
         end
       end
     end

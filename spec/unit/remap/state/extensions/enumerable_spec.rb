@@ -8,7 +8,7 @@ describe Remap::State::Extensions::Enumerable do
       subject(:result) { receiver.get(*path) }
 
       context "when path is empty" do
-        let(:path) { [] }
+        let(:path)     { []               }
         let(:receiver) { { key: "value" } }
 
         it { is_expected.to eq(receiver) }

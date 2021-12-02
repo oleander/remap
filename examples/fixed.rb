@@ -36,9 +36,9 @@ class Fixed < Remap::Base
       to(:income) do
         map(:financial_data, :incomes).then do
           value.select { |v| v.fetch(:label).include?("Antragsteller") }
-               .map { |v| v.fetch(:value) }
-               .collect
-               .sum
+            .map { |v| v.fetch(:value) }
+            .collect
+            .sum
         end
       end
     end

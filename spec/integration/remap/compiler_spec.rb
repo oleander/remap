@@ -3,8 +3,8 @@
 describe Remap::Compiler do
   subject(:output) { rule.call(state) }
 
-  let(:rule) { described_class.call(&block) }
-  let(:state) { state!(input) }
+  let(:rule)  { described_class.call(&block) }
+  let(:state) { state!(input)                }
 
   describe "#each" do
     let(:input) { [{ a: 1 }, { a: 2 }] }
@@ -36,7 +36,7 @@ describe Remap::Compiler do
     end
 
     context "with block" do
-      let(:input) { { a: 100 } }
+      let(:input) { { a: 100 }                       }
       let(:block) { -> * { wrap(:array) { map :a } } }
 
       it { is_expected.to contain([100]) }

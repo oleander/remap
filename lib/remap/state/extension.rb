@@ -134,7 +134,12 @@ module Remap
             in [:value, Array => list1, Array => list2]
               list1 + list2
             in [:value, l, r]
-              fatal!("Could not merge [%p] (%s) with [%p] (%s) @ %s", l, l.class, r, r.class, (path + [key]).join("."))
+              fatal!("Could not merge [%p] (%s) with [%p] (%s) @ %s",
+                     l,
+                     l.class,
+                     r,
+                     r.class,
+                     (path + [key]).join("."))
             in [:failures, Array => f1, Array => f2]
               f1 + f2
             in [:notices, Array => n1, Array => n2]
@@ -223,7 +228,10 @@ module Remap
           in [path, Hash => errors]
             errors.paths.flat_map do |sufix|
               Array.wrap(errors.dig(*sufix)).map do |inner_reason|
-                Notice.call(path: path + sufix, reason: inner_reason, **only(:value))
+                Notice.call(
+                  reason: inner_reason,
+                  path: path + sufix,
+                  **only(:value))
               end
             end
           end

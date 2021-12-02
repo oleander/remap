@@ -15,9 +15,9 @@ describe Remap::Rule::Each do
     context "when state is an array" do
       subject { result.fmap { _1.sort_by(&:to_s) } }
 
-      let(:input) { [3, 2, 1] }
-      let(:state) { state!(input) }
-      let(:rule) { described_class.call(rule: rule!) }
+      let(:input) { [3, 2, 1]                         }
+      let(:state) { state!(input)                     }
+      let(:rule)  { described_class.call(rule: rule!) }
 
       it { is_expected.not_to include(:element, :index, :key) }
 
@@ -64,7 +64,7 @@ describe Remap::Rule::Each do
 
     context "when state is not enumerable" do
       let(:rule) { rule! }
-      let(:value) { int! }
+      let(:value) { int!          }
       let(:state) { state!(value) }
 
       context "when accessing #value" do

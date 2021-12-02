@@ -21,11 +21,9 @@ module Remap
       #
       # @return [State<Array<T>>]
       def call(&block)
-        array.each_with_index.reduce(init) do |input_state, (value, index)|
-          block[value, index: index]._.then do |new_state|
-            new_state.fmap { [_1] }
-          end.then do |new_array_state|
-            input_state.combine(new_array_state)
+        array.each_with_index.reduce(init) do |state, (value, index)|
+          block[value, index: index].then do |other|
+            state.combine(other.fmap { [_1] })
           end
         end
       end

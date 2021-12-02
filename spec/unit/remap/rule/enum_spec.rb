@@ -43,7 +43,7 @@ describe Remap::Rule::Enum do
     context "without mappings" do
       it_behaves_like described_class do
         let(:lookup) { :does_not_exist }
-        let(:output) { None() }
+        let(:output) { None()          }
         let(:enum) do
           described_class.call do
             # NOP
@@ -58,7 +58,7 @@ describe Remap::Rule::Enum do
           it_behaves_like described_class do
             let(:output) { Some(lookup) }
             let(:fallback) { :fallback }
-            let(:lookup) { :ID }
+            let(:lookup)   { :ID       }
             let(:enum) do |context: self|
               described_class.call do
                 otherwise context.fallback
@@ -71,10 +71,10 @@ describe Remap::Rule::Enum do
         context "when mapped from multiply values" do
           it_behaves_like described_class do
             let(:output) { Some(value) }
-            let(:fallback) { :fallback }
-            let(:lookup) { :ID }
-            let(:lookups) { [lookup, :OTHER] }
-            let(:value) { :value }
+            let(:fallback) { :fallback        }
+            let(:lookup)   { :ID              }
+            let(:lookups)  { [lookup, :OTHER] }
+            let(:value)    { :value           }
             let(:enum) do |context: self|
               described_class.call do
                 otherwise context.fallback
@@ -88,8 +88,8 @@ describe Remap::Rule::Enum do
           it_behaves_like described_class do
             let(:output) { Some(value) }
             let(:fallback) { :fallback }
-            let(:lookup) { :ID }
-            let(:value) { :value }
+            let(:lookup)   { :ID       }
+            let(:value)    { :value    }
             let(:enum) do |context: self|
               described_class.call do
                 otherwise context.fallback
@@ -103,8 +103,8 @@ describe Remap::Rule::Enum do
       context "when key does not exist" do
         it_behaves_like described_class do
           let(:output) { Some(fallback) }
-          let(:fallback) { :fallback }
-          let(:lookup) { :does_not_exist }
+          let(:fallback) { :fallback       }
+          let(:lookup)   { :does_not_exist }
           let(:enum) do |context: self|
             described_class.call do
               otherwise context.fallback

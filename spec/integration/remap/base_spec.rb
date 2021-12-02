@@ -2,7 +2,7 @@
 
 describe Remap::Base do
   context "when using #embed" do
-    subject { mapper.call(value) }
+    subject(:result) { mapper.call(value) }
 
     let(:pass) do
       mapper! do
@@ -32,33 +32,41 @@ describe Remap::Base do
       context "when left passes" do
         let(:left) { pass }
         let(:middle) { fail }
-        let(:right) { fail }
+        let(:right)  { fail }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
 
       context "when middle passes" do
         let(:left) { fail }
         let(:middle) { pass }
-        let(:right) { fail }
+        let(:right)  { fail }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
 
       context "when right passes" do
         let(:left) { fail }
         let(:middle) { fail }
-        let(:right) { pass }
+        let(:right)  { pass }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
 
       context "when all passes" do
         let(:left) { pass }
         let(:middle) { pass }
-        let(:right) { pass }
+        let(:right)  { pass }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
     end
 
@@ -80,7 +88,9 @@ describe Remap::Base do
       context "when it passes" do
         let(:that) { pass }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
     end
 
@@ -96,7 +106,7 @@ describe Remap::Base do
       context "when left passes" do
         let(:left) { pass }
         let(:middle) { fail }
-        let(:right) { fail }
+        let(:right)  { fail }
 
         it { is_expected.to have_problem }
       end
@@ -104,7 +114,7 @@ describe Remap::Base do
       context "when middle passes" do
         let(:left) { fail }
         let(:middle) { pass }
-        let(:right) { fail }
+        let(:right)  { fail }
 
         it { is_expected.to have_problem }
       end
@@ -112,7 +122,7 @@ describe Remap::Base do
       context "when right passes" do
         let(:left) { fail }
         let(:middle) { fail }
-        let(:right) { pass }
+        let(:right)  { pass }
 
         it { is_expected.to have_problem }
       end
@@ -120,9 +130,11 @@ describe Remap::Base do
       context "when all passes" do
         let(:left) { pass }
         let(:middle) { pass }
-        let(:right) { pass }
+        let(:right)  { pass }
 
-        it { is_expected.to be_a_success.and(have_attributes(result: ["<RESULT>"] * 3)) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(result: ["<RESULT>"] * 3))
+        }
       end
     end
 
@@ -138,31 +150,37 @@ describe Remap::Base do
       context "when left passes" do
         let(:left) { pass }
         let(:middle) { fail }
-        let(:right) { fail }
+        let(:right)  { fail }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
 
       context "when middle passes" do
         let(:left) { fail }
         let(:middle) { pass }
-        let(:right) { fail }
+        let(:right)  { fail }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
 
       context "when right passes" do
         let(:left) { fail }
         let(:middle) { fail }
-        let(:right) { pass }
+        let(:right)  { pass }
 
-        it { is_expected.to be_a_success.and(have_attributes(value: ["<RESULT>"])) }
+        it {
+          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
+        }
       end
 
       xcontext "when all passes" do
         let(:left) { pass }
         let(:middle) { pass }
-        let(:right) { pass }
+        let(:right)  { pass }
 
         it { is_expected.to have_problem }
       end
@@ -239,9 +257,11 @@ describe Remap::Base do
 
       context "when state contains options" do
         context "when rule accesses option" do
-          subject { mapper.call(value!, id: id) }
+          subject(:result) { mapper.call(value!, id: id) }
 
-          it { is_expected.to be_a_success.and(have_attributes(value: { id: id })) }
+          it {
+            expect(result).to be_a_success.and(have_attributes(value: { id: id }))
+          }
         end
       end
 

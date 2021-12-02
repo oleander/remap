@@ -5,8 +5,8 @@ describe Remap::Rule::Wrap do
     subject { wrap.call(state) }
 
     let(:wrap) { described_class.new(type: type, rule: rule) }
-    let(:type) { :array }
-    let(:rule) { void! }
+    let(:type) { :array                                      }
+    let(:rule) { void!                                       }
 
     let(:state) { state!([1, 2, 3]) }
 
@@ -16,7 +16,10 @@ describe Remap::Rule::Wrap do
   describe "::new" do
     context "when type is not :array" do
       it "raises an error" do
-        expect { described_class.new(type: :foo, rule: void!) }.to raise_error(Dry::Struct::Error)
+        expect do
+          described_class.new(type: :foo,
+                              rule: void!)
+        end.to raise_error(Dry::Struct::Error)
       end
     end
   end

@@ -8,7 +8,11 @@ include Dry::Core::Constants
 FactoryBot.define do
   initialize_with { new(attributes) }
 
-  sequence(:key_path, aliases: [:path]) { Array.new(2).map { FactoryBot.generate(:key) } }
+  sequence(:key_path, aliases: [:path]) do
+    Array.new(2).map do
+      FactoryBot.generate(:key)
+    end
+  end
   sequence(:integer, aliases: [:index]) { Faker::Number.number(digits: 2) }
   sequence(:key) { "key_#{Faker::Lorem.word.underscore}".to_sym }
   sequence(:value, aliases: [:values, :input]) { |n| "value#{n}" }
@@ -16,7 +20,8 @@ FactoryBot.define do
 
   factory Remap::Base, aliases: [:mapper, Remap::Base] do
     initialize_with do |context: self|
-      Dry::Core::ClassBuilder.new(name: name, parent: Remap::Base).call do |klass|
+      Dry::Core::ClassBuilder.new(name: name,
+                                  parent: Remap::Base).call do |klass|
         klass.class_eval do
           context.options.each_key do |name|
             option name

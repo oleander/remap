@@ -26,26 +26,24 @@ module Remap
     # @param to ([]) [Array<Symbol>, Symbol]
     #
     # @return [Rule::Map]
-    def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &block)
+    def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       add Rule::Map::Strict.call(
         path: {
           output: [to].flatten,
           input: path.flatten
         },
         backtrace: backtrace,
-        rule: call(&block)
-      )
+        rule: call(&block))
     end
 
-    def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &block)
+    def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       add Rule::Map::Loose.call(
         path: {
           output: [to].flatten,
           input: path.flatten
         },
         backtrace: backtrace,
-        rule: call(&block)
-      )
+        rule: call(&block))
     end
 
     # Maps using mapper
@@ -78,7 +76,7 @@ module Remap
     # @param map [Array<Segment>, Segment]
     #
     # @return [Rule::Map]
-    def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller_locations, &block)
+    def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       map(*map, to: path, backtrace: backtrace, &block)
     end
 
@@ -138,7 +136,7 @@ module Remap
     # @param id [Symbol]
     #
     # @return [Rule::Static::Option]
-    def option(id, backtrace: Kernel.caller_locations)
+    def option(id, backtrace: Kernel.caller)
       Static::Option.new(name: id, backtrace: backtrace)
     end
 
@@ -151,7 +149,8 @@ module Remap
     def at(index)
       Selector::Index.new(index: index)
     rescue Dry::Struct::Error
-      raise ArgumentError, "Selector at(index) requires an integer argument, got [#{index}] (#{index.class})"
+      raise ArgumentError,
+            "Selector at(index) requires an integer argument, got [#{index}] (#{index.class})"
     end
 
     # Selects first element in input

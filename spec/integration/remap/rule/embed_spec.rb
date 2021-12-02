@@ -9,7 +9,7 @@ describe Remap::Rule::Embed do
     end
   end
 
-  let(:value) { value! }
+  let(:value) { value!                       }
   let(:embed) { described_class.call(mapper) }
 
   context "when embeded mapper fails" do

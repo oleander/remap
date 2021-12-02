@@ -32,12 +32,12 @@ describe Remap::Rule::Collection::Filled do
 
       let(:collection) { described_class.call(rules) }
       let(:input) { { key: "value" } }
-      let(:state) { state!(input) }
-      let(:rules) { [rule1, rule2] }
+      let(:state) { state!(input)    }
+      let(:rules) { [rule1, rule2]   }
 
       context "when left is a problem" do
         let(:value) { { key: "value" } }
-        let(:rule1) { problem! }
+        let(:rule1) { problem!       }
         let(:rule2) { static!(value) }
 
         it { is_expected.to contain(input) }

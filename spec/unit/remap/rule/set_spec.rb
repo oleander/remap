@@ -23,8 +23,8 @@ describe Remap::Rule::Set do
     subject { rule.call(state) }
 
     let(:key) { symbol! }
-    let(:rule) { described_class.call(path: [key], value: static) }
-    let(:value) { value! }
+    let(:rule)  { described_class.call(path: [key], value: static) }
+    let(:value) { value!                                           }
 
     context "given option" do
       let(:id) { symbol! }
@@ -47,7 +47,7 @@ describe Remap::Rule::Set do
 
     context "given value" do
       let(:fixed) { value! }
-      let(:state) { state! }
+      let(:state)  { state!                              }
       let(:static) { build("static/fixed", value: fixed) }
 
       it { is_expected.to contain(key => fixed) }

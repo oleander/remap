@@ -344,8 +344,53 @@ end
 
 ### Combine mappers using operators
 
+> Mappers can be combined using the logical operators `|`, `&` and `^`. This comes in handy when your input is finite
+
+``` ruby
+class Vehicle < Remap::Base
+  class Bicycle < Remap::Base
+    contract do
+      required(:gears)
+      required(:brand)
+    end
+
+    define do
+      to :bicycle
+    end
+  end
+
+  class Car < Remap::Base
+    contract do
+      required(:hybrid)
+      required(:fule)
+    end
+
+    define do
+      to :car
+    end
+  end
+
+  define do
+    each do
+      embed Bicycle | Car
+    end
+  end
+end
+```
+
+``` ruby
+ output = Vehicle.call([
+   { gears: 3, brand: "Rose" },
+   { hybrid: false, fule: "Petrol" }
+ ])
+
+ pp output.result
+```
+
 #### Xor
 #### And
 #### Or
 
 ### Constructors using ::define
+
+### Optional mappings

@@ -5,8 +5,8 @@ describe Remap::Rule do
     context "when passed a rule" do
       subject { rule.call(state) }
 
-      let(:rule) { described_class.call(void!) }
-      let(:state) { state! }
+      let(:rule)  { described_class.call(void!) }
+      let(:state) { state!                      }
 
       it { is_expected.to eq(state) }
     end

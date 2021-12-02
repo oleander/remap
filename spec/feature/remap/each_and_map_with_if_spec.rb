@@ -48,8 +48,7 @@ describe Remap::Base do
               "Jack"
             ]
           }
-        })
-      )
+        }))
     end
   end
 end

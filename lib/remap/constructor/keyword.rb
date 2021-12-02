@@ -34,7 +34,12 @@ module Remap
 
           target.public_send(id, **input)
         rescue ArgumentError => e
-          raise e.exception("Failed to create [#{target.inspect}] with input [#{input}] (#{input.class})")
+          raise e.exception("Failed to create [%p] with input [%s] (%s}) using method %s" % [
+            target,
+            input,
+            input.class,
+            id
+          ])
         end
       end
     end

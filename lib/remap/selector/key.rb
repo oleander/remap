@@ -33,7 +33,11 @@ module Remap
           end
 
           value = hash.fetch(key) do
-            state.ignore!("Key %p (%s) not found in hash %p (%s)", key, key.class, hash, hash.class)
+            state.ignore!("Key %p (%s) not found in hash %p (%s)",
+                          key,
+                          key.class,
+                          hash,
+                          hash.class)
           end
 
           state.set(value, key: key).then(&block)

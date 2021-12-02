@@ -20,7 +20,9 @@ module Support
 
   # @return [Remap::Rule::Map]
   def map!(&block)
-    Rule::Map.call(path: path!, rule: void!).adjust(&block)
+    a = Rule::Map.call(path: path!, rule: void!)
+    a.adjust(&block)
+    a
   end
 
   def notice!

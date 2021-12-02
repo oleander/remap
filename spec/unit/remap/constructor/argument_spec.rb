@@ -5,7 +5,7 @@ RSpec.describe Remap::Constructor::Argument do
     subject(:result) { constructor.call(state) }
 
     let(:constructor) { described_class.new(method: method, target: target) }
-    let(:method) { :new }
+    let(:method)      { :new                                                }
 
     let(:value) { 100 }
     let(:state) { state!(value) }

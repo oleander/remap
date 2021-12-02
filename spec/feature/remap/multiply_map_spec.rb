@@ -17,7 +17,11 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: { water: "fresh", food: "meat", purr: true }))
+      be_a_success.and(have_attributes(result: {
+        water: "fresh",
+        food: "meat",
+        purr: true
+      }))
     end
   end
 end

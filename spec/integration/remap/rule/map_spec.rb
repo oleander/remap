@@ -5,9 +5,9 @@ describe Remap::Rule::Map do
 
   subject { map.call(context) }
 
-  let(:input) { 10 }
-  let(:context) { state!(input) }
-  let(:map) { described_class.new(path: path!, rule: void!) }
+  let(:input)   { 10                                            }
+  let(:context) { state!(input)                                 }
+  let(:map)     { described_class.new(path: path!, rule: void!) }
 
   describe "#enum" do
     before do

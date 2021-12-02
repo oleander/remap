@@ -16,7 +16,8 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(value: { name: "John" }, notices: be_present))
+      be_a_success.and(have_attributes(value: { name: "John" },
+                                       notices: be_present))
     end
   end
 end

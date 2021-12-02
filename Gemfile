@@ -11,11 +11,12 @@ group :development do
   gem "guard-rubocop", require: false
 
   gem "reek", require: false
-  gem "yard", require: false
-  gem "yard-coderay", require: false
+  gem "yard"
+  gem "yard-coderay"
   gem "yard-doctest"
-  gem "yard-rspec", require: false
-  gem "yard-spellcheck", require: false
+  gem "yard-rspec"
+  gem "yard-spellcheck"
+  gem "yardstick", require: false
 end
 
 group :test, :development do
@@ -31,3 +32,5 @@ group :test do
   gem "rspec-its"
   gem "simplecov"
 end
+
+gem "benchmark-ips"

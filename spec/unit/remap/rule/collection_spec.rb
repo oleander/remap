@@ -22,14 +22,16 @@ describe Remap::Rule::Collection do
       let(:state) { state!(input) }
 
       it "throws a notice symbol" do
-        expect { rule.call(state) }.to throw_symbol(:notice, be_a(Remap::Notice))
+        expect do
+          rule.call(state)
+        end.to throw_symbol(:notice, be_a(Remap::Notice))
       end
     end
 
     context "with single rule" do
       it_behaves_like described_class do
         let(:rules) { [void!] }
-        let(:input) { { foo: :bar } }
+        let(:input)  { { foo: :bar }  }
         let(:output) { contain(input) }
       end
     end
@@ -37,7 +39,7 @@ describe Remap::Rule::Collection do
     context "with two rules" do
       it_behaves_like described_class do
         let(:rules) { [void!, void!] }
-        let(:input) { { foo: :bar } }
+        let(:input)  { { foo: :bar }  }
         let(:output) { contain(input) }
       end
     end

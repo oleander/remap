@@ -5,7 +5,7 @@ describe Remap::State do
     context "given valid input" do
       subject { described_class.call(input, mapper: mapper) }
 
-      let(:input) { value! }
+      let(:input)  { value!  }
       let(:mapper) { mapper! }
 
       it { is_expected.to include(mapper: mapper) }

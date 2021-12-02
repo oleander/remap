@@ -20,7 +20,9 @@ describe Remap::Base do
             to(:of_legal_age) do
               map [:applicants] do
                 each do
-                  map(:birth_date).then { (2020 - ::Time.parse(value).to_date.year) >= 18 }
+                  map(:birth_date).then do
+                    (2020 - ::Time.parse(value).to_date.year) >= 18
+                  end
                 end
               end
             end
@@ -32,9 +34,9 @@ describe Remap::Base do
             to(:income) do
               map(:financial_data, :incomes).then do
                 value.select { |v| v.fetch(:label).include?("Antragsteller") }
-                     .map { |v| v.fetch(:value) }
-                     .collect
-                     .sum
+                  .map { |v| v.fetch(:value) }
+                  .collect
+                  .sum
               end
             end
           end
@@ -57,8 +59,16 @@ describe Remap::Base do
         },
         financial_data: {
           incomes: [
-            { label: "Gehalt Antragsteller", value: 5000.0, number_of_rates: 12 },
-            { label: "Nebentätigkeit Antragsteller", value: 500.0, number_of_rates: 12 }
+            {
+              label: "Gehalt Antragsteller",
+              value: 5000.0,
+              number_of_rates: 12
+            },
+            {
+              label: "Nebentätigkeit Antragsteller",
+              value: 500.0,
+              number_of_rates: 12
+            }
           ]
         },
         offer: { reason: "PURCHASE" },
@@ -79,8 +89,7 @@ describe Remap::Base do
               income: 5500.0
             }
           }
-        })
-      )
+        }))
     end
   end
 end

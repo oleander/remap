@@ -14,7 +14,9 @@ end
 
 RSpec::Matchers.define :contain do |expected|
   match do |actual|
-    (actual.fetch(:value) { return false } === expected || actual.fetch(:value) == expected)
+    (actual.fetch(:value) do
+       return false
+     end === expected || actual.fetch(:value) == expected)
   end
 
   failure_message do |actual|

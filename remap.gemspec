@@ -27,12 +27,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-validation", "~> 1.7.0"
   spec.add_dependency "zeitwerk", "~> 2.5.1"
 
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rubocop", "~> 1.23.0"
   spec.add_development_dependency "rubocop-performance"
   spec.add_development_dependency "rubocop-rake"
   spec.add_development_dependency "rubocop-rspec"
 
-  spec.metadata = {
-    "rubygems_mfa_required" => "true"
-  }
+  spec.metadata = { "rubygems_mfa_required" => "true" }
 end

@@ -3,7 +3,12 @@
 describe Remap::Result do
   subject(:result) { described_class.call(input) }
 
-  let(:input) { { value: value!, notices: [{ value: value!, path: [1, 2, 3], reason: "my reason" }] } }
+  let(:input) do
+    {
+      value: value!,
+      notices: [{ value: value!, path: [1, 2, 3], reason: "my reason" }]
+    }
+  end
 
   describe "::call" do
     context "given valid input" do
@@ -17,7 +22,12 @@ describe Remap::Result do
     subject { described_class.call(input) }
 
     context "when notices exist" do
-      let(:input) { { value: value!, notices: [{ value: value!, path: [1, 2, 3], reason: "my reason" }] } }
+      let(:input) do
+        {
+          value: value!,
+          notices: [{ value: value!, path: [1, 2, 3], reason: "my reason" }]
+        }
+      end
 
       it { is_expected.to be_problem }
     end

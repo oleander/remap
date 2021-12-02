@@ -48,7 +48,10 @@ describe Remap::State::Extension do
     let(:state) { defined! }
 
     it "throws a symbol" do
-      expect { state.fatal!("%s", "a value") }.to throw_symbol(:fatal, be_kind_of(Remap::Notice))
+      expect do
+        state.fatal!("%s",
+                     "a value")
+      end.to throw_symbol(:fatal, be_kind_of(Remap::Notice))
     end
   end
 
@@ -56,7 +59,10 @@ describe Remap::State::Extension do
     let(:state) { defined! }
 
     it "throws a symbol" do
-      expect { state.notice!("%s", "a value") }.to throw_symbol(:notice, be_kind_of(Remap::Notice))
+      expect do
+        state.notice!("%s",
+                      "a value")
+      end.to throw_symbol(:notice, be_kind_of(Remap::Notice))
     end
   end
 
@@ -64,7 +70,10 @@ describe Remap::State::Extension do
     let(:state) { defined! }
 
     it "throws a symbol" do
-      expect { state.ignore!("%s", "a value") }.to throw_symbol(:ignore, be_kind_of(Remap::Notice))
+      expect do
+        state.ignore!("%s",
+                      "a value")
+      end.to throw_symbol(:ignore, be_kind_of(Remap::Notice))
     end
   end
 
@@ -144,7 +153,7 @@ describe Remap::State::Extension do
     end
 
     context "when different types" do
-      let(:left) { defined!(10) }
+      let(:left)  { defined!(10)     }
       let(:right) { defined!(:hello) }
 
       its(:itself) { will throw_symbol(:fatal, be_kind_of(Remap::Notice)) }
@@ -175,7 +184,7 @@ describe Remap::State::Extension do
   end
 
   describe "#failure" do
-    subject { state!(value, path: path).failure(reason) }
+    subject(:state) { state!(value, path: path).failure(reason) }
 
     let(:value) { "value" }
 
@@ -185,21 +194,35 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to include(failures: [have_attributes(reason: "reason", value: value)]) }
+        it {
+          expect(state).to include(failures: [
+            have_attributes(reason: "reason", value: value)
+          ])
+        }
+
         it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is an array" do
         let(:reason) { ["reason"] }
 
-        it { is_expected.to include(failures: [have_attributes(reason: "reason", value: value)]) }
+        it {
+          expect(state).to include(failures: [
+            have_attributes(reason: "reason", value: value)
+          ])
+        }
+
         it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is a hash" do
         let(:reason) { { key: ["error"] } }
 
-        it { is_expected.to include(failures: [have_attributes(reason: "error", path: [:key], value: value)]) }
+        it {
+          expect(state).to include(failures: [
+            have_attributes(reason: "error", path: [:key], value: value)
+          ])
+        }
       end
     end
 
@@ -209,21 +232,36 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it { is_expected.to include(failures: [have_attributes(reason: reason, value: value, path: [:a, :b])]) }
+        it {
+          expect(state).to include(failures: [
+            have_attributes(reason: reason, value: value, path: [:a, :b])
+          ])
+        }
+
         it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is an array" do
         let(:reason) { ["reason"] }
 
-        it { is_expected.to include(failures: [have_attributes(reason: "reason", value: value, path: [:a, :b])]) }
+        it {
+          expect(state).to include(failures: [
+            have_attributes(reason: "reason", value: value, path: [:a, :b])
+          ])
+        }
+
         it { is_expected.not_to have_key(:value) }
       end
 
       context "when reason is a hash" do
         let(:reason) { { c: ["reason"] } }
 
-        it { is_expected.to include(failures: [have_attributes(reason: "reason", path: [:a, :b, :c], value: value)]) }
+        it {
+          expect(state).to include(failures: [
+            have_attributes(reason: "reason", path: [:a, :b, :c], value: value)
+          ])
+        }
+
         it { is_expected.not_to have_key(:value) }
       end
     end
@@ -245,7 +283,7 @@ describe Remap::State::Extension do
 
   describe "#set" do
     let(:state) { defined! }
-    let(:index) { 1 }
+    let(:index) { 1       }
     let(:value) { "value" }
 
     context "when given an index" do
@@ -333,8 +371,8 @@ describe Remap::State::Extension do
     context "when state is defined!" do
       subject(:result) { state.set(**options) }
 
-      let(:state) { defined! }
-      let(:mapper) { mapper! }
+      let(:state)  { defined! }
+      let(:mapper) { mapper!  }
 
       context "when given a mapper" do
         let(:options) { { mapper: mapper } }
@@ -348,8 +386,8 @@ describe Remap::State::Extension do
     context "when state is undefined!" do
       subject(:result) { state.set(**options) }
 
-      let(:state) { undefined! }
-      let(:mapper) { mapper! }
+      let(:state)  { undefined! }
+      let(:mapper) { mapper!    }
 
       context "when given a mapper" do
         let(:options) { { mapper: mapper } }
@@ -432,7 +470,9 @@ describe Remap::State::Extension do
 
       let(:value) { "value" }
       let(:state) { defined!(value, path: [:key1]) }
-      let(:notice) { { path: [:key1], reason: "This is skipped!", value: value } }
+      let(:notice) do
+        { path: [:key1], reason: "This is skipped!", value: value }
+      end
 
       it "throws symbol notice" do
         expect { result }.to throw_symbol(:ignore, be_a(Remap::Notice))
@@ -460,7 +500,7 @@ describe Remap::State::Extension do
         end
 
         let(:value) { { a: { b: "value" } } }
-        let(:state) { defined!(value) }
+        let(:state) { defined!(value)       }
 
         it { is_expected.to contain("value") }
       end
@@ -486,7 +526,7 @@ describe Remap::State::Extension do
       end
 
       let(:value) { { key: "value" } }
-      let(:state) { defined!(value) }
+      let(:state) { defined!(value)  }
 
       its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
     end
@@ -521,7 +561,7 @@ describe Remap::State::Extension do
         end
       end
 
-      let(:key) { :key }
+      let(:key)   { :key                       }
       let(:state) { defined!(value!, path: []) }
 
       its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
@@ -543,7 +583,7 @@ describe Remap::State::Extension do
           end
         end
 
-        let(:state) { defined! }
+        let(:state)  { defined! }
         let(:reason) { "reason" }
 
         its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
@@ -608,7 +648,7 @@ describe Remap::State::Extension do
       end
 
       let(:key) { :key }
-      let(:value) { "value" }
+      let(:value) { "value"         }
       let(:state) { defined!(value) }
 
       its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
@@ -669,12 +709,12 @@ describe Remap::State::Extension do
 
       it "has paths" do
         expect(input).to match_array([
-                                       [:shallow],
-                                       [:deep1, :deep2],
-                                       [:deeper1, :deeper2, :deeper3],
-                                       [:deeper1, :deeper2, :deeper4],
-                                       [:deeper1, :deeper5, :deeper6]
-                                     ])
+          [:shallow],
+          [:deep1, :deep2],
+          [:deeper1, :deeper2, :deeper3],
+          [:deeper1, :deeper2, :deeper4],
+          [:deeper1, :deeper5, :deeper6]
+        ])
       end
     end
   end

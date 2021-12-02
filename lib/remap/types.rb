@@ -10,7 +10,7 @@ module Remap
     include Dry::Types()
     using State::Extension
 
-    Backtrace  = Array(Instance(Thread::Backtrace::Location) | String)
+    Backtrace  = Array(Interface(:to_s) | String)
     Enumerable = Any.constrained(type: Enumerable)
     Nothing    = Constant(Remap::Nothing)
     Mapper     = Interface(:call!)
@@ -26,10 +26,8 @@ module Remap
       error[JSON.pretty_generate(result.errors.to_h)]
     end
 
-    Problem = Hash.schema(
-      reason: String.constrained(min_size: 1),
-      path?: Array.constrained(min_size: 1),
-      value?: Any
-    )
+    Problem = Hash.schema(reason: String.constrained(min_size: 1),
+                          path?: Array.constrained(min_size: 1),
+                          value?: Any)
   end
 end

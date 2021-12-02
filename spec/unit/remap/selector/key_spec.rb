@@ -25,7 +25,7 @@ describe Remap::Selector::Key do
     subject(:selector) { described_class.call(key) }
 
     let(:value) { string! }
-    let(:key) { symbol! }
+    let(:key)   { symbol!       }
     let(:state) { state!(input) }
 
     context "without block" do
@@ -68,7 +68,9 @@ describe Remap::Selector::Key do
           let(:input) { { key => value } }
 
           it "invokes block" do
-            expect { |b| selector.call(state, &b) }.to yield_with_args(contain(value))
+            expect do |b|
+              selector.call(state, &b)
+            end.to yield_with_args(contain(value))
           end
         end
 

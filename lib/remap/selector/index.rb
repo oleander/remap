@@ -33,7 +33,10 @@ module Remap
           end
 
           element = array.fetch(index) do
-            state.ignore!("Index %s in array %p (%s) not found", index, array, array.class)
+            state.ignore!("Index %s in array %p (%s) not found",
+                          index,
+                          array,
+                          array.class)
           end
 
           state.set(element, index: index).then(&block)

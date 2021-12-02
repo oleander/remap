@@ -10,8 +10,8 @@ describe Remap::Rule::Map do
   describe "#call" do
     subject { rule.call(state) }
 
-    let(:rule) { described_class.call(path: path, rule: void!) }
-    let(:state) { state!({ a: 1 }) }
+    let(:rule)  { described_class.call(path: path, rule: void!) }
+    let(:state) { state!({ a: 1 })                              }
 
     context "without fn" do
       let(:path) { path!([:a], [:b]) }

@@ -2,13 +2,15 @@
 
 describe Remap::Constructor::None do
   shared_examples described_class do
-    subject(:constructor) { described_class.new(target: target, method: method, strategy: strategy) }
+    subject(:constructor) do
+      described_class.new(target: target, method: method, strategy: strategy)
+    end
 
-    let(:method) { Remap::Nothing }
-    let(:strategy) { Remap::Nothing }
-    let(:target) { Remap::Nothing }
-    let(:value) { value! }
-    let(:state) { state!(value) }
+    let(:method)   { Remap::Nothing    }
+    let(:strategy) { Remap::Nothing    }
+    let(:target)   { Remap::Nothing    }
+    let(:value)    { value!            }
+    let(:state)    { state!(value)     }
 
     it "returns the input state" do
       expect(constructor.call(state)).to eq(state)

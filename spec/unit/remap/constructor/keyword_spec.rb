@@ -4,9 +4,11 @@ RSpec.describe Remap::Constructor::Keyword do
   describe "#call" do
     subject(:result) { constructor.call(state) }
 
-    let(:method) { :new }
+    let(:method) { :new       }
     let(:target) { OpenStruct }
-    let(:constructor) { described_class.new(strategy: :keyword, method: method, target: target) }
+    let(:constructor) do
+      described_class.new(strategy: :keyword, method: method, target: target)
+    end
 
     context "when state is not a hash" do
       let(:state) { state!(:foo) }
@@ -16,7 +18,7 @@ RSpec.describe Remap::Constructor::Keyword do
 
     context "when state is a hash" do
       let(:value) { { input: "a value" } }
-      let(:state) { state!(value) }
+      let(:state) { state!(value)        }
 
       context "when target requires keyword arguments" do
         let(:target) { Struct.new(:input, keyword_init: true) }
