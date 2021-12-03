@@ -293,7 +293,10 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
 38
 39
 40
-41</pre>
+41
+42
+43
+44</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/selector/index.rb', line 27</span>
@@ -307,7 +310,10 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
     <span style="color:#080;font-weight:bold">end</span>
 
     element = array.fetch(index) <span style="color:#080;font-weight:bold">do</span>
-      state.ignore!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Index %s in array %p (%s) not found</span><span style="color:#710">&quot;</span></span>, index, array, array.class)
+      state.ignore!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Index %s in array %p (%s) not found</span><span style="color:#710">&quot;</span></span>,
+                    index,
+                    array,
+                    array.class)
     <span style="color:#080;font-weight:bold">end</span>
 
     state.set(element, <span style="color:#606">index</span>: index).then(&amp;block)
@@ -371,7 +377,7 @@ attribute <span style="color:#A60">:index</span>, <span style="color:#036;font-w
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:40:09 2021 by
+  Generated on Sat Dec  4 00:52:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

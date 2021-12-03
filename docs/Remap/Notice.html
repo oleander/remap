@@ -243,15 +243,15 @@
       <pre class="lines">
 
 
+25
 26
-27
-28</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/notice.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/notice.rb', line 25</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">exception</span>
-  <span style="color:#036;font-weight:bold">Error</span>.new(<span style="color:#606">notice</span>: <span style="color:#069">self</span>)
+  <span style="color:#036;font-weight:bold">Error</span>.new(<span style="color:#069">self</span>)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -277,12 +277,12 @@
       <pre class="lines">
 
 
+15
 16
-17
-18</pre>
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/notice.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/notice.rb', line 15</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
   <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;%s %s&gt;</span><span style="color:#710">&quot;</span></span> % [<span style="color:#069">self</span>.class, <span style="color:#036;font-weight:bold">JSON</span>.pretty_generate(to_hash)]
@@ -307,12 +307,12 @@
       <pre class="lines">
 
 
+20
 21
-22
-23</pre>
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/notice.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/notice.rb', line 20</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_hash</span>
   <span style="color:#080;font-weight:bold">super</span>.except(<span style="color:#A60">:backtrace</span>).reject { |_, value| value.blank? }
@@ -327,7 +327,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:40:08 2021 by
+  Generated on Sat Dec  4 00:52:54 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

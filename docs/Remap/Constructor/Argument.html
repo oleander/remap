@@ -263,7 +263,10 @@ new_state.fetch(<span style="color:#A60">:value</span>).foo <span style="color:#
 33
 34
 35
-36</pre>
+36
+37
+38
+39</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/constructor/argument.rb', line 30</span>
@@ -272,7 +275,10 @@ new_state.fetch(<span style="color:#A60">:value</span>).foo <span style="color:#
   <span style="color:#080;font-weight:bold">super</span>.fmap <span style="color:#080;font-weight:bold">do</span> |input|
     target.public_send(id, input)
   <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">ArgumentError</span> =&gt; e
-    raise e.exception(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Failed to create [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>target.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] with input [</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>input<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">] (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>input.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
+    raise e.exception(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Failed to create [%p] with input [%s] (%s)</span><span style="color:#710">&quot;</span></span> % [
+      target, input,
+      input.class
+    ])
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
@@ -333,7 +339,7 @@ attribute <span style="color:#A60">:strategy</span>, Value(<span style="color:#A
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:40:09 2021 by
+  Generated on Sat Dec  4 00:52:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

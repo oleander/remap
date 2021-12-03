@@ -455,14 +455,14 @@ upcase.call(state).fetch(<span style="color:#A60">:value</span>) <span style="co
       <pre class="lines">
 
 
+55
 56
 57
 58
-59
-60</pre>
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 55</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">adjust</span>(&amp;block)
   add <span style="color:#080;font-weight:bold">do</span> |state|
@@ -570,6 +570,7 @@ enum.call(d).fetch(<span style="color:#A60">:value</span>) <span style="color:#7
       <pre class="lines">
 
 
+100
 101
 102
 103
@@ -577,11 +578,10 @@ enum.call(d).fetch(<span style="color:#A60">:value</span>) <span style="color:#7
 105
 106
 107
-108
-109</pre>
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 100</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">enum</span>(&amp;block)
   add <span style="color:#080;font-weight:bold">do</span> |outer_state|
@@ -614,15 +614,13 @@ enum.call(d).fetch(<span style="color:#A60">:value</span>) <span style="color:#7
 
 33
 34
-35
-36</pre>
+35</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 33</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fatal</span>(state, <span style="color:#606">id</span>: <span style="color:#A60">:fatal</span>, &amp;block)
-  fatal = catch(id, &amp;block)
-  raise fatal.traced(backtrace).exception
+  raise catch(id, &amp;block).traced(backtrace).exception
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -691,16 +689,16 @@ map.call(c).key?(<span style="color:#A60">:value</span>) <span style="color:#777
       <pre class="lines">
 
 
+127
 128
 129
 130
 131
 132
-133
-134</pre>
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 127</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">if</span>(&amp;block)
   add <span style="color:#080;font-weight:bold">do</span> |outer_state|
@@ -774,16 +772,16 @@ map.call(c).fetch(<span style="color:#A60">:value</span>) <span style="color:#77
       <pre class="lines">
 
 
+153
 154
 155
 156
 157
 158
-159
-160</pre>
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 153</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">if_not</span>(&amp;block)
   add <span style="color:#080;font-weight:bold">do</span> |outer_state|
@@ -834,12 +832,12 @@ map.call(c).fetch(<span style="color:#A60">:value</span>) <span style="color:#77
       <pre class="lines">
 
 
+42
 43
-44
-45</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 42</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">ignore</span>(...)
   raise <span style="color:#036;font-weight:bold">NotImplementedError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span>.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">#ignore</span><span style="color:#710">&quot;</span></span>
@@ -864,13 +862,13 @@ map.call(c).fetch(<span style="color:#A60">:value</span>) <span style="color:#77
       <pre class="lines">
 
 
+37
 38
 39
-40
-41</pre>
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 37</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">notice</span>(state, &amp;block)
   notice = catch(<span style="color:#A60">:notice</span>, &amp;block).traced(backtrace)
@@ -1000,14 +998,14 @@ pending.call(state).key?(<span style="color:#A60">:value</span>) <span style="co
       <pre class="lines">
 
 
+73
 74
 75
 76
-77
-78</pre>
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/map.rb', line 73</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">pending</span>(reason = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Pending mapping</span><span style="color:#710">&quot;</span></span>)
   add <span style="color:#080;font-weight:bold">do</span> |state|
@@ -1024,7 +1022,7 @@ pending.call(state).key?(<span style="color:#A60">:value</span>) <span style="co
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:40:08 2021 by
+  Generated on Sat Dec  4 00:52:54 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

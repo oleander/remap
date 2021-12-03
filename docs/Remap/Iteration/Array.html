@@ -289,19 +289,15 @@
 26
 27
 28
-29
-30
-31</pre>
+29</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/iteration/array.rb', line 23</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(&amp;block)
-  array.each_with_index.reduce(init) <span style="color:#080;font-weight:bold">do</span> |input_state, (value, index)|
-    block[value, <span style="color:#606">index</span>: index]._.then <span style="color:#080;font-weight:bold">do</span> |new_state|
-      new_state.fmap { [_1] }
-    <span style="color:#080;font-weight:bold">end</span>.then <span style="color:#080;font-weight:bold">do</span> |new_array_state|
-      input_state.combine(new_array_state)
+  array.each_with_index.reduce(init) <span style="color:#080;font-weight:bold">do</span> |state, (value, index)|
+    block[value, <span style="color:#606">index</span>: index].then <span style="color:#080;font-weight:bold">do</span> |other|
+      state.combine(other.fmap { [_1] })
     <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span></pre>
@@ -411,7 +407,7 @@ attribute <span style="color:#A60">:value</span>, <span style="color:#036;font-w
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  1 00:40:09 2021 by
+  Generated on Sat Dec  4 00:52:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
