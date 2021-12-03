@@ -1,4 +1,4 @@
-# Remap [![Main](https://github.com/oleander/remap/actions/workflows/rspec.yml/badge.svg)](https://github.com/oleander/remap/actions/workflows/rspec.yml)
+# Remap [![Main](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg)](https://github.com/oleander/remap/actions/workflows/main.yml)
 
 > `Re:map`; an expressive and feature-complete data mapper design as a domain-specific language in Ruby 3.0
 
