@@ -1,9 +1,12 @@
 # Remap [![Main](https://github.com/oleander/remap/actions/workflows/rspec.yml/badge.svg)](https://github.com/oleander/remap/actions/workflows/rspec.yml)
 
+> `Re:map`; an expressive and feature-complete data mapper design as a domain-specific language in Ruby 3.0
+
 ``` ruby
 class Mapper < Remap::Base
-  option :id
+  option :key # <= Custom required value
 
+  # Optional requirements
   contract do
     required(:people).hash do
       required(:name).filled
@@ -12,23 +15,71 @@ class Mapper < Remap::Base
   end
 
   define do
-    set :key, to: option(:id)
+    # Fixed values
+    set :id, to: value("<VALID>")
 
+    # Semi-dynamic values
+    set :key, to: option(:key)
+
+    # Required rules
     map :people do
-      map :name, to: :nickname
+      # Post processors
+      map(:name).adjust(&:upcase)
 
-      to(:car, map: :cars, first).then(&:upcase)
+      # Field conditions
+      map(:age).if do |age|
+        age > 50
+      end
+
+      # Map to a finite set of values
+      map(:phones).enum do
+        from "iPhone", to: "iOS"
+        value "iOS", "Android"
+
+        otherwise "Unknown"
+      end
+    end
+
+    # Optional rule
+    get? :countries do
+      get :name
+    end
+
+    class Linux < Remap::Base
+      define do
+        get :kernel
+      end
+    end
+
+    class Windows < Remap::Base
+      define do
+        get :price
+      end
+    end
+
+    # Composable mappers
+    to :os do
+      embed Linux | Windows
+    end
+
+    map :cars do
+      each do
+        # Dig deep into a nested value
+        map :owners, all do
+          # Wrap output values
+          wrap :array do
+            map :name, :names
+          end
+        end
+      end
     end
   end
 end
-
-result = Mapper.call({ people: { name: 'John', cars: ['Volvo'] } }, id: 'ABC-123')
-pp result # => { key: 'ABC-123', nickname: 'John', car: 'VOLVO' }
 ```
 
 ## Examples
 
-### Map a value
+### Map a value from one path to another
 
 ``` ruby
 class Mapper < Remap::Base
@@ -48,7 +99,7 @@ class Mapper < Remap::Base
 end
 ```
 
-> and deeply nested
+> as well as deeply nested for improved readability
 
 ``` ruby
 class Mapper < Remap::Base
@@ -62,7 +113,7 @@ class Mapper < Remap::Base
 end
 ```
 
-> which works both ways
+> the rules can be mixed to fix the data structure
 
 ``` ruby
 class Mapper < Remap::Base
@@ -85,7 +136,7 @@ output.result # => { nickname: 'John' }
 
 ### Select all elements in an array
 
-> Similar to JSONPath's `[*] operator
+> Similar to JSONPath's `[*] operator and allows paths to dig into nested arrays and hashes
 
 ``` ruby
 class Mapper < Remap::Base
@@ -99,6 +150,8 @@ output.result # => ["John", "Jane"]
 ```
 
 ### Fixed values predefined in the mapper
+
+> A mapper instance can hold a set of pre-defined options. Use the `option` method to define a mappers requirement
 
 ``` ruby
 class Mapper < Remap::Base
@@ -115,6 +168,8 @@ output.result # => { person: { name: "John" } }
 
 ### Fixed value defined in the mapper
 
+> Allows a fixed value to be merged into the final data structure
+
 ``` ruby
 class Mapper < Remap::Base
   define do
@@ -125,7 +180,10 @@ end
 output = Mapper.call({})
 output.result # => { api_key: "ABC-123" }
 ```
-### Skip mapping rule, unless some condition is fulfilled
+
+### Skip mapping rule unless some condition is fulfilled
+
+> `map` and `to` allows the user to define post-processors and conditions for selected values
 
 ``` ruby
 class Mapper < Remap::Base
@@ -142,7 +200,7 @@ output = Mapper.call(["A", "B", "C"])
 output.result # => ["A", "C"]
 ```
 
-> or use `if` to reverse
+> or use `if` to reverse the selection
 
 ``` ruby
 class Mapper < Remap::Base
@@ -160,6 +218,8 @@ output.result # => ["B"]
 ```
 
 ### Map to a fixed set of values
+
+> `enum` lets the mapper define a finite set of values for a particular path
 
 ``` ruby
 class Mapper < Remap::Base
@@ -188,6 +248,8 @@ output.result # => { names: ["SWE", "DE", "US", "OTHER"] }
 
 ### Pending mapping
 
+> Use `pending` on rules that has yet to be defined
+
 ``` ruby
 class Mapper < Remap::Base
   define do
@@ -201,6 +263,8 @@ output.result # => { nickname: "John" }
 ```
 
 ### Iterate over an enumerable
+
+> `each` works similar to `all` and allows for arrays and hashes to be mixed
 
 ``` ruby
 class Mapper < Remap::Base
@@ -217,7 +281,14 @@ output = Mapper.call({ people: [{ name: "John" }] })
 output.result # => { names: ["John"] }
 ```
 
-> `element`, `index` and `key` can be accessed in the block
+> The scope gives access to a few handly values
+
+- `value` current value
+- `element` - defined by `each`
+- `index` defined by `each`
+- `key` defined by `to`, `map` and `each` on hashes
+- `values` & `input` yields the mapper input
+- `mapper` the current mapper
 
 ``` ruby
 class Mapper < Remap::Base
@@ -272,6 +343,8 @@ output.result # => "Hello!"
 
 ### Select element at index
 
+> Similar to JSONPath's `[n]` selector
+
 ``` ruby
 class Mapper < Remap::Base
   define do
@@ -309,7 +382,9 @@ output = Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] })
 output.result # => "Jane"
 ```
 
-### Wrap output result in an array
+### Wrap output
+
+> Wraps the mapped value in an array
 
 ``` ruby
 class Mapper < Remap::Base
@@ -328,6 +403,8 @@ output.result # => { names: ["John"] }
 
 ### Manually skip a mapping
 
+> Use `skip!` to manually skip a field
+
 ``` ruby
 class Mapper < Remap::Base
   define do
@@ -338,13 +415,9 @@ class Mapper < Remap::Base
 end
 ```
 
-### Validate with ::contract using Dry::Schema
-
-### Validate with ::rule using Dry::Validation
-
 ### Combine mappers using operators
 
-> Mappers can be combined using the logical operators `|`, `&` and `^`. This comes in handy when your input is finite
+> Mappers can be combined using the logical operators `|`, `&` and `^`
 
 ``` ruby
 class Vehicle < Remap::Base
@@ -376,21 +449,48 @@ class Vehicle < Remap::Base
     end
   end
 end
+
+output = Vehicle.call([
+  { gears: 3, brand: "Rose" },
+  { hybrid: false, fule: "Petrol" }
+])
 ```
 
-``` ruby
- output = Vehicle.call([
-   { gears: 3, brand: "Rose" },
-   { hybrid: false, fule: "Petrol" }
- ])
-
- pp output.result
-```
-
-#### Xor
-#### And
-#### Or
-
-### Constructors using ::define
+> Supported operators are `|`, `&` and `^`
 
 ### Optional mappings
+
+> Use the optional mapping rules `to?` and `map?` to define optional rules. By default, `to` and `map` cause the mapper to fail when a path cannot be found. The optional rules will just be ignored. This is perfect during development as it allows for partial inputs without breaking the mapper
+
+``` ruby
+class Person < Mapper::Base
+  define do
+    get :person do
+      get :name # Required
+      get? :age # Optional
+    end
+  end
+end
+
+# OK!
+Person.call({
+  person: {
+    name: "Linus"
+  }
+})
+
+# OK!
+Person.call({
+  person: {
+    name: "Linus",
+    age: 30
+  }
+})
+
+# NOT OK
+Person.call({
+  person: {
+    age: 30
+  }
+})
+```
