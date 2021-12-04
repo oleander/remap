@@ -1,6 +1,6 @@
 # Re:map [![Main](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg)](https://github.com/oleander/remap/actions/workflows/main.yml)
 
-> `Re:map`; an expressive and feature-complete data mapper design as a domain-specific language using Ruby 3.0. Re:map gives the developer the expressive power of JSONPath, without the hazzle of using strings. Its compiler is written on-top of a immutable, primitive data structure utilizing Rubys refinements pattern matching capabilities – making its blazingly fast
+> `Re:map`; an expressive and feature-complete data mapper designed as a domain-specific language using Ruby 3.0. `Re:map` gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing Rubys refinements & pattern matching capabilities – making it blazingly fast
 
 ``` ruby
 class Mapper < Remap::Base
