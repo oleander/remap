@@ -4,45 +4,38 @@
 
 ``` ruby
 class Mapper < Remap::Base
-  option :key # <= Custom required value
-
-  # Optional requirements
-  contract do
-    required(:people).hash do
-      required(:name).filled
-      required(:cars).array
-    end
-  end
+  option :date # <= Custom required value
 
   define do
     # Fixed values
-    set :id, to: value("<VALID>")
+    set :description, to: value("This is a description")
 
     # Semi-dynamic values
-    set :key, to: option(:key)
+    set :date, to: option(:date)
 
     # Required rules
-    map :people do
-      # Post processors
-      map(:name).adjust(&:upcase)
+    get :friends do
+      each do
+        # Post processors
+        map(:name, to: :id).adjust(&:upcase)
 
-      # Field conditions
-      map(:age).if do |age|
-        age > 50
+        # Field conditions
+        get?(:age).if do |age|
+          (30..50).cover?(age)
+        end
+
+        # Map to a finite set of values
+        get(:phones) do
+          each do
+            map.enum do
+              from "iPhone", to: "iOS"
+              value "iOS", "Android"
+
+              otherwise "Unknown"
+            end
+          end
+        end
       end
-
-      # Map to a finite set of values
-      map(:phones).enum do
-        from "iPhone", to: "iOS"
-        value "iOS", "Android"
-
-        otherwise "Unknown"
-      end
-    end
-
-    # Optional rule
-    get? :countries do
-      get :name
     end
 
     class Linux < Remap::Base
@@ -59,22 +52,72 @@ class Mapper < Remap::Base
 
     # Composable mappers
     to :os do
-      embed Linux | Windows
+      map :computer, :operating_system do
+        embed Linux | Windows
+      end
     end
 
-    map :cars do
+    get :cars do
       each do
         # Dig deep into a nested value
-        map :owners, all do
-          # Wrap output values
-          wrap :array do
-            map :name, :names
+        get :owners do
+          each do
+            map :name
           end
         end
       end
     end
   end
 end
+
+input = {
+  friends: [
+    {
+      name: "Lisa",
+      age: 20,
+      phones: ["iPhone"]
+    }, {
+      name: "Jane",
+      age: 40,
+      phones: ["Samsung"]
+    }
+  ],
+  computer: {
+    operating_system: {
+      kernel: :latest
+    }
+  },
+  cars: [
+    {
+      owners: [
+        {
+          name: "John"
+        }
+      ]
+    }
+  ]
+}
+
+output = {
+  friends: [
+    {
+      id: "LISA",
+      phones: ["iOS"]
+    }, {
+      age: 40,
+      id: "JANE",
+      phones: ["Unknown"]
+    }
+  ],
+  description: "This is a description",
+  cars: [{ owners: ["John"] }],
+  date: be_a(Date),
+  os: {
+    kernel: :latest
+  }
+}
+
+Mapper.call(input, date: Date.today).result == output
 ```
 
 ## Examples

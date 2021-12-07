@@ -46,6 +46,14 @@ module Remap
         rule: call(&block))
     end
 
+    def get(*path, backtrace: Kernel.caller, &block)
+      map(path, to: path, backtrace: backtrace, &block)
+    end
+
+    def get?(*path, backtrace: Kernel.caller, &block)
+      map?(path, to: path, backtrace: backtrace, &block)
+    end
+
     # Maps using mapper
     #
     # @param mapper [Remap]

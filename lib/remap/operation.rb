@@ -15,6 +15,7 @@ module Remap
     # @return [Success] if mapper succeeds
     def call(input, **options)
       state = State.call(input, options: options, mapper: self)
+
       other = call!(state, &:itself)
 
       case other

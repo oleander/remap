@@ -261,13 +261,15 @@
 29
 30
 31
-32</pre>
+32
+33</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/operation.rb', line 16</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(input, **options)
   state = <span style="color:#036;font-weight:bold">State</span>.call(input, <span style="color:#606">options</span>: options, <span style="color:#606">mapper</span>: <span style="color:#069">self</span>)
+
   other = call!(state, &amp;<span style="color:#A60">:itself</span>)
 
   <span style="color:#080;font-weight:bold">case</span> other
@@ -293,7 +295,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Dec  4 01:03:15 2021 by
+  Generated on Tue Dec  7 21:37:36 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

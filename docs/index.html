@@ -60,48 +60,43 @@
       <div id="content"><div id='filecontents'>
 <h1 id="label-Re-3Amap+rdoc-image-3Ahttps-3A-2F-2Fgithub.com-2Foleander-2Fremap-2Factions-2Fworkflows-2Fmain.yml-2Fbadge.svg">Re:map <a href="https://github.com/oleander/remap/actions/workflows/main.yml"><img src="https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg"></a></h1>
 
-<p><code>Re:map</code>; an expressive and feature-complete data mapper design as a domain-specific language using Ruby 3.0. Re:map gives the developer the expressive power of JSONPath, without the hazzle of using strings. Its compiler is written on-top of a immutable, primitive data structure utilizing Rubys refinements pattern matching capabilities – making its blazingly fast</p>
+<blockquote>
+<p><code>Re:map</code>; an expressive and feature-complete data mapper designed as a domain-specific language using Ruby 3.0. <code>Re:map</code> gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing Rubys refinements &amp; pattern matching capabilities – making it blazingly fast</p>
+</blockquote>
 
 <pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
-  option <span style="color:#A60">:key</span> <span style="color:#777"># &lt;= Custom required value</span>
-
-  <span style="color:#777"># Optional requirements</span>
-  contract <span style="color:#080;font-weight:bold">do</span>
-    required(<span style="color:#A60">:people</span>).hash <span style="color:#080;font-weight:bold">do</span>
-      required(<span style="color:#A60">:name</span>).filled
-      required(<span style="color:#A60">:cars</span>).array
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  option <span style="color:#A60">:date</span> <span style="color:#777"># &lt;= Custom required value</span>
 
   define <span style="color:#080;font-weight:bold">do</span>
     <span style="color:#777"># Fixed values</span>
-    set <span style="color:#A60">:id</span>, <span style="color:#606">to</span>: value(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">&lt;VALID&gt;</span><span style="color:#710">&quot;</span></span>)
+    set <span style="color:#A60">:description</span>, <span style="color:#606">to</span>: value(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">This is a description</span><span style="color:#710">&quot;</span></span>)
 
     <span style="color:#777"># Semi-dynamic values</span>
-    set <span style="color:#A60">:key</span>, <span style="color:#606">to</span>: option(<span style="color:#A60">:key</span>)
+    set <span style="color:#A60">:date</span>, <span style="color:#606">to</span>: option(<span style="color:#A60">:date</span>)
 
     <span style="color:#777"># Required rules</span>
-    map <span style="color:#A60">:people</span> <span style="color:#080;font-weight:bold">do</span>
-      <span style="color:#777"># Post processors</span>
-      map(<span style="color:#A60">:name</span>).adjust(&amp;<span style="color:#A60">:upcase</span>)
+    get <span style="color:#A60">:friends</span> <span style="color:#080;font-weight:bold">do</span>
+      each <span style="color:#080;font-weight:bold">do</span>
+        <span style="color:#777"># Post processors</span>
+        map(<span style="color:#A60">:name</span>, <span style="color:#606">to</span>: <span style="color:#A60">:id</span>).adjust(&amp;<span style="color:#A60">:upcase</span>)
 
-      <span style="color:#777"># Field conditions</span>
-      map(<span style="color:#A60">:age</span>).if <span style="color:#080;font-weight:bold">do</span> |age|
-        age &gt; <span style="color:#00D">50</span>
+        <span style="color:#777"># Field conditions</span>
+        get?(<span style="color:#A60">:age</span>).if <span style="color:#080;font-weight:bold">do</span> |age|
+          (<span style="color:#00D">30</span>..<span style="color:#00D">50</span>).cover?(age)
+        <span style="color:#080;font-weight:bold">end</span>
+
+        <span style="color:#777"># Map to a finite set of values</span>
+        get(<span style="color:#A60">:phones</span>) <span style="color:#080;font-weight:bold">do</span>
+          each <span style="color:#080;font-weight:bold">do</span>
+            map.enum <span style="color:#080;font-weight:bold">do</span>
+              from <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iPhone</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">to</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iOS</span><span style="color:#710">&quot;</span></span>
+              value <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iOS</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Android</span><span style="color:#710">&quot;</span></span>
+
+              otherwise <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Unknown</span><span style="color:#710">&quot;</span></span>
+            <span style="color:#080;font-weight:bold">end</span>
+          <span style="color:#080;font-weight:bold">end</span>
+        <span style="color:#080;font-weight:bold">end</span>
       <span style="color:#080;font-weight:bold">end</span>
-
-      <span style="color:#777"># Map to a finite set of values</span>
-      map(<span style="color:#A60">:phones</span>).enum <span style="color:#080;font-weight:bold">do</span>
-        from <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iPhone</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">to</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iOS</span><span style="color:#710">&quot;</span></span>
-        value <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iOS</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Android</span><span style="color:#710">&quot;</span></span>
-
-        otherwise <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Unknown</span><span style="color:#710">&quot;</span></span>
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-
-    <span style="color:#777"># Optional rule</span>
-    get? <span style="color:#A60">:countries</span> <span style="color:#080;font-weight:bold">do</span>
-      get <span style="color:#A60">:name</span>
     <span style="color:#080;font-weight:bold">end</span>
 
     <span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Linux</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
@@ -118,22 +113,72 @@
 
     <span style="color:#777"># Composable mappers</span>
     to <span style="color:#A60">:os</span> <span style="color:#080;font-weight:bold">do</span>
-      embed <span style="color:#036;font-weight:bold">Linux</span> | <span style="color:#036;font-weight:bold">Windows</span>
+      map <span style="color:#A60">:computer</span>, <span style="color:#A60">:operating_system</span> <span style="color:#080;font-weight:bold">do</span>
+        embed <span style="color:#036;font-weight:bold">Linux</span> | <span style="color:#036;font-weight:bold">Windows</span>
+      <span style="color:#080;font-weight:bold">end</span>
     <span style="color:#080;font-weight:bold">end</span>
 
-    map <span style="color:#A60">:cars</span> <span style="color:#080;font-weight:bold">do</span>
+    get <span style="color:#A60">:cars</span> <span style="color:#080;font-weight:bold">do</span>
       each <span style="color:#080;font-weight:bold">do</span>
         <span style="color:#777"># Dig deep into a nested value</span>
-        map <span style="color:#A60">:owners</span>, all <span style="color:#080;font-weight:bold">do</span>
-          <span style="color:#777"># Wrap output values</span>
-          wrap <span style="color:#A60">:array</span> <span style="color:#080;font-weight:bold">do</span>
-            map <span style="color:#A60">:name</span>, <span style="color:#A60">:names</span>
+        get <span style="color:#A60">:owners</span> <span style="color:#080;font-weight:bold">do</span>
+          each <span style="color:#080;font-weight:bold">do</span>
+            map <span style="color:#A60">:name</span>
           <span style="color:#080;font-weight:bold">end</span>
         <span style="color:#080;font-weight:bold">end</span>
       <span style="color:#080;font-weight:bold">end</span>
     <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
+
+input = {
+  <span style="color:#606">friends</span>: [
+    {
+      <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lisa</span><span style="color:#710">&quot;</span></span>,
+      <span style="color:#606">age</span>: <span style="color:#00D">20</span>,
+      <span style="color:#606">phones</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iPhone</span><span style="color:#710">&quot;</span></span>]
+    }, {
+      <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>,
+      <span style="color:#606">age</span>: <span style="color:#00D">40</span>,
+      <span style="color:#606">phones</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Samsung</span><span style="color:#710">&quot;</span></span>]
+    }
+  ],
+  <span style="color:#606">computer</span>: {
+    <span style="color:#606">operating_system</span>: {
+      <span style="color:#606">kernel</span>: <span style="color:#A60">:latest</span>
+    }
+  },
+  <span style="color:#606">cars</span>: [
+    {
+      <span style="color:#606">owners</span>: [
+        {
+          <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>
+        }
+      ]
+    }
+  ]
+}
+
+output = {
+  <span style="color:#606">friends</span>: [
+    {
+      <span style="color:#606">id</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">LISA</span><span style="color:#710">&quot;</span></span>,
+      <span style="color:#606">phones</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">iOS</span><span style="color:#710">&quot;</span></span>]
+    }, {
+      <span style="color:#606">age</span>: <span style="color:#00D">40</span>,
+      <span style="color:#606">id</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">JANE</span><span style="color:#710">&quot;</span></span>,
+      <span style="color:#606">phones</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Unknown</span><span style="color:#710">&quot;</span></span>]
+    }
+  ],
+  <span style="color:#606">description</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">This is a description</span><span style="color:#710">&quot;</span></span>,
+  <span style="color:#606">cars</span>: [{ <span style="color:#606">owners</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>] }],
+  <span style="color:#606">date</span>: be_a(<span style="color:#036;font-weight:bold">Date</span>),
+  <span style="color:#606">os</span>: {
+    <span style="color:#606">kernel</span>: <span style="color:#A60">:latest</span>
+  }
+}
+
+<span style="color:#036;font-weight:bold">Mapper</span>.call(input, <span style="color:#606">date</span>: <span style="color:#036;font-weight:bold">Date</span>.today).result == output
 </code></pre>
 
 <h2 id="label-Examples">Examples</h2>
@@ -583,7 +628,7 @@ output = <span style="color:#036;font-weight:bold">Vehicle</span>.call([
 </div></div>
 
       <div id="footer">
-  Generated on Sat Dec  4 01:03:15 2021 by
+  Generated on Tue Dec  7 21:37:35 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

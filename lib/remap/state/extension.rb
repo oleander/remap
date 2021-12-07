@@ -134,7 +134,7 @@ module Remap
             in [:value, Array => list1, Array => list2]
               list1 + list2
             in [:value, l, r]
-              fatal!("Could not merge [%p] (%s) with [%p] (%s) @ %s",
+              fatal!("Could not merge [%s] (%s) with [%s] (%s) @ %s",
                      l,
                      l.class,
                      r,
