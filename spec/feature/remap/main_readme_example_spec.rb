@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 describe Remap::Base do
   class self::Mapper < Remap::Base
     option :date # <= Custom required value
@@ -71,7 +70,7 @@ describe Remap::Base do
 
   subject { mapper.call(input, date: Date.today) }
 
-  let(:mapper) { self::class::Mapper }
+  let(:mapper) { self.class::Mapper }
 
   let(:input) do
     {
