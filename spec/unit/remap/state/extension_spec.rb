@@ -22,6 +22,17 @@ describe Remap::State::Extension do
     end
   end
 
+  describe "#fatal" do
+    let(:state) { defined! }
+
+    it "throws a symbol" do
+      expect do
+        state.fatal!("%s",
+                     "a value")
+      end.to throw_symbol(:fatal, be_kind_of(Remap::Notice))
+    end
+  end
+
   describe "#_" do
     context "when target is valid" do
       let(:state) { defined! }
@@ -41,17 +52,6 @@ describe Remap::State::Extension do
       it "invokes block" do
         expect { |b| state._(&b) }.to yield_control
       end
-    end
-  end
-
-  describe "#fatal" do
-    let(:state) { defined! }
-
-    it "throws a symbol" do
-      expect do
-        state.fatal!("%s",
-                     "a value")
-      end.to throw_symbol(:fatal, be_kind_of(Remap::Notice))
     end
   end
 
