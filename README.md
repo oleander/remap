@@ -2,7 +2,8 @@
 
 > `Re:map`; an expressive and feature-complete data mapper designed as a domain-specific language using Ruby 3.0. `Re:map` gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing Rubys refinements & pattern matching capabilities – making it blazingly fast
 
-[Documentation](http://oleander.io/remap/)
+- [Documentation](http://oleander.io/remap/)
+- [Examples](#examples)
 
 ``` ruby
 class Mapper < Remap::Base
