@@ -4,6 +4,24 @@ describe Remap::State::Extension do
   using Remap::Extensions::Enumerable
   using described_class
 
+  describe "#notice" do
+    context "when state is undefined" do
+      subject { state.notice("%s", "a value") }
+
+      let(:state) { undefined! }
+
+      it { is_expected.to be_a(Remap::Notice) }
+    end
+
+    context "when state is defined" do
+      subject { state.notice("%s", "a value") }
+
+      let(:state) { defined! }
+
+      it { is_expected.to be_a(Remap::Notice) }
+    end
+  end
+
   describe "#_" do
     context "when target is valid" do
       let(:state) { defined! }
@@ -23,24 +41,6 @@ describe Remap::State::Extension do
       it "invokes block" do
         expect { |b| state._(&b) }.to yield_control
       end
-    end
-  end
-
-  describe "#notice" do
-    context "when state is undefined" do
-      subject { state.notice("%s", "a value") }
-
-      let(:state) { undefined! }
-
-      it { is_expected.to be_a(Remap::Notice) }
-    end
-
-    context "when state is defined" do
-      subject { state.notice("%s", "a value") }
-
-      let(:state) { defined! }
-
-      it { is_expected.to be_a(Remap::Notice) }
     end
   end
 
