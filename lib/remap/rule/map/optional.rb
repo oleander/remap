@@ -5,7 +5,7 @@ module Remap
     class Map
       using State::Extension
 
-      class Loose < Concrete
+      class Optional < Concrete
         # Represents an optional mapping rule
         # When the mapping fails, the value is ignored
         #

@@ -5,7 +5,7 @@ module Remap
     class Map
       using State::Extension
 
-      class Strict < Concrete
+      class Required < Concrete
         attribute :backtrace, Types::Backtrace
 
         # Represents a required mapping rule

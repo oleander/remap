@@ -40,9 +40,9 @@ module Remap
     # @param path ([]) [Array<Segment>, Segment]
     # @param to ([]) [Array<Symbol>, Symbol]
     #
-    # @return [Rule::Map::Strict]
+    # @return [Rule::Map::Required]
     def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
-      add Rule::Map::Strict.call(
+      add Rule::Map::Required.call(
         path: {
           output: [to].flatten,
           input: path.flatten
@@ -55,9 +55,9 @@ module Remap
     #
     # @see #map
     #
-    # @return [Rule::Map::Loose]
+    # @return [Rule::Map::Optional]
     def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
-      add Rule::Map::Loose.call(
+      add Rule::Map::Optional.call(
         path: {
           output: [to].flatten,
           input: path.flatten
@@ -70,7 +70,7 @@ module Remap
     #
     # @param path ([]) [Array<Segment>, Segment]
     #
-    # @return [Rule::Map::Strict]
+    # @return [Rule::Map::Required]
     def get(*path, backtrace: Kernel.caller, &block)
       map(path, to: path, backtrace: backtrace, &block)
     end
@@ -79,7 +79,7 @@ module Remap
     #
     # @see #get
     #
-    # @return [Rule::Map::Loose]
+    # @return [Rule::Map::Optional]
     def get?(*path, backtrace: Kernel.caller, &block)
       map?(path, to: path, backtrace: backtrace, &block)
     end
@@ -122,7 +122,7 @@ module Remap
     #
     # @see #to
     #
-    # @return [Rule::Map::Loose]
+    # @return [Rule::Map::Optional]
     def to?(*path, map: EMPTY_ARRAY, &block)
       map?(*map, to: path, &block)
     end

@@ -33,6 +33,8 @@ module Remap
       # @return [Array<String>]
       attribute? :backtrace, Types::Backtrace, default: EMPTY_ARRAY
 
+      order :Optional, :Required
+
       # Represents a required or optional mapping rule
       #
       # @param state [State]
