@@ -143,8 +143,7 @@ module Remap
                 left.class,
                 right,
                 right.class,
-                (path + [key]).join(".")
-              )
+                (path + [key]).join("."))
             in [:failures, Array => f1, Array => f2]
               f1 + f2
             in [:notices, Array => n1, Array => n2]
@@ -160,7 +159,6 @@ module Remap
 
           state
         end
-
 
         # Creates a new state with params
         #

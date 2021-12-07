@@ -217,7 +217,7 @@ Layout/MultilineHashKeyLineBreaks:
   Enabled: true
 
 Layout/MultilineMethodArgumentLineBreaks:
-  Enabled: true
+  Enabled: false
 
 Layout/RedundantLineBreak:
   Enabled: true

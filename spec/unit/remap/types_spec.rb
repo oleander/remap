@@ -24,8 +24,8 @@ describe Remap::Types do
       context "when undefined" do
         subject { described_class.call(input) }
 
-        let(:input) { Remap::Nothing }
-        let(:output) { input }
+        let(:input)  { Remap::Nothing }
+        let(:output) { input          }
 
         it { is_expected.to eq(output) }
       end
