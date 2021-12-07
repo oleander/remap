@@ -35,7 +35,7 @@ module Remap
       end.rule
     end
 
-    # Maps {path} to {to}
+    # Maps {path} to {to} using {backtrace}
     #
     # @param path ([]) [Array<Segment>, Segment]
     # @param to ([]) [Array<Symbol>, Symbol]
