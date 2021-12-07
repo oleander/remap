@@ -2,7 +2,7 @@
 
 module Remap
   class Rule
-    using State::Extensions::Enumerable
+    using Extensions::Enumerable
     using State::Extension
 
     # Maps an input path to an output path

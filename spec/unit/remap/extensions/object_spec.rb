@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Remap::State::Extensions::Object do
+describe Remap::Extensions::Object do
   using described_class
 
   let(:target) { string! }

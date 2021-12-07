@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Remap
+  using Extensions::Hash
+
   class Notice < Dry::Interface
     attribute? :value, Types::Any
     attribute :reason, String
@@ -13,7 +15,7 @@ module Remap
     end
 
     def inspect
-      "#<%s %s>" % [self.class, JSON.pretty_generate(to_hash)]
+      "#<%s %s>" % [self.class, to_hash.formated]
     end
     alias to_s inspect
 

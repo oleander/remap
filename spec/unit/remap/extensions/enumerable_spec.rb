@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Remap::State::Extensions::Enumerable do
+describe Remap::Extensions::Enumerable do
   using described_class
 
   describe "#get" do

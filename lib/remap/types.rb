@@ -9,6 +9,7 @@ module Remap
   module Types
     include Dry::Types()
     using State::Extension
+    using Extensions::Hash
 
     Backtrace  = Array(Interface(:to_s) | String)
     Enumerable = Any.constrained(type: Enumerable)
@@ -25,7 +26,7 @@ module Remap
 
       next input if result.success?
 
-      error[JSON.pretty_generate(result.errors.to_h)]
+      error[result.errors.to_h.formated]
     end
   end
 end

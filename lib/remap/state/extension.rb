@@ -5,6 +5,7 @@ module Remap
     module Extension
       using Extensions::Enumerable
       using Extensions::Object
+      using Extensions::Hash
 
       refine Object do
         # @see Extension::Paths::Hash
@@ -94,7 +95,7 @@ module Remap
         # @return [self]
         def _(&block)
           unless block
-            return _ { raise ArgumentError, "Input: #{self} output: #{JSON.pretty_generate(_1)}" }
+            return _ { raise ArgumentError, "Input: #{self} output: #{_1.formated}" }
           end
 
           unless (result = Schema.call(self)).success?
@@ -123,7 +124,7 @@ module Remap
 
         # @return [String]
         def inspect
-          "#<State %s>" % JSON.pretty_generate(compact_blank)
+          "#<State %s>" % compact_blank.formated
         end
 
         # Merges {self} with {other} and returns a new state

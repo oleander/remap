@@ -9,9 +9,10 @@ require "dry/validation"
 require "dry/interface"
 require "dry/schema"
 require "dry/struct"
-require "dry/types"
 require "dry/monads"
+require "dry/types"
 
+require "neatjson"
 require "zeitwerk"
 
 module Remap

@@ -2,7 +2,7 @@
 
 module Remap
   class Path
-    using State::Extensions::Enumerable
+    using Extensions::Enumerable
     using State::Extension
 
     # Sets the value to a given path

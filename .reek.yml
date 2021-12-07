@@ -41,7 +41,7 @@ detectors:
     - Remap::Selector
     - Remap::State::Extension
     - Remap::State::Extensions
-    - Remap::State::Extensions::Enumerable
+    - Remap::Extensions::Enumerable
     - Remap::State::Extensions::Object
     - Remap::Static
   LongParameterList:
