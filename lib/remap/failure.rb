@@ -20,6 +20,9 @@ module Remap
       self
     end
 
+    # Checks if any failures exists
+    #
+    # @return [Boolean]
     def has_problem?
       super || failures.any?
     end

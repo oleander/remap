@@ -17,7 +17,9 @@ module Remap
     Rule       = Interface(:call)
     Key        = Interface(:hash)
 
-    State = Hash.constructor do |input, _type, &error|
+    # Validates a state according to State::Schema
+    State = Hash.constructor do |input, type, &error|
+      input = type.call(input, &error)
       result = Remap::State::Schema.call(input)
       error ||= -> { raise _1 }
 
@@ -25,9 +27,5 @@ module Remap
 
       error[JSON.pretty_generate(result.errors.to_h)]
     end
-
-    Problem = Hash.schema(reason: String.constrained(min_size: 1),
-                          path?: Array.constrained(min_size: 1),
-                          value?: Any)
   end
 end

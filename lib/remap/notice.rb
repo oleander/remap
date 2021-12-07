@@ -17,8 +17,11 @@ module Remap
     end
     alias to_s inspect
 
+    # Hash representation of the notice
+    #
+    # @return [Hash]
     def to_hash
-      super.except(:backtrace).reject { |_, value| value.blank? }
+      super.except(:backtrace).compact_blank
     end
 
     # @return [Error]

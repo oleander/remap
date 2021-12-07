@@ -12,14 +12,7 @@ module Remap
       # @return [State<Array<T>>]
       attribute :state, Types::State
 
-      # Defines an array iterator that will iterate over {#value}
-      #
-      # @yieldparam value [T]
-      # @yieldparam index: [Integer]
-      #
-      # @yieldreturn [State<T>]
-      #
-      # @return [State<Array<T>>]
+      # @see Iteration#map
       def call(&block)
         array.each_with_index.reduce(init) do |state, (value, index)|
           block[value, index: index].then do |other|

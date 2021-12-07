@@ -9,7 +9,7 @@ module Remap
       attribute :value, Types::Any, alias: :other
       attribute :state, Types::State
 
-      # @see Base#map
+      # @see Iteration#map
       def call(&block)
         block[other]
       end

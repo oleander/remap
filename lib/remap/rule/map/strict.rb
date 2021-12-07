@@ -8,6 +8,12 @@ module Remap
       class Strict < Concrete
         attribute :backtrace, Types::Backtrace
 
+        # Represents a required mapping rule
+        # When it fails, the entire mapping is marked as failed
+        #
+        # @param state [State]
+        #
+        # @return [State]
         def call(state)
           fatal(state, id: :ignore) do
             return fatal(state) do

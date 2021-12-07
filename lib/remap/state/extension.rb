@@ -58,22 +58,27 @@ module Remap
           end
         end
 
-        # Throws :fatal with a Problem::Untraced
+        # Throws :fatal containing a Notice
         def fatal!(...)
           throw :fatal, notice(...)
         end
 
-        # Throws :warn with a Problem::Untraced
+        # Throws :warn containing a Notice
         def notice!(...)
           throw :notice, notice(...)
         end
 
-        # Throws :ignore with a Problem::Untraced
+        # Throws :ignore containing a Notice
         def ignore!(...)
           throw :ignore, notice(...)
         end
 
-        # Stores a notice
+        # Creates a notice containing the given message
+        #
+        # @param template [String]
+        # @param values [Array]
+        #
+        # @return [Notice]
         def notice(template, *values)
           Notice.call(only(:value, :path).merge(reason: template % values))
         end
@@ -118,9 +123,7 @@ module Remap
 
         # @return [String]
         def inspect
-          reject { |_, value| value.blank? }.then do |cleaned|
-            "#<State %s>" % JSON.pretty_generate(cleaned)
-          end
+          "#<State %s>" % JSON.pretty_generate(compact_blank)
         end
 
         # Merges {self} with {other} and returns a new state
@@ -133,13 +136,15 @@ module Remap
             case [key, value1, value2]
             in [:value, Array => list1, Array => list2]
               list1 + list2
-            in [:value, l, r]
-              fatal!("Could not merge [%s] (%s) with [%s] (%s) @ %s",
-                     l,
-                     l.class,
-                     r,
-                     r.class,
-                     (path + [key]).join("."))
+            in [:value, left, right]
+              fatal!(
+                "Could not merge [%p] (%s) with [%p] (%s) @ %s",
+                left,
+                left.class,
+                right,
+                right.class,
+                (path + [key]).join(".")
+              )
             in [:failures, Array => f1, Array => f2]
               f1 + f2
             in [:notices, Array => n1, Array => n2]
@@ -156,9 +161,6 @@ module Remap
           state
         end
 
-        def failures
-          fetch(:failures)
-        end
 
         # Creates a new state with params
         #
@@ -313,6 +315,11 @@ module Remap
           fetch(:path, EMPTY_ARRAY)
         end
 
+        # @return [Array<Notice>]
+        def failures
+          fetch(:failures)
+        end
+
         # Represents options to a mapper
         #
         # @see Rule::Embed
@@ -334,6 +341,7 @@ module Remap
           fetch(:value)
         end
 
+        # @return [Array<Notice>]
         def notices
           fetch(:notices)
         end

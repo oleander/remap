@@ -12,7 +12,7 @@ module Remap
       # @return [State<Hash>]
       attribute :state, Types::State
 
-      # @see Base#map
+      # @see Iteration#map
       def call(&block)
         hash.reduce(init) do |input_state, (key, value)|
           block[value, key: key].then do |new_state|

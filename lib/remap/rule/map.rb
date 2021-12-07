@@ -16,31 +16,32 @@ module Remap
     #
     #   Mapper.call({ name: "Ford" }).result # => { person: { name: "Ford" } }
     class Map < Abstract
-      class LocalPath < Struct
-        attribute :output, Path::Output.default { Path::Output.call([]) }
-        attribute :input, Path::Input.default { Path::Input.call([]) }
+      class Path < Struct
+        Output = Remap::Path::Output
+        Input = Remap::Path::Input
+
+        attribute :output, Output.default { Output.call(EMPTY_ARRAY) }
+        attribute :input, Input.default { Input.call(EMPTY_ARRAY) }
       end
 
       # @return [Hash]
-      attribute? :path, LocalPath.default { LocalPath.call({}) }
-      attribute :rule, Rule.default { Void.call({}) }
+      attribute? :path, Path.default { Path.call(EMPTY_HASH) }
+
+      # @return [Rule]
+      attribute :rule, Rule.default { Void.call(EMPTY_HASH) }
+
+      # @return [Array<String>]
       attribute? :backtrace, Types::Backtrace, default: EMPTY_ARRAY
 
+      # Represents a required or optional mapping rule
+      #
+      # @param state [State]
+      #
+      # @return [State]
+      #
+      # @abstract
       def call(state)
         (path.input >> rule >> callback >> path.output).call(state)
-      end
-
-      def fatal(state, id: :fatal, &block)
-        raise catch(id, &block).traced(backtrace).exception
-      end
-
-      def notice(state, &block)
-        notice = catch(:notice, &block).traced(backtrace)
-        state.set(notice: notice).except(:value)
-      end
-
-      def ignore(...)
-        raise NotImplementedError, "#{self.class}#ignore"
       end
 
       # A post-processor method
@@ -177,6 +178,30 @@ module Remap
             fn[inner]
           end
         end
+      end
+
+      # Catches :fatal and raises {Notice::Error}
+      #
+      # @param state [State]
+      # @param id (:fatal) [:fatal, :notice, :ignore]
+      #
+      # raise [Notice::Error]
+      def fatal(state, id: :fatal, &block)
+        raise catch(id, &block).traced(backtrace).exception
+      end
+
+      # Catches :notice exceptions and repackages them as a state
+      #
+      # @param state [State]
+      #
+      # @return [State]
+      def notice(state, &block)
+        state.set(notice: catch(:notice, &block).traced(backtrace)).except(:value)
+      end
+
+      # @abstract
+      def ignore(...)
+        raise NotImplementedError, "#{self.class}#ignore"
       end
     end
   end

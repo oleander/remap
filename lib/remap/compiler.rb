@@ -4,12 +4,25 @@ module Remap
   # Constructs a {Rule} from the block passed to {Remap::Base.define}
   class Compiler < Proxy
     # @return [Array<Rule>]
-    param :rules, default: -> { EMPTY_ARRAY.dup }
+    param :rules, type: Types.Array(Rule)
 
     # @return [Rule]
     delegate :call, to: Compiler
 
     # Constructs a rule tree given block
+    #
+    # @example Compiles two rules
+    #   rule = Remap::Compiler.call do
+    #     get :name
+    #     get :age
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John",
+    #     age: 50
+    #   })
+    #
+    #   rule.call(state).fetch(:value) # => { name: "John", age: 50 }
     #
     # @return [Rule]
     def self.call(&block)
@@ -17,15 +30,17 @@ module Remap
         return Rule::Void.new
       end
 
-      new.tap { _1.instance_exec(&block) }.rule
+      new([]).tap do |compiler|
+        compiler.instance_exec(&block)
+      end.rule
     end
 
-    # Maps path to to with block in between
+    # Maps {path} to {to}
     #
     # @param path ([]) [Array<Segment>, Segment]
     # @param to ([]) [Array<Symbol>, Symbol]
     #
-    # @return [Rule::Map]
+    # @return [Rule::Map::Strict]
     def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       add Rule::Map::Strict.call(
         path: {
@@ -36,6 +51,11 @@ module Remap
         rule: call(&block))
     end
 
+    # Optional version of {#map}
+    #
+    # @see #map
+    #
+    # @return [Rule::Map::Loose]
     def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       add Rule::Map::Loose.call(
         path: {
@@ -46,10 +66,20 @@ module Remap
         rule: call(&block))
     end
 
+    # Select a path and uses the same path as output
+    #
+    # @param path ([]) [Array<Segment>, Segment]
+    #
+    # @return [Rule::Map::Strict]
     def get(*path, backtrace: Kernel.caller, &block)
       map(path, to: path, backtrace: backtrace, &block)
     end
 
+    # Optional version of {#get}
+    #
+    # @see #get
+    #
+    # @return [Rule::Map::Loose]
     def get?(*path, backtrace: Kernel.caller, &block)
       map?(path, to: path, backtrace: backtrace, &block)
     end
@@ -88,6 +118,11 @@ module Remap
       map(*map, to: path, backtrace: backtrace, &block)
     end
 
+    # Optional version of {#to}
+    #
+    # @see #to
+    #
+    # @return [Rule::Map::Loose]
     def to?(*path, map: EMPTY_ARRAY, &block)
       map?(*map, to: path, &block)
     end
