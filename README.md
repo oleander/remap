@@ -7,15 +7,15 @@ of an immutable, primitive data structure utilizing ruby's refinements & pattern
 matching capabilities – making it blazingly fast
 
 * [Quick start](#quick-start)
-* [API Documentation](http://oleander.io/remap/)
+* [Documentation](http://oleander.io/remap/)
 * [Introduction](#introduction)
+  * [Callbacks](#callbacks)
+  * [Operators](#operators)
+  * [Constructors](#constructors)
+  * [Error Handling](#error-handling)
 * [Installation](#installation)
 
 ## Quick start
-
-``` ruby
-
-```
 
 ``` ruby
 class Mapper < Remap::Base
