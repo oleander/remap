@@ -38,13 +38,13 @@ describe Remap::Iteration::Array do
     end
 
     context "when all values are rejected" do
-      subject(:result) do
-        iterator.call do |index:|
-          state.ignore!("P:#{index}")
+      subject do
+        iterator.call do
+          state.ignore!("Ignore!")
         end
       end
 
-      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
+      it { is_expected.to contain([]) }
     end
   end
 end

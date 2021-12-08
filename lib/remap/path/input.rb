@@ -2,6 +2,8 @@
 
 module Remap
   class Path
+    using State::Extension
+
     # Returns the value at a given path
     #
     # @example Select "A" from { a: { b: { c: ["A"] } } }
@@ -19,9 +21,13 @@ module Remap
       # @param state [State]
       #
       # @return [State]
-      def call(state)
-        segments.reverse.reduce(IDENTITY) do |fn, selector|
-          -> st { selector.call(st, &fn) }
+      def call(state, &iterator)
+        unless block_given?
+          raise ArgumentError, "Input path requires an iterator block"
+        end
+
+        segments.reverse.reduce(iterator) do |inner_iterator, selector|
+          -> inner_state { selector.call(inner_state, &inner_iterator) }
         end.call(state)
       end
     end

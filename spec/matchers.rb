@@ -2,6 +2,7 @@
 
 using Remap::State::Extension
 using Remap::Extensions::Hash
+using Remap::Extensions::Object
 
 RSpec::Matchers.define :contain do |expected|
   match do |actual|

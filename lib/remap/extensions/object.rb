@@ -27,6 +27,10 @@ module Remap
           raise PathError, []
         end
         alias_method :fetch, :get
+
+        def formated
+          self
+        end
       end
     end
   end

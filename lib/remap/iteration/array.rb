@@ -15,11 +15,7 @@ module Remap
       # @see Iteration#map
       def call(&block)
         array.each_with_index.reduce(init) do |state, (value, index)|
-          block[value, index: index] do |failure|
-            throw :failure, failure
-          end.then do |other|
-            state.combine(other.fmap { [_1] })
-          end
+          reduce(state, value, index, &block)
         end
       end
 
@@ -27,6 +23,15 @@ module Remap
 
       def init
         state.set(EMPTY_ARRAY)
+      end
+
+      def reduce(state, value, index, &block)
+        notice = catch :ignore do
+          other = block[value, index: index]
+          return state.combine(other.fmap { [_1] })
+        end
+
+        state.set(notice: notice)
       end
     end
   end

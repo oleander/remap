@@ -25,7 +25,9 @@ module Remap
       #
       # @return [State<U>]
       def call(outer_state, &block)
-        return call(outer_state, &:itself) unless block
+        unless block_given?
+          raise ArgumentError, "The key selector requires an iteration block"
+        end
 
         outer_state.bind(key: key) do |hash, state|
           requirement[hash] do

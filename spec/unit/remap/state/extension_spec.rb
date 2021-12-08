@@ -173,6 +173,144 @@ describe Remap::State::Extension do
     end
   end
 
+  describe "#map" do
+    context "when state is undefined" do
+      let(:state) { undefined! }
+
+      it "does not invoke block" do
+        expect { |iterator| state.map(&iterator) }.not_to yield_control
+      end
+    end
+
+    context "when state is a hash" do
+      let(:input) { { key1: "value1", key2: "value2" } }
+      let(:state) { defined!(input) }
+
+      context "when accessing value" do
+        subject do
+          state.map do |element|
+            element.fmap do |value|
+              value.upcase
+            end
+          end
+        end
+
+        it { is_expected.to contain(key1: "VALUE1", key2: "VALUE2") }
+      end
+
+      context "when accessing key" do
+        subject do
+          state.map do |element|
+            element.fmap do |_value, state|
+              state.key.upcase.to_s
+            end
+          end
+        end
+
+        it { is_expected.to contain(key1: "KEY1", key2: "KEY2") }
+      end
+
+      context "when iterator ignores some of the elements" do
+        subject do
+          state.map do |element|
+            element.fmap do |value, state|
+              case state.key
+              in :key1
+                value.upcase
+              in :key2
+                state.ignore!("Ignored!")
+              end
+            end
+          end
+        end
+
+        it { is_expected.to contain({ key1: "VALUE1" }) }
+      end
+
+      context "when iterator ignores all of the elements" do
+        subject do
+          state.map do |element|
+            element.fmap do |_value, state|
+              state.ignore!("Ignored!")
+            end
+          end
+        end
+
+        it { is_expected.to contain({}) }
+      end
+    end
+
+    context "when state contains an array" do
+      let(:input) { ["value1", "value2"] }
+      let(:state) { defined!(input) }
+
+      context "when accessing value" do
+        subject do
+          state.map do |element|
+            element.fmap do |value|
+              value.upcase
+            end
+          end
+        end
+
+        it { is_expected.to contain(["VALUE1", "VALUE2"]) }
+      end
+
+      context "when accessing index" do
+        subject do
+          state.map do |element|
+            element.fmap do |_value, state|
+              state.index
+            end
+          end
+        end
+
+        it { is_expected.to contain([0, 1]) }
+      end
+
+      context "when accessing element" do
+        subject do
+          state.map do |element|
+            element.fmap do |_value, state|
+              state.element.upcase
+            end
+          end
+        end
+
+        it { is_expected.to contain(["VALUE1", "VALUE2"]) }
+      end
+
+      context "when iterator ignores some of the elements" do
+        subject do
+          state.map do |element|
+            element.fmap do |value, state|
+              case state.index
+              in 0
+                value.upcase
+              in 1
+                state.ignore!("Ignore!")
+              end
+            end
+          end
+        end
+
+        it { is_expected.to contain(["VALUE1"]) }
+      end
+
+      context "when iterator ignores all of the elements" do
+        subject do
+          state.map do |element|
+            element.fmap do |_, state|
+              state.ignore!("Ignore!")
+            end
+          end
+        end
+
+        it { is_expected.to contain([]) }
+      end
+    end
+  end
+
   describe "#failure" do
     subject { state.failure(reason) }
 
@@ -286,7 +424,7 @@ describe Remap::State::Extension do
       let(:notice) { notice! }
 
       it { is_expected.to include(notices: [notice]) }
-      it { is_expected.not_to have_key(:value) }
+      it { is_expected.to have_key(:value) }
     end
 
     context "when given a notice twice" do
@@ -296,7 +434,7 @@ describe Remap::State::Extension do
       let(:notice2) { notice! }
 
       it { is_expected.to include(notices: [notice1, notice2]) }
-      it { is_expected.not_to have_key(:value) }
+      it { is_expected.to have_key(:value) }
     end
 
     context "when given just an index" do

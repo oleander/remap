@@ -163,7 +163,11 @@ module Remap
     # Selects all elements
     #
     # @return [Rule::Path::Segment::Quantifier::All]
-    def all
+    def all(&block)
+      if block
+        raise ArgumentError, "all selector does not take a block"
+      end
+
       Selector::All.new(EMPTY_HASH)
     end
 

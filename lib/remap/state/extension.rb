@@ -170,7 +170,7 @@ module Remap
 
           case [self, options]
           in [{notices:}, {notice: notice, **rest}]
-            merge(notices: notices + [notice]).except(:value).set(**rest)
+            merge(notices: notices + [notice]).set(**rest)
           in [{value:}, {mapper:, **rest}]
             merge(scope: value, mapper: mapper).set(**rest)
           in [{path:}, {key:, **rest}]
@@ -319,6 +319,21 @@ module Remap
         # @return [Any]
         def value
           fetch(:value)
+        end
+
+        # @return [Integer]
+        def index
+          fetch(:index)
+        end
+
+        # @return [Any]
+        def element
+          fetch(:element)
+        end
+
+        # @return [Any]
+        def key
+          fetch(:key)
         end
 
         # @return [Array<Notice>]

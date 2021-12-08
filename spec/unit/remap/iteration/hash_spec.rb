@@ -40,13 +40,13 @@ describe Remap::Iteration::Hash do
     end
 
     context "when all values are rejected" do
-      subject(:result) do
-        iterator.call do |_value, key:|
-          state.notice!("P:#{key}")
+      subject do
+        iterator.call do
+          state.ignore!("Ignore!")
         end
       end
 
-      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+      it { is_expected.to contain({}) }
     end
   end
 end

@@ -28,56 +28,30 @@ describe Remap::Selector::Key do
     let(:key)   { symbol!       }
     let(:state) { state!(input) }
 
-    context "without block" do
-      subject(:result) { selector.call(state) }
+    context "when input is not a hash" do
+      let(:input) { [] }
 
-      context "when input is not a hash" do
-        let(:input) { [] }
-
-        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
-      end
-
-      context "when input is a hash" do
-        context "when input contains key" do
-          let(:input) { { key => value } }
-
-          it { is_expected.to contain(value) }
-        end
-
-        context "when input does not key" do
-          let(:input) { {} }
-
-          its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
-        end
+      it "throws a symbol" do
+        expect { selector.call(state, &error) }.to throw_symbol(:fatal)
       end
     end
 
-    context "with block" do
-      context "when input is not a hash" do
-        subject { selector.call(state) }
+    context "when input is a hash" do
+      context "when input contains key" do
+        let(:input) { { key => value } }
 
-        let(:input) { [] }
-
-        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
+        it "invokes block" do
+          expect do |b|
+            selector.call(state, &b)
+          end.to yield_with_args(contain(value))
+        end
       end
 
-      context "when input is a hash" do
-        subject { selector.call(state) }
+      context "when input does not contain the key" do
+        let(:input) { { not: value } }
 
-        context "when input contains key" do
-          let(:input) { { key => value } }
-
-          it "invokes block" do
-            expect do |b|
-              selector.call(state, &b)
-            end.to yield_with_args(contain(value))
-          end
-        end
-
-        context "when input does not contain the key" do
-          let(:input) { {} }
-
-          its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
+        it "throws a symbol" do
+          expect { selector.call(state, &error) }.to throw_symbol(:ignore)
         end
       end
     end

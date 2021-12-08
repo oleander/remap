@@ -26,7 +26,9 @@ module Remap
       #
       # @return [State<U>]
       def call(outer_state, &block)
-        return call(outer_state, &:itself) unless block
+        unless block_given?
+          raise ArgumentError, "All selector requires an iteration block"
+        end
 
         outer_state.bind(quantifier: "*") do |enum, state|
           requirement[enum] do

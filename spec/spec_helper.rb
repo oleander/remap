@@ -2,6 +2,7 @@
 
 require "simplecov"
 
+require "active_support/core_ext/hash/deep_transform_values"
 require "dry/core/class_builder"
 require "rspec/collection_matchers"
 require "factory_bot"

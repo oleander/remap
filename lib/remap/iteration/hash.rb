@@ -14,16 +14,21 @@ module Remap
 
       # @see Iteration#map
       def call(&block)
-        hash.reduce(init) do |input_state, (key, value)|
-          block[value, key: key].then do |new_state|
-            new_state.fmap { { key => _1 } }
-          end.then do |new_hash_state|
-            input_state.combine(new_hash_state)
-          end
+        hash.reduce(init) do |state, (key, value)|
+          reduce(state, key, value, &block)
         end
       end
 
       private
+
+      def reduce(state, key, value, &block)
+        notice = catch :ignore do
+          other = block[value, key: key]
+          return state.combine(other.fmap { { key => _1 } })
+        end
+
+        state.set(notice: notice)
+      end
 
       def init
         state.set(EMPTY_HASH)

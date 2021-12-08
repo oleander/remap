@@ -47,9 +47,15 @@ module Remap
           raise ArgumentError, "Map#call(state, &error) requires error handler block"
         end
 
-        path.input.call(state).then do |inner_state|
-          rule.call(inner_state, &error)
-        end.then(&callback).then(&path.output)
+        notice = catch :fatal do
+          return path.input.call(state) do |inner_state|
+            rule.call(inner_state) do |failure|
+              return error[failure]
+            end.then(&callback)
+          end.then(&path.output)
+        end
+
+        raise notice.traced(backtrace).exception
       end
 
       # A post-processor method
