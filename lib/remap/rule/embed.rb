@@ -38,13 +38,9 @@ module Remap
           raise ArgumentError, "A block is required to evaluate the embed"
         end
 
-        notice = catch :fatal do
-          return mapper.call!(state.set(mapper: mapper)) do |failure|
-            return error[failure]
-          end
-        end
-
-        error[state.failure(notice).except(:mapper)]
+        mapper.call!(state.set(mapper: mapper)) do |failure|
+          return error[failure]
+        end.except(:mapper, :scope)
       end
     end
   end
