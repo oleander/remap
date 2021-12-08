@@ -4,6 +4,7 @@
 
 - [Documentation](http://oleander.io/remap/)
 - [Examples](#examples)
+- [Installation](#installation)
 
 ``` ruby
 class Mapper < Remap::Base
@@ -122,6 +123,10 @@ output = {
 
 Mapper.call(input, date: Date.today).result == output
 ```
+
+## Installation
+
+`gem install remap` then `require "remap"`
 
 ## Examples
 
