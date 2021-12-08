@@ -267,7 +267,7 @@ module Remap
     #
     # @private
     def call(state, &error)
-      unless error
+      unless block_given?
         raise ArgumentError, "Base#call(state, &error) requires block"
       end
 
