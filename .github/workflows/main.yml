@@ -62,7 +62,7 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: 3.0.3
-      - if: contains(github.branch, 'refs/heads/development')
+      - if: contains(github.ref, 'refs/heads/development')
         uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
