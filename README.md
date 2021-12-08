@@ -139,7 +139,9 @@ Mapper.call(input, date: Date.today) == output
 
 ## Examples
 
-### Map a value from one path to another
+### Map a value
+
+> from path `[:person, :name]` to `[:nickname]`
 
 ``` ruby
 class Mapper < Remap::Base
