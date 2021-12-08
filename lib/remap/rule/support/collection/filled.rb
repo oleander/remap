@@ -11,7 +11,8 @@ module Remap
       #   state = Remap::State.call("A")
       #   void = Remap::Rule::Void.call({})
       #   rule = Remap::Rule::Collection.call([void])
-      #   rule.call(state).fetch(:value) # => "A"
+      #   error = -> failure { raise failure.exception }
+      #   rule.call(state, &error).fetch(:value) # => "A"
       class Filled < Unit
         # @return [Array<Rule>]
         attribute :rules, [Types.Interface(:call)], min_size: 1
@@ -22,14 +23,16 @@ module Remap
         # @param state [State]
         #
         # @return [State]
-        def call(state)
-          notice = catch :fatal do
-            return rules.map do |rule|
-              rule.call(state)
-            end.reduce(&:combine)
+        def call(state, &error)
+          unless error
+            raise ArgumentError, "Collection::Filled#call(state, &error) requires a block"
           end
 
-          state.failure(notice)
+          rules.map do |rule|
+            rule.call(state) do |failure|
+              return error[failure]
+            end
+          end.reduce(&:combine)
         end
       end
     end

@@ -11,7 +11,7 @@ module Remap
 
       # @see Iteration#map
       def call(&block)
-        block[other]
+        state.fatal!("Expected an enumerable, got %s (%s)", value, value.class)
       end
     end
   end

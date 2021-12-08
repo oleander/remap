@@ -43,19 +43,25 @@ describe Remap::Mapper::And do
     context "when A fails but not B" do
       let(:input) { { b: 1 } }
 
-      it { is_expected.to be_a_failure }
+      it "yields failure" do
+        expect { |error| mapper.call(input, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+      end
     end
 
     context "when B fails but not A" do
       let(:input) { { a: 1 } }
 
-      it { is_expected.to be_a_failure }
+      it "yields failure" do
+        expect { |error| mapper.call(input, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+      end
     end
 
     context "when A and B fails" do
       let(:input) { { x: 1 } }
 
-      it { is_expected.to be_a_failure }
+      it "yields failure" do
+        expect { |error| mapper.call(input, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+      end
     end
   end
 end

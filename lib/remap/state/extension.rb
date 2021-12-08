@@ -117,7 +117,11 @@ module Remap
         def map(&block)
           bind do |value, state|
             Iteration.call(state: state, value: value).call do |other, **options|
-              state.set(other, **options)._.then(&block)._
+              state.set(other, **options).then do |inner_state|
+                block[inner_state] do |failure|
+                  throw :failure, failure
+                end
+              end
             end.except(:index, :element, :key)
           end
         end
@@ -133,7 +137,7 @@ module Remap
         #
         # @return [State]
         def combine(other)
-          state = deep_merge(other) do |key, value1, value2|
+          deep_merge(other) do |key, value1, value2|
             case [key, value1, value2]
             in [:value, Array => list1, Array => list2]
               list1 + list2
@@ -145,20 +149,12 @@ module Remap
                 right,
                 right.class,
                 (path + [key]).join("."))
-            in [:failures, Array => f1, Array => f2]
-              f1 + f2
             in [:notices, Array => n1, Array => n2]
               n1 + n2
             in [Symbol, _, value]
               value
             end
           end
-
-          if state.failures.any?
-            return state.except(:value)
-          end
-
-          state
         end
 
         # Creates a new state with params
@@ -175,10 +171,6 @@ module Remap
           case [self, options]
           in [{notices:}, {notice: notice, **rest}]
             merge(notices: notices + [notice]).except(:value).set(**rest)
-          in [_, {failure:, **rest}]
-            set(failures: [failure], **rest)
-          in [{failures: Array => left}, {failures: Array => right, **rest}]
-            merge(failures: left + right).set(**rest).except(:value)
           in [{value:}, {mapper:, **rest}]
             merge(scope: value, mapper: mapper).set(**rest)
           in [{path:}, {key:, **rest}]
@@ -216,6 +208,11 @@ module Remap
         # @see State::Schema
         #
         # @return [Failure]
+
+        # class Failure < Dry::Interface
+        #   attribute :notices, [Notice], min_size: 1
+        # end
+
         def failure(reason = Undefined)
           failures = case [path, reason]
           in [_, Notice => notice]
@@ -237,7 +234,7 @@ module Remap
             end
           end
 
-          set(failures: failures)
+          Failure.new(failures: failures, notices: notices)
         end
 
         # Passes {#value} to block, if defined
@@ -251,13 +248,13 @@ module Remap
         #
         # @return [Y]
         def bind(**options, &block)
-          unless block
-            raise ArgumentError, "no block given"
+          unless block_given?
+            raise ArgumentError, "State#bind requires a block"
           end
 
           fetch(:value) { return self }.then do |value|
             block[value, self] do |reason, **other|
-              return set(**options, **other).problem(reason)._
+              return set(**options, **other).notice!(reason)
             end
           end
         end
@@ -296,27 +293,11 @@ module Remap
           super { fmap(&block) }
         end
 
-        alias_method :problem, :notice!
-
-        # A list of problems
-        #
-        # @see State::Schema
-        #
-        # @return [Hash]
-        # def problems
-        #   raise NotImplementedError, "problems not implemented"
-        # end
-
         # A list of keys representing the path to {#value}
         #
         # @return [Array<Symbol, Integer, String>]
         def path
           fetch(:path, EMPTY_ARRAY)
-        end
-
-        # @return [Array<Notice>]
-        def failures
-          fetch(:failures)
         end
 
         # Represents options to a mapper
@@ -344,7 +325,6 @@ module Remap
         def notices
           fetch(:notices)
         end
-        alias_method :problems, :notices
 
         private
 

@@ -2,7 +2,7 @@
 
 describe Remap::Rule::Wrap do
   describe "#call" do
-    subject { wrap.call(state) }
+    subject { wrap.call(state, &error) }
 
     let(:wrap) { described_class.new(type: type, rule: rule) }
     let(:type) { :array                                      }

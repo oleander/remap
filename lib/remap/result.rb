@@ -4,12 +4,6 @@ module Remap
   class Result < Dry::Interface
     attribute? :notices, [Notice], default: EMPTY_ARRAY
 
-    # @return [Boolean]
-    def problem?
-      !notices.blank?
-    end
-    alias has_problem? problem?
-
     # @abstract
     #
     # @return [Boolean]

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Remap::Rule::Embed do
-  subject(:rule) { embed.call(state) }
+  subject(:rule) { embed.call(state, &error) }
 
   let(:mapper) do
     Class.new(Remap::Base) do
@@ -31,7 +31,9 @@ describe Remap::Rule::Embed do
     end
     let(:state) { state!(input) }
 
-    it { is_expected.to have_problem }
+    it "yields failure" do
+      expect { |error| mapper.call(value, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+    end
   end
 
   context "when embeded mapper does not requires option" do

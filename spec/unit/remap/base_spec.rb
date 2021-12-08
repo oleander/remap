@@ -37,7 +37,7 @@ describe Remap::Base do
 
   describe "::call" do
     context "when contract fails" do
-      subject(:result) { mapper.call({ b: 1 }) }
+      let(:input) { { b: 1 } }
 
       let(:mapper) do
         mapper! do
@@ -45,13 +45,13 @@ describe Remap::Base do
         end
       end
 
-      it "returns a failure" do
-        expect(result).to be_a_failure
+      it "yields failure" do
+        expect { |error| mapper.call(input, &error) }
       end
     end
 
     context "when mapper returns nothing" do
-      subject(:result) { mapper.call({ b: 1 }) }
+      let(:input) { { a: 1 } }
 
       let(:mapper) do
         mapper! do
@@ -63,13 +63,13 @@ describe Remap::Base do
         end
       end
 
-      it "returns a failure" do
-        expect(result).to be_a_failure
+      it "yields failure" do
+        expect { |error| mapper.call(input, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
       end
     end
 
     context "when mapper returns nothing with problems" do
-      subject(:result) { mapper.call({ a: "A" }) }
+      let(:input) { { a: "A" } }
 
       let(:mapper) do
         mapper! do
@@ -79,8 +79,8 @@ describe Remap::Base do
         end
       end
 
-      it "returns a failure" do
-        expect(result).to be_a_failure
+      it "yields failure" do
+        expect { |error| mapper.call(input, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
       end
     end
 

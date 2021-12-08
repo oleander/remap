@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 describe Remap::Base do
-  subject { mapper.call(input) }
-
   let(:mapper) do
     mapper! do
       define do
@@ -18,9 +16,7 @@ describe Remap::Base do
     "not-an-array"
   end
 
-  let(:output) do
-    be_a_failure.and(have_attributes(failures: be_present))
+  it "invokes block with failure" do
+    expect { |error| mapper.call(input, &error) }.to yield_with_args(Remap::Failure)
   end
-
-  it { is_expected.to match(output) }
 end

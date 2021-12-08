@@ -11,14 +11,14 @@ describe Remap::Iteration::Other do
       context "when error block is invoked" do
         subject(:result) do
           other.call do |_value|
-            state.problem("an error")
+            fail "this is not called"
           end
         end
 
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
       end
 
       context "when error block is not invoked" do
@@ -31,7 +31,7 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        it { is_expected.to contain(output) }
+        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
       end
     end
   end

@@ -4,9 +4,6 @@ module Remap
   # Represents a successful mapped result
   class Success < Result::Concrete
     # @return [Array<Notice>]
-    attribute? :failures, [Notice], size: 0, default: EMPTY_ARRAY
-
-    # @return [Array<Notice>]
     attribute? :notices, [Notice], default: EMPTY_ARRAY
 
     # @return [Any]

@@ -262,28 +262,40 @@
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/operation.rb', line 16</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(input, **options)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(input, **options, &amp;error)
+  <span style="color:#080;font-weight:bold">unless</span> error
+    <span style="color:#080;font-weight:bold">return</span> call(input, **options) <span style="color:#080;font-weight:bold">do</span> |failure|
+      raise failure.exception
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+
   state = <span style="color:#036;font-weight:bold">State</span>.call(input, <span style="color:#606">options</span>: options, <span style="color:#606">mapper</span>: <span style="color:#069">self</span>)
 
-  other = call!(state, &amp;<span style="color:#A60">:itself</span>)
+  other = call!(state) <span style="color:#080;font-weight:bold">do</span> |failure|
+    <span style="color:#080;font-weight:bold">return</span> error[failure]
+  <span style="color:#080;font-weight:bold">end</span>
 
   <span style="color:#080;font-weight:bold">case</span> other
-  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">failures</span>: [], <span style="color:#606">value</span>:, <span style="color:#606">notices</span>: }
+  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">value</span>:, <span style="color:#606">notices</span>: }
     <span style="color:#036;font-weight:bold">Success</span>.call(<span style="color:#606">value</span>: value, <span style="color:#606">notices</span>: notices)
-  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">failures</span>: [], <span style="color:#606">notices</span>: [] }
-    <span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: [other.failure(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No data avalible</span><span style="color:#710">&quot;</span></span>)])
-  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">failures</span>: [], <span style="color:#606">notices</span>: }
-    <span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: notices, <span style="color:#606">notices</span>: [])
-  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">failures</span>:, <span style="color:#606">notices</span>: }
-    <span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: failures, <span style="color:#606">notices</span>: notices)
+  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">notices</span>: [] }
+    <span style="color:#080;font-weight:bold">return</span> error[<span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: [other.failure(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No data avalible</span><span style="color:#710">&quot;</span></span>)])]
+  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">notices</span>: }
+    <span style="color:#080;font-weight:bold">return</span> error[<span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: notices, <span style="color:#606">notices</span>: [])]
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Notice</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
-  <span style="color:#036;font-weight:bold">Result</span>.call(<span style="color:#606">failures</span>: [e.notice])
+  error[<span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: [e.notice])]
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -295,7 +307,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec  7 21:37:36 2021 by
+  Generated on Wed Dec  8 01:08:58 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

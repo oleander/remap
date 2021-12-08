@@ -82,7 +82,9 @@ describe Remap::Base do
       context "when it fails" do
         let(:that) { fail }
 
-        it { is_expected.to have_problem }
+        it "yields failure" do
+          expect { |error| mapper.call(value, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+        end
       end
 
       context "when it passes" do
@@ -108,7 +110,9 @@ describe Remap::Base do
         let(:middle) { fail }
         let(:right)  { fail }
 
-        it { is_expected.to have_problem }
+        it "yields failure" do
+          expect { |error| mapper.call(value, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+        end
       end
 
       context "when middle passes" do
@@ -116,7 +120,9 @@ describe Remap::Base do
         let(:middle) { pass }
         let(:right)  { fail }
 
-        it { is_expected.to have_problem }
+        it "yields failure" do
+          expect { |error| mapper.call(value, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+        end
       end
 
       context "when right passes" do
@@ -124,7 +130,9 @@ describe Remap::Base do
         let(:middle) { fail }
         let(:right)  { pass }
 
-        it { is_expected.to have_problem }
+        it "yields failure" do
+          expect { |error| mapper.call(value, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+        end
       end
 
       context "when all passes" do
@@ -201,7 +209,9 @@ describe Remap::Base do
         end
       end
 
-      it { is_expected.to be_a_failure }
+      it "invokes block with failure" do
+        expect { |error| mapper.call(state, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+      end
     end
 
     context "when passing" do

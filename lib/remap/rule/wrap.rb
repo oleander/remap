@@ -27,11 +27,9 @@ module Remap
 
       # Wraps the output from {#rule} in a {#type}
       #
-      # @param state [State<T>]
-      #
-      # @return [State<Array<T>>]
-      def call(state)
-        rule.call(state).fmap { Array.wrap(_1) }
+      # @see Rule#call
+      def call(...)
+        rule.call(...).fmap { Array.wrap(_1) }
       end
     end
   end

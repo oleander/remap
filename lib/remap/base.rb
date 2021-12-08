@@ -69,15 +69,6 @@ module Remap
   #   Mapper.call({ a: { b: "A" } }).result # => "A"
   #   Mapper.call({ a: { b: "B" } }).result # => "B"
   #
-  # @example Ignore rule for input { a: { b: "A" } }
-  #   class Mapper < Remap::Base
-  #     define do
-  #       map(:a, :b).pending
-  #     end
-  #   end
-  #
-  #   Mapper.call({ a: { b: "A" } }).failures.count # => 1
-  #
   # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
   #   class Mapper < Remap::Base
   #     define do
@@ -272,6 +263,10 @@ module Remap
     #
     # @private
     def call(state, &error)
+      unless error
+        raise ArgumentError, "Base#call(state, &error) requires block"
+      end
+
       state.tap do |input|
         validation.call(input, state.options).tap do |result|
           unless result.success?
@@ -280,7 +275,13 @@ module Remap
         end
       end
 
-      state.then(&context).then(&constructor)
+      notice = catch :fatal do
+        return context.call(state) do |failure|
+          return error[failure]
+        end.then(&constructor)
+      end
+
+      error[state.failure(notice)]
     end
 
     private

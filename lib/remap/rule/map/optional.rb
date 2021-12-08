@@ -12,7 +12,11 @@ module Remap
         # @param state [State]
         #
         # @return [State]
-        def call(state)
+        def call(state, &error)
+          unless error
+            raise ArgumentError, "map.call(state, &error) requires a block"
+          end
+
           fatal(state) do
             return ignore(state) do
               return notice(state) do

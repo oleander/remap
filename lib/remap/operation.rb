@@ -13,23 +13,29 @@ module Remap
     # @yield [Failure] if mapper fails
     #
     # @return [Success] if mapper succeeds
-    def call(input, **options)
+    def call(input, **options, &error)
+      unless error
+        return call(input, **options) do |failure|
+          raise failure.exception
+        end
+      end
+
       state = State.call(input, options: options, mapper: self)
 
-      other = call!(state, &:itself)
+      other = call!(state) do |failure|
+        return error[failure]
+      end
 
       case other
-      in { failures: [], value:, notices: }
+      in { value:, notices: }
         Success.call(value: value, notices: notices)
-      in { failures: [], notices: [] }
-        Failure.call(failures: [other.failure("No data avalible")])
-      in { failures: [], notices: }
-        Failure.call(failures: notices, notices: [])
-      in { failures:, notices: }
-        Failure.call(failures: failures, notices: notices)
+      in { notices: [] }
+        return error[Failure.call(failures: [other.failure("No data avalible")])]
+      in { notices: }
+        return error[Failure.call(failures: notices, notices: [])]
       end
     rescue Notice::Error => e
-      Result.call(failures: [e.notice])
+      error[Failure.call(failures: [e.notice])]
     end
   end
 end

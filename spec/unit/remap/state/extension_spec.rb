@@ -113,42 +113,32 @@ describe Remap::State::Extension do
   describe "#combine" do
     subject { left.combine(right) }
 
-    context "when left has failures" do
-      let(:left) { defined!({}, :with_failures) }
-
-      context "when right has no failures" do
-        let(:right) { defined!({}) }
-
-        it { is_expected.not_to have_key(:value) }
-      end
-    end
-
     context "when left is undefined!" do
-      let(:left) { undefined!(:with_problems) }
+      let(:left) { undefined!(:with_notices) }
 
       context "when right is undefined!" do
-        let(:right) { undefined!(:with_problems) }
+        let(:right) { undefined!(:with_notices) }
 
         it { is_expected.not_to have_key(:value) }
-        it { is_expected.to have(2).problems }
+        its([:notices]) { is_expected.to have(2).items }
       end
 
       context "when right is defined!" do
-        let(:right) { defined!(1, :with_problems) }
+        let(:right) { defined!(1, :with_notices) }
 
         it { is_expected.to contain(right.value) }
-        it { is_expected.to have(2).problems }
+        its([:notices]) { is_expected.to have(2).items }
       end
     end
 
     context "when right is defined!" do
-      let(:left) { defined!(:with_problems) }
+      let(:left) { defined!(:with_notices) }
 
       context "when right is undefined!" do
-        let(:right) { undefined!(:with_problems) }
+        let(:right) { undefined!(:with_notices) }
 
         it { is_expected.to contain(left.value) }
-        it { is_expected.to have(1).problems }
+        its([:notices]) { is_expected.to have(1).item }
       end
     end
 
@@ -184,9 +174,11 @@ describe Remap::State::Extension do
   end
 
   describe "#failure" do
-    subject(:state) { state!(value, path: path).failure(reason) }
+    subject { state.failure(reason) }
 
-    let(:value) { "value" }
+    let(:state) { state!(value, path: path, notices: notices) }
+    let(:value)   { "value"                }
+    let(:notices) { build_list(:notice, 1) }
 
     context "when state is without path" do
       let(:path) { [] }
@@ -194,35 +186,33 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it {
-          expect(state).to include(failures: [
-            have_attributes(reason: "reason", value: value)
-          ])
-        }
+        it { is_expected.to be_a(Remap::Failure) }
+        it { is_expected.to have(1).failures }
+        it { is_expected.to have(1).notices }
 
-        it { is_expected.not_to have_key(:value) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "reason", path: path)) }
       end
 
       context "when reason is an array" do
-        let(:reason) { ["reason"] }
+        let(:reason) { ["reason1", "reason2"] }
 
-        it {
-          expect(state).to include(failures: [
-            have_attributes(reason: "reason", value: value)
-          ])
-        }
+        it { is_expected.to have(2).failures }
+        it { is_expected.to have(1).notices }
 
-        it { is_expected.not_to have_key(:value) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "reason1", path: path)) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "reason2", path: path)) }
       end
 
       context "when reason is a hash" do
-        let(:reason) { { key: ["error"] } }
+        let(:reason) { { key1: ["error1", "error2"], key2: ["error3", "error4"] } }
 
-        it {
-          expect(state).to include(failures: [
-            have_attributes(reason: "error", path: [:key], value: value)
-          ])
-        }
+        it { is_expected.to have(4).failures }
+        it { is_expected.to have(1).notices }
+
+        its(:failures) { is_expected.to include(have_attributes(reason: "error1", path: [:key1])) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "error2", path: [:key1])) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "error3", path: [:key2])) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "error4", path: [:key2])) }
       end
     end
 
@@ -232,37 +222,32 @@ describe Remap::State::Extension do
       context "when reason is a string" do
         let(:reason) { "reason" }
 
-        it {
-          expect(state).to include(failures: [
-            have_attributes(reason: reason, value: value, path: [:a, :b])
-          ])
-        }
+        it { is_expected.to have(1).failures }
+        it { is_expected.to have(1).notices }
 
-        it { is_expected.not_to have_key(:value) }
+        its(:failures) { is_expected.to include(have_attributes(reason: reason, path: path)) }
       end
 
       context "when reason is an array" do
-        let(:reason) { ["reason"] }
+        let(:reason) { ["reason1", "reason2"] }
 
-        it {
-          expect(state).to include(failures: [
-            have_attributes(reason: "reason", value: value, path: [:a, :b])
-          ])
-        }
+        it { is_expected.to have(2).failures }
+        it { is_expected.to have(1).notices }
 
-        it { is_expected.not_to have_key(:value) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "reason1", path: path)) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "reason2", path: path)) }
       end
 
       context "when reason is a hash" do
-        let(:reason) { { c: ["reason"] } }
+        let(:reason) { { key1: ["error1", "error2"], key2: ["error3", "error4"] } }
 
-        it {
-          expect(state).to include(failures: [
-            have_attributes(reason: "reason", path: [:a, :b, :c], value: value)
-          ])
-        }
+        it { is_expected.to have(4).failures }
+        it { is_expected.to have(1).notices }
 
-        it { is_expected.not_to have_key(:value) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "error1", path: path + [:key1])) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "error2", path: path + [:key1])) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "error3", path: path + [:key2])) }
+        its(:failures) { is_expected.to include(have_attributes(reason: "error4", path: path + [:key2])) }
       end
     end
   end
@@ -283,8 +268,8 @@ describe Remap::State::Extension do
 
   describe "#set" do
     let(:state) { defined! }
-    let(:index) { 1       }
-    let(:value) { "value" }
+    let(:index) { 1        }
+    let(:value) { "value"  }
 
     context "when given an index" do
       subject(:result) { state.set(value, index: index) }
@@ -301,24 +286,6 @@ describe Remap::State::Extension do
       let(:notice) { notice! }
 
       it { is_expected.to include(notices: [notice]) }
-      it { is_expected.not_to have_key(:value) }
-    end
-
-    context "when given a failure" do
-      subject(:result) { state.set(failure: notice) }
-
-      let(:notice) { notice! }
-
-      it { is_expected.to include(failures: [notice]) }
-      it { is_expected.not_to have_key(:value) }
-    end
-
-    context "when given failure" do
-      subject(:result) { state.set(failures: [notice]) }
-
-      let(:notice) { notice! }
-
-      it { is_expected.to include(failures: [notice]) }
       it { is_expected.not_to have_key(:value) }
     end
 

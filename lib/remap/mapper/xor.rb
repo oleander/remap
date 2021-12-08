@@ -34,7 +34,7 @@ module Remap
       def call!(state, &error)
         state1 = left.call!(state) do |failure1|
           return right.call!(state) do |failure2|
-            return error[failure1.combine(failure2)]
+            return error[failure1.merge(failure2)]
           end
         end
 

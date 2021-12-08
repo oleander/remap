@@ -259,7 +259,13 @@ RSpec/AlignLeftLetBrace:
   Enabled: true
 
 RSpec/AlignRightLetBrace:
-  Enabled: true
+  Enabled: false
+
+RSpec/RepeatedDescription:
+  Enabled: false
+
+Performance/BlockGivenWithExplicitBlock:
+  Enabled: false
 
 
 

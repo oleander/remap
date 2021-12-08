@@ -3,16 +3,6 @@
 using Remap::State::Extension
 using Remap::Extensions::Hash
 
-RSpec::Matchers.define :have do |count|
-  match do |actual|
-    actual.notices.count == count
-  end
-
-  chain :problems do
-    @count = :problems
-  end
-end
-
 RSpec::Matchers.define :contain do |expected|
   match do |actual|
     (actual.fetch(:value) do

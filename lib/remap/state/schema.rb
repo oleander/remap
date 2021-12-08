@@ -7,7 +7,6 @@ module Remap
 
       required(:mapper).filled(Remap::Types::Mapper)
       required(:notices).array(Types.Instance(Notice))
-      required(:failures).array(Types.Instance(Notice))
       required(:options).value(:hash)
       required(:path).array(Types::Key)
 

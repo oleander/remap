@@ -84,7 +84,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/remap/state.rb<span class="defines">,<br />
-  lib/remap/state/schema.rb,<br /> lib/remap/state/extension.rb,<br /> lib/remap/state/extensions/object.rb,<br /> lib/remap/state/extensions/enumerable.rb</span>
+  lib/remap/state/schema.rb,<br /> lib/remap/state/extension.rb</span>
 </dd>
   </dl>
   
@@ -105,7 +105,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="State/Extension.html" title="Remap::State::Extension (module)">Extension</a></span>, <span class='object_link'><a href="State/Extensions.html" title="Remap::State::Extensions (module)">Extensions</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="State/Extension.html" title="Remap::State::Extension (module)">Extension</a></span>
     
   
     
@@ -130,7 +130,6 @@
 
   required(<span style="color:#A60">:mapper</span>).filled(<span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Mapper</span>)
   required(<span style="color:#A60">:notices</span>).array(<span style="color:#036;font-weight:bold">Types</span>.Instance(<span style="color:#036;font-weight:bold">Notice</span>))
-  required(<span style="color:#A60">:failures</span>).array(<span style="color:#036;font-weight:bold">Types</span>.Instance(<span style="color:#036;font-weight:bold">Notice</span>))
   required(<span style="color:#A60">:options</span>).value(<span style="color:#A60">:hash</span>)
   required(<span style="color:#A60">:path</span>).array(<span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Key</span>)
 
@@ -347,15 +346,13 @@
 38
 39
 40
-41
-42</pre>
+41</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/state.rb', line 31</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call</span>(value, <span style="color:#606">mapper</span>: <span style="color:#036;font-weight:bold">Dummy</span>, <span style="color:#606">options</span>: <span style="color:#036;font-weight:bold">EMPTY_HASH</span>)
   {
-    <span style="color:#606">failures</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
     <span style="color:#606">notices</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
     <span style="color:#606">path</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
     <span style="color:#606">options</span>: options,
@@ -375,7 +372,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec  7 21:37:36 2021 by
+  Generated on Wed Dec  8 01:08:58 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
