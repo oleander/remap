@@ -5,14 +5,20 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "remap"
-  spec.version       = "2.0.3"
+  spec.version       = "2.1.0"
   spec.authors       = ["Linus Oleander"]
   spec.email         = ["oleander@users.noreply.github.com"]
   spec.homepage      = "https://github.com/oleander/remap"
   spec.license       = "MIT"
-  spec.summary       = "Makes mapping easy"
+  spec.summary       = "An expressive and feature-complete data mapper with intuitive syntax thanks to its DSL"
+  spec.description   = <<~DESC
+    Re:map; an expressive and feature-complete data mapper with an intuitive syntax designed as a domain-specific language using Ruby 3.0.
+    It gives the developer the expressive power of JSONPath, without the hassle of using strings.
+    Its compiler is written on top of an immutable, primitive data structure utilizing Rubys
+    refinements & pattern matching capabilities – making it blazingly fast
+  DESC
 
-  spec.files         = Dir["lib/**/*.rb"]
+  spec.files = Dir["lib/**/*.rb"]
 
   spec.required_ruby_version = ">= 3.0.0"
 
