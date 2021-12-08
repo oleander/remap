@@ -26,7 +26,7 @@ module Remap
 
       next input if result.success?
 
-      error[result.errors.to_h.formated]
+      error[result.errors.to_h.formatted]
     end
   end
 end

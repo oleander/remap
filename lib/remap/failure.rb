@@ -30,7 +30,7 @@ module Remap
     end
 
     def exception
-      Error.new(attributes.formated)
+      Error.new(attributes.formatted)
     end
   end
 end

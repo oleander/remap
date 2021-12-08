@@ -43,7 +43,7 @@ module Remap
         end
         alias_method :fetch, :get
 
-        def formated
+        def formatted
           self
         end
       end

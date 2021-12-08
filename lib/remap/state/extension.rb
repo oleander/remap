@@ -88,7 +88,7 @@ module Remap
         # @return [self]
         def _(&block)
           unless block
-            return _ { raise ArgumentError, "Input: #{self} output: #{_1.formated}" }
+            return _ { raise ArgumentError, "Input: #{self} output: #{_1.formatted}" }
           end
 
           unless (result = Schema.call(self)).success?
@@ -117,7 +117,7 @@ module Remap
 
         # @return [String]
         def inspect
-          "#<State %s>" % compact_blank.formated
+          "#<State %s>" % compact_blank.formatted
         end
 
         # Merges {self} with {other} and returns a new state

@@ -25,7 +25,7 @@ module Remap
         #   })
         #
         #   output = map.call(state) do |failure|
-        #     raise failure.exeception
+        #     # ...
         #   end
         #
         #   output.fetch(:value) # => { nickname: "John" }

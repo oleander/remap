@@ -212,7 +212,7 @@ module Remap
     # @option method (:new) [Symbol]
     # @option strategy (:argument) [:argument, :keywords, :none]
     #
-    # @example A mapper, which mapps a value at [:a] to [:b]
+    # @example A mapper, which maps a value at [:a] to [:b]
     #   class Mapper < Remap::Base
     #     define do
     #       map :a, to: :b
@@ -292,12 +292,12 @@ module Remap
 
     # @return [Contract]
     def validation
-      Contract.call({
+      Contract.call(
         attributes: attributes,
         contract: contract,
         options: options,
         rules: rules
-      })
+      )
     end
   end
 end
