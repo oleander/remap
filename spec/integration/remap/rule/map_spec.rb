@@ -2,6 +2,7 @@
 
 describe Remap::Rule::Map do
   using Remap::State::Extension
+  using Remap::Extensions::Object
 
   subject { map.call(context, &error) }
 
