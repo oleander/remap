@@ -53,7 +53,7 @@ jobs:
     - run: bundle exec rake yard:doctest
 
 
-  build:
+  deploy:
     needs: [rspec, rubocop, docs, doctest]
     runs-on: ubuntu-latest
     steps:
@@ -62,8 +62,9 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: 3.0.3
-      - uses: cadwallion/publish-rubygems-action@master
+      - if: contains(github.branch, 'refs/heads/development')
+        uses: cadwallion/publish-rubygems-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
-          RELEASE_COMMAND: bundle rake gem:release
+          RELEASE_COMMAND: bundle exec rake gem:release
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
