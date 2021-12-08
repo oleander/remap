@@ -70,3 +70,4 @@ jobs:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
           RELEASE_COMMAND: bundle exec rake gem:release
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: git push --tags
