@@ -104,7 +104,6 @@ GEM
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
-    json (2.6.1)
     kwalify (0.7.2)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -180,10 +179,10 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
+    simplecov-cobertura (2.0.0)
+      rexml
+      simplecov (~> 0.19)
     simplecov-html (0.12.3)
-    simplecov-json (0.2.3)
-      json
-      simplecov
     simplecov_json_formatter (0.1.3)
     thor (1.1.0)
     tzinfo (2.0.4)
@@ -235,7 +234,7 @@ DEPENDENCIES
   rubocop-rake
   rubocop-rspec
   simplecov
-  simplecov-json
+  simplecov-cobertura
   yard
   yard-coderay
   yard-doctest

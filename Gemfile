@@ -34,7 +34,7 @@ group :test do
   gem "rspec-github"
   gem "rspec-its"
   gem "simplecov"
-  gem "simplecov-json"
+  gem "simplecov-cobertura"
 end
 
 gem "benchmark-ips"

@@ -1,10 +1,14 @@
-# Re:map [![Main](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg)](https://github.com/oleander/remap/actions/workflows/main.yml) ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/oleander/8ffe1a1e4772eaaa22182389bd22fc43/raw/report.json)
+# Re:map [![Main](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg)](https://github.com/oleander/remap/actions/workflows/main.yml) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f07e265fc5184af584333f0bb62f3b47)](https://www.codacy.com/gh/oleander/remap/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oleander/remap&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/f07e265fc5184af584333f0bb62f3b47)](https://www.codacy.com/gh/oleander/remap/dashboard?utm_source=github.com&utm_medium=referral&utm_content=oleander/remap&utm_campaign=Badge_Coverage)
 
-> `Re:map`; an expressive and feature-complete data mapper designed as a domain-specific language using Ruby 3.0. `Re:map` gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing Rubys refinements & pattern matching capabilities – making it blazingly fast
+> `Re:map`; an expressive and feature-complete data mapper designed as a domain-specific
+> language using Ruby 3.0. `Re:map` gives the developer the expressive power of
+> JSONPath, without the hassle of using strings. Its compiler is written on top
+> of an immutable, primitive data structure utilizing Rubys refinements & pattern
+> matching capabilities – making it blazingly fast
 
-- [Documentation](http://oleander.io/remap/)
-- [Examples](#examples)
-- [Installation](#installation)
+* [Documentation](http://oleander.io/remap/)
+* [Examples](#examples)
+* [Installation](#installation)
 
 ``` ruby
 class Mapper < Remap::Base
@@ -197,7 +201,8 @@ Mapper.call({ person: { name: 'John' } }) # => { nickname: 'John' }
 
 ### Select all elements in an array
 
-> Similar to JSONPath's `[*] operator and allows paths to dig into nested arrays and hashes
+> Similar to JSONPath's `[*]` operator and allows
+> paths to dig into nested arrays and hashes
 
 ``` ruby
 class Mapper < Remap::Base
@@ -211,7 +216,8 @@ Mapper.call([{ name: "John" }, { name: "Jane" }]) # => ["John", "Jane"]
 
 ### Fixed values predefined in the mapper
 
-> A mapper instance can hold a set of pre-defined options. Use the `option` method to define a mappers requirement
+> A mapper instance can hold a set of pre-defined options.
+> Use the `option` method to define a mappers requirement
 
 ``` ruby
 class Mapper < Remap::Base
@@ -241,7 +247,8 @@ Mapper.call({}) # => { api_key: "ABC-123" }
 
 ### Skip mapping rule unless some condition is fulfilled
 
-> `map` and `to` allows the user to define post-processors and conditions for selected values
+> `map` and `to` allows the user to define post-processors
+> and conditions for selected values
 
 ``` ruby
 class Mapper < Remap::Base
@@ -335,12 +342,12 @@ Mapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
 
 > The scope gives access to a few handly values
 
-- `value` current value
-- `element` - defined by `each`
-- `index` defined by `each`
-- `key` defined by `to`, `map` and `each` on hashes
-- `values` & `input` yields the mapper input
-- `mapper` the current mapper
+* `value` current value
+* `element` - defined by `each`
+* `index` defined by `each`
+* `key` defined by `to`, `map` and `each` on hashes
+* `values` & `input` yields the mapper input
+* `mapper` the current mapper
 
 ``` ruby
 class Mapper < Remap::Base
@@ -505,7 +512,10 @@ output = Vehicle.call([
 
 ### Optional mappings
 
-> Use the optional mapping rules `to?` and `map?` to define optional rules. By default, `to` and `map` cause the mapper to fail when a path cannot be found. The optional rules will just be ignored. This is perfect during development as it allows for partial inputs without breaking the mapper
+> Use the optional mapping rules `to?` and `map?` to define optional rules.
+> By default, `to` and `map` cause the mapper to fail when a path cannot be found.
+> The optional rules will just be ignored. This is perfect during development as
+> it allows for partial inputs without breaking the mapper
 
 ``` ruby
 class Person < Mapper::Base

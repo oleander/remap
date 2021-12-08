@@ -2,10 +2,7 @@ name: remap
 on: [push]
 jobs:
   rspec:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
@@ -15,19 +12,10 @@ jobs:
     - run: bundle exec rake rspec
       env:
         COVERAGE: 'true'
-    - id: report
-      run: echo "::set-output name=coverage::$(bundle exec rake coverage)"
-    - uses: schneegans/dynamic-badges-action@v1.1.0
-      with:
-        auth: ${{ secrets.GIST_SECRET }}
-        gistID: 8ffe1a1e4772eaaa22182389bd22fc43
-        filename: report.json
-        message: ${{ steps.report.outputs.coverage }}%
-        label: Coverage
-        color: green
-        cacheSeconds: 300
-
-
+    - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/coverage.xml
+      env:
+        CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
   rubocop:
     runs-on: ubuntu-latest
@@ -39,7 +27,6 @@ jobs:
         ruby-version: 3.0.3
     - run: bundle exec rake rubocop
 
-
   docs:
     runs-on: ubuntu-latest
     steps:
@@ -49,19 +36,14 @@ jobs:
         bundler-cache: true
         ruby-version: 3.0.3
     - run: bundle exec rake yard:docs
-
     - run: git config --local user.email "bot@oleander.io"
     - run: git config --local user.name "oleander-bot"
-
     - run: git add docs/
-
     - run: git commit -m 'update docs'
     - run: git push -f origin development:gh-pages
+
   doctest:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
@@ -69,5 +51,3 @@ jobs:
         bundler-cache: true
         ruby-version: 3.0.3
     - run: bundle exec rake yard:doctest
-
-
