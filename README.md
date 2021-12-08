@@ -3,11 +3,11 @@
 > `Re:map`; an expressive and feature-complete data mapper designed as a domain-specific
 > language using Ruby 3.0. `Re:map` gives the developer the expressive power of
 > JSONPath, without the hassle of using strings. Its compiler is written on top
-> of an immutable, primitive data structure utilizing Rubys refinements & pattern
+> of an immutable, primitive data structure utilizing ruby's refinements & pattern
 > matching capabilities – making it blazingly fast
 
-* [Documentation](http://oleander.io/remap/)
-* [Examples](#examples)
+* [API Documentation](http://oleander.io/remap/)
+* [Introduction](#introduction)
 * [Installation](#installation)
 
 ``` ruby
@@ -133,195 +133,108 @@ Mapper.call(input, date: Date.today) == output
 
 `gem install remap` then `require "remap"`
 
-## Examples
+## Introduction
 
-### Map a value
-
-> from path `[:person, :name]` to `[:nickname]`
+> To create a mapper, inherit from `Remap::Base` and define a `define` block.
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    map :person, :name, to: :nickname
+    # here goes your mapping rules
   end
 end
 ```
 
-> `map` and `to` can be flipped around
+> A *mapping rule* specifies how to map a value from one place to another
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    to :nickname, map: :person, :name
+    map :input, to: :output
   end
 end
 ```
 
-> as well as deeply nested for improved readability
+To invoke the mapper, call `Mapper.call` with some input data
+
+``` ruby
+Mapper.call({ input: "value" }) # => { output: "value" }
+```
+
+> If the input data doesn't match the defined rule, an exception will be thrown.
+> To prevent this, pass a block to `.call` that will be called with a failure.
+
+``` ruby
+Mapper.call({ something: "value" }) do |failure|
+  # ...
+end
+```
+
+> The `failure` contains a detailed description of the error including the path to the problematic value.
+> If the input data is incomplete, use `map?` to define an optional rule.
+> It will be ignored whenever the path is missing.
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    to :nickname do
-      map :person do
-        map :name
-      end
-    end
+    map? :key1
+    map? :key2
   end
 end
 ```
 
-> the rules can be mixed to fix the data structure
+> If one of the two rules matches the input, the mapper will return the value.
 
 ``` ruby
-class Mapper < Remap::Base
-  define do
-    map :person do
-      map :name do
-        to :nickname
-      end
-    end
+Mapper.call({ key1: "value1" }) # => "value1"
+Mapper.call({ key2: "value2" }) # => "value2"
+```
+
+> If none if the rules matches, the mapper will raise an error or invoke the block
+
+``` ruby
+Mapper.call({ nope: "value" }) do |failure|
+  # ...
+end
+```
+
+> Rules can be expressed in a variety of ways to fit the implementation of the mapper.
+> The following rules are all equal:
+
+``` ruby
+map :person, :name, to: :first_name
+
+map :person do
+  map :name do
+    to :first_name
+  end
+end
+
+to :first_name do
+  map :person do
+    map :name
   end
 end
 ```
 
-> to invoke do the following
-
-``` ruby
-Mapper.call({ person: { name: 'John' } }) # => { nickname: 'John' }
-```
-
-### Select all elements in an array
-
-> Similar to JSONPath's `[*]` operator and allows
-> paths to dig into nested arrays and hashes
+> To select a value with its path, use `get`
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    map [all, :name]
+    get :person
   end
 end
 
-Mapper.call([{ name: "John" }, { name: "Jane" }]) # => ["John", "Jane"]
+Mapper.call({ person: "John" }) # => { person: "John" }
 ```
 
-### Fixed values predefined in the mapper
-
-> A mapper instance can hold a set of pre-defined options.
-> Use the `option` method to define a mappers requirement
-
-``` ruby
-class Mapper < Remap::Base
-  option :name
-
-  define do
-    set [:person, :name], to: option(:name)
-  end
-end
-
-Mapper.call({}, name: "John") # => { person: { name: "John" } }
-```
-
-### Fixed value defined in the mapper
-
-> Allows a fixed value to be merged into the final data structure
+> Use `each` to iterate over an array of values
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    set [:api_key], to: value("ABC-123")
-  end
-end
-
-Mapper.call({}) # => { api_key: "ABC-123" }
-```
-
-### Skip mapping rule unless some condition is fulfilled
-
-> `map` and `to` allows the user to define post-processors
-> and conditions for selected values
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    each do
-      map.if_not do
-        value.include?("B")
-      end
-    end
-  end
-end
-
-Mapper.call(["A", "B", "C"]) # => ["A", "C"]
-```
-
-> or use `if` to reverse the selection
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    each do
-      map.if do
-        value.include?("B")
-      end
-    end
-  end
-end
-
-Mapper.call(["A", "B", "C"]) # => ["B"]
-```
-
-### Map to a fixed set of values
-
-> `enum` lets the mapper define a finite set of values for a particular path
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    to :names do
-      map(:countries, all, :name).enum do
-        from "USA", to: "US"
-        value "SWE", "DE"
-        otherwise "OTHER"
-      end
-    end
-  end
-end
-
-Mapper.call({
-  countries: [
-    { name: "SWE" },
-    { name: "DE" },
-    { name: "USA" },
-    { name: "IT" }
-  ]
-}) # => { names: ["SWE", "DE", "US", "OTHER"] }
-```
-
-### Pending mapping
-
-> Use `pending` on rules that has yet to be defined
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    map(:workplace, to: :job).pending
-    map(:name, to: :nickname)
-  end
-end
-
-Mapper.call({ workplace: "Apple", name: "John" }) # => { nickname: "John" }
-```
-
-### Iterate over an enumerable
-
-> `each` works similar to `all` and allows for arrays and hashes to be mixed
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    map :people, to: :names do
+    map :people do
       each do
         map :name
       end
@@ -329,10 +242,74 @@ class Mapper < Remap::Base
   end
 end
 
-Mapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
+Mapper.call({ people: [ { name: "John" }, { name: "Jane" } ] }) # => ["John", "Jane"]
 ```
 
-> The scope gives access to a few handly values
+> Alternatively, `all` can be used to express rules that applies to all values in an array.
+> To accomplish this using the above input, do the following:
+
+``` ruby
+class Mapper < Remap::Base
+  define do
+    map :people, all, :name
+  end
+end
+```
+
+> Selected values can easily be processed before being mapped.
+> To do this, append any of the methods defined in `Remap::Rule::Map`
+
+``` ruby
+class Mapper < Remap::Base
+  using Extensions::Hash
+
+  define do
+    map :people, all do
+      # Pass a proc
+      map(:name).then(&:upcase)
+
+      # Or pass a block
+      map(:name).then do
+        value.upcase
+      end
+
+      # Manually skip a mapping using skip!
+      map(:name).then do
+        skip!
+      end
+
+      # Add conditions
+      map?(:name).if do
+        value.include?("John")
+      end
+
+      map?(:name).if_not do
+        value.include?("Lisa")
+      end
+
+      # Pending mappings
+      map(:name).pending("I'll do this later")
+
+      # Define rules for a finite set of values
+      map(:name).enum do
+        from "John", to "Joe"
+        value "Lisa", "Jane"
+        otherwise "Unknown"
+      end
+
+      # Get is defined by the Remap::Extensions::Hash refinement
+      # and allows for a path to be passed. If the path is missing,
+      # the rule will be ignored in the case of `map?` and `map`
+      # a detailed error message will be thrown with a detailed path
+      map(:name).then do
+        value.get(:a, :b)
+      end
+    end
+  end
+end
+```
+
+> The block scope gives access to some useful values
 
 * `value` current value
 * `element` - defined by `each`
@@ -341,90 +318,47 @@ Mapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
 * `values` & `input` yields the mapper input
 * `mapper` the current mapper
 
+> The complete set of values are defined by `Remap::State::Extension#execute`.
+
+### Fixed values
+
+> A mapper can define required options using `option`.
+> These values can be referenced any where in the mapper
+> An can be set to a fixed path using `set`
+
 ``` ruby
 class Mapper < Remap::Base
+  option :code
+
   define do
-    map :people, to: :names do
-      each do
-        map(:name).then do
-          element
-        end
-      end
+    set :secret, to: option(:code)
+
+    # Access {code} inside a callback
+    map(:pin_code, to: :seed).then do |pin|
+      code ** pin
     end
   end
 end
-
-Mapper.call({ people: [{ name: "John" }] }) # => [{ name: "John" }]
 ```
 
-> or `index` to get access to `each`'s index
+The second argument to `Mapper.call` takes a hash, used to populate the mapper.
+
+``` ruby
+Mapper.call({ pin_code: 1234}, code: 5678) # => { secret: 5678, seed: 3.2*10^10 }
+```
+
+### Fixed values
+
+> `set` also accepts a fixed value in combination with `value`, i.e
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    map :people, to: :names do
-      each do
-        map(:name).then do
-          index
-        end
-      end
-    end
+    set :api_key, to: value("ABC-123")
   end
 end
 
-Mapper.call({ people: [{ name: "John" }] }) # => [0]
-```
-
-### Post-process a mapped value
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    map.adjust do
-      "#{value}!"
-    end
-  end
-end
-
-Mapper.call("Hello") # => "Hello!"
-```
-
-### Select element at index
-
-> Similar to JSONPath's `[n]` selector
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    map :people, at(0), :name
-  end
-end
-
-Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] }) # => "John"
-```
-
-> or `first`
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    map :people, first, :name
-  end
-end
-
-Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] }) # => "John"
-```
-
-> or `last`
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    map :people, last, :name
-  end
-end
-
-Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] }) # => "Jane"
+Mapper.call({}) # => { api_key: "ABC-123" }
 ```
 
 ### Wrap output
@@ -443,20 +377,6 @@ class Mapper < Remap::Base
 end
 
 Mapper.call({ name: "John" }) # => { names: ["John"] }
-```
-
-### Manually skip a mapping
-
-> Use `skip!` to manually skip a field
-
-``` ruby
-class Mapper < Remap::Base
-  define do
-    map.then do
-      skip!("I'll do this later")
-    end
-  end
-end
 ```
 
 ### Combine mappers using operators
@@ -501,43 +421,3 @@ output = Vehicle.call([
 ```
 
 > Supported operators are `|`, `&` and `^`
-
-### Optional mappings
-
-> Use the optional mapping rules `to?` and `map?` to define optional rules.
-> By default, `to` and `map` cause the mapper to fail when a path cannot be found.
-> The optional rules will just be ignored. This is perfect during development as
-> it allows for partial inputs without breaking the mapper
-
-``` ruby
-class Person < Mapper::Base
-  define do
-    get :person do
-      get :name # Required
-      get? :age # Optional
-    end
-  end
-end
-
-# OK!
-Person.call({
-  person: {
-    name: "Linus"
-  }
-})
-
-# OK!
-Person.call({
-  person: {
-    name: "Linus",
-    age: 30
-  }
-})
-
-# NOT OK
-Person.call({
-  person: {
-    age: 30
-  }
-})
-```
