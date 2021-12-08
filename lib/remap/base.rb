@@ -236,12 +236,12 @@ module Remap
     #
     # @return [void]
     def self.define(target = Nothing, method: :new, strategy: :argument, &context)
-      unless context
-        raise ArgumentError, "Missing block"
+      unless block_given?
+        raise ArgumentError, "#{self}.define requires a block"
       end
 
-      self.context = Compiler.call(&context)
       self.constructor = Constructor.call(method: method, strategy: strategy, target: target)
+      self.context = Compiler.call(&context)
     rescue Dry::Struct::Error => e
       raise ArgumentError, e.message
     end
