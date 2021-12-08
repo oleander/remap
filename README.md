@@ -46,13 +46,6 @@ class Mapper < Remap::Base
       end
     end
 
-    to :houses do
-      # Value wrapper
-      wrap :array do
-        map :house
-      end
-    end
-
     class Linux < Remap::Base
       define do
         get :kernel
@@ -72,16 +65,15 @@ class Mapper < Remap::Base
       end
     end
 
-    get :cars do
-      each do
-        # Dig deep into a nested value
-        get :owners do
-          each do
-            map :name
-          end
-        end
+    # Wrapping values in an array
+    to :houses do
+      wrap :array do
+        map :house
       end
     end
+
+    # Array selector (all)
+    map :cars, all, :model, to: :cars
   end
 end
 

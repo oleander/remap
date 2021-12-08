@@ -55,22 +55,15 @@ describe Remap::Base do
         end
       end
 
+      # Wrapping values in an array
       to :houses do
         wrap :array do
           map :house
         end
       end
 
-      get :cars do
-        each do
-          # Dig deep into a nested value
-          get :owners do
-            each do
-              map :name
-            end
-          end
-        end
-      end
+      # Array selector (all)
+      map :cars, all, :model, to: :cars
     end
   end
 
@@ -97,15 +90,11 @@ describe Remap::Base do
           kernel: :latest
         }
       },
-      cars: [
-        {
-          owners: [
-            {
-              name: "John"
-            }
-          ]
-        }
-      ]
+      cars: [{
+        model: "Volvo"
+      }, {
+        model: "Tesla"
+      }]
     }
   end
 
@@ -122,7 +111,7 @@ describe Remap::Base do
         }
       ],
       description: "This is a description",
-      cars: [{ owners: ["John"] }],
+      cars: ["Volvo", "Tesla"],
       houses: ["100kvm"],
       date: be_a(Date),
       os: {
