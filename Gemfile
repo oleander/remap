@@ -19,6 +19,7 @@ group :development do
   gem "yard-rspec"
   gem "yard-spellcheck"
   gem "yardstick", require: false
+  gem "bump"
 end
 
 group :test, :development do
