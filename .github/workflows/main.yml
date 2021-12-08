@@ -71,3 +71,4 @@ jobs:
           RELEASE_COMMAND: bundle exec rake gem:release || true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: git push --tags || true
+      - run: git push || true
