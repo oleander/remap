@@ -13,6 +13,21 @@ jobs:
         bundler-cache: true
         ruby-version: 3.0.3
     - run: bundle exec rake rspec
+      env:
+        COVERAGE: 'true'
+    - id: report
+      run: echo "::set-output name=coverage::$(bundle exec rake coverage)"
+    - uses: schneegans/dynamic-badges-action@v1.1.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: 8ffe1a1e4772eaaa22182389bd22fc43
+        filename: report.json
+        message: ${{ steps.report.outputs.coverage }}%
+        label: Coverage
+        color: green
+        cacheSeconds: 300
+
+
 
   rubocop:
     runs-on: ubuntu-latest
@@ -23,6 +38,7 @@ jobs:
         bundler-cache: true
         ruby-version: 3.0.3
     - run: bundle exec rake rubocop
+
 
   docs:
     runs-on: ubuntu-latest

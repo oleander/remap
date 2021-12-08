@@ -2,6 +2,7 @@
 
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
+require "json"
 
 RSpec::Core::RakeTask.new(:spec)
 
@@ -38,4 +39,12 @@ end
 desc "Run all specs and generate documentation"
 task :rubocop do
   exec "bundle", "exec", "rubocop"
+end
+
+desc "Generate coverage report"
+task :coverage do
+  coverage_path = Pathname(__dir__).join("coverage/coverage.json")
+  coverage_data = coverage_path.read
+  coverage_report = JSON.parse(coverage_data, symbolize_names: true)
+  puts coverage_report.dig(:metrics, :covered_percent).round(2)
 end
