@@ -12,6 +12,7 @@ group :development do
 
   gem "rubocop-rspec", require: false
 
+  gem "bump"
   gem "reek", require: false
   gem "yard"
   gem "yard-coderay"
