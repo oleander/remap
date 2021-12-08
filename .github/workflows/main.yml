@@ -67,8 +67,7 @@ jobs:
       - run: git config --local user.name "oleander-bot"
       - if: contains(github.ref, 'refs/tags/v')
         run: |
-          bundle exec bump patch --replace-in remap.gemspec
-          git commit --amend --no-edit
+          bundle exec bump patch --tag
       - uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
