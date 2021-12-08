@@ -90,11 +90,13 @@ describe Remap::Base do
           kernel: :latest
         }
       },
-      cars: [{
-        model: "Volvo"
-      }, {
-        model: "Tesla"
-      }]
+      cars: [
+        {
+          model: "Volvo"
+        }, {
+          model: "Tesla"
+        }
+      ]
     }
   end
 
