@@ -12,7 +12,22 @@ matching capabilities – making it blazingly fast
 * [Installation](#installation)
 
 ## Quickstart
+
 A convoluted example containing most of `Re:map`s features
+
+``` ruby
+class Linux < Remap::Base
+  define do
+    get :kernel
+  end
+end
+
+class Windows < Remap::Base
+  define do
+    get :price
+  end
+end
+```
 
 ``` ruby
 class Mapper < Remap::Base
@@ -47,18 +62,6 @@ class Mapper < Remap::Base
             end
           end
         end
-      end
-    end
-
-    class Linux < Remap::Base
-      define do
-        get :kernel
-      end
-    end
-
-    class Windows < Remap::Base
-      define do
-        get :price
       end
     end
 
@@ -124,13 +127,13 @@ output = {
   description: "This is a description",
   cars: [{ owners: ["John"] }],
   houses: ["100kvm"],
-  date: be_a(Date),
+  date: Date.today,
   os: {
     kernel: :latest
   }
 }
 
-Mapper.call(input, date: Date.today) # =output
+Mapper.call(input, date: Date.today) # => output
 ```
 
 ## Installation
@@ -149,7 +152,10 @@ class Mapper < Remap::Base
 end
 ```
 
-Here, you’ll define zero or more *mapping rules*. A rule contains an input path, an output path, an optional block and zero or more callbacks for post-processing. The easiest way to get started is using `map`.
+Here, you’ll define zero or more *mapping rules*.
+A rule contains an input path, an output path,
+an optional block and zero or more callbacks for post-processing.
+The easiest way to get started is using `map`.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -167,7 +173,9 @@ To invoke the rule, call `Mapper.call` with your data.
 Mapper.call({ input: "value" }) # => { output: "value" }
 ```
 
-If the input data doesn't match the defined rule, an exception will be thrown explaining what went wrong and where. To prevent this, pass a block to `.call`. This will be called whenever the mapper fails and contains detailed information about the failure.
+If the input data doesn't match the defined rule, an exception will be thrown explaining what went wrong and where.
+To prevent this, pass a block to `.call`.
+This will be called whenever the mapper fails and contains detailed information about the failure.
 
 ``` ruby
 Mapper.call({ something: "value" }) do |failure|
@@ -175,7 +183,8 @@ Mapper.call({ something: "value" }) do |failure|
 end
 ```
 
-If the input data is incomplete, use `map?`. It defines an optional rule mapping rule and will be ignored when missing.
+If the input data is incomplete, use `map?`.
+It defines an optional rule mapping rule and will be ignored when missing.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -252,14 +261,14 @@ class Mapper < Remap::Base
   end
 end
 
-Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] }) # =["John", "Jane"]
+Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] }) # => ["John", "Jane"]
 ```
 
 A compacter version is to use `all`
 
 > `all` is similar to JSONPath’s `[*]` operator
 
-To accomplish this using the above input, do the following:
+To accomplish this using the above input, do the following
 
 ``` ruby
 class Mapper < Remap::Base
@@ -339,8 +348,8 @@ class Person < Remap::Base
   define do
     get :person do
       get(:name)
-      get(:age).if do |age|
-        age >= 40 || values.get(:person, :name) == "John"
+      get(:age).if do
+        values.get(:person, :name) == "John"
       end
     end
   end
@@ -349,10 +358,10 @@ end
 
 > See `Remap::State::Extension#execute` for more details
 
-### Fixed values
+### Fixed & semi-fixed values
 
 A mapper can define required options using `option`.
-These values can be referenced any where in the mapper and can be set to a fixed path using `set`
+These values can be referenced any where in the mapper and can be set to a fixed path using `set`.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -376,8 +385,6 @@ Mapper.call({
   pin_code: 1234
 }, code: 5678) # => { secret: 5678, seed: 3.2*10^10 }
 ```
-
-### Fixed values
 
 `set` also accepts a fixed value using the `value` method
 
@@ -411,34 +418,34 @@ end
 Mapper.call({ name: "John" }) # ={ names: ["John"] }
 ```
 
-### Combine mappers using operators
+### Operators
 
 Mappers can be combined using the logical operators `|`, `&` and `^`
 
 ``` ruby
+class Bicycle < Remap::Base
+  contract do
+    required(:gears)
+    required(:brand)
+  end
+
+  define do
+    to :bicycle
+  end
+end
+
+class Car < Remap::Base
+  contract do
+    required(:hybrid)
+    required(:fuel)
+  end
+
+  define do
+    to :car
+  end
+end
+
 class Vehicle < Remap::Base
-  class Bicycle < Remap::Base
-    contract do
-      required(:gears)
-      required(:brand)
-    end
-
-    define do
-      to :bicycle
-    end
-  end
-
-  class Car < Remap::Base
-    contract do
-      required(:hybrid)
-      required(:fule)
-    end
-
-    define do
-      to :car
-    end
-  end
-
   define do
     each do
       embed Bicycle | Car
@@ -446,7 +453,12 @@ class Vehicle < Remap::Base
   end
 end
 
-output = Vehicle.call([{ gears: 3, brand: "Rose" }, { hybrid: false, fule: "Petrol" }])
+Vehicle.call([
+{
+  gears: 3,
+  brand: "Rose"
+}, {
+  hybrid: false,
+  fuel: "Petrol"
+}]) # => [{ bicycle: { gears: 3, brand: "Rose" } }, { car: { hybrid: false, fuel: "Petrol" } }]
 ```
-
-Supported operators are `|`, `&` and `^`
