@@ -123,5 +123,5 @@ describe Remap::Base do
     }
   end
 
-  it { is_expected.to be_a_success.and(have_attributes(value: output)) }
+  it { is_expected.to match(output) }
 end

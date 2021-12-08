@@ -14,14 +14,20 @@ module Remap
         # @param state [State]
         #
         # @return [State]
-        def call(state)
-          fatal(state, id: :ignore) do
+        def call(state, &error)
+          unless block_given?
+            raise ArgumentError, "Required.call(state, &error) requires a block"
+          end
+
+          notice = catch :ignore do
             return fatal(state) do
               return notice(state) do
                 return super
               end
             end
           end
+
+          error[state.failure(notice)]
         end
       end
     end

@@ -3,24 +3,9 @@
 module Remap
   using Extensions::Hash
 
-  class Failure < Result::Concrete
+  class Failure < Dry::Concrete
     attribute :failures, [Notice], min_size: 1
     attribute? :notices, [Notice], default: EMPTY_ARRAY
-
-    # @return [true]
-    def failure?
-      true
-    end
-
-    # @return [false]
-    def success?
-      false
-    end
-
-    # @return [self]
-    def fmap
-      self
-    end
 
     # Merges two failures
     #
@@ -28,7 +13,7 @@ module Remap
     #
     # @return [Failure]
     def merge(other)
-      unless other.is_a?(Failure)
+      unless other.is_a?(self.class)
         raise ArgumentError, "can't merge #{self.class} with #{other.class}"
       end
 

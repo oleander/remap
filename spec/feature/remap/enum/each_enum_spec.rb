@@ -32,7 +32,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: { items: [{ items: ["B", "B", "C"] }] }))
+      { items: [{ items: ["B", "B", "C"] }] }
     end
   end
 end

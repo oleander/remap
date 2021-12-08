@@ -4,7 +4,7 @@ describe Remap::Base do
   let(:mapper) do
     mapper! do
       define do
-        map?(:a, :b, :c, :missing).then { skip! }
+        map?(:a, :b, :missing)
       end
     end
   end

@@ -12,6 +12,7 @@ require "json"
 module Remap
   # Represents the current state of a mapping
   module State
+    using Extensions::Object
     using Extension
 
     include Dry::Core::Constants
@@ -29,15 +30,19 @@ module Remap
     #
     # @return [Hash] A valid state
     def self.call(value, mapper: Dummy, options: EMPTY_HASH)
-      {
-        notices: EMPTY_ARRAY,
-        path: EMPTY_ARRAY,
-        options: options,
-        mapper: mapper,
-        values: value,
-        value: value,
-        input: value
-      }._
+      value._ do
+        return {
+          notices: EMPTY_ARRAY,
+          path: EMPTY_ARRAY,
+          options: options,
+          mapper: mapper,
+          values: value,
+          value: value,
+          input: value
+        }._
+      end
+
+      raise ArgumentError, "Input is a state: #{value}"
     end
   end
 end

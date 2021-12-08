@@ -9,9 +9,11 @@ module Remap
     # @example Select "A" from { a: { b: { c: ["A"] } } }
     #   state = Remap::State.call({ a: { b: { c: ["A"] } } })
     #   first = Remap::Selector::Index.new(index: 0)
-    #   result = Remap::Path::Input.new([:a, :b, :c, first]).call(state)
+    #   path = Remap::Path::Input.new([:a, :b, :c, first])
     #
-    #   result.fetch(:value) # => "A"
+    #   path.call(state) do |state|
+    #     state.fetch(:value)
+    #   end
     class Input < Unit
       # @return [Array<Selector>]
       attribute :segments, [Selector]

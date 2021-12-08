@@ -15,7 +15,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: be_a(::Struct)))
+      be_a(::Struct)
     end
   end
 end

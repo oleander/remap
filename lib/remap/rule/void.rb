@@ -13,7 +13,7 @@ module Remap
     #     end
     #   end
     #
-    #  Mapper.call("A").result # => "A"
+    #  Mapper.call("A") # => "A"
     class Void < Concrete
       # @param state [State<T>]
       #

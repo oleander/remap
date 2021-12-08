@@ -16,24 +16,6 @@ describe Remap::Failure do
     end
   end
 
-  describe "#failure?" do
-    it { is_expected.to be_failure }
-  end
-
-  describe "#success?" do
-    it { is_expected.not_to be_a_success }
-  end
-
-  describe "#fmap" do
-    it "does not invoke block" do
-      expect { |b| failure.fmap(&b) }.not_to yield_control
-    end
-
-    it "returns itself" do
-      expect(failure.fmap).to be(failure)
-    end
-  end
-
   describe "#merge" do
     subject(:result) { left.merge(right) }
 
@@ -59,14 +41,6 @@ describe Remap::Failure do
       }
 
       it { is_expected.to have_attributes(failures: be_a(Array)) }
-    end
-
-    context "when right is a success" do
-      let(:right) { Remap::Success.new(value: value!) }
-
-      it "raises an error" do
-        expect { result }.to raise_error(ArgumentError)
-      end
     end
   end
 end

@@ -13,7 +13,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({}).result # => { a: { b: 'a value' } }
+    #   Mapper.call({}) # => { a: { b: 'a value' } }
     class Fixed < Concrete
       # @return [Any]
       attribute :value, Types::Any

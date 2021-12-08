@@ -4,16 +4,20 @@ describe Remap::Base do
   context "when using #embed" do
     subject(:result) { mapper.call(value) }
 
-    let(:pass) do
+    let(:output) { ["<RESULT>"] }
+
+    let(:pass) do |context: self|
       mapper! do
         define do
           map.adjust do
-            ["<RESULT>"]
+            context.output
           end
         end
       end
     end
+
     let(:value) { value! }
+
     let(:fail) do
       mapper! do
         contract { required(:something).filled }
@@ -30,13 +34,11 @@ describe Remap::Base do
       end
 
       context "when left passes" do
-        let(:left) { pass }
+        let(:left)   { pass }
         let(:middle) { fail }
         let(:right)  { fail }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
 
       context "when middle passes" do
@@ -44,9 +46,7 @@ describe Remap::Base do
         let(:middle) { pass }
         let(:right)  { fail }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
 
       context "when right passes" do
@@ -54,9 +54,7 @@ describe Remap::Base do
         let(:middle) { fail }
         let(:right)  { pass }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
 
       context "when all passes" do
@@ -64,9 +62,7 @@ describe Remap::Base do
         let(:middle) { pass }
         let(:right)  { pass }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
     end
 
@@ -90,9 +86,7 @@ describe Remap::Base do
       context "when it passes" do
         let(:that) { pass }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
     end
 
@@ -140,9 +134,7 @@ describe Remap::Base do
         let(:middle) { pass }
         let(:right)  { pass }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(result: ["<RESULT>"] * 3))
-        }
+        it { is_expected.to eq(["<RESULT>"] * 3) }
       end
     end
 
@@ -160,9 +152,7 @@ describe Remap::Base do
         let(:middle) { fail }
         let(:right)  { fail }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
 
       context "when middle passes" do
@@ -170,9 +160,7 @@ describe Remap::Base do
         let(:middle) { pass }
         let(:right)  { fail }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
 
       context "when right passes" do
@@ -180,9 +168,7 @@ describe Remap::Base do
         let(:middle) { fail }
         let(:right)  { pass }
 
-        it {
-          expect(result).to be_a_success.and(have_attributes(value: ["<RESULT>"]))
-        }
+        it { is_expected.to eq(output) }
       end
 
       xcontext "when all passes" do
@@ -196,9 +182,9 @@ describe Remap::Base do
   end
 
   describe "::rule" do
-    subject { mapper.call(state) }
+    subject { mapper.call(input) }
 
-    let(:state) { state!({ key: "okay" }) }
+    let(:input) { { key: "value" } }
 
     context "when failing" do
       let(:mapper) do
@@ -210,7 +196,7 @@ describe Remap::Base do
       end
 
       it "invokes block with failure" do
-        expect { |error| mapper.call(state, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
+        expect { |error| mapper.call(input, &error) }.to yield_with_args(an_instance_of(Remap::Failure))
       end
     end
 
@@ -223,7 +209,7 @@ describe Remap::Base do
         end
       end
 
-      it { is_expected.to be_a_success }
+      it { is_expected.to eq(input) }
     end
   end
 
@@ -249,7 +235,7 @@ describe Remap::Base do
         context "when rule accesses option" do
           subject { mapper.call(value!, id: id) }
 
-          it { is_expected.to be_a_success.and(have_attributes(value: id)) }
+          it { is_expected.to eq(id) }
         end
       end
     end
@@ -269,9 +255,7 @@ describe Remap::Base do
         context "when rule accesses option" do
           subject(:result) { mapper.call(value!, id: id) }
 
-          it {
-            expect(result).to be_a_success.and(have_attributes(value: { id: id }))
-          }
+          it { is_expected.to eq(id: id) }
         end
       end
 

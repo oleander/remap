@@ -22,7 +22,7 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(have_attributes(result: { items: ["B", "B", "C"] }))
+      { items: ["B", "B", "C"] }
     end
   end
 end

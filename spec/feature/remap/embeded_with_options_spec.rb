@@ -25,7 +25,7 @@ describe Remap::Base do
     let(:input) { {} }
 
     let(:output) do
-      be_a_success.and(have_attributes(result: { computer: { password: "secret" } }))
+      { computer: { password: "secret" } }
     end
   end
 end

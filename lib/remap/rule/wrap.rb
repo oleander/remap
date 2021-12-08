@@ -17,7 +17,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({ name: "Ford" }).result # => { cars: ["Ford"] }
+    #   Mapper.call({ name: "Ford" }) # => { cars: ["Ford"] }
     class Wrap < Concrete
       # @return [:array]
       attribute :type, Value(:array)

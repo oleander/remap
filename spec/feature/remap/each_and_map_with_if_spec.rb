@@ -40,15 +40,12 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(
-        have_attributes({
-          result: {
-            drive: ["John", "Jane", "Jack"],
-            retire: [
-              "Jack"
-            ]
-          }
-        }))
+      {
+        drive: ["John", "Jane", "Jack"],
+        retire: [
+          "Jack"
+        ]
+      }
     end
   end
 end

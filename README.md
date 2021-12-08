@@ -121,7 +121,7 @@ output = {
   }
 }
 
-Mapper.call(input, date: Date.today).result == output
+Mapper.call(input, date: Date.today) == output
 ```
 
 ## Installation
@@ -181,8 +181,7 @@ end
 > to invoke do the following
 
 ``` ruby
-output = Mapper.call({ person: { name: 'John' } })
-output.result # => { nickname: 'John' }
+Mapper.call({ person: { name: 'John' } }) # => { nickname: 'John' }
 ```
 
 ### Select all elements in an array
@@ -196,8 +195,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call([{ name: "John" }, { name: "Jane" }])
-output.result # => ["John", "Jane"]
+Mapper.call([{ name: "John" }, { name: "Jane" }]) # => ["John", "Jane"]
 ```
 
 ### Fixed values predefined in the mapper
@@ -213,8 +211,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({}, name: "John")
-output.result # => { person: { name: "John" } }
+Mapper.call({}, name: "John") # => { person: { name: "John" } }
 ```
 
 ### Fixed value defined in the mapper
@@ -228,8 +225,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({})
-output.result # => { api_key: "ABC-123" }
+Mapper.call({}) # => { api_key: "ABC-123" }
 ```
 
 ### Skip mapping rule unless some condition is fulfilled
@@ -247,8 +243,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call(["A", "B", "C"])
-output.result # => ["A", "C"]
+Mapper.call(["A", "B", "C"]) # => ["A", "C"]
 ```
 
 > or use `if` to reverse the selection
@@ -264,8 +259,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call(["A", "B", "C"])
-output.result # => ["B"]
+Mapper.call(["A", "B", "C"]) # => ["B"]
 ```
 
 ### Map to a fixed set of values
@@ -285,16 +279,14 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({
+Mapper.call({
   countries: [
     { name: "SWE" },
     { name: "DE" },
     { name: "USA" },
     { name: "IT" }
   ]
-})
-
-output.result # => { names: ["SWE", "DE", "US", "OTHER"] }
+}) # => { names: ["SWE", "DE", "US", "OTHER"] }
 ```
 
 ### Pending mapping
@@ -309,8 +301,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ workplace: "Apple", name: "John" })
-output.result # => { nickname: "John" }
+Mapper.call({ workplace: "Apple", name: "John" }) # => { nickname: "John" }
 ```
 
 ### Iterate over an enumerable
@@ -328,8 +319,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ people: [{ name: "John" }] })
-output.result # => { names: ["John"] }
+Mapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
 ```
 
 > The scope gives access to a few handly values
@@ -354,8 +344,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ people: [{ name: "John" }] })
-output.result # => [{ name: "John" }]
+Mapper.call({ people: [{ name: "John" }] }) # => [{ name: "John" }]
 ```
 
 > or `index` to get access to `each`'s index
@@ -373,8 +362,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ people: [{ name: "John" }] })
-output.result # => [0]
+Mapper.call({ people: [{ name: "John" }] }) # => [0]
 ```
 
 ### Post-process a mapped value
@@ -388,8 +376,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call("Hello")
-output.result # => "Hello!"
+Mapper.call("Hello") # => "Hello!"
 ```
 
 ### Select element at index
@@ -403,8 +390,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] })
-output.result # => "John"
+Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] }) # => "John"
 ```
 
 > or `first`
@@ -416,8 +402,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] })
-output.result # => "John"
+Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] }) # => "John"
 ```
 
 > or `last`
@@ -429,8 +414,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] })
-output.result # => "Jane"
+Mapper.call({ people: [{ name: "John" }, { name: "Jane"}] }) # => "Jane"
 ```
 
 ### Wrap output
@@ -448,8 +432,7 @@ class Mapper < Remap::Base
   end
 end
 
-output = Mapper.call({ name: "John" })
-output.result # => { names: ["John"] }
+Mapper.call({ name: "John" }) # => { names: ["John"] }
 ```
 
 ### Manually skip a mapping

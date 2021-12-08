@@ -44,13 +44,10 @@ describe Remap::Base do
     end
 
     let(:output) do
-      be_a_success.and(
-        have_attributes({
-          result: [
-            { bicycle: { gears: 3, brand: "Rose" } },
-            { car: { hybrid: false, fule: "Petrol" } }
-          ]
-        }))
+      [
+        { bicycle: { gears: 3, brand: "Rose" } },
+        { car: { hybrid: false, fule: "Petrol" } }
+      ]
     end
   end
 end

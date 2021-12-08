@@ -20,22 +20,20 @@ module Remap
         end
       end
 
-      state = State.call(input, options: options, mapper: self)
-
-      other = call!(state) do |failure|
-        return error[failure]
+      other = State.call(input, options: options, mapper: self).then do |state|
+        call!(state) do |failure|
+          return error[failure]
+        end
       end
 
       case other
-      in { value:, notices: }
-        Success.call(value: value, notices: notices)
+      in { value: }
+        value
       in { notices: [] }
-        return error[Failure.call(failures: [other.failure("No data avalible")])]
+        error[other.failure("No return value")]
       in { notices: }
-        return error[Failure.call(failures: notices, notices: [])]
+        error[Failure.call(failures: notices)]
       end
-    rescue Notice::Error => e
-      error[Failure.call(failures: [e.notice])]
     end
   end
 end

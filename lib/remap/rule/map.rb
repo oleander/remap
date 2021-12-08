@@ -14,7 +14,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({ name: "Ford" }).result # => { person: { name: "Ford" } }
+    #   Mapper.call({ name: "Ford" }) # => { person: { name: "Ford" } }
     class Map < Abstract
       class Path < Struct
         Output = Remap::Path::Output

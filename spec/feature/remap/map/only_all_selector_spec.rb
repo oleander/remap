@@ -19,5 +19,5 @@ describe Remap::Base do
     input
   end
 
-  its(:value) { is_expected.to eq(output) }
+  it { is_expected.to eq(output) }
 end

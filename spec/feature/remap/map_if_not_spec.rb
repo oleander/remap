@@ -17,7 +17,7 @@ describe Remap::Base do
     let(:input) { ["A", "B", "C"] }
 
     let(:output) do
-      be_a_success.and(have_attributes(result: ["B", "C"]))
+      ["B", "C"]
     end
   end
 end

@@ -8,8 +8,11 @@ module Remap
     #
     # @example Select the value at key :name from a hash
     #   state = Remap::State.call({ name: "John" })
-    #   result = Remap::Selector::Key.new(:name).call(state)
-    #   result.fetch(:value) # => "John"
+    #   selector = Remap::Selector::Key.new(:name)
+    #
+    #   selector.call(state) do |state|
+    #     state.fetch(:value)
+    #   end
     class Key < Unit
       # @return [#hash
       attribute :key, Types::Key

@@ -11,8 +11,7 @@ module Remap
   #     end
   #   end
   #
-  #   output = Mapper.call([{ name: "John" }, { name: "Jane" }])
-  #   output.result # => ["John", "Jane"]
+  #   Mapper.call([{ name: "John" }, { name: "Jane" }]) # => ["John", "Jane"]
   #
   # @example Given an option
   #   class Mapper < Remap::Base
@@ -23,7 +22,7 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call({}, name: "John").result # => { person: { name: "John" } }
+  #   Mapper.call({}, name: "John") # => { person: { name: "John" } }
   #
   # @example Given a value
   #   class Mapper < Remap::Base
@@ -32,7 +31,8 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call({}).result # => { api_key: "ABC-123" }
+  #   Mapper.call({}) # => { api_key: "ABC-123" }
+  #
   # @example Maps ["A", "B", "C"] to ["A", "C"]
   #   class Mapper < Remap::Base
   #     define do
@@ -44,7 +44,8 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call(["A", "B", "C"]).result # => ["A", "C"]
+  #   Mapper.call(["A", "B", "C"]) # => ["A", "C"]
+  #
   # @example Maps ["A", "B", "C"] to ["B"]
   #   class Mapper < Remap::Base
   #     define do
@@ -56,7 +57,8 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call(["A", "B", "C"]).result # => ["B"]
+  #   Mapper.call(["A", "B", "C"]) # => ["B"]
+  #
   # @example Maps { a: { b: "A" } } to "A"
   #   class Mapper < Remap::Base
   #     define do
@@ -66,8 +68,8 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call({ a: { b: "A" } }).result # => "A"
-  #   Mapper.call({ a: { b: "B" } }).result # => "B"
+  #   Mapper.call({ a: { b: "A" } }) # => "A"
+  #   Mapper.call({ a: { b: "B" } }) # => "B"
   #
   # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
   #   class Mapper < Remap::Base
@@ -80,7 +82,7 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call({ people: [{ name: "John" }] }).result # => { names: ["John"] }
+  #   Mapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
   #
   # @example Map "Hello" to "Hello!"
   #   class Mapper < Remap::Base
@@ -91,7 +93,7 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call("Hello").result # => "Hello!"
+  #   Mapper.call("Hello") # => "Hello!"
   #
   # @example Select the second element from an array
   #   class Mapper < Remap::Base
@@ -100,7 +102,7 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call([1, 2, 3]).result # => 2
+  #   Mapper.call([1, 2, 3]) # => 2
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants
@@ -122,7 +124,7 @@ module Remap
     # If the schema fail, the mapper will fail
     #
     # @example Guard against missing values
-    #   class Mapper < Remap::Base
+    #   class MapperWithAge < Remap::Base
     #     contract do
     #       required(:age).filled(:integer)
     #     end
@@ -132,8 +134,10 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({age: '10'}).success? # => false
-    #   Mapper.call({age: 50}).success? # => true
+    #   MapperWithAge.call({age: 50}) # => { person: { age: 50 } }
+    #   MapperWithAge.call({age: '10'}) do |failure|
+    #     # ...
+    #   end
     #
     # @see https://dry-rb.org/gems/dry-schema/1.5/
     #
@@ -146,7 +150,7 @@ module Remap
     # If the rule fail, the mapper will fail
     #
     # @example Guard against values
-    #   class Mapper < Remap::Base
+    #   class MapperWithRule < Remap::Base
     #     contract do
     #       required(:age)
     #     end
@@ -162,8 +166,10 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({age: 10}).success? # => false
-    #   Mapper.call({age: 50}).success? # => true
+    #   MapperWithRule.call({age: 50}) # => { person: { age: 50 } }
+    #   MapperWithRule.call({age: 10}) do |failure|
+    #     # ...
+    #   end
     #
     # @see https://dry-rb.org/gems/dry-validation/1.6/rules/
     #
@@ -175,7 +181,7 @@ module Remap
     # Defines a required option for the mapper
     #
     # @example A mapper that takes an argument name
-    #   class Mapper < Remap::Base
+    #   class MapperWithOption < Remap::Base
     #     option :name
     #
     #     define do
@@ -183,7 +189,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({}, name: "John").result # => { name: "John" }
+    #   MapperWithOption.call({}, name: "John") # => { name: "John" }
     #
     # @param field [Symbol]
     # @option type (Types::Any) [#call]
@@ -213,7 +219,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({a: 1}).result # => { b: 1 }
+    #   Mapper.call({a: 1}) # => { b: 1 }
     #
     # @example A mapper with an output constructor
     #   class Person < Dry::Struct
@@ -226,7 +232,7 @@ module Remap
     #     end
     #   end
     #
-    #   Mapper.call({name: "John"}).result.first_name # => "John"
+    #   Mapper.call({name: "John"}).first_name # => "John"
     #
     # @return [void]
     def self.define(target = Nothing, method: :new, strategy: :argument, &context)

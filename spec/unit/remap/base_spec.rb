@@ -85,15 +85,16 @@ describe Remap::Base do
     end
 
     context "when mapper succeedes" do
-      subject(:result) { mapper.call({ a: 1 }) }
+      subject(:result) { mapper.call(input) }
 
+      let(:input) { { a: 1 } }
       let(:mapper) do
         mapper! do
           contract { required(:a) }
         end
       end
 
-      it { is_expected.to be_a_success }
+      it { is_expected.to eq(input) }
     end
   end
 end
