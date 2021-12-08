@@ -5,11 +5,11 @@ describe Remap::Path::Input do
 
   describe "#call" do
     let(:state) { state!(input) }
-    let(:path)  { described_class.call(segments) }
+    let(:path)  { described_class.call(selectors) }
 
-    context "without segments" do
+    context "without selectors" do
       let(:input) { "value" }
-      let(:segments) { [] }
+      let(:selectors) { [] }
 
       it "does not yield" do
         expect { |iterator| path.call(state, &iterator) }.to yield_with_args(contain(input))
@@ -17,7 +17,7 @@ describe Remap::Path::Input do
     end
 
     context "with key" do
-      let(:segments) { [:key] }
+      let(:selectors) { [:key] }
 
       context "when the key is present" do
         let(:value) { "value" }
@@ -39,7 +39,7 @@ describe Remap::Path::Input do
     end
 
     context "with a single 'all' selector" do
-      let(:segments) { [all!] }
+      let(:selectors) { [all!] }
 
       context "when input is an array" do
         subject do
@@ -79,7 +79,7 @@ describe Remap::Path::Input do
     end
 
     context "with 'all' selector and a key" do
-      let(:segments) { [all!, :key] }
+      let(:selectors) { [all!, :key] }
 
       context "when input is an array" do
         subject do
@@ -120,7 +120,7 @@ describe Remap::Path::Input do
     end
 
     context "with index" do
-      let(:segments) { [index!(1)] }
+      let(:selectors) { [index!(1)] }
 
       context "when the index is present" do
         subject do

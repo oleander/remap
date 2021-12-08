@@ -13,12 +13,12 @@ module Remap
     #
     #   result.fetch(:value) # => { a: { b: { c: "A" } } }
     class Output < Unit
-      attribute :segments, [Types::Key]
+      attribute :selectors, [Types::Key]
 
       # @return [State]
       def call(state)
         state.fmap do |value|
-          segments.hide(value)
+          selectors.hide(value)
         end
       end
     end
