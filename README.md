@@ -11,6 +11,7 @@ matching capabilities – making it blazingly fast
 * [Introduction](#introduction)
   * [Callbacks](#callbacks)
   * [Operators](#operators)
+  * [Selectors](#selectors)
   * [Constructors](#constructors)
   * [Error Handling](#error-handling)
 * [Installation](#installation)
@@ -293,9 +294,11 @@ end
 Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] }) # => ["John", "Jane"]
 ```
 
-Or use the `all` selector as part of the path.
+### Selectors
 
-> `all` is similar to JSONPath’s `[*]` operator
+Use the `all` selector as part of the path instead of `each`.
+
+> `all` is similar to JSONPath’s `[*]` selector
 
 ``` ruby
 class Mapper < Remap::Base
@@ -303,6 +306,22 @@ class Mapper < Remap::Base
     map :people, all, :name
   end
 end
+```
+
+`first` selects the first element in an array and `last` the last element.
+
+> `first` & `last` is similar to JSONPath’s `[0]` `[-1]` selectors
+
+``` ruby
+class Mapper < Remap::Base
+  define do
+    map :people do
+      map first, :name, to: :name
+    end
+  end
+end
+
+Mapper.call({ people: [{ name: "John" }] }) # => { name: "John" }
 ```
 
 ### Callbacks
