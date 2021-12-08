@@ -31,7 +31,7 @@ module Remap
         #
         # @return [State]
         def call(state, &error)
-          unless error
+          unless block_given?
             raise ArgumentError, "map.call(state, &error) requires a block"
           end
 

@@ -31,14 +31,18 @@ module Remap
     # @return [Rule]
     def self.call(&block)
       unless block
-        return Rule::Void.new
+        return Rule::VOID
       end
 
       rules = new([]).tap do |compiler|
         compiler.instance_exec(&block)
       end.rules
 
-      Rule::Collection.call(rules: rules)
+      if rules.empty?
+        return Rule::VOID
+      end
+
+      Rule::Block.new(rules)
     end
 
     # Maps input path [input] to output path [to]
@@ -65,7 +69,6 @@ module Remap
     def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       add rule(*path, to: to, backtrace: backtrace, &block)
     end
-
 
     # Optional version of {#map}
     #

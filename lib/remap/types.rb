@@ -15,7 +15,7 @@ module Remap
     Enumerable = Any.constrained(type: Enumerable)
     Nothing    = Constant(Remap::Nothing)
     Mapper     = Interface(:call!)
-    Rule       = Interface(:call)
+    Rule       = Interface(:call) | Instance(Proc)
     Key        = Interface(:hash)
 
     # Validates a state according to State::Schema

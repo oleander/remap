@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-shared_examples Remap::Rule::Collection do
-  subject(:rule) { described_class.call(rules: rules) }
-
-  subject { rule.call(state, &error) }
-
-  let(:state) { state!(input) }
-
-  it { is_expected.to match(output) }
-end
-
-describe Remap::Rule::Collection do
+describe Remap::Rule::Block do
   using Remap::State::Extension
+
+  shared_examples described_class do
+    subject(:rule) { described_class.call(rules: rules) }
+
+    subject { rule.call(state, &error) }
+
+    let(:state) { state!(input) }
+
+    it { is_expected.to match(output) }
+  end
 
   describe "#call" do
     context "without rules" do
@@ -22,9 +22,7 @@ describe Remap::Rule::Collection do
       let(:state) { state!(input) }
 
       it "throws a notice symbol" do
-        expect do
-          rule.call(state)
-        end.to throw_symbol(:notice, be_a(Remap::Notice))
+        expect(rule.call(state, &error)).not_to have_key(:value)
       end
     end
 

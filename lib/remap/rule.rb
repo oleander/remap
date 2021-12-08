@@ -5,6 +5,8 @@ module Remap
     defines :requirement
     requirement Types::Any
 
+    VOID = Void.new(EMPTY_HASH)
+
     # @param state [State]
     #
     # @abstract

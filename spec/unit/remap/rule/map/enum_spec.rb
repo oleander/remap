@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Remap::Rule::Enum do
+describe Remap::Rule::Map::Enum do
   shared_examples described_class do
     subject { enum[lookup] }
 
