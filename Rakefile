@@ -3,6 +3,7 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 require "json"
+require "bump"
 
 RSpec::Core::RakeTask.new(:spec)
 
@@ -47,4 +48,12 @@ end
 desc "Run all specs and generate documentation"
 task :rubocop do
   exec "bundle", "exec", "rubocop"
+end
+
+namespace :gem do
+  desc "Build and release gem"
+  task :release do
+    Bump::Bump.run("patch", commit: true, bundle: true, tag: true)
+    exec "bundle", "exec", "rake", "release"
+  end
 end
