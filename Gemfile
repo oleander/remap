@@ -10,6 +10,7 @@ group :development do
   gem "guard-rspec", require: false
   gem "guard-rubocop", require: false
 
+  gem "rubocop-md", require: false
   gem "rubocop-rspec", require: false
 
   gem "bump"

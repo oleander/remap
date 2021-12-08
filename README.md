@@ -242,7 +242,7 @@ class Mapper < Remap::Base
   end
 end
 
-Mapper.call({ people: [ { name: "John" }, { name: "Jane" } ] }) # => ["John", "Jane"]
+Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] }) # => ["John", "Jane"]
 ```
 
 > Alternatively, `all` can be used to express rules that applies to all values in an array.
@@ -292,7 +292,7 @@ class Mapper < Remap::Base
 
       # Define rules for a finite set of values
       map(:name).enum do
-        from "John", to "Joe"
+        from "John", to: "Joe"
         value "Lisa", "Jane"
         otherwise "Unknown"
       end
@@ -335,7 +335,7 @@ class Mapper < Remap::Base
 
     # Access {code} inside a callback
     map(:pin_code, to: :seed).then do |pin|
-      code ** pin
+      code**pin
     end
   end
 end
@@ -344,7 +344,7 @@ end
 The second argument to `Mapper.call` takes a hash, used to populate the mapper.
 
 ``` ruby
-Mapper.call({ pin_code: 1234}, code: 5678) # => { secret: 5678, seed: 3.2*10^10 }
+Mapper.call({ pin_code: 1234 }, code: 5678) # => { secret: 5678, seed: 3.2*10^10 }
 ```
 
 ### Fixed values
@@ -414,10 +414,7 @@ class Vehicle < Remap::Base
   end
 end
 
-output = Vehicle.call([
-  { gears: 3, brand: "Rose" },
-  { hybrid: false, fule: "Petrol" }
-])
+output = Vehicle.call([ { gears: 3, brand: "Rose" }, { hybrid: false, fule: "Petrol" } ])
 ```
 
 > Supported operators are `|`, `&` and `^`
