@@ -35,7 +35,7 @@ describe Remap::Rule::Collection::Filled do
 
       context "when left is a problem" do
         let(:value) { { key: "value" } }
-        let(:rule1) { skip!       }
+        let(:rule1) { skip! }
         let(:rule2) { static!(value) }
 
         it { is_expected.to contain(input) }
