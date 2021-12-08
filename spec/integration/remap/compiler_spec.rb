@@ -19,10 +19,10 @@ describe Remap::Compiler do
     end
 
     context "without block" do
-      let(:block) { -> * { each } }
+      let(:block) { -> { each } }
 
       it "raises an argument error" do
-        expect { rule.call(state) }.to raise_error(ArgumentError)
+        expect { output }.to raise_error(ArgumentError)
       end
     end
   end
@@ -46,11 +46,10 @@ describe Remap::Compiler do
     end
 
     context "without block" do
-      let(:input) { { a: 100 } }
-      let(:block) { -> * { wrap(:array) } }
+      let(:block) { -> { wrap(:array) } }
 
       it "raises an argument error" do
-        expect { rule.call(state) }.to raise_error(ArgumentError)
+        expect { output }.to raise_error(ArgumentError)
       end
     end
   end
@@ -233,6 +232,90 @@ describe Remap::Compiler do
     end
   end
 
+  describe "#map?" do
+    subject { rule.call(state, &error) }
+
+    let(:rule) { described_class.call(&context) }
+
+    context "when state is undefined" do
+      let(:state) { undefined! }
+
+      context "when rule is nested" do
+        let(:context) do
+          -> do
+            map? :person do
+              map :name
+            end
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+
+      context "when rule not nested" do
+        let(:context) do
+          -> do
+            map? :person
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+    end
+
+    context "when rule is nested" do
+      let(:context) do
+        -> do
+          map? :person do
+            map? :name
+          end
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { person: { name: "John" } } }
+
+        it { is_expected.to contain("John") }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { person: { mismatch: "John" } } }
+
+        it "does not yields a failure" do
+          expect { |error| rule.call(state, &error) }.not_to yield_control
+        end
+
+        it { is_expected.not_to have_key(:value) }
+        its([:notices]) { is_expected.to have(1).item }
+      end
+    end
+
+    context "when rule not nested" do
+      let(:context) do
+        -> do
+          map? :name
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { name: "John" } }
+
+        it { is_expected.to contain("John") }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { mismatch: "John" } }
+
+        it "does not yield a failure" do
+          expect { |error| rule.call(state, &error) }.not_to yield_control
+        end
+
+        it { is_expected.not_to have_key(:value) }
+        its([:notices]) { is_expected.to have(1).item }
+      end
+    end
+  end
+
   describe "#to" do
     context "without block" do
       let(:input) { value! }
@@ -249,6 +332,90 @@ describe Remap::Compiler do
     end
   end
 
+  describe "#to?" do
+    subject { rule.call(state, &error) }
+
+    let(:rule) { described_class.call(&context) }
+
+    context "when state is undefined" do
+      let(:state) { undefined! }
+
+      context "when rule is nested" do
+        let(:context) do
+          -> do
+            to? :person do
+              to :name
+            end
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+
+      context "when rule not nested" do
+        let(:context) do
+          -> do
+            to? :person
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+    end
+
+    context "when rule is nested" do
+      let(:context) do
+        -> do
+          to? map: :person do
+            to? map: :name
+          end
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { person: { name: "John" } } }
+
+        it { is_expected.to contain("John") }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { person: { mismatch: "John" } } }
+
+        it "does not yields a failure" do
+          expect { |error| rule.call(state, &error) }.not_to yield_control
+        end
+
+        it { is_expected.not_to have_key(:value) }
+        its([:notices]) { is_expected.to have(1).item }
+      end
+    end
+
+    context "when rule not nested" do
+      let(:context) do
+        -> do
+          to? map: :name
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { name: "John" } }
+
+        it { is_expected.to contain("John") }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { mismatch: "John" } }
+
+        it "does not yield a failure" do
+          expect { |error| rule.call(state, &error) }.not_to yield_control
+        end
+
+        it { is_expected.not_to have_key(:value) }
+        its([:notices]) { is_expected.to have(1).item }
+      end
+    end
+  end
+
   describe "#all" do
     let(:block) { -> * { map [all, :a] } }
 
@@ -257,25 +424,67 @@ describe Remap::Compiler do
 
       it { is_expected.to contain([1, 2]) }
     end
+
+    context "given a block" do
+      let(:block) do
+        -> do
+          all do
+            # NOP
+          end
+        end
+      end
+
+      it "raises an error" do
+        expect { output }.to raise_error(ArgumentError)
+      end
+    end
   end
 
   describe "#first" do
-    let(:block) { -> * { map [first] } }
+    let(:block) { -> { map [first] } }
 
     context "when non-empty" do
       let(:input) { array! }
 
       it { is_expected.to contain(input.first) }
     end
+
+    context "given a block" do
+      let(:block) do
+        -> do
+          first do
+            # NOP
+          end
+        end
+      end
+
+      it "raises an error" do
+        expect { output }.to raise_error(ArgumentError)
+      end
+    end
   end
 
   describe "#last" do
-    let(:block) { -> * { map [last] } }
+    let(:block) { -> { map [last] } }
 
     context "when non-empty" do
       let(:input) { array! }
 
       it { is_expected.to contain(input.last) }
+    end
+
+    context "given a block" do
+      let(:block) do
+        -> do
+          last do
+            # NOP
+          end
+        end
+      end
+
+      it "raises an error" do
+        expect { output }.to raise_error(ArgumentError)
+      end
     end
   end
 
@@ -283,27 +492,57 @@ describe Remap::Compiler do
     let(:input) { array! }
 
     context "when inside range" do
-      let(:block) { -> * { map [at(1)] } }
+      let(:block) { -> { map [at(1)] } }
 
       it { is_expected.to contain(input[1]) }
     end
 
     context "when outside range" do
-      let(:block) { -> * { map? [at(100)] } }
+      let(:block) { -> { map? [at(100)] } }
 
       its([:notices]) { is_expected.to have(1).items }
     end
 
     context "when a non-int is passed" do
-      let(:block) { -> * { map [at(:not_an_index)] } }
+      let(:block) { -> { map [at(:not_an_index)] } }
 
       it "raises an argument error" do
+        expect { output }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "given a block" do
+      let(:block) do
+        -> do
+          at(10) do
+            # NOP
+          end
+        end
+      end
+
+      it "raises an error" do
         expect { output }.to raise_error(ArgumentError)
       end
     end
   end
 
   describe "#embed" do
+    context "given a block" do
+      let(:mapper) { mapper! }
+
+      let(:block) do |context: self|
+        -> do
+          embed(context.mapper) do
+            # NOP
+          end
+        end
+      end
+
+      it "raises an error" do
+        expect { output }.to raise_error(ArgumentError)
+      end
+    end
+
     context "with a non-mapper as argument" do
       let(:block) { -> * { embed Object.new } }
       let(:input) { { a: 1 } }
@@ -333,6 +572,20 @@ describe Remap::Compiler do
   describe "#set" do
     let(:input) { {} }
 
+    context "given a block" do
+      let(:block) do
+        -> do
+          set(to: value("a value")) do
+            # NOP
+          end
+        end
+      end
+
+      it "raises an error" do
+        expect { output }.to raise_error(ArgumentError)
+      end
+    end
+
     context "when using #value" do
       let(:block) { -> * { set :a, :b, to: value("a value") } }
 
@@ -348,7 +601,7 @@ describe Remap::Compiler do
     end
 
     context "given using #option" do
-      let(:id) { symbol! }
+      let(:id)    { symbol! }
       let(:state) { state!(options: { id: id }) }
 
       context "when value exists" do

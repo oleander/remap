@@ -91,7 +91,11 @@ module Remap
     # @param mapper [Remap]
     #
     # @return [Rule::Embed]
-    def embed(mapper)
+    def embed(mapper, &block)
+      if block
+        raise ArgumentError, "#embed does not take a block"
+      end
+
       add Rule::Embed.new(mapper: mapper)
     rescue Dry::Struct::Error
       raise ArgumentError, "Embeded mapper must be [Remap::Mapper], got [#{mapper}]"
@@ -104,7 +108,11 @@ module Remap
     # @raise [ArgumentError]
     #   if no path given
     #   if path is not a Symbol or Array<Symbol>
-    def set(*path, to:)
+    def set(*path, to:, &block)
+      if block
+        raise ArgumentError, "#set does not take a block"
+      end
+
       add Rule::Set.new(path: path.flatten, value: to)
     rescue Dry::Struct::Error => e
       raise ArgumentError, e.message
@@ -176,7 +184,11 @@ module Remap
     # @param value [Any]
     #
     # @return [Rule::Static::Fixed]
-    def value(value)
+    def value(value, &block)
+      if block
+        raise ArgumentError, "option selector does not take a block"
+      end
+
       Static::Fixed.new(value: value)
     end
 
@@ -185,7 +197,11 @@ module Remap
     # @param id [Symbol]
     #
     # @return [Rule::Static::Option]
-    def option(id, backtrace: Kernel.caller)
+    def option(id, backtrace: Kernel.caller, &block)
+      if block
+        raise ArgumentError, "option selector does not take a block"
+      end
+
       Static::Option.new(name: id, backtrace: backtrace)
     end
 
@@ -195,7 +211,11 @@ module Remap
     #
     # @return [Path::Segment::Key]
     # @raise [ArgumentError] if index is not an Integer
-    def at(index)
+    def at(index, &block)
+      if block
+        raise ArgumentError, "first selector does not take a block"
+      end
+
       Selector::Index.new(index: index)
     rescue Dry::Struct::Error
       raise ArgumentError,
@@ -205,7 +225,11 @@ module Remap
     # Selects first element in input
     #
     # @return [Path::Segment::Key]]
-    def first
+    def first(&block)
+      if block
+        raise ArgumentError, "first selector does not take a block"
+      end
+
       at(0)
     end
     alias any first
@@ -213,7 +237,11 @@ module Remap
     # Selects last element in input
     #
     # @return [Path::Segment::Key]
-    def last
+    def last(&block)
+      if block
+        raise ArgumentError, "last selector does not take a block"
+      end
+
       at(-1)
     end
 
