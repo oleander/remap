@@ -47,7 +47,7 @@ module Remap
         #       b: :c
         #     },
         #     d: :e
-        #   }.hur_only(:a, :b) # => { a: { b: :c } }
+        #   }.only(:a, :b) # => { a: { b: :c } }
         #
         # @returns [Hash] a hash containing the given path
         # @raise Europace::Error when path doesn't exist
@@ -117,11 +117,7 @@ module Remap
         def map(&block)
           bind do |value, state|
             Iteration.call(state: state, value: value).call do |other, **options|
-              state.set(other, **options).then do |inner_state|
-                block[inner_state] do |failure|
-                  throw :failure, failure
-                end
-              end
+              state.set(other, **options).then(&block)
             end.except(:index, :element, :key)
           end
         end
