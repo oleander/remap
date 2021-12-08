@@ -11,7 +11,7 @@ module Remap
 
     # Constructs a rule tree given block
     #
-    # @example Compiles two rules
+    # @example Compiles two rules, [get] and [map]
     #   rule = Remap::Compiler.call do
     #     get :name
     #     get :age
@@ -42,6 +42,21 @@ module Remap
     # @param path ([]) [Array<Segment>, Segment]
     # @param to ([]) [Array<Symbol>, Symbol]
     #
+    # @example From path [:name] to [:nickname]
+    #   rule = Remap::Compiler.call do
+    #     map :name, to: :nickname
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John"
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { nickname: "John" }
+    #
     # @return [Rule::Map::Required]
     def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       add Rule::Map::Required.call(
@@ -54,6 +69,24 @@ module Remap
     end
 
     # Optional version of {#map}
+    #
+    # @example Map an optional field
+    #   rule = Remap::Compiler.call do
+    #     to :person do
+    #       map? :age, to: :age
+    #       map :name, to: :name
+    #     end
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John"
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { person: { name: "John" } }
     #
     # @see #map
     #
@@ -72,12 +105,43 @@ module Remap
     #
     # @param path ([]) [Array<Segment>, Segment]
     #
+    # @example Map from [:name] to [:name]
+    #   rule = Remap::Compiler.call do
+    #     get :name
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John"
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { name: "John" }
+    #
     # @return [Rule::Map::Required]
     def get(*path, backtrace: Kernel.caller, &block)
       map(path, to: path, backtrace: backtrace, &block)
     end
 
     # Optional version of {#get}
+    #
+    # @example Map from [:name] to [:name]
+    #   rule = Remap::Compiler.call do
+    #     get :name
+    #     get? :age
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John"
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { name: "John" }
     #
     # @see #get
     #
@@ -90,6 +154,35 @@ module Remap
     #
     # @param mapper [Remap]
     #
+    # @example Embed mapper Car into a person
+    #   class Car < Remap::Base
+    #     define do
+    #       map :car do
+    #         map :name, to: :car
+    #       end
+    #     end
+    #   end
+    #
+    #   rule = Remap::Compiler.call do
+    #     map :person do
+    #       embed Car
+    #     end
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     person: {
+    #       car: {
+    #         name: "Volvo"
+    #       }
+    #     }
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { car: "Volvo" }
+    #
     # @return [Rule::Embed]
     def embed(mapper, &block)
       if block
@@ -101,8 +194,36 @@ module Remap
       raise ArgumentError, "Embeded mapper must be [Remap::Mapper], got [#{mapper}]"
     end
 
+    # Set a static value
+    #
     # @param path ([]) [Symbol, Array<Symbol>]
     # @option to [Remap::Static]
+    #
+    # @example Set static value to { name: "John" }
+    #   rule = Remap::Compiler.call do
+    #     set :name, to: value("John")
+    #   end
+    #
+    #   state = Remap::State.call({})
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { name: "John" }
+    #
+    # @example Reference an option
+    #   rule = Remap::Compiler.call do
+    #     set :name, to: option(:name)
+    #   end
+    #
+    #   state = Remap::State.call({}, options: { name: "John" })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { name: "John" }
     #
     # @return [Rule::Set]
     # @raise [ArgumentError]
@@ -123,6 +244,21 @@ module Remap
     # @param path [Array<Symbol>, Symbol]
     # @param map [Array<Segment>, Segment]
     #
+    # @example From path [:name] to [:nickname]
+    #   rule = Remap::Compiler.call do
+    #     to :nickname, map: :name
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John"
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { nickname: "John" }
+    #
     # @return [Rule::Map]
     def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
       map(*map, to: path, backtrace: backtrace, &block)
@@ -130,6 +266,23 @@ module Remap
 
     # Optional version of {#to}
     #
+    # @example Map an optional field
+    #   rule = Remap::Compiler.call do
+    #     to :person do
+    #       to? :age, map: :age
+    #       to :name, map: :name
+    #     end
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John"
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { person: { name: "John" } }
     # @see #to
     #
     # @return [Rule::Map::Optional]
@@ -139,6 +292,25 @@ module Remap
 
     # Iterates over the input value, passes each value
     # to its block and merges the result back together
+    #
+    # @example Map an array of hashes
+    #   rule = Remap::Compiler.call do
+    #     each do
+    #       map :name
+    #     end
+    #   end
+    #
+    #   state = Remap::State.call([{
+    #     name: "John"
+    #   }, {
+    #     name: "Jane"
+    #   }])
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => ["John", "Jane"]
     #
     # @return [Rule::Each]]
     # @raise [ArgumentError] if no block given
@@ -156,6 +328,23 @@ module Remap
     #
     # @yieldreturn [Rule]
     #
+    # @example Wrap an output value in an array
+    #   rule = Remap::Compiler.call do
+    #     wrap(:array) do
+    #       map :name
+    #     end
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     name: "John"
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => ["John"]
+    #
     # @return [Rule::Wrap]
     # @raise [ArgumentError] if type is not :array
     def wrap(type, &block)
@@ -170,6 +359,22 @@ module Remap
 
     # Selects all elements
     #
+    # @example Select all keys in array
+    #   rule = Remap::Compiler.call do
+    #     map all, :name, to: :names
+    #   end
+    #
+    #   state = Remap::State.call([
+    #     { name: "John" },
+    #     { name: "Jane" }
+    #   ])
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { names: ["John", "Jane"] }
+    #
     # @return [Rule::Path::Segment::Quantifier::All]
     def all(&block)
       if block
@@ -183,6 +388,19 @@ module Remap
     #
     # @param value [Any]
     #
+    # @example Set path to static value
+    #   rule = Remap::Compiler.call do
+    #     set :api_key, to: value("<SECRET>")
+    #   end
+    #
+    #   state = Remap::State.call({})
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { api_key: "<SECRET>" }
+    #
     # @return [Rule::Static::Fixed]
     def value(value, &block)
       if block
@@ -193,6 +411,19 @@ module Remap
     end
 
     # Static option to be selected
+    #
+    # @example Set path to option
+    #   rule = Remap::Compiler.call do
+    #     set :meaning_of_life, to: option(:number)
+    #   end
+    #
+    #   state = Remap::State.call({}, options: { number: 42 })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { meaning_of_life: 42 }
     #
     # @param id [Symbol]
     #
@@ -209,6 +440,21 @@ module Remap
     #
     # @param index [Integer]
     #
+    # @example Select value at index
+    #   rule = Remap::Compiler.call do
+    #     map :names, at(1), to: :name
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     names: ["John", "Jane"]
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { name: "Jane" }
+    #
     # @return [Path::Segment::Key]
     # @raise [ArgumentError] if index is not an Integer
     def at(index, &block)
@@ -224,6 +470,21 @@ module Remap
 
     # Selects first element in input
     #
+    # @example Select first value in an array
+    #   rule = Remap::Compiler.call do
+    #     map :names, first, to: :name
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     names: ["John", "Jane"]
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { name: "John" }
+    #
     # @return [Path::Segment::Key]]
     def first(&block)
       if block
@@ -235,6 +496,21 @@ module Remap
     alias any first
 
     # Selects last element in input
+    #
+    # @example Select last value in an array
+    #   rule = Remap::Compiler.call do
+    #     map :names, last, to: :name
+    #   end
+    #
+    #   state = Remap::State.call({
+    #     names: ["John", "Jane", "Linus"]
+    #   })
+    #
+    #   output = rule.call(state) do |failure|
+    #     raise failure.exception
+    #   end
+    #
+    #   output.fetch(:value) # => { name: "Linus" }
     #
     # @return [Path::Segment::Key]
     def last(&block)
