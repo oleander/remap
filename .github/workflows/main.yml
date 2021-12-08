@@ -37,5 +37,14 @@ jobs:
     - run: git add docs/
     - run: git commit -m 'update docs'
     - run: git push origin development
+  doctest:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+        ruby-version: 3.0.3
+    - run: bundle exec rake yard:doctest
 
 
