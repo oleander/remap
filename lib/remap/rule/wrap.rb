@@ -29,7 +29,9 @@ module Remap
       #
       # @see Rule#call
       def call(...)
-        rule.call(...).fmap { Array.wrap(_1) }
+        rule.call(...).fmap do |value|
+          Array.wrap(value)
+        end
       end
     end
   end

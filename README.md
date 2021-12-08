@@ -42,6 +42,13 @@ class Mapper < Remap::Base
       end
     end
 
+    to :houses do
+      # Value wrapper
+      wrap :array do
+        map :house
+      end
+    end
+
     class Linux < Remap::Base
       define do
         get :kernel
@@ -75,6 +82,7 @@ class Mapper < Remap::Base
 end
 
 input = {
+  house: "100kvm",
   friends: [
     {
       name: "Lisa",
@@ -115,6 +123,7 @@ output = {
   ],
   description: "This is a description",
   cars: [{ owners: ["John"] }],
+  houses: ["100kvm"],
   date: be_a(Date),
   os: {
     kernel: :latest

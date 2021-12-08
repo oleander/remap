@@ -55,6 +55,12 @@ describe Remap::Base do
         end
       end
 
+      to :houses do
+        wrap :array do
+          map :house
+        end
+      end
+
       get :cars do
         each do
           # Dig deep into a nested value
@@ -74,6 +80,7 @@ describe Remap::Base do
 
   let(:input) do
     {
+      house: "100kvm",
       friends: [
         {
           name: "Lisa",
@@ -116,6 +123,7 @@ describe Remap::Base do
       ],
       description: "This is a description",
       cars: [{ owners: ["John"] }],
+      houses: ["100kvm"],
       date: be_a(Date),
       os: {
         kernel: :latest
