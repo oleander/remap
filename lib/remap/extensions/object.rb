@@ -17,6 +17,13 @@ module Remap
           block["Expected a state, got [#{self}] (#{self.class})"]
         end
 
+        # @return [Array]
+        #
+        # @see Extension::Paths::Hash
+        def paths
+          EMPTY_ARRAY
+        end
+
         # Fallback method used when #get is called on an object that does not respond to #get
         #
         # Block is invoked, if provided

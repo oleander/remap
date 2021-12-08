@@ -7,13 +7,6 @@ module Remap
       using Extensions::Object
       using Extensions::Hash
 
-      refine Object do
-        # @see Extension::Paths::Hash
-        def paths
-          EMPTY_ARRAY
-        end
-      end
-
       refine Hash do
         # Returns a list of all key paths
         #
@@ -23,7 +16,7 @@ module Remap
         #       b: :c
         #     },
         #     d: :e
-        #   }.hur_paths # => [[:a, :b], [:d]]
+        #   }.paths # => [[:a, :b], [:d]]
         #
         # @return [Array<Array<Symbol>>] a list of key paths
         def paths
