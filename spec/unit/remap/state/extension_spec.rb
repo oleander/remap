@@ -173,6 +173,7 @@ describe Remap::State::Extension do
     end
   end
 
+
   describe "#map" do
     context "when state is undefined" do
       let(:state) { undefined! }

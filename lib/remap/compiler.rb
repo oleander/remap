@@ -38,10 +38,6 @@ module Remap
         compiler.instance_exec(&block)
       end.rules
 
-      if rules.empty?
-        return Rule::VOID
-      end
-
       Rule::Block.new(rules)
     end
 

@@ -17,30 +17,35 @@ describe Remap::Failure do
   end
 
   describe "#merge" do
-    subject(:result) { left.merge(right) }
+    subject(:result) { failure.merge(other) }
 
     let(:reason1) { notice! }
     let(:notice1) { notice! }
 
-    let(:left) do
+    let(:failure) do
       described_class.call(notices: [notice1], failures: [reason1])
     end
 
-    context "when right is a failure" do
+    context "when merged with a failure" do
       let(:reason2) { notice! }
       let(:notice2) { notice! }
 
-      let(:right) do
+      let(:other) do
         described_class.call(notices: [notice2], failures: [reason2])
       end
 
       it { is_expected.to be_a(described_class) }
 
-      it {
-        expect(result).to have_attributes(notices: contain_exactly(notice1, notice2))
-      }
+      its(:notices) { is_expected.to match_array([notice1, notice2]) }
+      its(:failures) { is_expected.to match_array([reason1, reason2]) }
+    end
 
-      it { is_expected.to have_attributes(failures: be_a(Array)) }
+    context "when merged with a non-failure" do
+      let(:other) { string! }
+
+      it "raises an argument error" do
+        expect { result }.to raise_error(ArgumentError)
+      end
     end
   end
 end
