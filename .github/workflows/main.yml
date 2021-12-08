@@ -39,7 +39,7 @@ jobs:
 
     - run: git add docs/
     - run: git commit -m 'update docs'
-    - run: git push origin development
+    - run: git push -f origin gh-pages
   doctest:
     runs-on: ${{ matrix.os }}
     strategy:
