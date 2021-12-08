@@ -143,7 +143,7 @@ module Remap
     #
     # @return [void]
     def self.contract(&context)
-      self.contract = Dry::Schema.JSON(&context)
+      self.contract = Dry::Schema.define(&context)
     end
 
     # Defines a rule for the mapper
