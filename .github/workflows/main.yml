@@ -1,7 +1,7 @@
 name: remap
 on: [push]
 concurrency:
-  group: ${{ github.head_ref }}
+  group: group-${{ github.head_ref }}
   cancel-in-progress: true
 jobs:
   rspec:
