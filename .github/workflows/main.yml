@@ -62,6 +62,8 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: 3.0.3
+      - run: git config --local user.email "bot@oleander.io"
+      - run: git config --local user.name "oleander-bot"
       - if: contains(github.ref, 'refs/heads/development')
         uses: cadwallion/publish-rubygems-action@master
         env:
