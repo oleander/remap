@@ -4,14 +4,6 @@ module Support
   include Dry::Core::Constants
   include Remap
 
-  def me(&block)
-    its(:itself, &block)
-  end
-
-  def Failure(**options)
-    Failure.new(reasons: options)
-  end
-
   def error
     -> failure { raise failure.exception }
   end
@@ -22,18 +14,8 @@ module Support
   end
   alias rule! void!
 
-  # @return [Remap::Rule::Map]
-  def map!(&block)
-    Rule::Map::Required.call(path: path!, rule: void!, backtrace: []).adjust(&block)
-  end
-
   def notice!
     Notice.call(value: value!, path: [:a], reason: string!)
-  end
-
-  # @return [Remap::Rule::Map]
-  def pending!(*args)
-    Rule::Map::Optional.call(path: path!, rule: void!).pending(*args)
   end
 
   # @return [Hash]
@@ -55,11 +37,6 @@ module Support
   # @return [Selector::Index]
   def index!(idx)
     Selector::Index.call(index: idx)
-  end
-
-  # @return [Selector::Index]
-  def first!
-    index!(0)
   end
 
   # A random hash
@@ -110,11 +87,6 @@ module Support
     end
   end
 
-  # @return [Remap::Rule::Map]
-  def skip!(*reason)
-    map! { skip!(*reason) }
-  end
-
   # @return [String]
   def string!
     Faker::Types.rb_string
@@ -125,13 +97,6 @@ module Support
   # @return [Array]
   def array!(max = 3)
     Faker::Types.rb_array(len: max)
-  end
-
-  # A random int
-  #
-  # @return [Integer]
-  def int!
-    Faker::Number.number(digits: 1)
   end
 
   # A random symbol
