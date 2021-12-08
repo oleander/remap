@@ -16,11 +16,12 @@ module Remap
     #   end
     class Input < Unit
       # @return [Array<Selector>]
-      attribute :segments, [Selector]
+      attribute :selectors, [Selector]
 
-      # Selects the value at the path {#segments}
-      #
       # @param state [State]
+      #
+      # @yieldparam [State]
+      # @yieldreturn [State]
       #
       # @return [State]
       def call(state, &iterator)
@@ -28,7 +29,7 @@ module Remap
           raise ArgumentError, "Input path requires an iterator block"
         end
 
-        segments.reverse.reduce(iterator) do |inner_iterator, selector|
+        selectors.reverse.reduce(iterator) do |inner_iterator, selector|
           -> inner_state { selector.call(inner_state, &inner_iterator) }
         end.call(state)
       end
