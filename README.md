@@ -454,11 +454,12 @@ class Vehicle < Remap::Base
 end
 
 Vehicle.call([
-{
-  gears: 3,
-  brand: "Rose"
-}, {
+  {
+    gears: 3,
+    brand: "Rose"
+  }, {
   hybrid: false,
   fuel: "Petrol"
-}]) # => [{ bicycle: { gears: 3, brand: "Rose" } }, { car: { hybrid: false, fuel: "Petrol" } }]
+}
+]) # => [{ bicycle: { gears: 3, brand: "Rose" } }, { car: { hybrid: false, fuel: "Petrol" } }]
 ```
