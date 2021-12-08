@@ -18,6 +18,13 @@ Gem::Specification.new do |spec|
     refinements & pattern matching capabilities – making it blazingly fast
   DESC
 
+  spec.metadata = {
+    "bug_tracker_uri" => "https://github.com/oleander/remap/issues",
+    "homepage_uri" => "https://github.com/oleander/remap",
+    "documentation_uri" => "http://oleander.io/remap/",
+    "rubygems_mfa_required" => "true"
+  }
+
   spec.files = Dir["lib/**/*.rb"]
 
   spec.required_ruby_version = ">= 3.0.0"
@@ -39,6 +46,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop", "~> 1.23.0"
   spec.add_development_dependency "rubocop-performance"
   spec.add_development_dependency "rubocop-rake"
-
-  spec.metadata = { "rubygems_mfa_required" => "true" }
 end
