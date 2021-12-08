@@ -65,8 +65,10 @@ jobs:
           ruby-version: 3.0.3
       - run: git config --local user.email "bot@oleander.io"
       - run: git config --local user.name "oleander-bot"
-      - run: bundle exec bump patch --replace-in remap.gemspec
-      - run: git commit --amend --no-edit
+      - if: contains(github.ref, 'refs/tags/v')
+        run: |
+          bundle exec bump patch --replace-in remap.gemspec
+          git commit --amend --no-edit
       - uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
