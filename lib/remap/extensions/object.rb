@@ -23,8 +23,16 @@ module Remap
         # Otherwise a symbol is thrown
         #
         # @param path [Array<Key>]
-        def get(*path, &block)
-          raise PathError, []
+        def get(*path, trace: EMPTY_ARRAY, &fallback)
+          return self if path.empty?
+
+          unless block_given?
+            get(*path, trace: trace) do
+              raise PathError, trace
+            end
+          end
+
+          yield
         end
         alias_method :fetch, :get
 
