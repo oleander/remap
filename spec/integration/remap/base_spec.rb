@@ -170,14 +170,6 @@ describe Remap::Base do
 
         it { is_expected.to eq(output) }
       end
-
-      xcontext "when all passes" do
-        let(:left) { pass }
-        let(:middle) { pass }
-        let(:right)  { pass }
-
-        it { is_expected.to have_problem }
-      end
     end
   end
 
