@@ -65,11 +65,12 @@ jobs:
           ruby-version: 3.0.3
       - run: git config --local user.email "bot@oleander.io"
       - run: git config --local user.name "oleander-bot"
+      - run: git fetch --tags
       - if: contains(github.ref, 'refs/heads/development')
         uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
-          RELEASE_COMMAND: bundle exec rake gem:release || true
+          RELEASE_COMMAND: bundle exec rake gem:release
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: git push --tags || true
       - run: git push || true
