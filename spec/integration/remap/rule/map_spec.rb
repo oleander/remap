@@ -142,7 +142,7 @@ describe Remap::Rule::Map do
 
       before do
         map.adjust do
-          Undefined
+          Dry::Core::Constants::Undefined
         end
       end
 

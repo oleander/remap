@@ -38,7 +38,7 @@ module Remap
         values: value,
         value: value,
         input: value
-      }
+      }._
     end
   end
 end

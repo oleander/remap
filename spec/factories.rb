@@ -3,7 +3,6 @@
 require "faker"
 
 using Remap::State::Extension
-include Dry::Core::Constants
 
 FactoryBot.define do
   initialize_with { new(attributes) }
@@ -32,7 +31,7 @@ FactoryBot.define do
 
     transient do
       name { [generate(:class_name), "Mapper"].join }
-      options { EMPTY_HASH }
+      options { {} }
     end
   end
 
@@ -69,9 +68,9 @@ FactoryBot.define do
   factory :state, class: Hash, aliases: [:undefined] do
     initialize_with { attributes }
 
-    failures { EMPTY_ARRAY }
-    notices { EMPTY_ARRAY }
-    options { EMPTY_HASH }
+    failures { [] }
+    notices { [] }
+    options { {} }
     values { input }
 
     mapper
