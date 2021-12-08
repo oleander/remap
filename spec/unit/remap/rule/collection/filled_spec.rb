@@ -38,8 +38,9 @@ describe Remap::Rule::Collection::Filled do
         let(:rule1) { skip! }
         let(:rule2) { static!(value) }
 
-        it { is_expected.to contain(input) }
-        its([:notices]) { is_expected.to have(1).item }
+        it "yields failure" do
+          expect { |error| rule.call(state, &error) }.to yield_control
+        end
       end
 
       context "when right is a problem" do
@@ -54,8 +55,9 @@ describe Remap::Rule::Collection::Filled do
         let(:rule1) { skip! }
         let(:rule2) { skip! }
 
-        it { is_expected.not_to contain(input) }
-        its([:notices]) { is_expected.to have(2).items }
+        it "yields failure" do
+          expect { |error| rule.call(state, &error) }.to yield_control
+        end
       end
     end
 

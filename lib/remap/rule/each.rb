@@ -14,7 +14,7 @@ module Remap
     #   each.call(state, &error).fetch(:value) # => ["JOHN", "JANE"]
     class Each < Unit
       # @return [Rule]
-      attribute :rule, Rule
+      attribute :rule, Types::Rule
 
       # Iterates over state and passes each value to rule
       # Restores element, key & index before returning state

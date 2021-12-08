@@ -23,7 +23,7 @@ module Remap
       attribute :type, Value(:array)
 
       # @return [Rule]
-      attribute :rule, Rule
+      attribute :rule, Types::Rule
 
       # Wraps the output from {#rule} in a {#type}
       #
