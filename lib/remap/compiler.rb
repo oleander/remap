@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Remap
+  using State::Extension
+
   # Constructs a {Rule} from the block passed to {Remap::Base.define}
   class Compiler < Proxy
     # @return [Array<Rule>]
@@ -32,9 +34,11 @@ module Remap
         return Rule::Void.new
       end
 
-      new([]).tap do |compiler|
+      rules = new([]).tap do |compiler|
         compiler.instance_exec(&block)
-      end.rule
+      end.rules
+
+      Rule::Collection.call(rules: rules)
     end
 
     # Maps input path [input] to output path [to]
@@ -59,14 +63,9 @@ module Remap
     #
     # @return [Rule::Map::Required]
     def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
-      add Rule::Map::Required.call(
-        path: {
-          output: [to].flatten,
-          input: path.flatten
-        },
-        backtrace: backtrace,
-        rule: call(&block))
+      add rule(*path, to: to, backtrace: backtrace, &block)
     end
+
 
     # Optional version of {#map}
     #
@@ -92,13 +91,7 @@ module Remap
     #
     # @return [Rule::Map::Optional]
     def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
-      add Rule::Map::Optional.call(
-        path: {
-          output: [to].flatten,
-          input: path.flatten
-        },
-        backtrace: backtrace,
-        rule: call(&block))
+      add rule?(*path, to: to, backtrace: backtrace, &block)
     end
 
     # Select a path and uses the same path as output
@@ -122,7 +115,7 @@ module Remap
     #
     # @return [Rule::Map::Required]
     def get(*path, backtrace: Kernel.caller, &block)
-      map(path, to: path, backtrace: backtrace, &block)
+      add rule(path, to: path, backtrace: backtrace, &block)
     end
 
     # Optional version of {#get}
@@ -147,7 +140,7 @@ module Remap
     #
     # @return [Rule::Map::Optional]
     def get?(*path, backtrace: Kernel.caller, &block)
-      map?(path, to: path, backtrace: backtrace, &block)
+      add rule?(path, to: path, backtrace: backtrace, &block)
     end
 
     # Maps using mapper
@@ -189,9 +182,13 @@ module Remap
         raise ArgumentError, "#embed does not take a block"
       end
 
-      add Rule::Embed.new(mapper: mapper)
-    rescue Dry::Struct::Error
-      raise ArgumentError, "Embeded mapper must be [Remap::Mapper], got [#{mapper}]"
+      embeding = rule(&block).add do |state, &error|
+        mapper.call!(state.set(mapper: mapper)) do |failure|
+          next error[failure]
+        end.except(:mapper, :scope)
+      end
+
+      add embeding
     end
 
     # Set a static value
@@ -234,9 +231,7 @@ module Remap
         raise ArgumentError, "#set does not take a block"
       end
 
-      add Rule::Set.new(path: path.flatten, value: to)
-    rescue Dry::Struct::Error => e
-      raise ArgumentError, e.message
+      add rule(to: path).add { to.call(_1) }
     end
 
     # Maps to path from map with block in between
@@ -261,7 +256,7 @@ module Remap
     #
     # @return [Rule::Map]
     def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
-      map(*map, to: path, backtrace: backtrace, &block)
+      add rule(*map, to: path, backtrace: backtrace, &block)
     end
 
     # Optional version of {#to}
@@ -287,7 +282,7 @@ module Remap
     #
     # @return [Rule::Map::Optional]
     def to?(*path, map: EMPTY_ARRAY, &block)
-      map?(*map, to: path, &block)
+      add rule?(*map, to: path, &block)
     end
 
     # Iterates over the input value, passes each value
@@ -319,7 +314,7 @@ module Remap
         raise ArgumentError, "#each requires a block"
       end
 
-      add Rule::Each.new(rule: call(&block))
+      add rule(all, &block)
     end
 
     # Wraps output in type
@@ -352,9 +347,7 @@ module Remap
         raise ArgumentError, "#wrap requires a block"
       end
 
-      add Rule::Wrap.new(type: type, rule: call(&block))
-    rescue Dry::Struct::Error => e
-      raise ArgumentError, e.message
+      add rule(&block).then { Array.wrap(_1) }
     end
 
     # Selects all elements
@@ -521,19 +514,31 @@ module Remap
       at(-1)
     end
 
-    # The final rule
-    #
-    # @return [Rule]
-    #
-    # @private
-    def rule
-      Rule::Collection.call(rules: rules)
-    end
-
     private
 
     def add(rule)
       rule.tap { rules << rule }
+    end
+
+    def rule(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+      Rule::Map::Required.call({
+        path: {
+          output: [to].flatten,
+          input: path.flatten
+        },
+        backtrace: backtrace,
+        rule: call(&block)
+      })
+    end
+
+    def rule?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+      Rule::Map::Optional.call({
+        path: {
+          output: [to].flatten,
+          input: path.flatten
+        },
+        rule: call(&block)
+      })
     end
   end
 end

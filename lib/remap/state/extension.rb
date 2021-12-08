@@ -351,7 +351,7 @@ module Remap
         #
         # @return [Struct]
         def context(value, context: self, &error)
-          ::Struct.new(*keys, *options.keys, keyword_init: true) do
+          ::Struct.new(*keys, *options.keys, :state, keyword_init: true) do
             define_method :method_missing do |name, *|
               error["Method [#{name}] not defined"]
             end
@@ -359,7 +359,7 @@ module Remap
             define_method :skip! do |message = "Manual skip!"|
               context.ignore!(message)
             end
-          end.new(**to_hash, **options, value: value)
+          end.new(**to_hash, **options, value: value, state: self)
         end
       end
     end

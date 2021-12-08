@@ -49,9 +49,13 @@ module Remap
 
         notice = catch :fatal do
           return path.input.call(state) do |inner_state|
-            rule.call(inner_state) do |failure|
+            other_state = rule.call(inner_state) do |failure|
               return error[failure]
-            end.then(&callback)
+            end
+
+            callback(other_state) do |failure|
+              return error[failure]
+            end
           end.then(&path.output)
         end
 
@@ -181,12 +185,12 @@ module Remap
         end
       end
 
-      private
-
       # @return [self]
       def add(&block)
         tap { fn << block }
       end
+
+      private
 
       # @return [Array<Proc>]
       def fn
@@ -194,10 +198,14 @@ module Remap
       end
 
       # @return [Proc]
-      def callback
-        -> state do
-          fn.reduce(state) do |inner, fn|
-            fn[inner]
+      def callback(state, &error)
+        unless block_given?
+          raise ArgumentError, "Map#callback(state, &error) requires error handler block"
+        end
+
+        fn.reduce(state) do |inner, fn|
+          fn[inner] do |failure|
+            return error[failure]
           end
         end
       end

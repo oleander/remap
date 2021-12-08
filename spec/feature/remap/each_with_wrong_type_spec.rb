@@ -17,6 +17,6 @@ describe Remap::Base do
   end
 
   it "invokes block with failure" do
-    expect { |error| mapper.call(input, &error) }.to yield_with_args(Remap::Failure)
+    expect { mapper.call(input, &error) }.to raise_error(Remap::Error)
   end
 end
