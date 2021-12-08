@@ -10,7 +10,8 @@ module Remap
     #   state = Remap::State.call(["John", "Jane"])
     #   upcase = Remap::Rule::Map.call({}).then(&:upcase)
     #   each = Remap::Rule::Each.call(rule: upcase)
-    #   each.call(state).fetch(:value) # => ["JOHN", "JANE"]
+    #   error = -> failure { raise failure.exception }
+    #   each.call(state, &error).fetch(:value) # => ["JOHN", "JANE"]
     class Each < Unit
       # @return [Rule]
       attribute :rule, Rule
@@ -21,8 +22,16 @@ module Remap
       # @param state [State<Enumerable>]
       #
       # @return [State<Enumerable>]
-      def call(state)
-        state.map(&rule)
+      def call(state, &error)
+        unless error
+          raise ArgumentError, "Each#call(state, &error) requires a block"
+        end
+
+        state.map do |inner_state|
+          rule.call(inner_state) do |failure|
+            return error[failure]
+          end
+        end
       end
     end
   end

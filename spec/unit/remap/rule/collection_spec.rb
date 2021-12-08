@@ -3,7 +3,7 @@
 shared_examples Remap::Rule::Collection do
   subject(:rule) { described_class.call(rules: rules) }
 
-  subject { rule.call(state) }
+  subject { rule.call(state, &error) }
 
   let(:state) { state!(input) }
 

@@ -22,7 +22,9 @@ module Remap
     #     age: 50
     #   })
     #
-    #   rule.call(state).fetch(:value) # => { name: "John", age: 50 }
+    #   error = -> failure { raise failure.exception }
+    #
+    #   rule.call(state, &error).fetch(:value) # => { name: "John", age: 50 }
     #
     # @return [Rule]
     def self.call(&block)
@@ -35,7 +37,7 @@ module Remap
       end.rule
     end
 
-    # Maps {path} to {to} using {backtrace}
+    # Maps input path [input] to output path [to]
     #
     # @param path ([]) [Array<Segment>, Segment]
     # @param to ([]) [Array<Symbol>, Symbol]

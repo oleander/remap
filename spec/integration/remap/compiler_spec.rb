@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 describe Remap::Compiler do
-  subject(:output) { rule.call(state) }
+  using Remap::State::Extension
+
+  subject(:output) { rule.call(state, &error) }
 
   let(:rule)  { described_class.call(&block) }
   let(:state) { state!(input)                }
@@ -126,7 +128,7 @@ describe Remap::Compiler do
     context "when outside range" do
       let(:block) { -> * { map? [at(100)] } }
 
-      it { is_expected.to have(1).problems }
+      its([:notices]) { is_expected.to have(1).items }
     end
 
     context "when a non-int is passed" do

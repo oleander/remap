@@ -152,7 +152,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(state)  &#x21d2; State&lt;Array&lt;T&gt;&gt; </a>
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>  &#x21d2; Object </a>
     
 
     
@@ -230,7 +230,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="call-instance_method">
   
-    #<strong>call</strong>(state)  &#x21d2; <tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;Array&lt;T&gt;&gt;</tt> 
+    #<strong>call</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -245,35 +245,14 @@
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>state</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;T&gt;</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;Array&lt;T&gt;&gt;</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../Rule.html#call-instance_method" title="Remap::Rule#call (method)">Remap::Rule#call</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -281,15 +260,15 @@
       <pre class="lines">
 
 
-33
-34
-35</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 31</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
-  rule.call(state).fmap { <span style="color:#036;font-weight:bold">Array</span>.wrap(_1) }
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(...)
+  rule.call(...).fmap { <span style="color:#036;font-weight:bold">Array</span>.wrap(_1) }
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -397,7 +376,7 @@ attribute <span style="color:#A60">:type</span>, Value(<span style="color:#A60">
 </div>
 
       <div id="footer">
-  Generated on Tue Dec  7 21:37:37 2021 by
+  Generated on Wed Dec  8 01:08:59 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

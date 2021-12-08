@@ -10,7 +10,7 @@ describe Remap::Rule::Each do
   end
 
   describe "#call" do
-    subject(:result) { described_class.call(rule: rule).call(state) }
+    subject(:result) { described_class.call(rule: rule).call(state, &error) }
 
     context "when state is an array" do
       subject { result.fmap { _1.sort_by(&:to_s) } }
@@ -62,37 +62,13 @@ describe Remap::Rule::Each do
       end
     end
 
-    context "when state is not enumerable" do
-      let(:rule) { rule! }
+    xcontext "when state is not enumerable" do
+      let(:rule) { void! }
       let(:value) { int!          }
       let(:state) { state!(value) }
 
-      context "when accessing #value" do
-        let(:output) { value.to_s }
-        let(:rule) { map!(&:to_s) }
-
-        it { is_expected.to have(0).problems }
-        it { is_expected.to contain(output) }
-      end
-
-      context "when accessing #element" do
-        let(:output) { value.to_s }
-        let(:rule) { map!(&:to_s) }
-
-        it { is_expected.to have(0).problems }
-        it { is_expected.to contain(output) }
-      end
-
-      context "when accessing #key" do
-        let(:rule) { map! { key } }
-
-        it { is_expected.to have(1).problems }
-      end
-
-      context "when accessing #index" do
-        let(:rule) { map! { index } }
-
-        it { is_expected.to have(1).problems }
+      it "raises an notice error" do
+        expect { |b| rule.call(state, &b) }.to yield_control
       end
     end
   end

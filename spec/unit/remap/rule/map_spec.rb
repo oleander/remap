@@ -8,7 +8,7 @@ describe Remap::Rule::Map do
   end
 
   describe "#call" do
-    subject { rule.call(state) }
+    subject { rule.call(state, &error) }
 
     let(:rule)  { described_class.call(path: path, rule: void!) }
     let(:state) { state!({ a: 1 })                              }

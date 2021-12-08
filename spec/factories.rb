@@ -87,7 +87,7 @@ FactoryBot.define do
       index
     end
 
-    trait :with_problems do
+    trait :with_notices do
       notices { build_list(:notice, 1) }
     end
 

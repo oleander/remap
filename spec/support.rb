@@ -12,6 +12,10 @@ module Support
     Failure.new(reasons: options)
   end
 
+  def error
+    -> failure { raise failure.exception }
+  end
+
   # @return [Remap::Rule::Void]
   def void!
     Rule::Void.call(EMPTY_HASH)
@@ -109,7 +113,7 @@ module Support
   end
 
   # @return [Remap::Rule::Map]
-  def problem!(*reason)
+  def skip!(*reason)
     map! { skip!(*reason) }
   end
 

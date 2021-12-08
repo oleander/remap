@@ -24,13 +24,9 @@ module Remap
       # @return [Path::Output]
       attribute :path, Path::Output
 
-      # Returns value mapped to path regardless of input
-      #
-      # @param state [State<T>]
-      #
-      # @return [State<U>]
-      def call(state)
-        rule.call(state).then(&path)
+      # @see Rule#call
+      def call(...)
+        rule.call(...).then(&path)
       end
     end
   end

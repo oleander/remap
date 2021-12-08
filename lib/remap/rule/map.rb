@@ -42,8 +42,14 @@ module Remap
       # @return [State]
       #
       # @abstract
-      def call(state)
-        (path.input >> rule >> callback >> path.output).call(state)
+      def call(state, &error)
+        unless error
+          raise ArgumentError, "Map#call(state, &error) requires error handler block"
+        end
+
+        path.input.call(state).then do |inner_state|
+          rule.call(inner_state, &error)
+        end.then(&callback).then(&path.output)
       end
 
       # A post-processor method
@@ -52,7 +58,8 @@ module Remap
       #   state = Remap::State.call("Hello World")
       #   map = Remap::Rule::Map.call({})
       #   upcase = map.adjust(&:upcase)
-      #   upcase.call(state).fetch(:value) # => "HELLO WORLD"
+      #   error = -> failure { raise failure.exception }
+      #   upcase.call(state, &error).fetch(:value) # => "HELLO WORLD"
       #
       # @return [Map]
       def adjust(&block)
@@ -70,7 +77,8 @@ module Remap
       #   state = Remap::State.call(:value)
       #   map = Remap::Rule::Map.call({})
       #   pending = map.pending("this is pending")
-      #   pending.call(state).key?(:value) # => false
+      #   error = -> failure { raise failure.exception }
+      #   pending.call(state, &error).key?(:value) # => false
       #
       # @return [Map]
       def pending(reason = "Pending mapping")
@@ -87,17 +95,19 @@ module Remap
       #     otherwise "C"
       #   end
       #
+      #   error = -> failure { raise failure.exception }
+      #
       #   a = Remap::State.call("A")
-      #   enum.call(a).fetch(:value) # => "A"
+      #   enum.call(a, &error).fetch(:value) # => "A"
       #
       #   b = Remap::State.call("B")
-      #   enum.call(b).fetch(:value) # => "B"
+      #   enum.call(b, &error).fetch(:value) # => "B"
       #
       #   c = Remap::State.call("C")
-      #   enum.call(c).fetch(:value) # => "C"
+      #   enum.call(c, &error).fetch(:value) # => "C"
       #
       #   d = Remap::State.call("D")
-      #   enum.call(d).fetch(:value) # => "C"
+      #   enum.call(d, &error).fetch(:value) # => "C"
       #
       # @return [Map]
       def enum(&block)
@@ -117,14 +127,16 @@ module Remap
       #     value.include?("A")
       #   end
       #
+      #   error = -> failure { raise failure.exception }
+      #
       #   a = Remap::State.call("A")
-      #   map.call(a).fetch(:value) # => "A"
+      #   map.call(a, &error).fetch(:value) # => "A"
       #
       #   b = Remap::State.call("BA")
-      #   map.call(b).fetch(:value) # => "BA"
+      #   map.call(b, &error).fetch(:value) # => "BA"
       #
       #   c = Remap::State.call("C")
-      #   map.call(c).key?(:value) # => false
+      #   map.call(c, &error).key?(:value) # => false
       #
       # @return [Map]
       def if(&block)
@@ -143,14 +155,16 @@ module Remap
       #     value.include?("A")
       #   end
       #
+      #   error = -> failure { raise failure.exception }
+      #
       #   a = Remap::State.call("A")
-      #   map.call(a).key?(:value) # => false
+      #   map.call(a, &error).key?(:value) # => false
       #
       #   b = Remap::State.call("BA")
-      #   map.call(b).key?(:value) # => false
+      #   map.call(b, &error).key?(:value) # => false
       #
       #   c = Remap::State.call("C")
-      #   map.call(c).fetch(:value) # => "C"
+      #   map.call(c, &error).fetch(:value) # => "C"
       #
       # @return [Map]
       def if_not(&block)

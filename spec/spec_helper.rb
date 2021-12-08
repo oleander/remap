@@ -3,8 +3,9 @@
 require "simplecov"
 
 require "dry/core/class_builder"
-require "rspec/its"
+require "rspec/collection_matchers"
 require "factory_bot"
+require "rspec/its"
 require "remap"
 require "pry"
 

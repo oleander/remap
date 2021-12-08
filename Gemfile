@@ -10,6 +10,8 @@ group :development do
   gem "guard-rspec", require: false
   gem "guard-rubocop", require: false
 
+  gem "rubocop-rspec", require: false
+
   gem "reek", require: false
   gem "yard"
   gem "yard-coderay"
@@ -28,6 +30,7 @@ group :test do
   gem "factory_bot"
   gem "faker"
   gem "rspec"
+  gem "rspec-collection"
   gem "rspec-github"
   gem "rspec-its"
   gem "simplecov"

@@ -340,7 +340,7 @@ output.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call!</span>(state, &amp;error)
   state1 = left.call!(state) <span style="color:#080;font-weight:bold">do</span> |failure1|
     <span style="color:#080;font-weight:bold">return</span> right.call!(state) <span style="color:#080;font-weight:bold">do</span> |failure2|
-      <span style="color:#080;font-weight:bold">return</span> error[failure1.combine(failure2)]
+      <span style="color:#080;font-weight:bold">return</span> error[failure1.merge(failure2)]
     <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 
@@ -360,7 +360,7 @@ output.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
 </div>
 
       <div id="footer">
-  Generated on Tue Dec  7 21:37:37 2021 by
+  Generated on Wed Dec  8 01:08:59 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

@@ -122,7 +122,8 @@
       <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>])
 upcase = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Map</span>.call({}).then(&amp;<span style="color:#A60">:upcase</span>)
 each = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Rule</span>::<span style="color:#036;font-weight:bold">Each</span>.call(<span style="color:#606">rule</span>: upcase)
-each.call(state).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; [&quot;JOHN&quot;, &quot;JANE&quot;]</span></code></pre>
+error = -&gt; failure { raise failure.exception }
+each.call(state, &amp;error).fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; [&quot;JOHN&quot;, &quot;JANE&quot;]</span></code></pre>
     
   </div>
 
@@ -145,7 +146,7 @@ each.call(state).fetch(<span style="color:#A60">:value</span>) <span style="colo
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(state)  &#x21d2; State&lt;Enumerable&gt; </a>
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(state, &amp;error)  &#x21d2; State&lt;Enumerable&gt; </a>
     
 
     
@@ -201,7 +202,7 @@ each.call(state).fetch(<span style="color:#A60">:value</span>) <span style="colo
       <div class="method_details first">
   <h3 class="signature first" id="call-instance_method">
   
-    #<strong>call</strong>(state)  &#x21d2; <tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;Enumerable&gt;</tt> 
+    #<strong>call</strong>(state, &amp;error)  &#x21d2; <tt><span class='object_link'><a href="../State.html" title="Remap::State (module)">State</a></span>&lt;Enumerable&gt;</tt> 
   
 
   
@@ -252,15 +253,31 @@ each.call(state).fetch(<span style="color:#A60">:value</span>) <span style="colo
       <pre class="lines">
 
 
-24
 25
-26</pre>
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 25</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state)
-  state.map(&amp;rule)
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;error)
+  <span style="color:#080;font-weight:bold">unless</span> error
+    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Each#call(state, &amp;error) requires a block</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+  state.map <span style="color:#080;font-weight:bold">do</span> |inner_state|
+    rule.call(inner_state) <span style="color:#080;font-weight:bold">do</span> |failure|
+      <span style="color:#080;font-weight:bold">return</span> error[failure]
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -304,10 +321,10 @@ each.call(state).fetch(<span style="color:#A60">:value</span>) <span style="colo
       <pre class="lines">
 
 
-16</pre>
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/rule/each.rb', line 17</span>
 
 attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-weight:bold">Rule</span></pre>
     </td>
@@ -320,7 +337,7 @@ attribute <span style="color:#A60">:rule</span>, <span style="color:#036;font-we
 </div>
 
       <div id="footer">
-  Generated on Tue Dec  7 21:37:37 2021 by
+  Generated on Wed Dec  8 01:08:59 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

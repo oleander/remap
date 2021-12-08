@@ -3,7 +3,7 @@
 describe Remap::Rule::Map do
   using Remap::State::Extension
 
-  subject { map.call(context) }
+  subject { map.call(context, &error) }
 
   let(:input)   { 10                                            }
   let(:context) { state!(input)                                 }
@@ -19,14 +19,14 @@ describe Remap::Rule::Map do
     context "when missed" do
       let(:input) { "MISS" }
 
-      it { is_expected.to have(1).problems }
+      its([:notices]) { is_expected.to have(1).items }
       it { is_expected.not_to contain(input) }
     end
 
     context "when hit" do
       let(:input) { "HIT" }
 
-      it { is_expected.to have(0).problems }
+      its([:notices]) { is_expected.to be_empty }
       it { is_expected.to contain(input) }
     end
   end
@@ -37,7 +37,7 @@ describe Remap::Rule::Map do
         map.pending
       end
 
-      it { is_expected.to have(1).problems }
+      its([:notices]) { is_expected.to have(1).items }
     end
 
     context "with reason" do
@@ -45,7 +45,7 @@ describe Remap::Rule::Map do
         map.pending("nope")
       end
 
-      it { is_expected.to have(1).problems }
+      its([:notices]) { is_expected.to have(1).items }
     end
   end
 
@@ -66,7 +66,7 @@ describe Remap::Rule::Map do
         map.if(&:odd?)
       end
 
-      it { is_expected.to have(1).problems }
+      its([:notices]) { is_expected.to have(1).items }
     end
   end
 
@@ -87,7 +87,7 @@ describe Remap::Rule::Map do
         map.if_not(&:even?)
       end
 
-      it { is_expected.to have(1).problems }
+      its([:notices]) { is_expected.to have(1).items }
     end
   end
 
@@ -145,7 +145,7 @@ describe Remap::Rule::Map do
         end
       end
 
-      it { is_expected.to have(1).problems }
+      its([:notices]) { is_expected.to have(1).items }
     end
 
     context "when #fetch is called" do
@@ -167,7 +167,7 @@ describe Remap::Rule::Map do
         context "when the key does not exist" do
           let(:input) { { other: value } }
 
-          it { is_expected.to have(1).problems }
+          its([:notices]) { is_expected.to have(1).items }
         end
       end
 
@@ -187,7 +187,7 @@ describe Remap::Rule::Map do
         context "when the index does not exist" do
           let(:input) { [:one] }
 
-          it { is_expected.to have(1).problems }
+          its([:notices]) { is_expected.to have(1).items }
         end
       end
 
@@ -200,7 +200,7 @@ describe Remap::Rule::Map do
 
         let(:input) { 100_000 }
 
-        it { is_expected.to have(1).problems }
+        its([:notices]) { is_expected.to have(1).items }
       end
     end
 
@@ -212,7 +212,7 @@ describe Remap::Rule::Map do
           end
         end
 
-        it { is_expected.to have(1).problems }
+        its([:notices]) { is_expected.to have(1).items }
       end
 
       context "with reason" do
@@ -222,7 +222,7 @@ describe Remap::Rule::Map do
           end
         end
 
-        it { is_expected.to have(1).problems }
+        its([:notices]) { is_expected.to have(1).items }
       end
     end
   end

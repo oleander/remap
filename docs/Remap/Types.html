@@ -134,23 +134,28 @@
         <dd><pre class="code">Interface(<span style="color:#A60">:hash</span>)</pre></dd>
       
         <dt id="State-constant" class="">State =
-          
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Validates a state according to State::Schema</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
-        <dd><pre class="code"><span style="color:#036;font-weight:bold">Hash</span>.constructor <span style="color:#080;font-weight:bold">do</span> |input, _type, &amp;error|
+        <dd><pre class="code"><span style="color:#036;font-weight:bold">Hash</span>.constructor <span style="color:#080;font-weight:bold">do</span> |input, type, &amp;error|
+  input = type.call(input, &amp;error)
   result = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>::<span style="color:#036;font-weight:bold">Schema</span>.call(input)
   error ||= -&gt; { raise _1 }
 
   <span style="color:#080;font-weight:bold">next</span> input <span style="color:#080;font-weight:bold">if</span> result.success?
 
-  error[<span style="color:#036;font-weight:bold">JSON</span>.pretty_generate(result.errors.to_h)]
+  error[result.errors.to_h.formated]
 <span style="color:#080;font-weight:bold">end</span></pre></dd>
-      
-        <dt id="Problem-constant" class="">Problem =
-          
-        </dt>
-        <dd><pre class="code"><span style="color:#036;font-weight:bold">Hash</span>.schema(<span style="color:#606">reason</span>: <span style="color:#036;font-weight:bold">String</span>.constrained(<span style="color:#606">min_size</span>: <span style="color:#00D">1</span>),
-<span style="color:#606">path?</span>: <span style="color:#036;font-weight:bold">Array</span>.constrained(<span style="color:#606">min_size</span>: <span style="color:#00D">1</span>),
-<span style="color:#606">value?</span>: <span style="color:#036;font-weight:bold">Any</span>)</pre></dd>
       
     </dl>
   
@@ -166,7 +171,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec  7 21:37:36 2021 by
+  Generated on Wed Dec  8 01:08:58 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

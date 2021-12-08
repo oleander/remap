@@ -55,10 +55,8 @@ describe Remap::Mapper::Xor do
       let(:input) { { c: 1 } }
 
       it "invokes block with problem" do
-        expect { |b| mapper.call!(state, &b) }.to yield_control
+        expect { |b| mapper.call!(state, &b) }.to yield_with_args(be_a(Remap::Failure))
       end
-
-      it { is_expected.not_to have_key(:value) }
     end
   end
 end

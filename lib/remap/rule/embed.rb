@@ -33,14 +33,18 @@ module Remap
       # @param state [State<T>]
       #
       # @return [State<U>]
-      def call(state)
+      def call(state, &error)
+        unless error
+          raise ArgumentError, "A block is required to evaluate the embed"
+        end
+
         notice = catch :fatal do
-          return mapper.call!(state.set(mapper: mapper)) do |failed_state|
-            return failed_state.except(:value, :mapper)
+          return mapper.call!(state.set(mapper: mapper)) do |failure|
+            return error[failure]
           end
         end
 
-        state.failure(notice).except(:mapper)
+        error[state.failure(notice).except(:mapper)]
       end
     end
   end

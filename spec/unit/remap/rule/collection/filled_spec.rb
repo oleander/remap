@@ -7,7 +7,7 @@ describe Remap::Rule::Collection::Filled do
   let(:rule2) { void! }
 
   describe "#call" do
-    subject { rule.call(state) }
+    subject { rule.call(state, &error) }
 
     let(:rule) { described_class.call(rules) }
 
@@ -28,8 +28,6 @@ describe Remap::Rule::Collection::Filled do
     end
 
     context "when mixed with a problem" do
-      subject { collection.call(state) }
-
       let(:collection) { described_class.call(rules) }
       let(:input) { { key: "value" } }
       let(:state) { state!(input)    }
@@ -37,11 +35,11 @@ describe Remap::Rule::Collection::Filled do
 
       context "when left is a problem" do
         let(:value) { { key: "value" } }
-        let(:rule1) { problem!       }
+        let(:rule1) { skip!       }
         let(:rule2) { static!(value) }
 
         it { is_expected.to contain(input) }
-        it { is_expected.to have(1).problems }
+        its([:notices]) { is_expected.to have(1).item }
       end
 
       context "when right is a problem" do
@@ -49,15 +47,15 @@ describe Remap::Rule::Collection::Filled do
         let(:rule2) { pending! }
 
         it { is_expected.to contain(input) }
-        it { is_expected.to have(1).problems }
+        its([:notices]) { is_expected.to have(1).item }
       end
 
       context "when both are a problem" do
-        let(:rule1) { problem! }
-        let(:rule2) { problem! }
+        let(:rule1) { skip! }
+        let(:rule2) { skip! }
 
         it { is_expected.not_to contain(input) }
-        it { is_expected.to have(2).problems }
+        its([:notices]) { is_expected.to have(2).items }
       end
     end
 

@@ -35,8 +35,8 @@ describe Remap::Iteration do
         let(:input) { "value" }
         let(:output) { input.downcase }
 
-        it "invokes block" do
-          expect(result).to contain(output)
+        it "throws a fatal symbol" do
+          expect { result }.to throw_symbol(:fatal)
         end
       end
 
