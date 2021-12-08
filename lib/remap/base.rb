@@ -110,7 +110,7 @@ module Remap
     extend Operation
 
     with_options instance_accessor: true do |scope|
-      scope.config_accessor(:contract) { Dry::Schema.JSON {} }
+      scope.config_accessor(:contract) { Dry::Schema.define {} }
       scope.config_accessor(:constructor) { IDENTITY }
       scope.config_accessor(:options) { EMPTY_ARRAY }
       scope.config_accessor(:option) { EMPTY_HASH }
@@ -143,7 +143,7 @@ module Remap
     #
     # @return [void]
     def self.contract(&context)
-      self.contract = Dry::Schema.JSON(&context)
+      self.contract = Dry::Schema.define(&context)
     end
 
     # Defines a rule for the mapper
@@ -175,7 +175,7 @@ module Remap
     #
     # @return [void]
     def self.rule(...)
-      self.rules = rules + [-> * { rule(...) }]
+      self.rules = rules + [-> { rule(...) }]
     end
 
     # Defines a required option for the mapper
@@ -212,7 +212,7 @@ module Remap
     # @option method (:new) [Symbol]
     # @option strategy (:argument) [:argument, :keywords, :none]
     #
-    # @example A mapper, which mapps a value at [:a] to [:b]
+    # @example A mapper, which maps a value at [:a] to [:b]
     #   class Mapper < Remap::Base
     #     define do
     #       map :a, to: :b
@@ -236,14 +236,12 @@ module Remap
     #
     # @return [void]
     def self.define(target = Nothing, method: :new, strategy: :argument, &context)
-      unless context
-        raise ArgumentError, "Missing block"
+      unless block_given?
+        raise ArgumentError, "#{self}.define requires a block"
       end
 
-      self.context = Compiler.call(&context)
       self.constructor = Constructor.call(method: method, strategy: strategy, target: target)
-    rescue Dry::Struct::Error => e
-      raise ArgumentError, e.message
+      self.context = Compiler.call(&context)
     end
 
     # Similar to {::call}, but takes a state
@@ -269,7 +267,7 @@ module Remap
     #
     # @private
     def call(state, &error)
-      unless error
+      unless block_given?
         raise ArgumentError, "Base#call(state, &error) requires block"
       end
 

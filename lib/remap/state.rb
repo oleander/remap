@@ -30,19 +30,15 @@ module Remap
     #
     # @return [Hash] A valid state
     def self.call(value, mapper: Dummy, options: EMPTY_HASH)
-      value._ do
-        return {
-          notices: EMPTY_ARRAY,
-          path: EMPTY_ARRAY,
-          options: options,
-          mapper: mapper,
-          values: value,
-          value: value,
-          input: value
-        }._
-      end
-
-      raise ArgumentError, "Input is a state: #{value}"
+      {
+        notices: EMPTY_ARRAY,
+        path: EMPTY_ARRAY,
+        options: options,
+        mapper: mapper,
+        values: value,
+        value: value,
+        input: value
+      }._
     end
   end
 end

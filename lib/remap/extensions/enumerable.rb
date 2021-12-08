@@ -28,21 +28,20 @@ module Remap
         # @return [Any]
         #
         # @raise When path cannot be found
-        def get(*path, &error)
-          _, result = path.reduce([
-            EMPTY_ARRAY,
-            self
-          ]) do |(current_path, element), key|
-            value = element.fetch(key) do
-              raise PathError, current_path + [key]
-            end
+        def get(*path, trace: [], &fallback)
+          return self if path.empty?
 
-            [current_path + [key], value]
-          rescue TypeError
-            raise PathError, current_path + [key]
+          key = path.first
+
+          unless block_given?
+            return get(*path, trace: trace) do
+              raise PathError, trace + [key]
+            end
           end
 
-          result
+          fetch(key, &fallback).get(*path[1..], trace: trace + [key], &fallback)
+        rescue TypeError
+          raise PathError, trace + [key]
         end
       end
     end

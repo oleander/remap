@@ -14,24 +14,23 @@ module Remap
     # @return [Failure]
     def merge(other)
       unless other.is_a?(self.class)
-        raise ArgumentError, "can't merge #{self.class} with #{other.class}"
+        raise ArgumentError, "Cannot merge %s (%s) with %s (%s)" % [
+          self, self.class, other, other.class
+        ]
       end
 
-      failure = attributes.deep_merge(other.attributes) do |_, value1, value2|
-        case [value1, value2]
-        in [Array, Array]
+      failure = attributes.deep_merge(other.attributes) do |key, value1, value2|
+        case [key, value1, value2]
+        in [:failures | :notices, Array, Array]
           value1 + value2
-        else
-          raise ArgumentError, "can't merge #{self.class} with #{other.class}"
         end
       end
 
       new(failure)
     end
 
-    # @return [String]
     def exception
-      Error.new(attributes.formated)
+      Error.new(attributes.formatted)
     end
   end
 end

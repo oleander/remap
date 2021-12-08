@@ -3,7 +3,7 @@
 module Remap
   # Represents a sequence of keys and selects or maps a value given a path
   class Path < Dry::Interface
-    attribute :segments, Types::Array
+    attribute :selectors, Types::Array
 
     delegate :>>, to: :to_proc
 

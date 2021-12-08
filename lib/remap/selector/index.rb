@@ -8,8 +8,14 @@ module Remap
     #
     # @example Select the value at index 1 from a array
     #   state = Remap::State.call([:one, :two, :tree])
-    #   result = Remap::Selector::Index.new(1).call(state)
-    #   result.fetch(:value) # => :two
+    #   index = Remap::Selector::Index.new(1)
+    #
+    #   result = index.call(state) do |element|
+    #     value = element.fetch(:value)
+    #     element.merge(value: value.upcase)
+    #   end
+    #
+    #   result.fetch(:value) # => :TWO
     class Index < Unit
       # @return [Integer]
       attribute :index, Integer
@@ -25,7 +31,9 @@ module Remap
       #
       # @return [State<U>]
       def call(outer_state, &block)
-        return call(outer_state, &:itself) unless block
+        unless block_given?
+          raise ArgumentError, "The index selector requires an iteration block"
+        end
 
         outer_state.bind(index: index) do |array, state|
           requirement[array] do

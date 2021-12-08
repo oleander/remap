@@ -13,11 +13,11 @@ module Remap
     def self.call(rules:, options:, contract:, attributes:)
       Class.new(self) do
         rules.each do |rule|
-          class_eval(&rule)
+          instance_exec(&rule)
         end
 
         options.each do |option|
-          class_eval(&option)
+          instance_exec(&option)
         end
 
         schema(contract)

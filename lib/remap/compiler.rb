@@ -30,17 +30,13 @@ module Remap
     #
     # @return [Rule]
     def self.call(&block)
-      unless block
+      unless block_given?
         return Rule::VOID
       end
 
       rules = new([]).tap do |compiler|
         compiler.instance_exec(&block)
       end.rules
-
-      if rules.empty?
-        return Rule::VOID
-      end
 
       Rule::Block.new(rules)
     end
@@ -66,7 +62,7 @@ module Remap
     #   output.fetch(:value) # => { nickname: "John" }
     #
     # @return [Rule::Map::Required]
-    def map(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def map(*path, to: EMPTY_ARRAY, backtrace: caller, &block)
       add rule(*path, to: to, backtrace: backtrace, &block)
     end
 
@@ -93,7 +89,7 @@ module Remap
     # @see #map
     #
     # @return [Rule::Map::Optional]
-    def map?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def map?(*path, to: EMPTY_ARRAY, backtrace: caller, &block)
       add rule?(*path, to: to, backtrace: backtrace, &block)
     end
 
@@ -117,7 +113,7 @@ module Remap
     #   output.fetch(:value) # => { name: "John" }
     #
     # @return [Rule::Map::Required]
-    def get(*path, backtrace: Kernel.caller, &block)
+    def get(*path, backtrace: caller, &block)
       add rule(path, to: path, backtrace: backtrace, &block)
     end
 
@@ -142,7 +138,7 @@ module Remap
     # @see #get
     #
     # @return [Rule::Map::Optional]
-    def get?(*path, backtrace: Kernel.caller, &block)
+    def get?(*path, backtrace: caller, &block)
       add rule?(path, to: path, backtrace: backtrace, &block)
     end
 
@@ -180,12 +176,12 @@ module Remap
     #   output.fetch(:value) # => { car: "Volvo" }
     #
     # @return [Rule::Embed]
-    def embed(mapper, &block)
-      if block
+    def embed(mapper)
+      if block_given?
         raise ArgumentError, "#embed does not take a block"
       end
 
-      embeding = rule(&block).add do |state, &error|
+      embeding = rule.add do |state, &error|
         mapper.call!(state.set(mapper: mapper)) do |failure|
           next error[failure]
         end.except(:mapper, :scope)
@@ -229,8 +225,8 @@ module Remap
     # @raise [ArgumentError]
     #   if no path given
     #   if path is not a Symbol or Array<Symbol>
-    def set(*path, to:, &block)
-      if block
+    def set(*path, to:)
+      if block_given?
         raise ArgumentError, "#set does not take a block"
       end
 
@@ -258,7 +254,7 @@ module Remap
     #   output.fetch(:value) # => { nickname: "John" }
     #
     # @return [Rule::Map]
-    def to(*path, map: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def to(*path, map: EMPTY_ARRAY, backtrace: caller, &block)
       add rule(*map, to: path, backtrace: backtrace, &block)
     end
 
@@ -313,7 +309,7 @@ module Remap
     # @return [Rule::Each]]
     # @raise [ArgumentError] if no block given
     def each(&block)
-      unless block
+      unless block_given?
         raise ArgumentError, "#each requires a block"
       end
 
@@ -346,7 +342,7 @@ module Remap
     # @return [Rule::Wrap]
     # @raise [ArgumentError] if type is not :array
     def wrap(type, &block)
-      unless block
+      unless block_given?
         raise ArgumentError, "#wrap requires a block"
       end
 
@@ -372,8 +368,8 @@ module Remap
     #   output.fetch(:value) # => { names: ["John", "Jane"] }
     #
     # @return [Rule::Path::Segment::Quantifier::All]
-    def all(&block)
-      if block
+    def all
+      if block_given?
         raise ArgumentError, "all selector does not take a block"
       end
 
@@ -398,8 +394,8 @@ module Remap
     #   output.fetch(:value) # => { api_key: "<SECRET>" }
     #
     # @return [Rule::Static::Fixed]
-    def value(value, &block)
-      if block
+    def value(value)
+      if block_given?
         raise ArgumentError, "option selector does not take a block"
       end
 
@@ -424,8 +420,8 @@ module Remap
     # @param id [Symbol]
     #
     # @return [Rule::Static::Option]
-    def option(id, backtrace: Kernel.caller, &block)
-      if block
+    def option(id, backtrace: caller)
+      if block_given?
         raise ArgumentError, "option selector does not take a block"
       end
 
@@ -453,8 +449,8 @@ module Remap
     #
     # @return [Path::Segment::Key]
     # @raise [ArgumentError] if index is not an Integer
-    def at(index, &block)
-      if block
+    def at(index)
+      if block_given?
         raise ArgumentError, "first selector does not take a block"
       end
 
@@ -482,8 +478,8 @@ module Remap
     #   output.fetch(:value) # => { name: "John" }
     #
     # @return [Path::Segment::Key]]
-    def first(&block)
-      if block
+    def first
+      if block_given?
         raise ArgumentError, "first selector does not take a block"
       end
 
@@ -509,8 +505,8 @@ module Remap
     #   output.fetch(:value) # => { name: "Linus" }
     #
     # @return [Path::Segment::Key]
-    def last(&block)
-      if block
+    def last
+      if block_given?
         raise ArgumentError, "last selector does not take a block"
       end
 
@@ -523,7 +519,7 @@ module Remap
       rule.tap { rules << rule }
     end
 
-    def rule(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def rule(*path, to: EMPTY_ARRAY, backtrace: caller, &block)
       Rule::Map::Required.call({
         path: {
           output: [to].flatten,
@@ -534,7 +530,7 @@ module Remap
       })
     end
 
-    def rule?(*path, to: EMPTY_ARRAY, backtrace: Kernel.caller, &block)
+    def rule?(*path, to: EMPTY_ARRAY, backtrace: caller, &block)
       Rule::Map::Optional.call({
         path: {
           output: [to].flatten,

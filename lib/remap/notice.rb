@@ -15,7 +15,7 @@ module Remap
     end
 
     def inspect
-      "#<%s %s>" % [self.class, to_hash.formated]
+      "#<%s %s>" % [self.class, to_hash.formatted]
     end
     alias to_s inspect
 

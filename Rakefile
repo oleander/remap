@@ -50,12 +50,10 @@ task :rubocop do
   exec "bundle", "exec", "rubocop"
 end
 
-Bump.tag_by_default = true
-
 namespace :gem do
   desc "Build and release gem"
   task :release do
-    Bump::Bump.run("patch", commit: true, bundle: true, tag: true)
+    system "bundle", "exec", "bump", "patch", "--tag"
     exec "bundle", "exec", "rake", "release"
   end
 end

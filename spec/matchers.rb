@@ -12,12 +12,12 @@ RSpec::Matchers.define :contain do |expected|
   end
 
   failure_message do |actual|
-    "expected #{actual.value.formated} to contain #{expected}"
+    "expected #{actual.value.formatted} to contain #{expected}"
   rescue KeyError
     "expected actual to contain #{expected} but it contains nothing"
   end
 
   failure_message_when_negated do |actual|
-    "expected #{actual.value.formated} not to contain #{expected}"
+    "expected #{actual.value.formatted} not to contain #{expected}"
   end
 end

@@ -17,18 +17,33 @@ module Remap
           block["Expected a state, got [#{self}] (#{self.class})"]
         end
 
+        # @return [Array]
+        #
+        # @see Extension::Paths::Hash
+        def paths
+          []
+        end
+
         # Fallback method used when #get is called on an object that does not respond to #get
         #
         # Block is invoked, if provided
         # Otherwise a symbol is thrown
         #
         # @param path [Array<Key>]
-        def get(*path, &block)
-          raise PathError, []
+        def get(*path, trace: [], &fallback)
+          return self if path.empty?
+
+          unless block_given?
+            return get(*path, trace: trace) do
+              raise PathError, trace
+            end
+          end
+
+          yield
         end
         alias_method :fetch, :get
 
-        def formated
+        def formatted
           self
         end
       end

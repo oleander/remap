@@ -7,13 +7,6 @@ module Remap
       using Extensions::Object
       using Extensions::Hash
 
-      refine Object do
-        # @see Extension::Paths::Hash
-        def paths
-          EMPTY_ARRAY
-        end
-      end
-
       refine Hash do
         # Returns a list of all key paths
         #
@@ -23,7 +16,7 @@ module Remap
         #       b: :c
         #     },
         #     d: :e
-        #   }.hur_paths # => [[:a, :b], [:d]]
+        #   }.paths # => [[:a, :b], [:d]]
         #
         # @return [Array<Array<Symbol>>] a list of key paths
         def paths
@@ -47,7 +40,7 @@ module Remap
         #       b: :c
         #     },
         #     d: :e
-        #   }.hur_only(:a, :b) # => { a: { b: :c } }
+        #   }.only(:a, :b) # => { a: { b: :c } }
         #
         # @returns [Hash] a hash containing the given path
         # @raise Europace::Error when path doesn't exist
@@ -95,7 +88,7 @@ module Remap
         # @return [self]
         def _(&block)
           unless block
-            return _ { raise ArgumentError, "Input: #{self} output: #{_1.formated}" }
+            return _ { raise ArgumentError, "Input: #{self} output: #{_1.formatted}" }
           end
 
           unless (result = Schema.call(self)).success?
@@ -117,18 +110,14 @@ module Remap
         def map(&block)
           bind do |value, state|
             Iteration.call(state: state, value: value).call do |other, **options|
-              state.set(other, **options).then do |inner_state|
-                block[inner_state] do |failure|
-                  throw :failure, failure
-                end
-              end
+              state.set(other, **options).then(&block)
             end.except(:index, :element, :key)
           end
         end
 
         # @return [String]
         def inspect
-          "#<State %s>" % compact_blank.formated
+          "#<State %s>" % compact_blank.formatted
         end
 
         # Merges {self} with {other} and returns a new state
@@ -275,10 +264,6 @@ module Remap
             end
 
             set(result)._
-          rescue NoMethodError => e
-            e.name == :fetch ? error["Fetch not defined on value: #{e}"] : raise
-          rescue NameError => e
-            e.name == :Undefined ? error["Undefined returned, skipping!: #{e}"] : raise
           rescue KeyError, IndexError => e
             error[e.message]
           rescue PathError => e

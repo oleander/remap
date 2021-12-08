@@ -4,7 +4,7 @@ module Remap
   module Extensions
     module Hash
       refine ::Hash do
-        def formated
+        def formatted
           JSON.neat_generate(self, sort: true, wrap: 40, aligned: true, around_colon: 1)
         end
       end

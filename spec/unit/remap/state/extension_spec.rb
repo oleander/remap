@@ -2,6 +2,7 @@
 
 describe Remap::State::Extension do
   using Remap::Extensions::Enumerable
+  using Remap::Extensions::Object
   using described_class
 
   describe "#notice" do
@@ -633,7 +634,7 @@ describe Remap::State::Extension do
       let(:value) { { key: "value" } }
       let(:state) { defined!(value)  }
 
-      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
     end
 
     context "when IndexError is raised" do

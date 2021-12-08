@@ -2,6 +2,7 @@
 
 describe Remap::Rule::Map do
   using Remap::State::Extension
+  using Remap::Extensions::Object
 
   subject { map.call(context, &error) }
 
@@ -141,7 +142,7 @@ describe Remap::Rule::Map do
 
       before do
         map.adjust do
-          Undefined
+          Dry::Core::Constants::Undefined
         end
       end
 
