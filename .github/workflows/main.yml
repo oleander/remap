@@ -1,5 +1,7 @@
 name: remap
 on: [push]
+concurrency:
+  cancel-in-progress: true
 jobs:
   rspec:
     runs-on: ubuntu-latest
