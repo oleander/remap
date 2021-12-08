@@ -10,8 +10,9 @@ describe Remap::Rule::Each do
   end
 
   describe "#call" do
-    let(:each) { described_class.call(rule: rule) }
     subject(:result) { each.call(state, &error) }
+
+    let(:each) { described_class.call(rule: rule) }
 
     context "when state is an array" do
       subject { result.fmap { _1.sort_by(&:to_s) } }
