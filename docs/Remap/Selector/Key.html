@@ -120,8 +120,11 @@
 </div></p>
       
       <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call({ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> })
-result = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">Key</span>.new(<span style="color:#A60">:name</span>).call(state)
-result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; &quot;John&quot;</span></code></pre>
+selector = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">Key</span>.new(<span style="color:#A60">:name</span>)
+
+selector.call(state) <span style="color:#080;font-weight:bold">do</span> |state|
+  state.fetch(<span style="color:#A60">:value</span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
     
   </div>
 
@@ -281,9 +284,6 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
       <pre class="lines">
 
 
-27
-28
-29
 30
 31
 32
@@ -301,10 +301,13 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
 44
 45
 46
-47</pre>
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 30</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(outer_state, &amp;block)
   <span style="color:#080;font-weight:bold">unless</span> block_given?
@@ -376,10 +379,10 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
       <pre class="lines">
 
 
-15</pre>
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/selector/key.rb', line 18</span>
 
 attribute <span style="color:#A60">:key</span>, <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Key</span></pre>
     </td>
@@ -392,7 +395,7 @@ attribute <span style="color:#A60">:key</span>, <span style="color:#036;font-wei
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  8 02:44:59 2021 by
+  Generated on Wed Dec  8 03:52:35 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

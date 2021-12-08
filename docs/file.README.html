@@ -185,7 +185,7 @@ output = {
   }
 }
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call(input, <span style="color:#606">date</span>: <span style="color:#036;font-weight:bold">Date</span>.today).result == output
+<span style="color:#036;font-weight:bold">Mapper</span>.call(input, <span style="color:#606">date</span>: <span style="color:#036;font-weight:bold">Date</span>.today) == output
 </code></pre>
 
 <h2 id="label-Installation">Installation</h2>
@@ -248,8 +248,7 @@ output = {
 <p>to invoke do the following</p>
 </blockquote>
 
-<pre class="code ruby"><code class="ruby">output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">person</span>: { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">John</span><span style="color:#710">'</span></span> } })
-output.result <span style="color:#777"># =&gt; { nickname: 'John' }</span>
+<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">person</span>: { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">John</span><span style="color:#710">'</span></span> } }) <span style="color:#777"># =&gt; { nickname: 'John' }</span>
 </code></pre>
 
 <h3 id="label-Select+all+elements+in+an+array">Select all elements in an array</h3>
@@ -264,8 +263,7 @@ output.result <span style="color:#777"># =&gt; { nickname: 'John' }</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call([{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span> }])
-output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quot;]</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call([{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span> }]) <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quot;]</span>
 </code></pre>
 
 <h3 id="label-Fixed+values+predefined+in+the+mapper">Fixed values predefined in the mapper</h3>
@@ -282,8 +280,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>)
-output.result <span style="color:#777"># =&gt; { person: { name: &quot;John&quot; } }</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; { person: { name: &quot;John&quot; } }</span>
 </code></pre>
 
 <h3 id="label-Fixed+value+defined+in+the+mapper">Fixed value defined in the mapper</h3>
@@ -298,8 +295,7 @@ output.result <span style="color:#777"># =&gt; { person: { name: &quot;John&quot
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({})
-output.result <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({}) <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }</span>
 </code></pre>
 
 <h3 id="label-Skip+mapping+rule+unless+some+condition+is+fulfilled">Skip mapping rule unless some condition is fulfilled</h3>
@@ -318,8 +314,7 @@ output.result <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }<
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>])
-output.result <span style="color:#777"># =&gt; [&quot;A&quot;, &quot;C&quot;]</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>]) <span style="color:#777"># =&gt; [&quot;A&quot;, &quot;C&quot;]</span>
 </code></pre>
 
 <blockquote>
@@ -336,8 +331,7 @@ output.result <span style="color:#777"># =&gt; [&quot;A&quot;, &quot;C&quot;]</s
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>])
-output.result <span style="color:#777"># =&gt; [&quot;B&quot;]</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>]) <span style="color:#777"># =&gt; [&quot;B&quot;]</span>
 </code></pre>
 
 <h3 id="label-Map+to+a+fixed+set+of+values">Map to a fixed set of values</h3>
@@ -358,16 +352,14 @@ output.result <span style="color:#777"># =&gt; [&quot;B&quot;]</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({
+<span style="color:#036;font-weight:bold">Mapper</span>.call({
   <span style="color:#606">countries</span>: [
     { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">SWE</span><span style="color:#710">&quot;</span></span> },
     { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">DE</span><span style="color:#710">&quot;</span></span> },
     { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">USA</span><span style="color:#710">&quot;</span></span> },
     { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">IT</span><span style="color:#710">&quot;</span></span> }
   ]
-})
-
-output.result <span style="color:#777"># =&gt; { names: [&quot;SWE&quot;, &quot;DE&quot;, &quot;US&quot;, &quot;OTHER&quot;] }</span>
+}) <span style="color:#777"># =&gt; { names: [&quot;SWE&quot;, &quot;DE&quot;, &quot;US&quot;, &quot;OTHER&quot;] }</span>
 </code></pre>
 
 <h3 id="label-Pending+mapping">Pending mapping</h3>
@@ -383,8 +375,7 @@ output.result <span style="color:#777"># =&gt; { names: [&quot;SWE&quot;, &quot;
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">workplace</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Apple</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> })
-output.result <span style="color:#777"># =&gt; { nickname: &quot;John&quot; }</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">workplace</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Apple</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }) <span style="color:#777"># =&gt; { nickname: &quot;John&quot; }</span>
 </code></pre>
 
 <h3 id="label-Iterate+over+an+enumerable">Iterate over an enumerable</h3>
@@ -403,8 +394,7 @@ output.result <span style="color:#777"># =&gt; { nickname: &quot;John&quot; }</s
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] })
-output.result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] }) <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span>
 </code></pre>
 
 <blockquote>
@@ -436,8 +426,7 @@ output.result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</sp
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] })
-output.result <span style="color:#777"># =&gt; [{ name: &quot;John&quot; }]</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] }) <span style="color:#777"># =&gt; [{ name: &quot;John&quot; }]</span>
 </code></pre>
 
 <blockquote>
@@ -456,8 +445,7 @@ output.result <span style="color:#777"># =&gt; [{ name: &quot;John&quot; }]</spa
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] })
-output.result <span style="color:#777"># =&gt; [0]</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] }) <span style="color:#777"># =&gt; [0]</span>
 </code></pre>
 
 <h3 id="label-Post-process+a+mapped+value">Post-process a mapped value</h3>
@@ -470,8 +458,7 @@ output.result <span style="color:#777"># =&gt; [0]</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello</span><span style="color:#710">&quot;</span></span>)
-output.result <span style="color:#777"># =&gt; &quot;Hello!&quot;</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; &quot;Hello!&quot;</span>
 </code></pre>
 
 <h3 id="label-Select+element+at+index">Select element at index</h3>
@@ -486,8 +473,7 @@ output.result <span style="color:#777"># =&gt; &quot;Hello!&quot;</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] })
-output.result <span style="color:#777"># =&gt; &quot;John&quot;</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] }) <span style="color:#777"># =&gt; &quot;John&quot;</span>
 </code></pre>
 
 <blockquote>
@@ -500,8 +486,7 @@ output.result <span style="color:#777"># =&gt; &quot;John&quot;</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] })
-output.result <span style="color:#777"># =&gt; &quot;John&quot;</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] }) <span style="color:#777"># =&gt; &quot;John&quot;</span>
 </code></pre>
 
 <blockquote>
@@ -514,8 +499,7 @@ output.result <span style="color:#777"># =&gt; &quot;John&quot;</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] })
-output.result <span style="color:#777"># =&gt; &quot;Jane&quot;</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span>}] }) <span style="color:#777"># =&gt; &quot;Jane&quot;</span>
 </code></pre>
 
 <h3 id="label-Wrap+output">Wrap output</h3>
@@ -534,8 +518,7 @@ output.result <span style="color:#777"># =&gt; &quot;Jane&quot;</span>
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> })
-output.result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }) <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span>
 </code></pre>
 
 <h3 id="label-Manually+skip+a+mapping">Manually skip a mapping</h3>
@@ -639,7 +622,7 @@ output = <span style="color:#036;font-weight:bold">Vehicle</span>.call([
 </div></div>
 
       <div id="footer">
-  Generated on Wed Dec  8 02:44:58 2021 by
+  Generated on Wed Dec  8 03:52:33 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

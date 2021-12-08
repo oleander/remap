@@ -121,9 +121,11 @@
       
       <pre class="example code"><code>state = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">State</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: { <span style="color:#606">c</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>] } } })
 first = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Selector</span>::<span style="color:#036;font-weight:bold">Index</span>.new(<span style="color:#606">index</span>: <span style="color:#00D">0</span>)
-result = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Path</span>::<span style="color:#036;font-weight:bold">Input</span>.new([<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>, <span style="color:#A60">:c</span>, first]).call(state)
+path = <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Path</span>::<span style="color:#036;font-weight:bold">Input</span>.new([<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>, <span style="color:#A60">:c</span>, first])
 
-result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># =&gt; &quot;A&quot;</span></code></pre>
+path.call(state) <span style="color:#080;font-weight:bold">do</span> |state|
+  state.fetch(<span style="color:#A60">:value</span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
     
   </div>
 
@@ -253,18 +255,18 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
       <pre class="lines">
 
 
-24
-25
 26
 27
 28
 29
 30
 31
-32</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/path/input.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/path/input.rb', line 26</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;iterator)
   <span style="color:#080;font-weight:bold">unless</span> block_given?
@@ -317,10 +319,10 @@ result.fetch(<span style="color:#A60">:value</span>) <span style="color:#777"># 
       <pre class="lines">
 
 
-17</pre>
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/path/input.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/path/input.rb', line 19</span>
 
 attribute <span style="color:#A60">:segments</span>, [<span style="color:#036;font-weight:bold">Selector</span>]</pre>
     </td>
@@ -333,7 +335,7 @@ attribute <span style="color:#A60">:segments</span>, [<span style="color:#036;fo
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  8 02:44:59 2021 by
+  Generated on Wed Dec  8 03:52:34 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

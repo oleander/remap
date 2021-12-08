@@ -150,7 +150,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="call-instance_method">
   
-    #<strong>call</strong>(input, **options) {|Failure| ... } &#x21d2; <tt><span class='object_link'><a href="Success.html" title="Remap::Success (class)">Success</a></span></tt> 
+    #<strong>call</strong>(input, **options) {|Failure| ... } &#x21d2; <tt>Success</tt> 
   
 
   
@@ -226,7 +226,7 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Success.html" title="Remap::Success (class)">Success</a></span></tt>)</span>
+        <span class='type'>(<tt>Success</tt>)</span>
       
       
       
@@ -266,9 +266,7 @@
 34
 35
 36
-37
-38
-39</pre>
+37</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/operation.rb', line 16</span>
@@ -280,22 +278,20 @@
     <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 
-  state = <span style="color:#036;font-weight:bold">State</span>.call(input, <span style="color:#606">options</span>: options, <span style="color:#606">mapper</span>: <span style="color:#069">self</span>)
-
-  other = call!(state) <span style="color:#080;font-weight:bold">do</span> |failure|
-    <span style="color:#080;font-weight:bold">return</span> error[failure]
+  other = <span style="color:#036;font-weight:bold">State</span>.call(input, <span style="color:#606">options</span>: options, <span style="color:#606">mapper</span>: <span style="color:#069">self</span>).then <span style="color:#080;font-weight:bold">do</span> |state|
+    call!(state) <span style="color:#080;font-weight:bold">do</span> |failure|
+      <span style="color:#080;font-weight:bold">return</span> error[failure]
+    <span style="color:#080;font-weight:bold">end</span>
   <span style="color:#080;font-weight:bold">end</span>
 
   <span style="color:#080;font-weight:bold">case</span> other
-  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">value</span>:, <span style="color:#606">notices</span>: }
-    <span style="color:#036;font-weight:bold">Success</span>.call(<span style="color:#606">value</span>: value, <span style="color:#606">notices</span>: notices)
+  <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">value</span>: }
+    value
   <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">notices</span>: [] }
-    <span style="color:#080;font-weight:bold">return</span> error[<span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: [other.failure(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No data avalible</span><span style="color:#710">&quot;</span></span>)])]
+    error[other.failure(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">No return value</span><span style="color:#710">&quot;</span></span>)]
   <span style="color:#080;font-weight:bold">in</span> { <span style="color:#606">notices</span>: }
-    <span style="color:#080;font-weight:bold">return</span> error[<span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: notices, <span style="color:#606">notices</span>: [])]
+    error[<span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: notices)]
   <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Notice</span>::<span style="color:#036;font-weight:bold">Error</span> =&gt; e
-  error[<span style="color:#036;font-weight:bold">Failure</span>.call(<span style="color:#606">failures</span>: [e.notice])]
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -307,7 +303,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  8 02:44:58 2021 by
+  Generated on Wed Dec  8 03:52:34 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

@@ -329,6 +329,19 @@
     </li>
   
 </ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -336,7 +349,6 @@
       <pre class="lines">
 
 
-31
 32
 33
 34
@@ -346,21 +358,30 @@
 38
 39
 40
-41</pre>
+41
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/state.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/state.rb', line 32</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call</span>(value, <span style="color:#606">mapper</span>: <span style="color:#036;font-weight:bold">Dummy</span>, <span style="color:#606">options</span>: <span style="color:#036;font-weight:bold">EMPTY_HASH</span>)
-  {
-    <span style="color:#606">notices</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
-    <span style="color:#606">path</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
-    <span style="color:#606">options</span>: options,
-    <span style="color:#606">mapper</span>: mapper,
-    <span style="color:#606">values</span>: value,
-    <span style="color:#606">value</span>: value,
-    <span style="color:#606">input</span>: value
-  }._
+  value._ <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#080;font-weight:bold">return</span> {
+      <span style="color:#606">notices</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
+      <span style="color:#606">path</span>: <span style="color:#036;font-weight:bold">EMPTY_ARRAY</span>,
+      <span style="color:#606">options</span>: options,
+      <span style="color:#606">mapper</span>: mapper,
+      <span style="color:#606">values</span>: value,
+      <span style="color:#606">value</span>: value,
+      <span style="color:#606">input</span>: value
+    }._
+  <span style="color:#080;font-weight:bold">end</span>
+
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Input is a state: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>value<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -372,7 +393,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  8 02:44:58 2021 by
+  Generated on Wed Dec  8 03:52:34 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>

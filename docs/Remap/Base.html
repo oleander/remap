@@ -137,8 +137,7 @@
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-output = <span style="color:#036;font-weight:bold">Mapper</span>.call([{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span> }])
-output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quot;]</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call([{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }, { <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Jane</span><span style="color:#710">&quot;</span></span> }]) <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quot;]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -153,7 +152,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>).result <span style="color:#777"># =&gt; { person: { name: &quot;John&quot; } }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; { person: { name: &quot;John&quot; } }</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -166,7 +165,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({}).result <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({}) <span style="color:#777"># =&gt; { api_key: &quot;ABC-123&quot; }</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -183,7 +182,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>]).result <span style="color:#777"># =&gt; [&quot;A&quot;, &quot;C&quot;]</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>]) <span style="color:#777"># =&gt; [&quot;A&quot;, &quot;C&quot;]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -200,7 +199,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>]).result <span style="color:#777"># =&gt; [&quot;B&quot;]</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">C</span><span style="color:#710">&quot;</span></span>]) <span style="color:#777"># =&gt; [&quot;B&quot;]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -215,8 +214,8 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }).result <span style="color:#777"># =&gt; &quot;A&quot;</span>
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span> } }).result <span style="color:#777"># =&gt; &quot;B&quot;</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A</span><span style="color:#710">&quot;</span></span> } }) <span style="color:#777"># =&gt; &quot;A&quot;</span>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">a</span>: { <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">B</span><span style="color:#710">&quot;</span></span> } }) <span style="color:#777"># =&gt; &quot;B&quot;</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -233,7 +232,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] }).result <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({ <span style="color:#606">people</span>: [{ <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span> }] }) <span style="color:#777"># =&gt; { names: [&quot;John&quot;] }</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -248,7 +247,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello</span><span style="color:#710">&quot;</span></span>).result <span style="color:#777"># =&gt; &quot;Hello!&quot;</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; &quot;Hello!&quot;</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -261,7 +260,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="color:#00D">1</span>, <span style="color:#00D">2</span>, <span style="color:#00D">3</span>]).result <span style="color:#777"># =&gt; 2</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call([<span style="color:#00D">1</span>, <span style="color:#00D">2</span>, <span style="color:#00D">3</span>]) <span style="color:#777"># =&gt; 2</span></code></pre>
     
   </div>
 
@@ -482,7 +481,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <div class="method_details first">
   <h3 class="signature first" id="call!-class_method">
   
-    .<strong>call!</strong>(state) {|Failure| ... } &#x21d2; <tt><span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></tt> 
+    .<strong>call!</strong>(state) {|Failure| ... } &#x21d2; <tt>Result</tt> 
   
 
   
@@ -537,7 +536,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Result.html" title="Remap::Result (class)">Result</a></span></tt>)</span>
+        <span class='type'>(<tt>Result</tt>)</span>
       
       
       
@@ -556,12 +555,12 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
-252
-253
-254</pre>
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 258</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">call!</span>(state, &amp;error)
   new(state.options).call(state._.set(<span style="color:#606">mapper</span>: <span style="color:#069">self</span>), &amp;error)
@@ -598,7 +597,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 <p>Guard against missing values</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">MapperWithAge</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   contract <span style="color:#080;font-weight:bold">do</span>
     required(<span style="color:#A60">:age</span>).filled(<span style="color:#A60">:integer</span>)
   <span style="color:#080;font-weight:bold">end</span>
@@ -608,8 +607,10 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">10</span><span style="color:#710">'</span></span>}).success? <span style="color:#777"># =&gt; false</span>
-<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">50</span>}).success? <span style="color:#777"># =&gt; true</span></code></pre>
+<span style="color:#036;font-weight:bold">MapperWithAge</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">50</span>}) <span style="color:#777"># =&gt; { person: { age: 50 } }</span>
+<span style="color:#036;font-weight:bold">MapperWithAge</span>.call({<span style="color:#606">age</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">10</span><span style="color:#710">'</span></span>}) <span style="color:#080;font-weight:bold">do</span> |failure|
+  <span style="color:#777"># ...</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
     
   </div>
 
@@ -627,12 +628,12 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
-141
-142
-143</pre>
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 145</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">contract</span>(&amp;context)
   <span style="color:#069">self</span>.contract = <span style="color:#036;font-weight:bold">Dry</span>::<span style="color:#036;font-weight:bold">Schema</span>.JSON(&amp;context)
@@ -675,7 +676,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">a</span>: <span style="color:#00D">1</span>}).result <span style="color:#777"># =&gt; { b: 1 }</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">a</span>: <span style="color:#00D">1</span>}) <span style="color:#777"># =&gt; { b: 1 }</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
@@ -692,7 +693,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>}).result.first_name <span style="color:#777"># =&gt; &quot;John&quot;</span></code></pre>
+<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>}).first_name <span style="color:#777"># =&gt; &quot;John&quot;</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -799,19 +800,19 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
-232
-233
-234
-235
-236
-237
 238
 239
 240
-241</pre>
+241
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 238</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">define</span>(target = <span style="color:#036;font-weight:bold">Nothing</span>, <span style="color:#606">method</span>: <span style="color:#A60">:new</span>, <span style="color:#606">strategy</span>: <span style="color:#A60">:argument</span>, &amp;context)
   <span style="color:#080;font-weight:bold">unless</span> context
@@ -855,7 +856,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 <p>A mapper that takes an argument name</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">MapperWithOption</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   option <span style="color:#A60">:name</span>
 
   define <span style="color:#080;font-weight:bold">do</span>
@@ -863,7 +864,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>).result <span style="color:#777"># =&gt; { name: &quot;John&quot; }</span></code></pre>
+<span style="color:#036;font-weight:bold">MapperWithOption</span>.call({}, <span style="color:#606">name</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">John</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; { name: &quot;John&quot; }</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -927,18 +928,18 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
-192
-193
-194
-195
-196
-197
 198
 199
-200</pre>
+200
+201
+202
+203
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 198</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">option</span>(field, <span style="color:#606">type</span>: <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">Any</span>)
   attribute(field, type)
@@ -981,7 +982,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 <p>Guard against values</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Mapper</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">MapperWithRule</span> &lt; <span style="color:#036;font-weight:bold">Remap</span>::<span style="color:#036;font-weight:bold">Base</span>
   contract <span style="color:#080;font-weight:bold">do</span>
     required(<span style="color:#A60">:age</span>)
   <span style="color:#080;font-weight:bold">end</span>
@@ -997,8 +998,10 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 
-<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">10</span>}).success? <span style="color:#777"># =&gt; false</span>
-<span style="color:#036;font-weight:bold">Mapper</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">50</span>}).success? <span style="color:#777"># =&gt; true</span></code></pre>
+<span style="color:#036;font-weight:bold">MapperWithRule</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">50</span>}) <span style="color:#777"># =&gt; { person: { age: 50 } }</span>
+<span style="color:#036;font-weight:bold">MapperWithRule</span>.call({<span style="color:#606">age</span>: <span style="color:#00D">10</span>}) <span style="color:#080;font-weight:bold">do</span> |failure|
+  <span style="color:#777"># ...</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
     
   </div>
 
@@ -1016,12 +1019,12 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
-171
-172
-173</pre>
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 177</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">rule</span>(...)
   <span style="color:#069">self</span>.rules = rules + [-&gt; * { rule(...) }]
@@ -1109,12 +1112,6 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
       <pre class="lines">
 
 
-265
-266
-267
-268
-269
-270
 271
 272
 273
@@ -1129,10 +1126,16 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 282
 283
 284
-285</pre>
+285
+286
+287
+288
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/remap/base.rb', line 271</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(state, &amp;error)
   <span style="color:#080;font-weight:bold">unless</span> error
@@ -1165,7 +1168,7 @@ output.result <span style="color:#777"># =&gt; [&quot;John&quot;, &quot;Jane&quo
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  8 02:44:58 2021 by
+  Generated on Wed Dec  8 03:52:34 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
