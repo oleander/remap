@@ -67,7 +67,7 @@ jobs:
       - run: git config --local user.name "oleander-bot"
       - run: git fetch --tags
       - run: bundle exec bump patch --tag
-        uses: cadwallion/publish-rubygems-action@master
+      - uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
           RELEASE_COMMAND: bundle exec rake release
