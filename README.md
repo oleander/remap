@@ -18,6 +18,8 @@ matching capabilities – making it blazingly fast
 ## Quick start
 
 ``` ruby
+require "remap"
+
 class Mapper < Remap::Base
   option :date # <= Custom required value
 
