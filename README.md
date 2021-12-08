@@ -126,7 +126,7 @@ output = {
   }
 }
 
-Mapper.call(input, date: Date.today) == output
+Mapper.call(input, date: Date.today) # => output
 ```
 
 ## Installation
@@ -155,7 +155,7 @@ class Mapper < Remap::Base
 end
 ```
 
-To invoke the mapper, call `Mapper.call` with some input data
+> To invoke the mapper, call `Mapper.call` with some input data
 
 ``` ruby
 Mapper.call({ input: "value" }) # => { output: "value" }
@@ -414,7 +414,7 @@ class Vehicle < Remap::Base
   end
 end
 
-output = Vehicle.call([ { gears: 3, brand: "Rose" }, { hybrid: false, fule: "Petrol" } ])
+output = Vehicle.call([{ gears: 3, brand: "Rose" }, { hybrid: false, fule: "Petrol" }])
 ```
 
 > Supported operators are `|`, `&` and `^`
