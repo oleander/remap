@@ -6,7 +6,8 @@ describe Remap::Compiler do
   subject(:output) { rule.call(state, &error) }
 
   let(:rule)  { described_class.call(&block) }
-  let(:state) { state!(input)                }
+  let(:input) { value! }
+  let(:state) { state!(input) }
 
   describe "#each" do
     let(:input) { [{ a: 1 }, { a: 2 }] }
@@ -50,6 +51,168 @@ describe Remap::Compiler do
 
       it "raises an argument error" do
         expect { rule.call(state) }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
+  describe "#get" do
+    subject { rule.call(state, &error) }
+
+    let(:rule) { described_class.call(&context) }
+
+    context "when state is undefined" do
+      let(:state) { undefined! }
+
+      context "when rule is nested" do
+        let(:context) do
+          -> do
+            get :person do
+              get :name
+            end
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+
+      context "when rule not nested" do
+        let(:context) do
+          -> do
+            get :person
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+    end
+
+    context "when rule is nested" do
+      let(:context) do
+        -> do
+          get :person do
+            get :name
+          end
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { person: { name: "John" } } }
+
+        it { is_expected.to contain(input) }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { person: { mismatch: "John" } } }
+
+        it "yields a failure" do
+          expect { |error| rule.call(state, &error) }.to yield_control
+        end
+      end
+    end
+
+    context "when rule not nested" do
+      let(:context) do
+        -> do
+          get :name
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { name: "John" } }
+
+        it { is_expected.to contain(input) }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { mismatch: "John" } }
+
+        it "yields a failure" do
+          expect { |error| rule.call(state, &error) }.to yield_control
+        end
+      end
+    end
+  end
+
+  describe "#get?" do
+    subject { rule.call(state, &error) }
+
+    let(:rule) { described_class.call(&context) }
+
+    context "when state is undefined" do
+      let(:state) { undefined! }
+
+      context "when rule is nested" do
+        let(:context) do
+          -> do
+            get? :person do
+              get :name
+            end
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+
+      context "when rule not nested" do
+        let(:context) do
+          -> do
+            get? :person
+          end
+        end
+
+        it { is_expected.to eq(state) }
+      end
+    end
+
+    context "when rule is nested" do
+      let(:context) do
+        -> do
+          get? :person do
+            get? :name
+          end
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { person: { name: "John" } } }
+
+        it { is_expected.to contain(input) }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { person: { mismatch: "John" } } }
+
+        it "does not yields a failure" do
+          expect { |error| rule.call(state, &error) }.not_to yield_control
+        end
+
+        it { is_expected.not_to have_key(:value) }
+        its([:notices]) { is_expected.to have(1).item }
+      end
+    end
+
+    context "when rule not nested" do
+      let(:context) do
+        -> do
+          get? :name
+        end
+      end
+
+      context "when path is a match" do
+        let(:input) { { name: "John" } }
+
+        it { is_expected.to contain(input) }
+      end
+
+      context "when path is not a match" do
+        let(:input) { { mismatch: "John" } }
+
+        it "does not yield a failure" do
+          expect { |error| rule.call(state, &error) }.not_to yield_control
+        end
+
+        it { is_expected.not_to have_key(:value) }
+        its([:notices]) { is_expected.to have(1).item }
       end
     end
   end
