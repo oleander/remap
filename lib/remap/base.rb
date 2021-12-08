@@ -242,8 +242,6 @@ module Remap
 
       self.constructor = Constructor.call(method: method, strategy: strategy, target: target)
       self.context = Compiler.call(&context)
-    rescue Dry::Struct::Error => e
-      raise ArgumentError, e.message
     end
 
     # Similar to {::call}, but takes a state
