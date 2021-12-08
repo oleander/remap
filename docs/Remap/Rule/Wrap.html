@@ -262,13 +262,17 @@
 
 31
 32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/rule/wrap.rb', line 31</span>
 
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">call</span>(...)
-  rule.call(...).fmap { <span style="color:#036;font-weight:bold">Array</span>.wrap(_1) }
+  rule.call(...).fmap <span style="color:#080;font-weight:bold">do</span> |value|
+    <span style="color:#036;font-weight:bold">Array</span>.wrap(value)
+  <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -376,7 +380,7 @@ attribute <span style="color:#A60">:type</span>, Value(<span style="color:#A60">
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  8 04:50:45 2021 by
+  Generated on Wed Dec  8 05:06:00 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
