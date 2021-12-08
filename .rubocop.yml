@@ -9,7 +9,7 @@ AllCops:
 
 Layout/LineLength:
    Max: 100
-   Exclude: ['**/spec/**/*.rb']
+   Exclude: ['**/spec/**/*.rb', 'remap.gemspec']
 
 RSpec/NestedGroups:
   Exclude:
