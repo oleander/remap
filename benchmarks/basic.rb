@@ -5,9 +5,6 @@ Bundler.require
 require "remap"
 require "benchmark/ips"
 
-input = JSON.parse(Pathname(__FILE__).dirname.join("../examples/input.json").read,
-                   symbolize_names: true)
-
 class Fixed < Remap::Base
   define do
     map :a do
