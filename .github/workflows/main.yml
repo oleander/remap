@@ -68,6 +68,6 @@ jobs:
         uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
-          RELEASE_COMMAND: bundle exec rake gem:release
+          RELEASE_COMMAND: bundle exec rake gem:release || true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: git push --tags
+      - run: git push --tags || true

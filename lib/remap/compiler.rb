@@ -524,6 +524,8 @@ module Remap
     # The final rule
     #
     # @return [Rule]
+    #
+    # @private
     def rule
       Rule::Collection.call(rules: rules)
     end
