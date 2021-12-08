@@ -237,7 +237,9 @@ end
 ```
 
 Rules can be expressed in a variety of ways to best fit the
-problem at hand. The following rules are yields the same output
+problem at hand.
+
+The following rules yields the same output
 
 ``` ruby
 # Flat map
@@ -273,7 +275,7 @@ end
 Mapper.call({ person: "John" }) # => { person: "John" }
 ```
 
-Use `each` when iterate over arrays and hashes.
+Use `each` when iterating over arrays and hashes.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -289,7 +291,7 @@ end
 Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] }) # => ["John", "Jane"]
 ```
 
-Or use the `all` selector.
+Or use the `all` selector as part of the path.
 
 > `all` is similar to JSONPath’s `[*]` operator
 
@@ -305,7 +307,7 @@ end
 
 Selected values can easily be processed before being returned using call-backs.
 
-> See for more information `Remap::Rule::Map`
+> See `Remap::Rule::Map` for more information
 
 ``` ruby
 class Mapper < Remap::Base
@@ -409,7 +411,7 @@ Mapper.call({
 }, code: 5678) # => { secret: 5678, seed: 3.2*10^10 }
 ```
 
-`set` can also accept a fixed value using the `value` method
+`set` can also take a fixed value using the `value` method
 
 ``` ruby
 class Mapper < Remap::Base
@@ -421,7 +423,7 @@ end
 Mapper.call(input) # => { api_key: "ABC-123" }
 ```
 
-### Wrap output
+### Type casting
 
 `wrap` allows output values to be type casts into an array.
 
@@ -491,5 +493,9 @@ Vehicle.call([
 TODO
 
 ### Constructors
+
+TODO
+
+### Schemas & rules
 
 TODO
