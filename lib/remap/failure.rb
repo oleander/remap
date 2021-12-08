@@ -28,5 +28,9 @@ module Remap
 
       new(failure)
     end
+
+    def exception
+      Error.new(attributes.formated)
+    end
   end
 end
