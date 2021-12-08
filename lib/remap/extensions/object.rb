@@ -21,7 +21,7 @@ module Remap
         #
         # @see Extension::Paths::Hash
         def paths
-          EMPTY_ARRAY
+          []
         end
 
         # Fallback method used when #get is called on an object that does not respond to #get
@@ -30,7 +30,7 @@ module Remap
         # Otherwise a symbol is thrown
         #
         # @param path [Array<Key>]
-        def get(*path, trace: EMPTY_ARRAY, &fallback)
+        def get(*path, trace: [], &fallback)
           return self if path.empty?
 
           unless block_given?

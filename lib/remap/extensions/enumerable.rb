@@ -28,7 +28,7 @@ module Remap
         # @return [Any]
         #
         # @raise When path cannot be found
-        def get(*path, trace: EMPTY_ARRAY, &fallback)
+        def get(*path, trace: [], &fallback)
           return self if path.empty?
 
           key = path.first
