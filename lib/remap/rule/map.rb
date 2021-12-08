@@ -43,7 +43,7 @@ module Remap
       #
       # @abstract
       def call(state, &error)
-        unless error
+        unless block_given?
           raise ArgumentError, "Map#call(state, &error) requires error handler block"
         end
 
