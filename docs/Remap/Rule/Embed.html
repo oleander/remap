@@ -273,11 +273,7 @@
 41
 42
 43
-44
-45
-46
-47
-48</pre>
+44</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/remap/rule/embed.rb', line 36</span>
@@ -287,13 +283,9 @@
     raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">A block is required to evaluate the embed</span><span style="color:#710">&quot;</span></span>
   <span style="color:#080;font-weight:bold">end</span>
 
-  notice = catch <span style="color:#A60">:fatal</span> <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#080;font-weight:bold">return</span> mapper.call!(state.set(<span style="color:#606">mapper</span>: mapper)) <span style="color:#080;font-weight:bold">do</span> |failure|
-      <span style="color:#080;font-weight:bold">return</span> error[failure]
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-
-  error[state.failure(notice).except(<span style="color:#A60">:mapper</span>)]
+  mapper.call!(state.set(<span style="color:#606">mapper</span>: mapper)) <span style="color:#080;font-weight:bold">do</span> |failure|
+    <span style="color:#080;font-weight:bold">return</span> error[failure]
+  <span style="color:#080;font-weight:bold">end</span>.except(<span style="color:#A60">:mapper</span>, <span style="color:#A60">:scope</span>)
 <span style="color:#080;font-weight:bold">end</span></pre>
     </td>
   </tr>
@@ -353,7 +345,7 @@ attribute <span style="color:#A60">:mapper</span>, <span style="color:#036;font-
 </div>
 
       <div id="footer">
-  Generated on Wed Dec  8 04:16:57 2021 by
+  Generated on Wed Dec  8 04:50:45 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.0.3).
 </div>
