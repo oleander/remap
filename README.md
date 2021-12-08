@@ -458,8 +458,8 @@ Vehicle.call([
     gears: 3,
     brand: "Rose"
   }, {
-  hybrid: false,
+    hybrid: false,
   fuel: "Petrol"
-}
+  }
 ]) # => [{ bicycle: { gears: 3, brand: "Rose" } }, { car: { hybrid: false, fuel: "Petrol" } }]
 ```
