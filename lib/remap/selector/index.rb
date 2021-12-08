@@ -11,9 +11,8 @@ module Remap
     #   index = Remap::Selector::Index.new(1)
     #
     #   result = index.call(state) do |element|
-    #     element.fmap do |value|
-    #       value.upcase
-    #     end
+    #     value = element.fetch(:value)
+    #     element.merge(value: value.upcase)
     #   end
     #
     #   result.fetch(:value) # => :TWO
