@@ -28,7 +28,7 @@ module Remap
       attribute? :path, Path.default { Path.call(EMPTY_HASH) }
 
       # @return [Rule]
-      attribute :rule, Rule.default { Void.call(EMPTY_HASH) }
+      attribute? :rule, Rule.default { Void.call(EMPTY_HASH) }
 
       # @return [Array<String>]
       attribute? :backtrace, Types::Backtrace, default: EMPTY_ARRAY
