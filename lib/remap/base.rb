@@ -175,7 +175,7 @@ module Remap
     #
     # @return [void]
     def self.rule(...)
-      self.rules = rules + [-> * { rule(...) }]
+      self.rules = rules + [-> { rule(...) }]
     end
 
     # Defines a required option for the mapper
