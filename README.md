@@ -6,27 +6,15 @@ JSONPath, without the hassle of using strings. Its compiler is written on top
 of an immutable, primitive data structure utilizing ruby's refinements & pattern
 matching capabilities – making it blazingly fast
 
-* [Quickstart](#quickstart)
+* [Quick start](#quick-start)
 * [API Documentation](http://oleander.io/remap/)
 * [Introduction](#introduction)
 * [Installation](#installation)
 
-## Quickstart
-
-A convoluted example containing most of `Re:map`s features
+## Quick start
 
 ``` ruby
-class Linux < Remap::Base
-  define do
-    get :kernel
-  end
-end
 
-class Windows < Remap::Base
-  define do
-    get :price
-  end
-end
 ```
 
 ``` ruby
@@ -44,7 +32,9 @@ class Mapper < Remap::Base
     get :friends do
       each do
         # Post processors
-        map(:name, to: :id).adjust(&:upcase)
+        map(:name, to: :id).then do
+          "#{value.upcase}!"
+        end
 
         # Field conditions
         get?(:age).if do |age|
@@ -52,7 +42,7 @@ class Mapper < Remap::Base
         end
 
         # Map to a finite set of values
-        get(:phones) do
+        get :phones do
           each do
             map.enum do
               from "iPhone", to: "iOS"
@@ -66,24 +56,48 @@ class Mapper < Remap::Base
     end
 
     # Composable mappers
+    class Linux < Remap::Base
+      define do
+        get :kernel
+      end
+    end
+
+    class Windows < Remap::Base
+      define do
+        get :price
+      end
+    end
+
+    # Embed mappers
     to :os do
       map :computer, :operating_system do
         embed Linux | Windows
       end
     end
 
-    # Wrapping values in an array
+    # Wrapping values in arrays
     to :houses do
       wrap :array do
         map :house
       end
     end
 
-    # Array selector (all)
+    # Nested paths ($.cars[*].model)
     map :cars, all, :model, to: :cars
+
+    # Or using the #each iterator
+    map :cars do
+      each do
+        map :model, to: :cars
+      end
+    end
   end
 end
+```
 
+Input hash to be mapped
+
+``` ruby
 input = {
   house: "100kvm",
   friends: [
@@ -112,15 +126,19 @@ input = {
     }
   ]
 }
+```
 
+The expected mapped output
+
+```ruby
 output = {
   friends: [
     {
-      id: "LISA",
+      id: "LISA!",
       phones: ["iOS"]
     }, {
       age: 40,
-      id: "JANE",
+      id: "JANE!",
       phones: ["Unknown"]
     }
   ],
@@ -132,7 +150,11 @@ output = {
     kernel: :latest
   }
 }
+```
 
+Invoking the mapper with input and the `date` option
+
+``` ruby
 Mapper.call(input, date: Date.today) # => output
 ```
 
@@ -142,40 +164,45 @@ Mapper.call(input, date: Date.today) # => output
 
 ## Introduction
 
-To create a mapper, inherit from `Remap::Base` and define `define`
+To create a mapper, inherit from `Remap::Base` and define your rules using `define`.
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    # here goes your mapping rules
+    # ...
   end
 end
 ```
 
 Here, you’ll define zero or more *mapping rules*.
-A rule contains an input path, an output path,
-an optional block and zero or more callbacks for post-processing.
+A rule represents
+
+* an input path
+* an output path
+* a nested block
+* zero or more post-processing callbacks
+
 The easiest way to get started is using `map`.
+`map` transform a value from one path to another.
 
 ``` ruby
 class Mapper < Remap::Base
   define do
-    # selects value at path {:input}
-    # and stores it at path {:output}
-    map :input, to: :output
+    map :name, to: :nickname
   end
 end
 ```
 
-To invoke the rule, call `Mapper.call` with your data.
+To invoke the mapper, call `Mapper.call` with any input.
 
 ``` ruby
 Mapper.call({ input: "value" }) # => { output: "value" }
 ```
 
-If the input data doesn't match the defined rule, an exception will be thrown explaining what went wrong and where.
-To prevent this, pass a block to `.call`.
-This will be called whenever the mapper fails and contains detailed information about the failure.
+If the input data doesn't match the defined rule, an exception
+will be thrown explaining what went wrong and where.
+To prevent this, you can pass a block to `.call`.
+The mapper will yield failures to the block instead of raising an error.
 
 ``` ruby
 Mapper.call({ something: "value" }) do |failure|
@@ -183,8 +210,7 @@ Mapper.call({ something: "value" }) do |failure|
 end
 ```
 
-If the input data is incomplete, use `map?`.
-It defines an optional rule mapping rule and will be ignored when missing.
+Use `map?`, `to?` and `get?` to map partial data structures.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -202,7 +228,7 @@ Mapper.call({ key1: "value1" }) # ="value1"
 Mapper.call({ key2: "value2" }) # ="value2"
 ```
 
-If none if the rules succeeds, the mapper raises an exception or invokes the passed block.
+If none of the rules succeeds, the mapper invokes the error block.
 
 ``` ruby
 Mapper.call({ nope: "value" }) do |failure|
@@ -210,9 +236,8 @@ Mapper.call({ nope: "value" }) do |failure|
 end
 ```
 
-Rules can be expressed in a variety of ways to best fit the problem at hand.
-
-The following rules are all equal
+Rules can be expressed in a variety of ways to best fit the
+problem at hand. The following rules are yields the same output
 
 ``` ruby
 # Flat map
@@ -236,7 +261,7 @@ to :first_name do
 end
 ```
 
-To select a value and its path, use `get`, or `get?`.
+To select a value *and* its path, use `get`, or `get?`.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -248,7 +273,7 @@ end
 Mapper.call({ person: "John" }) # => { person: "John" }
 ```
 
-Use `each` too iterate over arrays.
+Use `each` when iterate over arrays and hashes.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -264,11 +289,9 @@ end
 Mapper.call({ people: [{ name: "John" }, { name: "Jane" }] }) # => ["John", "Jane"]
 ```
 
-A compacter version is to use `all`
+Or use the `all` selector.
 
 > `all` is similar to JSONPath’s `[*]` operator
-
-To accomplish this using the above input, do the following
 
 ``` ruby
 class Mapper < Remap::Base
@@ -277,6 +300,8 @@ class Mapper < Remap::Base
   end
 end
 ```
+
+### Callbacks
 
 Selected values can easily be processed before being returned using call-backs.
 
@@ -332,7 +357,7 @@ class Mapper < Remap::Base
 end
 ```
 
-The callback context has access to the follow values
+The callback context has access to the following values
 
 * `value` current value
 * `element` - defined by `each`
@@ -340,8 +365,6 @@ The callback context has access to the follow values
 * `key` defined by `to`, `map` and `each` on hashes
 * `values` & `input` yields the mapper input
 * `mapper` the current mapper
-
-I.e
 
 ``` ruby
 class Person < Remap::Base
@@ -360,8 +383,8 @@ end
 
 ### Fixed & semi-fixed values
 
-A mapper can define required options using `option`.
-These values can be referenced any where in the mapper and can be set to a fixed path using `set`.
+A mapper can require options using the `option` method.
+An option can be referenced from within callbacks and via `set`.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -378,7 +401,7 @@ class Mapper < Remap::Base
 end
 ```
 
-The second argument to `Mapper.call` takes a hash and is used to populate the mapper.
+The second argument to `Mapper.call` takes a hash and is used as options for the mapper.
 
 ``` ruby
 Mapper.call({
@@ -386,7 +409,7 @@ Mapper.call({
 }, code: 5678) # => { secret: 5678, seed: 3.2*10^10 }
 ```
 
-`set` also accepts a fixed value using the `value` method
+`set` can also accept a fixed value using the `value` method
 
 ``` ruby
 class Mapper < Remap::Base
@@ -400,9 +423,7 @@ Mapper.call(input) # => { api_key: "ABC-123" }
 
 ### Wrap output
 
-`wrap` allows output values to be wrapped in an array
-
-> If the value is already an array, it’s not
+`wrap` allows output values to be type casts into an array.
 
 ``` ruby
 class Mapper < Remap::Base
@@ -420,7 +441,8 @@ Mapper.call({ name: "John" }) # ={ names: ["John"] }
 
 ### Operators
 
-Mappers can be combined using the logical operators `|`, `&` and `^`
+Mappers can be composed using the `|` (or), `&` (and) and `^` (xor) operators.
+Composed mappers can then be embedded into other mappers using `embed`.
 
 ``` ruby
 class Bicycle < Remap::Base
@@ -463,3 +485,11 @@ Vehicle.call([
   }
 ]) # => [{ bicycle: { gears: 3, brand: "Rose" } }, { car: { hybrid: false, fuel: "Petrol" } }]
 ```
+
+### Error handling
+
+TODO
+
+### Constructors
+
+TODO
