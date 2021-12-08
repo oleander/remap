@@ -38,6 +38,8 @@ module Remap
             end
 
             [current_path + [key], value]
+          rescue TypeError
+            raise PathError, current_path + [key]
           end
 
           result
