@@ -292,12 +292,7 @@ module Remap
 
     # @return [Contract]
     def validation
-      Contract.call(
-        attributes: attributes,
-        contract: contract,
-        options: options,
-        rules: rules
-      )
+      Contract.call(attributes: attributes, contract: contract, options: options, rules: rules)
     end
   end
 end
