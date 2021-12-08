@@ -34,7 +34,7 @@ module Remap
           key = path.first
 
           unless block_given?
-            get(*path, trace: trace) do
+            return get(*path, trace: trace) do
               raise PathError, trace + [key]
             end
           end
