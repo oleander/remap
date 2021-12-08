@@ -15,7 +15,7 @@ module Remap
     #       value.upcase
     #     end
     #   end
-
+    #
     #   result.fetch(:value) # => :TWO
     class Index < Unit
       # @return [Integer]

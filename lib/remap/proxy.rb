@@ -8,6 +8,7 @@ module Remap
 
     include Dry::Core::Constants
     extend Dry::Initializer
+    include Kernel
 
     # See Object#tap
     def tap(&block)
