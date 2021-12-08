@@ -65,6 +65,8 @@ jobs:
           ruby-version: 3.0.3
       - run: git config --local user.email "bot@oleander.io"
       - run: git config --local user.name "oleander-bot"
+      - run: git fetch --tags
+      - run: git fetch
       - if: contains(github.ref, 'refs/tags/v')
         run: |
           bundle exec bump patch --tag
