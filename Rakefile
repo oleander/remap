@@ -17,6 +17,11 @@ namespace :yard do
   task :doctest do
     exec "bundle", "exec", "yard", "doctest"
   end
+
+  desc "Generate yard docs"
+  task :docs do
+    exec "bundle", "exec", "yard", "doc", "-o", "docs/"
+  end
 end
 
 desc "Run all specs"
