@@ -9,11 +9,11 @@ describe Remap do
     end
 
     let(:input) do
-      { a: 'value' }
+      { a: "value" }
     end
 
     let(:output) do
-      have_attributes(b: 'value')
+      have_attributes(b: "value")
     end
   end
 end
