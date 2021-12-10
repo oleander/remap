@@ -61,4 +61,4 @@ jobs:
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: git push origin development:main --follow-tags
+      - run: git push origin -f development:main --follow-tags
