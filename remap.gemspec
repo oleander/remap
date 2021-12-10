@@ -12,10 +12,11 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.summary       = "An expressive and feature-complete data mapper with intuitive syntax thanks to its DSL"
   spec.description   = <<~DESC
-    Re:map; an expressive and feature-complete data mapper with an intuitive syntax designed as a domain-specific language using Ruby 3.0.
-    It gives the developer the expressive power of JSONPath, without the hassle of using strings.
-    Its compiler is written on top of an immutable, primitive data structure utilizing Rubys
-    refinements & pattern matching capabilities – making it blazingly fast
+    Re:map; an expressive and feature-rich data transformation mapper for Ruby 3.
+    It gives the developer the expressive power of JSONPath, without the hassle of
+    using strings. Its compiler is written on top of an immutable, primitive data
+    structure utilizing ruby's refinements & pattern matching capabilities – making
+    it blazingly fast
   DESC
 
   spec.metadata = {
