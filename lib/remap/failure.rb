@@ -29,6 +29,7 @@ module Remap
       new(failure)
     end
 
+    # @return [Error]
     def exception
       Error.new(attributes.formatted)
     end
