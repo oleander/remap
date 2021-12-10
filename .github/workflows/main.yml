@@ -67,7 +67,7 @@ jobs:
       - run: git push origin -f development:main --follow-tags
 
       - name: Get current gem version
-      - run: echo "::set-output name=version::$(bundle exec bump current)"
+        run: echo "::set-output name=version::$(bundle exec bump current)"
         id: gem
 
       - uses: actions/create-release@v1
