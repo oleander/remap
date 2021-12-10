@@ -1,4 +1,4 @@
-on: [release]
+on: release
 jobs:
   merge:
     runs-on: ubuntu-latest
