@@ -19,7 +19,7 @@ jobs:
       env:
         COVERAGE: 'true'
     - name: Upload coverage report once
-      if: startsWith(matrix.os, 'macos')
+      if: startsWith(matrix.os, 'ubuntu')
       run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/coverage.xml || true
       env:
         CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
