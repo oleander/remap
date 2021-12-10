@@ -87,6 +87,12 @@ jobs:
           prerelease: false
           draft: false
 
+      - name: Publish gem to Github
+        uses: jstastny/publish-gem-to-github@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: oleander
+
   docs:
     runs-on: ubuntu-latest
     needs: [deploy]
