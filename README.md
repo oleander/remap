@@ -169,7 +169,7 @@ source "https://rubygems.pkg.github.com/oleander" do
 end
 
 # Or Rubygems
-gem "remap
+gem "remap"
 ```
 
 Then run `bundle install`
@@ -212,7 +212,7 @@ end
 To invoke the mapper, call `Mapper.call` with any input, i.e
 
 ``` ruby
-Mapper.call({ input: "value" }) # => { output: "value" }
+Mapper.call({ name: "John" }) # => { nickname: "John" }
 ```
 
 If the input data doesn't match the defined rule, an exception
