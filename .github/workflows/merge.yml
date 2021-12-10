@@ -3,7 +3,7 @@ name: merge
 on:
   push:
     tags:
-      - v*
+      - 'v*'
 
 jobs:
   merge:
