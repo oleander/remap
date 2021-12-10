@@ -69,16 +69,7 @@ jobs:
           ruby-version: 3.0.3
       - run: git config --local user.email "bot@oleander.io"
       - run: git config --local user.name "oleander-bot"
-
-      # - name: Current gem version
-      #   run: echo "::set-output name=version::$(bundle exec bump current)"
-      #   id: deploy
-
-      # - name: Check if tag exists
-      #   run: git tag -l
-      #   run: echo "::set-output name=exists::$(git tag -l)"
-
-      - run: bundle exec bump patch
+      - run: bundle exec bump patch --commit-message release
       - uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
