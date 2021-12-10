@@ -7,7 +7,7 @@ module Remap
     attribute :failures, [Notice], min_size: 1
     attribute? :notices, [Notice], default: EMPTY_ARRAY
 
-    # Merges two failures
+    # Merges two failures and returns a new failure
     #
     # @param other [Failure]
     #
