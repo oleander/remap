@@ -4,26 +4,21 @@ on:
     branches: [development]
 jobs:
   rspec:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
         ruby-version: 3.0.3
-    - name: Run specs
-      run: bundle exec rake rspec
+    - name: Run specs & upload coverage report
+      uses: paambaati/codeclimate-action@v3.0.0
       env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         COVERAGE: 'true'
-    - name: Upload coverage report once
-      if: startsWith(matrix.os, 'ubuntu')
-      run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/coverage.xml || true
-      env:
-        CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
-        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      with:
+        coverageCommand: bundle exec rake rspec
+        coverageLocations: ${{github.workspace}}/coverage/coverage.xml
 
   rubocop:
     runs-on: ubuntu-latest
