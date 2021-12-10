@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "remap"
-  spec.version       = "2.2.9"
+  spec.version       = "2.2.10"
   spec.authors       = ["Linus Oleander"]
   spec.email         = ["oleander@users.noreply.github.com"]
   spec.homepage      = "https://github.com/oleander/remap"
