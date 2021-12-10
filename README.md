@@ -1,10 +1,7 @@
 # Re:map [![remap](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg?branch=development)](https://github.com/oleander/remap/actions/workflows/main.yml) [![Gem](https://img.shields.io/gem/v/remap)](https://rubygems.org/gems/remap) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f07e265fc5184af584333f0bb62f3b47)](https://www.codacy.com/gh/oleander/remap/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oleander/remap&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/f07e265fc5184af584333f0bb62f3b47)](https://www.codacy.com/gh/oleander/remap/dashboard?utm_source=github.com&utm_medium=referral&utm_content=oleander/remap&utm_campaign=Badge_Coverage)
 
-`Re:map`; an expressive and feature-complete data mapper designed as a domain-specific
-language using Ruby 3.0. `Re:map` gives the developer the expressive power of
-JSONPath, without the hassle of using strings. Its compiler is written on top
-of an immutable, primitive data structure utilizing ruby's refinements & pattern
-matching capabilities – making it blazingly fast
+`Re:map`; an expressive and feature-rich data transformation mapper for Ruby 3.
+It gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing ruby's refinements & pattern matching capabilities – making it blazingly fast
 
 * [Quick start](#quick-start)
 * [Documentation](http://oleander.io/remap/)
@@ -163,7 +160,19 @@ Mapper.call(input, date: Date.today) # => output
 
 ## Installation
 
-`gem install remap` then `require "remap"`
+Add `remap` to your `Gemfile`
+
+``` ruby
+# Use Github as source
+source "https://rubygems.pkg.github.com/oleander" do
+  gem "remap"
+end
+
+# Or Rubygems
+gem "remap
+```
+
+Then run `bundle install`
 
 ## Introduction
 
@@ -175,23 +184,19 @@ class Mapper < Remap::Base
     # rules goes here
   end
 end
+
+Mapper.call(input)
 ```
 
 Or use `define` method directly on the Remap module
 
 ``` ruby
-Remap.define do
+mapper = Remap.define do
   # rules goes here
 end
+
+mapper.call(input)
 ```
-
-Here, you’ll define zero or more *mapping rules*.
-A rule represents
-
-* an input path
-* an output path
-* a nested block
-* zero or more post-processing callbacks
 
 The easiest way to get started is using `map`.
 `map` transform a value from one path to another.
@@ -204,7 +209,7 @@ class Mapper < Remap::Base
 end
 ```
 
-To invoke the mapper, call `Mapper.call` with any input.
+To invoke the mapper, call `Mapper.call` with any input, i.e
 
 ``` ruby
 Mapper.call({ input: "value" }) # => { output: "value" }
