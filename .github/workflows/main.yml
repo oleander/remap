@@ -1,9 +1,7 @@
 name: remap
-
 on:
   push:
     branches: [development]
-
 jobs:
   rspec:
     runs-on: ubuntu-latest

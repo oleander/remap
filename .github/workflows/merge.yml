@@ -1,10 +1,5 @@
 name: merge
-
-on:
-  push:
-    tags:
-      - 'v*'
-
+on: [release]
 jobs:
   merge:
     runs-on: ubuntu-latest
