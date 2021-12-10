@@ -1,5 +1,8 @@
 name: remap
-on: [push]
+
+on:
+  push:
+    branches: [development]
 
 jobs:
   rspec:

@@ -1,0 +1,17 @@
+name: merge
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        git fetch origin
+        git checkout main
+        git merge development
+        git push origin development
