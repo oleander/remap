@@ -172,8 +172,16 @@ To create a mapper, inherit from `Remap::Base` and define your rules using `defi
 ``` ruby
 class Mapper < Remap::Base
   define do
-    # ...
+    # rules goes here
   end
+end
+```
+
+Or use `define` method directly on the Remap module
+
+``` ruby
+Remap.define do
+  # rules goes here
 end
 ```
 

@@ -20,4 +20,7 @@ module Remap
   loader.collapse("#{__dir__}/remap/mapper/support")
   loader.setup
   loader.eager_load
+
+  include ClassInterface
+  module_function :define
 end
