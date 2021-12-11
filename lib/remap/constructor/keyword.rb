@@ -29,7 +29,8 @@ module Remap
       def call(state)
         super.fmap do |input|
           unless input.is_a?(Hash)
-            raise ArgumentError, "Keyword stategy requires a Hash, got %s (%s)" % [input, input.class]
+            raise ArgumentError,
+                  "Keyword stategy requires a Hash, got %s (%s)" % [input, input.class]
           end
 
           target.public_send(id, **input)
