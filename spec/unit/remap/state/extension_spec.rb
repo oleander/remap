@@ -23,17 +23,6 @@ describe Remap::State::Extension do
     end
   end
 
-  describe "#fatal" do
-    let(:state) { defined! }
-
-    it "throws a symbol" do
-      expect do
-        state.fatal!("%s",
-                     "a value")
-      end.to throw_symbol(:fatal, be_kind_of(Remap::Notice))
-    end
-  end
-
   describe "#_" do
     context "when target is valid" do
       let(:state) { defined! }
@@ -56,34 +45,12 @@ describe Remap::State::Extension do
     end
   end
 
-  describe "#notice!" do
-    let(:state) { defined! }
-
-    it "throws a symbol" do
-      expect do
-        state.notice!("%s",
-                      "a value")
-      end.to throw_symbol(:notice, be_kind_of(Remap::Notice))
-    end
-  end
-
-  describe "#ignore!" do
-    let(:state) { defined! }
-
-    it "throws a symbol" do
-      expect do
-        state.ignore!("%s",
-                      "a value")
-      end.to throw_symbol(:ignore, be_kind_of(Remap::Notice))
-    end
-  end
-
   describe "#only" do
     subject(:result) { target.only(*keys) }
 
     context "when keys are empty" do
       let(:target) { hash! }
-      let(:keys) { [] }
+      let(:keys)   { [] }
 
       it { is_expected.to be_empty }
     end
@@ -112,7 +79,7 @@ describe Remap::State::Extension do
   end
 
   describe "#combine" do
-    subject { left.combine(right) }
+    subject(:result) { left.combine(right) }
 
     context "when left is undefined!" do
       let(:left) { undefined!(:with_notices) }
@@ -147,7 +114,15 @@ describe Remap::State::Extension do
       let(:left)  { defined!(10)     }
       let(:right) { defined!(:hello) }
 
-      its(:itself) { will throw_symbol(:fatal, be_kind_of(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Fatal).and(
+            having_attributes(
+              value: 10
+            )
+          )
+        )
+      end
     end
 
     context "when same type" do
@@ -188,7 +163,7 @@ describe Remap::State::Extension do
       let(:state) { defined!(input) }
 
       context "when accessing value" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |value|
               value.upcase
@@ -200,7 +175,7 @@ describe Remap::State::Extension do
       end
 
       context "when accessing key" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |_value, state|
               state.key.upcase.to_s
@@ -212,7 +187,7 @@ describe Remap::State::Extension do
       end
 
       context "when iterator ignores some of the elements" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |value, state|
               case state.key
@@ -225,11 +200,19 @@ describe Remap::State::Extension do
           end
         end
 
-        it { is_expected.to contain({ key1: "VALUE1" }) }
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                reason: "Ignored!"
+              )
+            )
+          )
+        end
       end
 
       context "when iterator ignores all of the elements" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |_value, state|
               state.ignore!("Ignored!")
@@ -237,7 +220,15 @@ describe Remap::State::Extension do
           end
         end
 
-        it { is_expected.to contain({}) }
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                reason: "Ignored!"
+              )
+            )
+          )
+        end
       end
     end
 
@@ -246,7 +237,7 @@ describe Remap::State::Extension do
       let(:state) { defined!(input) }
 
       context "when accessing value" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |value|
               value.upcase
@@ -258,7 +249,7 @@ describe Remap::State::Extension do
       end
 
       context "when accessing index" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |_value, state|
               state.index
@@ -270,7 +261,7 @@ describe Remap::State::Extension do
       end
 
       context "when accessing element" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |_value, state|
               state.element.upcase
@@ -282,32 +273,48 @@ describe Remap::State::Extension do
       end
 
       context "when iterator ignores some of the elements" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |value, state|
               case state.index
               in 0
                 value.upcase
               in 1
-                state.ignore!("Ignore!")
+                state.ignore!("notice!")
               end
             end
           end
         end
 
-        it { is_expected.to contain(["VALUE1"]) }
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                reason: "notice!"
+              )
+            )
+          )
+        end
       end
 
       context "when iterator ignores all of the elements" do
-        subject do
+        subject(:result) do
           state.map do |element|
             element.fmap do |_, state|
-              state.ignore!("Ignore!")
+              state.ignore!("notice!")
             end
           end
         end
 
-        it { is_expected.to contain([]) }
+        it "raises an ignore exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                reason: "notice!"
+              )
+            )
+          )
+        end
       end
     end
   end
@@ -544,9 +551,18 @@ describe Remap::State::Extension do
         end
       end
 
-      let(:state) { defined! }
+      let(:value) { value! }
+      let(:state) { defined!(value) }
 
-      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              value: value
+            )
+          )
+        )
+      end
     end
 
     context "when #values is accessed" do
@@ -580,26 +596,21 @@ describe Remap::State::Extension do
         { path: [:key1], reason: "This is skipped!", value: value }
       end
 
-      it "throws symbol notice" do
-        expect { result }.to throw_symbol(:ignore, be_a(Remap::Notice))
-      end
-    end
-
-    context "when undefined! is returned" do
-      subject(:result) do
-        state.execute { undefined! }
-      end
-
-      let(:state) { defined! }
-
-      it "throws symbol notice" do
-        expect { result }.to throw_symbol(:notice, be_a(Remap::Notice))
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              path: [:key1],
+              value: "value"
+            )
+          )
+        )
       end
     end
 
     context "when #get is used" do
       context "when value exists" do
-        subject do
+        subject(:result) do
           state.execute do
             value.get(:a, :b)
           end
@@ -612,7 +623,7 @@ describe Remap::State::Extension do
       end
 
       context "when value does not exists" do
-        subject do
+        subject(:result) do
           state.execute do
             value.get(:a, :x)
           end
@@ -620,12 +631,20 @@ describe Remap::State::Extension do
 
         let(:state) { defined! }
 
-        its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                path: [:a]
+              )
+            )
+          )
+        end
       end
     end
 
     context "when KeyError is raised" do
-      subject do
+      subject(:result) do
         state.execute do
           input.fetch(:does_not_exist)
         end
@@ -634,11 +653,19 @@ describe Remap::State::Extension do
       let(:value) { { key: "value" } }
       let(:state) { defined!(value)  }
 
-      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
+      it "raises a ignore exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              value: value
+            )
+          )
+        )
+      end
     end
 
     context "when IndexError is raised" do
-      subject do
+      subject(:result) do
         state.execute do
           value.fetch(10)
         end
@@ -647,7 +674,15 @@ describe Remap::State::Extension do
       let(:value) { [1, 2, 3] }
       let(:state) { defined!(value) }
 
-      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              value: value
+            )
+          )
+        )
+      end
     end
   end
 
@@ -661,7 +696,7 @@ describe Remap::State::Extension do
     end
 
     context "when options are passed" do
-      subject do
+      subject(:result) do
         state.fmap(key: key) do |&error|
           error["message"]
         end
@@ -670,7 +705,15 @@ describe Remap::State::Extension do
       let(:key)   { :key                       }
       let(:state) { defined!(value!, path: []) }
 
-      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              path: [:key]
+            )
+          )
+        )
+      end
     end
 
     context "when value not defined!" do
@@ -683,7 +726,7 @@ describe Remap::State::Extension do
 
     context "when error block is invoked" do
       context "without pre-existing path" do
-        subject do
+        subject(:result) do
           state.fmap do |_value, &error|
             error[reason]
           end
@@ -692,25 +735,42 @@ describe Remap::State::Extension do
         let(:state)  { defined! }
         let(:reason) { "reason" }
 
-        its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                reason: reason
+              )
+            )
+          )
+        end
       end
 
       context "with pre-existing path" do
         context "without key argument" do
-          subject do
+          subject(:result) do
             state.fmap do
-              state.notice!(reason)
+              state.ignore!(reason)
             end
           end
 
           let(:state) { defined!(1, path: [:key]) }
           let(:reason) { "reason" }
 
-          its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+          it "raises a fatal exception" do
+            expect { result }.to raise_error(
+              an_instance_of(Remap::Notice::Ignore).and(
+                having_attributes(
+                  path: [:key],
+                  reason: reason
+                )
+              )
+            )
+          end
         end
 
         context "with key argument" do
-          subject do
+          subject(:result) do
             state.fmap(key: :key2) do |_value, &error|
               error[reason]
             end
@@ -719,7 +779,16 @@ describe Remap::State::Extension do
           let(:state) { defined!(1, path: [:key1]) }
           let(:reason) { "reason" }
 
-          its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+          it "raises a fatal exception" do
+            expect { result }.to raise_error(
+              an_instance_of(Remap::Notice::Ignore).and(
+                having_attributes(
+                  path: [:key1, :key2],
+                  reason: reason
+                )
+              )
+            )
+          end
         end
       end
     end
@@ -747,7 +816,7 @@ describe Remap::State::Extension do
     end
 
     context "when options are passed" do
-      subject do
+      subject(:result) do
         state.bind(key: key) do |_value, _state, &error|
           error["error"]
         end
@@ -757,11 +826,20 @@ describe Remap::State::Extension do
       let(:value) { "value"         }
       let(:state) { defined!(value) }
 
-      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              path: [:key],
+              value: value
+            )
+          )
+        )
+      end
     end
 
     context "when error block is invoked" do
-      subject do
+      subject(:result) do
         state.bind do |&error|
           error[reason]
         end
@@ -770,7 +848,15 @@ describe Remap::State::Extension do
       let(:state) { defined! }
       let(:reason) { "reason" }
 
-      its(:itself) { will throw_symbol(:notice, be_a(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              reason: reason
+            )
+          )
+        )
+      end
     end
   end
 

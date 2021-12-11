@@ -59,10 +59,10 @@ FactoryBot.define do
     # NOP
   end
 
-  factory :notice, class: "Remap::Notice::Untraced" do
-    reason { Faker::Lorem.sentence }
-    path
-    value
+  factory :notice, class: "Remap::Notice" do
+    reason { "this is a reason" }
+    path { generate(:path) }
+    value { generate(:value) }
   end
 
   factory :state, class: Hash, aliases: [:undefined] do
@@ -72,9 +72,9 @@ FactoryBot.define do
     notices { [] }
     options { {} }
     values { input }
+    path { [] }
 
     mapper
-    path
     input
 
     factory :defined do
@@ -92,6 +92,10 @@ FactoryBot.define do
 
     trait :with_failures do
       failures { build_list(:notice, 1) }
+    end
+
+    trait :with_path do
+      path { [generate(:path)] }
     end
   end
 end

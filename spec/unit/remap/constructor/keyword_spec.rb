@@ -13,8 +13,8 @@ RSpec.describe Remap::Constructor::Keyword do
     context "when state is not a hash" do
       let(:state) { state!(:foo) }
 
-      it "raises an argument error" do
-        expect { result }.to raise_error(ArgumentError)
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(an_instance_of(Remap::Notice::Ignore))
       end
     end
 

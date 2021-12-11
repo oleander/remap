@@ -14,8 +14,8 @@ module Support
   end
   alias rule! void!
 
-  def notice!
-    Notice.call(value: value!, path: [:a], reason: string!)
+  def notice!(value: value!, path: [], reason: "my reason!")
+    Notice.call(value: value, path: path, reason: reason)
   end
 
   # @return [Hash]

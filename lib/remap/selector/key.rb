@@ -27,22 +27,18 @@ module Remap
       # @yieldreturn [State<U>]
       #
       # @return [State<U>]
-      def call(outer_state, &block)
+      def call(state, &block)
         unless block_given?
           raise ArgumentError, "The key selector requires an iteration block"
         end
 
-        outer_state.bind(key: key) do |hash, state|
+        state.bind(key: key) do |hash, s|
           requirement[hash] do
-            state.fatal!("Expected hash but got %p (%s)", hash, hash.class)
+            s.fatal!("Expected hash")
           end
 
           value = hash.fetch(key) do
-            state.ignore!("Key %p (%s) not found in hash %p (%s)",
-                          key,
-                          key.class,
-                          hash,
-                          hash.class)
+            s.ignore!("Key not found")
           end
 
           state.set(value, key: key).then(&block)

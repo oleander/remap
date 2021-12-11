@@ -15,7 +15,7 @@ describe Remap::Base do
     { string: "string", array: [1, 2, 3], hash: { a: 1, b: 2 } }
   end
 
-  it "invokes block with failure" do
-    expect { |error| mapper.call(input, &error) }.to yield_with_args(Remap::Failure)
+  it "catches exception" do
+    expect { mapper.call(input) }.to raise_error(Remap::Notice::Fatal)
   end
 end

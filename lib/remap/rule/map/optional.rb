@@ -35,13 +35,9 @@ module Remap
             raise ArgumentError, "map.call(state, &error) requires a block"
           end
 
-          fatal(state) do
-            return ignore(state) do
-              return notice(state) do
-                return super
-              end
-            end
-          end
+          super
+        rescue Notice::Ignore => e
+          e.undefined(state)
         end
 
         private

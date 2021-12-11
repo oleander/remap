@@ -54,17 +54,17 @@ module Remap
 
         # Throws :fatal containing a Notice
         def fatal!(...)
-          throw :fatal, notice(...)
+          notice(...).fatal!
         end
 
         # Throws :warn containing a Notice
         def notice!(...)
-          throw :notice, notice(...)
+          raise NotImplementedError, "Not implemented"
         end
 
         # Throws :ignore containing a Notice
         def ignore!(...)
-          throw :ignore, notice(...)
+          notice(...).ignore!
         end
 
         # Creates a notice containing the given message
@@ -132,12 +132,12 @@ module Remap
               list1 + list2
             in [:value, left, right]
               fatal!(
-                "Could not merge [%p] (%s) with [%p] (%s) @ %s",
-                left,
+                "Could not merge [%p] (%s) with [%p] (%s)",
+                left.formatted,
                 left.class,
-                right,
-                right.class,
-                (path + [key]).join("."))
+                right.formatted,
+                right.class
+              )
             in [:notices, Array => n1, Array => n2]
               n1 + n2
             in [Symbol, _, value]
@@ -218,7 +218,8 @@ module Remap
                 Notice.call(
                   reason: inner_reason,
                   path: path + sufix,
-                  **only(:value))
+                  **only(:value)
+                )
               end
             end
           end
@@ -241,9 +242,11 @@ module Remap
             raise ArgumentError, "State#bind requires a block"
           end
 
-          fetch(:value) { return self }.then do |value|
-            block[value, self] do |reason, **other|
-              return set(**options, **other).notice!(reason)
+          s = set(**options)
+
+          fetch(:value) { return s }.then do |value|
+            block[value, s] do |reason, **other|
+              return s.set(**other).ignore!(reason)
             end
           end
         end
@@ -263,11 +266,13 @@ module Remap
               return error["Undefined returned, skipping!"]
             end
 
-            set(result)._
-          rescue KeyError, IndexError => e
-            error[e.message]
+            set(result)
+          rescue KeyError => e
+            set(path: path + [e.key]).ignore!(e.message)
+          rescue IndexError => e
+            ignore!(e.message)
           rescue PathError => e
-            ignore!("Path %s not defined for %p (%s)", e.path.join("."), value, value.class)
+            set(path: path + e.path).ignore!("Undefined path")
           end
         end
 

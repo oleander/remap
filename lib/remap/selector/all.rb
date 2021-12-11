@@ -32,7 +32,7 @@ module Remap
 
         outer_state.bind(quantifier: "*") do |enum, state|
           requirement[enum] do
-            state.fatal!("Expected enumeration but got %p (%s)", enum, enum.class)
+            state.fatal!("Expected enumerable")
           end
 
           state.map(&block)

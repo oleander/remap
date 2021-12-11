@@ -35,8 +35,14 @@ describe Remap::Iteration do
         let(:input) { "value" }
         let(:output) { input.downcase }
 
-        it "throws a fatal symbol" do
-          expect { result }.to throw_symbol(:fatal)
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Fatal).and(
+              having_attributes(
+                value: input
+              )
+            )
+          )
         end
       end
 

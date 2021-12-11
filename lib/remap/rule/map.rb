@@ -47,19 +47,19 @@ module Remap
           raise ArgumentError, "Map#call(state, &error) requires error handler block"
         end
 
-        notice = catch :fatal do
-          return path.input.call(state) do |inner_state|
-            other_state = rule.call(inner_state) do |failure|
-              return error[failure]
-            end
+        s1 = path.input.call(state) do |inner_state|
+          other_state = rule.call(inner_state) do |failure|
+            return error[failure]
+          end
 
-            callback(other_state) do |failure|
-              return error[failure]
-            end
-          end.then(&path.output)
-        end
+          callback(other_state) do |failure|
+            return error[failure]
+          end
+        end.then(&path.output)
 
-        raise notice.traced(backtrace).exception
+        s1.set(path: state.path).except(:key)
+      rescue Notice::Fatal => e
+        raise e.traced(backtrace)
       end
 
       # A post-processor method
@@ -93,7 +93,7 @@ module Remap
       # @return [Map]
       def pending(reason = "Pending mapping")
         add do |state|
-          state.notice!(reason)
+          state.ignore!(reason)
         end
       end
 
@@ -152,7 +152,7 @@ module Remap
       def if(&block)
         add do |outer_state|
           outer_state.execute(&block).fmap do |bool, state|
-            bool ? outer_state.value : state.notice!("#if returned false")
+            bool ? outer_state.value : state.ignore!("#if returned false")
           end
         end
       end
@@ -180,7 +180,7 @@ module Remap
       def if_not(&block)
         add do |outer_state|
           outer_state.execute(&block).fmap do |bool, state|
-            bool ? state.notice!("#if_not returned false") : outer_state.value
+            bool ? state.ignore!("#if_not returned false") : outer_state.value
           end
         end
       end

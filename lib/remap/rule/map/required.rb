@@ -38,15 +38,9 @@ module Remap
             raise ArgumentError, "Required.call(state, &error) requires a block"
           end
 
-          notice = catch :ignore do
-            return fatal(state) do
-              return notice(state) do
-                return super
-              end
-            end
-          end
-
-          error[state.failure(notice)]
+          super
+        rescue Notice::Ignore => e
+          error[e.failure(state)]
         end
       end
     end

@@ -251,7 +251,7 @@ Layout/ClosingParenthesisIndentation:
   Enabled: true
 
 Layout/MultilineMethodCallBraceLayout:
-  EnforcedStyle: same_line
+  EnforcedStyle: symmetrical
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented

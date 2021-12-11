@@ -32,11 +32,19 @@ describe Remap::Selector::All do
       end
 
       context "when not enumerable" do
-        subject { selector.call(state, &:itself) }
+        subject(:result) { selector.call(state, &:itself) }
 
         let(:input) { 100 }
 
-        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Fatal).and(
+              having_attributes(
+                value: input
+              )
+            )
+          )
+        end
       end
     end
   end

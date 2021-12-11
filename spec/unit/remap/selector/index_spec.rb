@@ -20,7 +20,7 @@ describe Remap::Selector::Index do
   end
 
   describe "#call" do
-    subject { selector.call(state, &:itself) }
+    subject(:result) { selector.call(state, &:itself) }
 
     let(:selector) { described_class.call(index: index) }
 
@@ -28,7 +28,16 @@ describe Remap::Selector::Index do
       let(:input) { "foo" }
       let(:index) { 0 }
 
-      its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Fatal).and(
+            having_attributes(
+              path: [index],
+              value: input
+            )
+          )
+        )
+      end
     end
 
     context "when the index exist" do
@@ -52,7 +61,16 @@ describe Remap::Selector::Index do
       let(:input) { [1, 2, 3] }
       let(:index) { 4 }
 
-      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
+      it "raises an ignore exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              path: [index],
+              value: input
+            )
+          )
+        )
+      end
     end
 
     context "when index is in bounds" do
@@ -66,7 +84,16 @@ describe Remap::Selector::Index do
       let(:input) { [] }
       let(:index) { 0 }
 
-      its(:itself) { will throw_symbol(:ignore, be_a(Remap::Notice)) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              path: [index],
+              value: input
+            )
+          )
+        )
+      end
     end
   end
 end

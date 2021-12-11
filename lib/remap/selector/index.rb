@@ -30,21 +30,18 @@ module Remap
       # @yieldreturn [State<U>]
       #
       # @return [State<U>]
-      def call(outer_state, &block)
+      def call(state, &block)
         unless block_given?
           raise ArgumentError, "The index selector requires an iteration block"
         end
 
-        outer_state.bind(index: index) do |array, state|
+        state.bind(index: index) do |array, s|
           requirement[array] do
-            state.fatal!("Expected array but got %p (%s)", array, array.class)
+            s.fatal!("Expected an array")
           end
 
           element = array.fetch(index) do
-            state.ignore!("Index %s in array %p (%s) not found",
-                          index,
-                          array,
-                          array.class)
+            s.ignore!("Index %s not found", index)
           end
 
           state.set(element, index: index).then(&block)

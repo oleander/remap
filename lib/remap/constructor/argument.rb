@@ -30,6 +30,11 @@ module Remap
       def call(state)
         super.fmap do |input|
           target.public_send(id, input)
+        rescue ArgumentError => e
+          raise e.exception("Failed to create [%p] with input [%s] (%s)" % [
+            target, input,
+            input.class
+          ])
         end
       end
     end

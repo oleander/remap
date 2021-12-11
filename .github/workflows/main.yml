@@ -1,4 +1,4 @@
-name: remap
+name: Verify code
 on:
   push:
     branches: [development]
@@ -18,7 +18,7 @@ jobs:
         COVERAGE: 'true'
       with:
         coverageCommand: bundle exec rake rspec
-        coverageLocations: ${{github.workspace}}/coverage/coverage.xml:cobertura
+        coverageLocations: ${{github.workspace}}/coverage/coverage.xml
 
   rubocop:
     runs-on: ubuntu-latest

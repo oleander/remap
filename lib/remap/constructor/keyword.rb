@@ -27,13 +27,19 @@ module Remap
       #
       # @return [State]
       def call(state)
-        super.fmap do |input|
+        super.fmap do |input, &error|
           unless input.is_a?(Hash)
-            raise ArgumentError,
-                  "Keyword stategy requires a Hash, got %s (%s)" % [input, input.class]
+            return error["Input is not a hash"]
           end
 
           target.public_send(id, **input)
+        rescue ArgumentError => e
+          raise e.exception("Failed to create [%p] with input [%s] (%s}) using method %s" % [
+            target,
+            input,
+            input.class,
+            id
+          ])
         end
       end
     end

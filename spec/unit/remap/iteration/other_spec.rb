@@ -18,7 +18,15 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Fatal).and(
+              having_attributes(
+                value: value
+              )
+            )
+          )
+        end
       end
 
       context "when error block is not invoked" do
@@ -31,7 +39,9 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        its(:itself) { will throw_symbol(:fatal, be_a(Remap::Notice)) }
+        it "raises an fatal exception" do
+          expect { result }.to raise_error(Remap::Notice::Fatal)
+        end
       end
     end
   end

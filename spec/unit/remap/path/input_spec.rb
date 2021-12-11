@@ -4,8 +4,9 @@ describe Remap::Path::Input do
   using Remap::State::Extension
 
   describe "#call" do
+    subject(:path) { described_class.call(selectors) }
+
     let(:state) { state!(input) }
-    let(:path)  { described_class.call(selectors) }
 
     context "without selectors" do
       let(:input) { "value" }
@@ -32,8 +33,15 @@ describe Remap::Path::Input do
         let(:value) { "value" }
         let(:input) { { not: value } }
 
-        it "throws an ignore symbol" do
-          expect { path.call(state, &error) }.to throw_symbol(:ignore)
+        it "raises a fatal exception" do
+          expect { path.call(state, &error) }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                path: selectors,
+                value: input
+              )
+            )
+          )
         end
       end
     end
@@ -42,7 +50,7 @@ describe Remap::Path::Input do
       let(:selectors) { [all!] }
 
       context "when input is an array" do
-        subject do
+        subject(:result) do
           path.call(state) do |element|
             element.fmap do |value|
               value.upcase
@@ -56,7 +64,7 @@ describe Remap::Path::Input do
       end
 
       context "when input is a hash" do
-        subject do
+        subject(:result) do
           path.call(state) do |element|
             element.fmap do |value|
               value.upcase
@@ -70,10 +78,22 @@ describe Remap::Path::Input do
       end
 
       context "when input is not an enumerable" do
+        subject(:result) do
+          path.call(state) do |_element|
+            fail "This should not be called"
+          end
+        end
+
         let(:input) { 100_000 }
 
-        it "raises an error" do
-          expect { path.call(state, &error) }.to throw_symbol(:fatal)
+        it "raises a fatal exception" do
+          expect { result }.to raise_error(
+            an_instance_of(Remap::Notice::Fatal).and(
+              having_attributes(
+                value: input
+              )
+            )
+          )
         end
       end
     end
@@ -82,7 +102,7 @@ describe Remap::Path::Input do
       let(:selectors) { [all!, :key] }
 
       context "when input is an array" do
-        subject do
+        subject(:result) do
           path.call(state) do |element|
             element.fmap do |value|
               value.upcase
@@ -96,7 +116,7 @@ describe Remap::Path::Input do
       end
 
       context "when input is a hash" do
-        subject do
+        subject(:result) do
           path.call(state) do |element|
             element.fmap do |value|
               value.upcase
@@ -113,8 +133,14 @@ describe Remap::Path::Input do
       context "when input is not an enumerable" do
         let(:input) { 100_000 }
 
-        it "raises an error" do
-          expect { path.call(state, &error) }.to throw_symbol(:fatal)
+        it "raises a fatal exception" do
+          expect { path.call(state, &error) }.to raise_error(
+            an_instance_of(Remap::Notice::Fatal).and(
+              having_attributes(
+                value: input
+              )
+            )
+          )
         end
       end
     end
@@ -123,7 +149,7 @@ describe Remap::Path::Input do
       let(:selectors) { [index!(1)] }
 
       context "when the index is present" do
-        subject do
+        subject(:result) do
           path.call(state) do |element|
             element.fmap do |value|
               value.upcase
@@ -139,8 +165,15 @@ describe Remap::Path::Input do
       context "when the key is not present" do
         let(:input) { [:one] }
 
-        it "yields failure" do
-          expect { path.call(state, &error) }.to throw_symbol(:ignore)
+        it "raises an ignore exception" do
+          expect { path.call(state, &error) }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                path: [1],
+                value: input
+              )
+            )
+          )
         end
       end
     end

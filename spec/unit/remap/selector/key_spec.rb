@@ -31,8 +31,14 @@ describe Remap::Selector::Key do
     context "when input is not a hash" do
       let(:input) { [] }
 
-      it "throws a symbol" do
-        expect { selector.call(state, &error) }.to throw_symbol(:fatal)
+      it "raises a fatal exception" do
+        expect { selector.call(state, &error) }.to raise_error(
+          an_instance_of(Remap::Notice::Fatal).and(
+            having_attributes(
+              value: input
+            )
+          )
+        )
       end
     end
 
@@ -50,8 +56,14 @@ describe Remap::Selector::Key do
       context "when input does not contain the key" do
         let(:input) { { not: value } }
 
-        it "throws a symbol" do
-          expect { selector.call(state, &error) }.to throw_symbol(:ignore)
+        it "raises a fatal exception" do
+          expect { selector.call(state, &error) }.to raise_error(
+            an_instance_of(Remap::Notice::Ignore).and(
+              having_attributes(
+                value: input
+              )
+            )
+          )
         end
       end
     end

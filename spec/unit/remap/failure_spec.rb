@@ -3,8 +3,8 @@
 describe Remap::Failure do
   subject(:failure) { described_class.call(input) }
 
-  let(:problem) { { value: value!, path: [:a], reason: string! } }
-  let(:input)   { { notices: [], failures: [problem] }           }
+  let(:problem) { notice!(value: value!, path: [:a], reason: string!) }
+  let(:input)   { { notices: [], failures: [problem] } }
 
   describe "::call" do
     context "given valid input" do

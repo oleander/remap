@@ -4,8 +4,8 @@ module Remap
   using Extensions::Hash
 
   class Failure < Dry::Concrete
-    attribute :failures, [Notice], min_size: 1
-    attribute? :notices, [Notice], default: EMPTY_ARRAY
+    attribute :failures, Types.Array(Types::Notice), min_size: 1
+    attribute? :notices, Types.Array(Types::Notice), default: EMPTY_ARRAY
 
     # Merges two failures and returns a new failure
     #
@@ -31,7 +31,7 @@ module Remap
 
     # @return [Error]
     def exception
-      Error.new(attributes.formatted)
+      Error.new(attributes)
     end
   end
 end

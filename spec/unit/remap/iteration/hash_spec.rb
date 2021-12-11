@@ -40,13 +40,21 @@ describe Remap::Iteration::Hash do
     end
 
     context "when all values are rejected" do
-      subject do
+      subject(:result) do
         iterator.call do
           state.ignore!("Ignore!")
         end
       end
 
-      it { is_expected.to contain({}) }
+      it "raises a fatal exception" do
+        expect { result }.to raise_error(
+          an_instance_of(Remap::Notice::Ignore).and(
+            having_attributes(
+              reason: "Ignore!"
+            )
+          )
+        )
+      end
     end
   end
 end
