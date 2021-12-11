@@ -1,2 +1,13 @@
 exclude_patterns:
   - benchmarks/*.rb
+plugins:
+  brakeman:
+    enabled: true
+  bundler-audit:
+    enabled: true
+  flog:
+    enabled: true
+    config:
+      score_threshold: 20.0
+  reek:
+    enabled: true
