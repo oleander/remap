@@ -11,3 +11,7 @@ plugins:
       score_threshold: 20.0
   reek:
     enabled: true
+  fixme:
+    enabled: true
+  rubocop:
+    enabled: true
