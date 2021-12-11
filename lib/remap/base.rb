@@ -37,7 +37,7 @@ module Remap
   #   class Mapper < Remap::Base
   #     define do
   #       each do
-  #         map.if_not do
+  #         map?.if_not do
   #           value.include?("B")
   #         end
   #       end
@@ -50,7 +50,7 @@ module Remap
   #   class Mapper < Remap::Base
   #     define do
   #       each do
-  #         map.if do
+  #         map?.if do
   #           value.include?("B")
   #         end
   #       end
@@ -85,7 +85,7 @@ module Remap
   #   Mapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
   #
   # @example Map "Hello" to "Hello!"
-  #   class Mapper < Remap::Base
+  #   class HelloMapper < Remap::Base
   #     define do
   #       map.adjust do
   #         "#{value}!"
@@ -93,7 +93,7 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call("Hello") # => "Hello!"
+  #   HelloMapper.call("Hello") # => "Hello!"
   #
   # @example Select the second element from an array
   #   class Mapper < Remap::Base
