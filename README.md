@@ -1,17 +1,20 @@
-# Re:map [![remap](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg?branch=development)](https://github.com/oleander/remap/actions/workflows/main.yml) [![Gem](https://img.shields.io/gem/v/remap)](https://rubygems.org/gems/remap) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f07e265fc5184af584333f0bb62f3b47)](https://www.codacy.com/gh/oleander/remap/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oleander/remap&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/f07e265fc5184af584333f0bb62f3b47)](https://www.codacy.com/gh/oleander/remap/dashboard?utm_source=github.com&utm_medium=referral&utm_content=oleander/remap&utm_campaign=Badge_Coverage)
+# Re:map [![remap](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg?branch=development)](https://github.com/oleander/remap/actions/workflows/main.yml) [![Gem](https://img.shields.io/gem/v/remap)](https://rubygems.org/gems/remap) [![Maintainability](https://api.codeclimate.com/v1/badges/0c09721ad5a3b646a6d3/maintainability)](https://codeclimate.com/github/oleander/remap/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/0c09721ad5a3b646a6d3/test_coverage)](https://codeclimate.com/github/oleander/remap/test_coverage)
 
 `Re:map`; an expressive and feature-rich data transformation mapper for Ruby 3.
 It gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing ruby's refinements & pattern matching capabilities – making it blazingly fast
 
-* [Quick start](#quick-start)
-* [Documentation](http://oleander.io/remap/)
-* [Introduction](#introduction)
-  * [Callbacks](#callbacks)
-  * [Operators](#operators)
-  * [Selectors](#selectors)
-  * [Constructors](#constructors)
-  * [Error Handling](#error-handling)
-* [Installation](#installation)
+- [Re:map ![remap](https://github.com/oleander/remap/actions/workflows/main.yml) [![Gem](https://img.shields.io/gem/v/remap)](https://rubygems.org/gems/remap) [![Maintainability](https://api.codeclimate.com/v1/badges/0c09721ad5a3b646a6d3/maintainability)](https://codeclimate.com/github/oleander/remap/maintainability)](#remap---)
+  - [Quick start](#quick-start)
+  - [Installation](#installation)
+  - [Introduction](#introduction)
+    - [Selectors](#selectors)
+    - [Callbacks](#callbacks)
+    - [Fixed & semi-fixed values](#fixed--semi-fixed-values)
+    - [Type casting](#type-casting)
+    - [Operators](#operators)
+    - [Error handling](#error-handling)
+    - [Constructors](#constructors)
+    - [Schemas & rules](#schemas--rules)
 
 ## Quick start
 
