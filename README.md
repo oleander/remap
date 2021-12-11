@@ -1,6 +1,6 @@
 # Re:map [![remap](https://github.com/oleander/remap/actions/workflows/main.yml/badge.svg?branch=development)](https://github.com/oleander/remap/actions/workflows/main.yml) [![Gem](https://img.shields.io/gem/v/remap)](https://rubygems.org/gems/remap) [![Maintainability](https://api.codeclimate.com/v1/badges/0c09721ad5a3b646a6d3/maintainability)](https://codeclimate.com/github/oleander/remap/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/0c09721ad5a3b646a6d3/test_coverage)](https://codeclimate.com/github/oleander/remap/test_coverage)
 
-`Re:map`; an expressive and feature-rich data transformation mapper for Ruby 3.
+`Re:map`; an expressive and feature-rich data transformer written in Ruby 3.
 It gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing ruby's refinements & pattern matching capabilities – making it blazingly fast
 
 - Overview
