@@ -1,4 +1,4 @@
-name: Verify code
+name: remap
 on:
   push:
     branches: [development]
