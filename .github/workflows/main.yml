@@ -18,7 +18,7 @@ jobs:
         COVERAGE: 'true'
       with:
         coverageCommand: bundle exec rake rspec
-        coverageLocations: ${{github.workspace}}/coverage/coverage.xml
+        coverageLocations: ${{github.workspace}}/coverage/coverage.xml:cobertura
 
   rubocop:
     runs-on: ubuntu-latest
