@@ -34,9 +34,7 @@ module Remap
           return self if path.empty?
 
           unless block_given?
-            return get(*path, trace: trace) do
-              raise PathError, trace
-            end
+            raise PathError, trace
           end
 
           yield
