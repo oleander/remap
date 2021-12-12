@@ -4,6 +4,7 @@
 It gives the developer the expressive power of JSONPath, without the hassle of using strings. Its compiler is written on top of an immutable, primitive data structure utilizing ruby's refinements & pattern matching capabilities – making it blazingly fast
 
 - Overview
+  - [API Documentation](http://oleander.io/remap)
   - [Quick start](#quick-start)
   - [Installation](#installation)
   - [Introduction](#introduction)
