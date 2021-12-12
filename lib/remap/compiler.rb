@@ -176,12 +176,12 @@ module Remap
     #   output.fetch(:value) # => { car: "Volvo" }
     #
     # @return [Rule::Embed]
-    def embed(mapper)
+    def embed(mapper, backtrace: caller)
       if block_given?
         raise ArgumentError, "#embed does not take a block"
       end
 
-      embeding = rule.add do |state, &error|
+      embeding = rule(backtrace: backtrace).add do |state, &error|
         mapper.call!(state.set(mapper: mapper)) do |failure|
           next error[failure]
         end.except(:mapper, :scope)
@@ -225,12 +225,12 @@ module Remap
     # @raise [ArgumentError]
     #   if no path given
     #   if path is not a Symbol or Array<Symbol>
-    def set(*path, to:)
+    def set(*path, to:, backtrace: caller)
       if block_given?
         raise ArgumentError, "#set does not take a block"
       end
 
-      add rule(to: path).add { to.call(_1) }
+      add rule(to: path, backtrace: backtrace).add { to.call(_1) }
     end
 
     # Maps to path from map with block in between
@@ -280,8 +280,8 @@ module Remap
     # @see #to
     #
     # @return [Rule::Map::Optional]
-    def to?(*path, map: EMPTY_ARRAY, &block)
-      add rule?(*map, to: path, &block)
+    def to?(*path, map: EMPTY_ARRAY, backtrace: caller, &block)
+      add rule?(*map, to: path, backtrace: backtrace, &block)
     end
 
     # Iterates over the input value, passes each value
@@ -341,12 +341,12 @@ module Remap
     #
     # @return [Rule::Wrap]
     # @raise [ArgumentError] if type is not :array
-    def wrap(type, &block)
+    def wrap(type, backtrace: caller, &block)
       unless block_given?
         raise ArgumentError, "#wrap requires a block"
       end
 
-      add rule(&block).then { Array.wrap(_1) }
+      add rule(backtrace: backtrace, &block).then { Array.wrap(_1) }
     end
 
     # Selects all elements
@@ -394,12 +394,12 @@ module Remap
     #   output.fetch(:value) # => { api_key: "<SECRET>" }
     #
     # @return [Rule::Static::Fixed]
-    def value(value)
+    def value(value, backtrace: caller)
       if block_given?
         raise ArgumentError, "option selector does not take a block"
       end
 
-      Static::Fixed.new(value: value)
+      Static::Fixed.new(value: value, backtrace: backtrace)
     end
 
     # Static option to be selected

@@ -26,11 +26,11 @@ module Remap
       #
       # @return [State]
       def call(state)
-        state.set(state.options.fetch(name))
-      rescue KeyError => e
-        raise ArgumentError, e.exception("Option [%s] not found in input [%p]" % [
-          name, state.options
-        ])
+        value = state.options.fetch(name) do
+          raise ArgumentError, "Option [%s] not found" % [name], backtrace
+        end
+
+        state.set(value)
       end
     end
   end
