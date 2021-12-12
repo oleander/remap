@@ -132,7 +132,7 @@ module Remap
               list1 + list2
             in [:value, left, right]
               fatal!(
-                "Could not merge [%p] (%s) with [%p] (%s)",
+                "Could not merge [%s] (%s) with [%s] (%s)",
                 left.formatted,
                 left.class,
                 right.formatted,

@@ -16,6 +16,6 @@ describe Remap::Base do
   end
 
   it "catches exception" do
-    expect { mapper.call(input) }.to raise_error(Remap::Notice::Fatal)
+    expect { mapper.call(input) }.to raise_error(Remap::Notice::Traced)
   end
 end

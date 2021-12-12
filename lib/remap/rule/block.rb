@@ -23,11 +23,15 @@ module Remap
           return state.except(:value)
         end
 
-        rules.map do |rule|
-          rule.call(state) do |failure|
+        rules.reduce(state.except(:value)) do |s1, rule|
+          result = rule.call(state) do |failure|
             return error[failure]
           end
-        end.reduce(&:combine)
+
+          s1.combine(result)
+        rescue Notice::Fatal => e
+          raise e.traced(rule.backtrace)
+        end
       end
     end
   end

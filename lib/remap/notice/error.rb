@@ -25,8 +25,13 @@ module Remap
       end
 
       def traced(backtrace)
-        tap { _1.set_backtrace(backtrace) }
+        e = Traced.new(notice: notice)
+        e.set_backtrace(backtrace)
+        e
       end
+    end
+
+    class Traced < Error
     end
   end
 end

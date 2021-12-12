@@ -308,12 +308,12 @@ module Remap
     #
     # @return [Rule::Each]]
     # @raise [ArgumentError] if no block given
-    def each(&block)
+    def each(backtrace: caller, &block)
       unless block_given?
         raise ArgumentError, "#each requires a block"
       end
 
-      add rule(all, &block)
+      add rule(all, backtrace: backtrace, &block)
     end
 
     # Wraps output in type

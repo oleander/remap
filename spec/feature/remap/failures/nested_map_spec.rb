@@ -32,7 +32,7 @@ describe Remap::Base do
 
     it "raises an exception" do
       expect { mapper.call(input, &error) }.to raise_error(
-        an_instance_of(Remap::Notice::Fatal).and(
+        an_instance_of(Remap::Notice::Traced).and(
           having_attributes(
             value: "hes 50 years old",
             path: [:person, :name]
