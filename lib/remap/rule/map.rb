@@ -209,30 +209,6 @@ module Remap
           end
         end
       end
-
-      # Catches :fatal and raises {Notice::Error}
-      #
-      # @param state [State]
-      # @param id (:fatal) [:fatal, :notice, :ignore]
-      #
-      # raise [Notice::Error]
-      def fatal(state, id: :fatal, &block)
-        raise catch(id, &block).traced(backtrace).exception
-      end
-
-      # Catches :notice exceptions and repackages them as a state
-      #
-      # @param state [State]
-      #
-      # @return [State]
-      def notice(state, &block)
-        state.set(notice: catch(:notice, &block).traced(backtrace)).except(:value)
-      end
-
-      # @abstract
-      def ignore(...)
-        raise NotImplementedError, "#{self.class}#ignore"
-      end
     end
   end
 end

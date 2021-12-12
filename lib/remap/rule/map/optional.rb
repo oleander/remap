@@ -39,17 +39,6 @@ module Remap
         rescue Notice::Ignore => e
           e.undefined(state)
         end
-
-        private
-
-        # Catches :ignore exceptions and re-package them as a state
-        #
-        # @param state [State]
-        #
-        # @return [State]
-        def ignore(state, &block)
-          state.set(notice: catch(:ignore, &block).traced(backtrace)).except(:value)
-        end
       end
     end
   end
