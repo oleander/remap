@@ -47,10 +47,14 @@ describe Remap::Iteration::Hash do
       end
 
       it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              reason: "Ignore!"
+        expect { result }.to throw_symbol(
+          :ignore, include(
+            notices: contain_exactly(
+              an_instance_of(Remap::Notice).and(
+                having_attributes(
+                  reason: "Ignore!"
+                )
+              )
             )
           )
         )

@@ -268,5 +268,5 @@ RSpec/RepeatedDescription:
 Performance/BlockGivenWithExplicitBlock:
   Enabled: false
 
-
-
+Naming/MethodParameterName:
+  Enabled: false

@@ -14,23 +14,19 @@ module Remap
       # @param state [State]
       #
       # @return [State]
-      def call(state, &error)
-        unless block_given?
-          raise ArgumentError, "Block#call(state, &error) requires a block"
-        end
+      def call(state)
+        s0 = state.except(:value)
 
         if rules.empty?
-          return state.except(:value)
+          return s0
         end
 
-        rules.reduce(state.except(:value)) do |s1, rule|
-          result = rule.call(state) do |failure|
-            return error[failure]
-          end
+        catch do |id|
+          s1 = s0.set(id: id)
 
-          s1.combine(result)
-        rescue Notice::Fatal => e
-          raise e.traced(rule.backtrace)
+          rules.reduce(s1) do |s2, rule|
+            s2.combine(rule.call(state))
+          end.except(:id)
         end
       end
     end

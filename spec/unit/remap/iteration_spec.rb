@@ -36,10 +36,16 @@ describe Remap::Iteration do
         let(:output) { input.downcase }
 
         it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Fatal).and(
+          expect { result }.to throw_symbol(
+            :fatal, an_instance_of(Remap::Failure).and(
               having_attributes(
-                value: input
+                failures: contain_exactly(
+                  an_instance_of(Remap::Notice).and(
+                    having_attributes(
+                      value: input
+                    )
+                  )
+                )
               )
             )
           )

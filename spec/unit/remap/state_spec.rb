@@ -13,7 +13,7 @@ describe Remap::State do
       it { is_expected.to include(options: {}) }
     end
 
-    context "given invalid input" do
+    context "when mapper is nil" do
       subject(:result) { described_class.call(value!, mapper: nil) }
 
       it "raises an argument error" do

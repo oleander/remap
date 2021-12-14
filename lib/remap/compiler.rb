@@ -181,13 +181,26 @@ module Remap
         raise ArgumentError, "#embed does not take a block"
       end
 
-      embeding = rule(backtrace: backtrace).add do |state, &error|
-        mapper.call!(state.set(mapper: mapper)) do |failure|
-          next error[failure]
+      r = rule(backtrace: backtrace).add do |s0|
+        _embed(s0, mapper, backtrace)
+      end
+
+      add r
+    end
+
+    def _embed(s0, mapper, backtrace)
+      failure = catch do |fatal_id|
+        s1 = s0.set(fatal_id: fatal_id)
+        s2 = s1.set(mapper: mapper)
+
+        return mapper.call!(s2) do |s3|
+          s3.ignore!("Mapper failed")
         end.except(:mapper, :scope)
       end
 
-      add embeding
+      e = failure.exception
+      e.add_backtrace(backtrace)
+      raise e
     end
 
     # Set a static value

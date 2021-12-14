@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Remap::Selector::Key do
+xdescribe Remap::Selector::Key do
   using Remap::State::Extension
 
   let(:key) { :key }

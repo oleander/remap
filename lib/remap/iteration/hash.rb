@@ -22,12 +22,8 @@ module Remap
       private
 
       def reduce(state, key, value, &block)
-        notice = catch :ignore do
-          other = block[value, key: key]
-          return state.combine(other.fmap { { key => _1 } })
-        end
-
-        state.set(notice: notice)
+        other = block[value, key: key]
+        state.combine(other.fmap { { key => _1 } })
       end
 
       def init

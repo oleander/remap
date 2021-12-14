@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Remap::Selector::Index do
+xdescribe Remap::Selector::Index do
   let(:state) { state!(input) }
 
   describe "::call" do

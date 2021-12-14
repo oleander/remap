@@ -26,20 +26,13 @@ module Remap
       # @param state [State]
       #
       # @return [State]
-      def call(state)
-        super.fmap do |input, &error|
+      def call(s0)
+        super.fmap do |input, _s1|
           unless input.is_a?(Hash)
-            return error["Input is not a hash"]
+            raise Error, "Expected Hash, got #{input.class}"
           end
 
           target.public_send(id, **input)
-        rescue ArgumentError => e
-          raise e.exception("Failed to create [%p] with input [%s] (%s}) using method %s" % [
-            target,
-            input,
-            input.class,
-            id
-          ])
         end
       end
     end

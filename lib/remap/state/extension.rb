@@ -54,7 +54,7 @@ module Remap
 
         # Throws :fatal containing a Notice
         def fatal!(...)
-          notice(...).fatal!
+          throw fatal_id, Failure.new(failures: [notice(...)], notices: notices)
         end
 
         # Throws :warn containing a Notice
@@ -64,7 +64,7 @@ module Remap
 
         # Throws :ignore containing a Notice
         def ignore!(...)
-          notice(...).ignore!
+          throw id, set(notice: notice(...)).except(:value, :id)
         end
 
         # Creates a notice containing the given message
@@ -185,8 +185,8 @@ module Remap
         #
         # @return [State<Y>]
         def fmap(**options, &block)
-          bind(**options) do |input, state, &error|
-            state.set(block[input, state, &error])
+          bind(**options, id: id) do |input, state|
+            state.set(block[input, state])
           end
         end
 
@@ -203,28 +203,7 @@ module Remap
         # end
 
         def failure(reason = Undefined)
-          failures = case [path, reason]
-          in [_, Notice => notice]
-            [notice]
-          in [path, Array => reasons]
-            reasons.map do |inner_reason|
-              Notice.call(path: path, reason: inner_reason, **only(:value))
-            end
-          in [path, String => reason]
-            [Notice.call(path: path, reason: reason, **only(:value))]
-          in [path, Hash => errors]
-            errors.paths.flat_map do |sufix|
-              Array.wrap(errors.dig(*sufix)).map do |inner_reason|
-                Notice.call(
-                  reason: inner_reason,
-                  path: path + sufix,
-                  **only(:value)
-                )
-              end
-            end
-          end
-
-          Failure.new(failures: failures, notices: notices)
+          raise NotImplementedError, "Not implemented"
         end
 
         # Passes {#value} to block, if defined
@@ -242,12 +221,10 @@ module Remap
             raise ArgumentError, "State#bind requires a block"
           end
 
-          s = set(**options)
+          s1 = set(**options)
 
-          fetch(:value) { return s }.then do |value|
-            block[value, s] do |reason, **other|
-              return s.set(**other).ignore!(reason)
-            end
+          fetch(:value) { return s1 }.then do |value|
+            block[value, s1]
           end
         end
 
@@ -259,11 +236,11 @@ module Remap
         #
         # @return [State<U>]
         def execute(&block)
-          bind do |value, &error|
-            result = context(value, &error).instance_exec(value, &block)
+          bind do |value|
+            result = context(value).instance_exec(value, &block)
 
             if result.equal?(Dry::Core::Constants::Undefined)
-              return error["Undefined returned, skipping!"]
+              ignore!("Undefined returned, skipping!")
             end
 
             set(result)
@@ -290,6 +267,14 @@ module Remap
           fetch(:path, EMPTY_ARRAY)
         end
 
+        def id
+          fetch(:id, :ignore)
+        end
+
+        def fatal_id
+          fetch(:fatal_id, :fatal)
+        end
+
         # Represents options to a mapper
         #
         # @see Rule::Embed
@@ -303,7 +288,7 @@ module Remap
         #
         # @return [Hash]
         def to_hash
-          super.except(:options, :notices, :value)
+          super.except(:options, :notices, :value, :id)
         end
 
         # @return [Any]
@@ -340,13 +325,13 @@ module Remap
         # @yieldparam reason [T]
         #
         # @return [Struct]
-        def context(value, context: self, &error)
-          ::Struct.new(*keys, *options.keys, :state, keyword_init: true) do
+        def context(value, context: self)
+          ::Struct.new(*except(:id).keys, *options.keys, :state, keyword_init: true) do
             define_method :method_missing do |name, *|
-              error["Method [#{name}] not defined"]
+              fatal!("Method [%s] not defined", name)
             end
 
-            define_method :skip! do |message = "Manual skip!"|
+            define_method(:skip!) do |message = "Manual skip!"|
               context.ignore!(message)
             end
           end.new(**to_hash, **options, value: value, state: self)

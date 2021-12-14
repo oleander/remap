@@ -33,15 +33,9 @@ module Remap
         # @param state [State]
         #
         # @return [State]
-        def call(state, &error)
-          unless block_given?
-            raise ArgumentError, "Required.call(state, &error) requires a block"
-          end
-
-          super
-        rescue Notice::Ignore => e
-          error[e.failure(state)]
-        end
+        # def call(state)
+        #   super
+        # end
       end
     end
   end

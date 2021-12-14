@@ -20,17 +20,17 @@ module Remap
         end
       end
 
-      other = State.call(input, options: options, mapper: self).then do |state|
-        call!(state) do |failure|
-          return error[failure]
-        end
+      s0 = State.call(input, options: options, mapper: self)
+
+      s1 = call!(s0) do |failure|
+        return error[failure]
       end
 
-      case other
+      case s1
       in { value: }
         value
       in { notices: [] }
-        error[other.failure("No return value")]
+        raise NotImplementedError, "Notices are not yet supported"
       in { notices: }
         error[Failure.call(failures: notices)]
       end

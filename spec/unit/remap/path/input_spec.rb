@@ -29,7 +29,7 @@ describe Remap::Path::Input do
         end
       end
 
-      context "when the key is not present" do
+      xcontext "when the key is not present" do
         let(:value) { "value" }
         let(:input) { { not: value } }
 
@@ -87,10 +87,16 @@ describe Remap::Path::Input do
         let(:input) { 100_000 }
 
         it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Fatal).and(
+          expect { result }.to throw_symbol(
+            :fatal, an_instance_of(Remap::Failure).and(
               having_attributes(
-                value: input
+                failures: contain_exactly(
+                  an_instance_of(Remap::Notice).and(
+                    having_attributes(
+                      value: input
+                    )
+                  )
+                )
               )
             )
           )
@@ -131,13 +137,21 @@ describe Remap::Path::Input do
       end
 
       context "when input is not an enumerable" do
+        subject(:result) { path.call(state, &error) }
+
         let(:input) { 100_000 }
 
         it "raises a fatal exception" do
-          expect { path.call(state, &error) }.to raise_error(
-            an_instance_of(Remap::Notice::Fatal).and(
+          expect { result }.to throw_symbol(
+            :fatal, an_instance_of(Remap::Failure).and(
               having_attributes(
-                value: input
+                failures: contain_exactly(
+                  an_instance_of(Remap::Notice).and(
+                    having_attributes(
+                      value: input
+                    )
+                  )
+                )
               )
             )
           )
@@ -162,7 +176,7 @@ describe Remap::Path::Input do
         it { is_expected.to contain(:TWO) }
       end
 
-      context "when the key is not present" do
+      xcontext "when the key is not present" do
         let(:input) { [:one] }
 
         it "raises an ignore exception" do

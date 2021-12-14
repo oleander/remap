@@ -267,25 +267,11 @@ module Remap
     #
     # @private
     def call(state, &error)
-      unless block_given?
-        raise ArgumentError, "Base#call(state, &error) requires block"
+      failure = catch do |id|
+        return context.call(state.set(id: id)).then(&constructor).except(:id)
       end
 
-      state.tap do |input|
-        validation.call(input, state.options).tap do |result|
-          unless result.success?
-            return error[state.failure(result.errors.to_h)]
-          end
-        end
-      end
-
-      notice = catch :fatal do
-        return context.call(state) do |failure|
-          return error[failure]
-        end.then(&constructor)
-      end
-
-      error[state.failure(notice)]
+      error[failure]
     end
 
     private
