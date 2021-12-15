@@ -64,7 +64,14 @@ module Remap
 
         # Throws :ignore containing a Notice
         def ignore!(...)
-          throw id, set(notice: notice(...)).except(:value, :id)
+          case self
+          in {ids: [], id:}
+            throw id, set(notice: notice(...)).except(:value, :id)
+          in { ids:, id: }
+            throw id, merge(ids: ids[1...], id: ids[0]).set(notice: notice(...)).except(:value)
+          else
+            raise ArgumentError, "#id not defined for state [%s]" % [formatted]
+          end
         end
 
         # Creates a notice containing the given message
@@ -168,6 +175,8 @@ module Remap
             merge(path: path + [index], element: value, index: index, value: value).set(**rest)
           in [{path:}, {index:, **rest}]
             merge(path: path + [index], index: index).set(**rest)
+          in [{ids:, id: old_id}, {id: new_id, **rest}]
+            merge(ids: [old_id] + ids, id: new_id).set(**rest)
           else
             merge(options)
           end

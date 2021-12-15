@@ -7,14 +7,19 @@ module Remap
   module Operation
     # Public interface for mappers
     #
-    # @param input [Any] Data to be mapped
-    # @param options [Hash] Mapper arguments
+    # @param input [Any] data to be mapped
+    # @param options [Hash] mapper options
     #
-    # @yield [Failure] if mapper fails
+    # @yield [Failure]
+    #   when a non-critical error occurs
+    # @yieldreturn T
     #
-    # @return [Success] if mapper succeeds
+    # @return [Any, T]
+    #   when request is a success
+    # @raise [Remap::Error]
+    #   when a fatal error occurs
     def call(input, **options, &error)
-      unless error
+      unless block_given?
         return call(input, **options) do |failure|
           raise failure.exception
         end
@@ -26,13 +31,10 @@ module Remap
         return error[failure]
       end
 
-      case s1
-      in { value: }
-        value
-      in { notices: [] }
-        raise NotImplementedError, "Notices are not yet supported"
-      in { notices: }
-        error[Failure.call(failures: notices)]
+      s1.fetch(:value) do
+        notice = s1.notice("No mapped data")
+
+        Failure.new(notices: s1.notices, failures: [notice]).then(&error)
       end
     end
   end

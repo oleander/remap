@@ -9,6 +9,7 @@ module Remap
       required(:notices).array(Types.Instance(Notice))
       required(:options).value(:hash)
       required(:path).array(Types::Key)
+      required(:ids).value(:array)
 
       optional(:index).filled(:integer)
       optional(:element).filled

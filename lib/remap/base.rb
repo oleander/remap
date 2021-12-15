@@ -244,17 +244,20 @@ module Remap
       self.context = Compiler.call(&context)
     end
 
-    # Similar to {::call}, but takes a state
-    #
     # @param state [State]
     #
-    # @yield [Failure] if mapper fails
+    # @yield [Failure]
+    #   when a non-critical error occurs
+    # @yieldreturn T
     #
-    # @return [Result] if mapper succeeds
+    # @return [State, T]
+    #   when request is a success
+    # @raise [Remap::Error]
+    #   when a fatal error occurs
     #
     # @private
     def self.call!(state, &error)
-      new(state.options).call(state._.set(mapper: self), &error)
+      new(state.options).call(state, &error)
     end
 
     # Mappers state according to the mapper rules
@@ -266,12 +269,14 @@ module Remap
     # @return [State]
     #
     # @private
-    def call(state, &error)
-      failure = catch do |id|
-        return context.call(state.set(id: id)).then(&constructor).except(:id)
+    def call(s0, &error)
+      s1 = catch do |id|
+        return context.call(s0.set(id: id)).then(&constructor)
       end
 
-      error[failure]
+      notice = s1.notice("No mapped data")
+
+      Failure.new(notices: s1.notices, failures: [notice]).then(&error)
     end
 
     private

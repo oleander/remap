@@ -4,7 +4,7 @@ describe Remap::Iteration::Array do
   using Remap::State::Extension
   subject(:iterator) { described_class.call(state: state, value: value) }
 
-  let(:state) { state!(value) }
+  let(:state) { state!(value, id: :ignore) }
 
   context "given an empty array" do
     let(:value) { [] }

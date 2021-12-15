@@ -1,9 +1,41 @@
 # frozen_string_literal: true
 
+RSpec::Matchers.define_negated_matcher :have_no_key, :have_key
+
 xdescribe Remap::State::Extension do
   using Remap::Extensions::Enumerable
   using Remap::Extensions::Object
   using described_class
+
+  describe "#ignore!" do
+    let(:state) { defined! }
+
+    context "when id exists" do
+      let(:id) { :id1 }
+
+      let(:state) { super().set(id: id) }
+
+      context "when no pre-existing id's exists" do
+        it "throws an error" do
+          expect { state.ignore!("a reason") }.to throw_symbol(
+            id, include(ids: be_empty).and(have_no_key(:id))
+          )
+        end
+      end
+
+      context "when pre-existing id's exists" do
+        let(:id1) { id }
+        let(:id2) { :id2 }
+        let(:id3) { :id3 }
+
+        let(:state) { super().merge(ids: [id2, id3]) }
+
+        it "throws an error" do
+          expect { state.ignore!("a reason") }.to throw_symbol(id1, include(ids: [id3], id: id2))
+        end
+      end
+    end
+  end
 
   describe "#notice" do
     context "when state is undefined" do
@@ -412,10 +444,29 @@ xdescribe Remap::State::Extension do
     end
   end
 
-  xdescribe "#set" do
+  describe "#set" do
     let(:state) { defined! }
     let(:index) { 1        }
     let(:value) { "value"  }
+
+    context "given an id" do
+      subject { state.set(id: id1) }
+
+      let(:id1) { :id1 }
+
+      context "when state has no previous id" do
+        its([:id]) { is_expected.to eq(id1) }
+        its([:ids]) { is_expected.to be_empty }
+      end
+
+      context "when state already have an idea" do
+        let(:id2)   { :id2 }
+        let(:state) { defined!.set(id: id2) }
+
+        its([:id]) { is_expected.to eq(id1) }
+        its([:ids]) { is_expected.to eq([id2]) }
+      end
+    end
 
     context "when given an index" do
       subject(:result) { state.set(value, index: index) }
@@ -527,7 +578,7 @@ xdescribe Remap::State::Extension do
     end
   end
 
-  xdescribe "#execute" do
+  describe "#execute" do
     context "when defined!" do
       subject { state.execute { |value| value + 1 } }
 

@@ -33,6 +33,7 @@ module Remap
       {
         notices: EMPTY_ARRAY,
         path: EMPTY_ARRAY,
+        ids: EMPTY_ARRAY,
         options: options,
         mapper: mapper,
         values: value,

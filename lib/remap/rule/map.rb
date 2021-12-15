@@ -62,7 +62,7 @@ module Remap
 
       # A post-processor method
       #
-      # @example Upcase mapped value
+      # @example Up-case mapped value
       #   state = Remap::State.call("Hello World")
       #   map = Remap::Rule::Map.call({})
       #   upcase = map.adjust(&:upcase)

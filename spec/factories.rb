@@ -73,6 +73,7 @@ FactoryBot.define do
     options { {} }
     values { input }
     path { [] }
+    ids { [] }
 
     mapper
     input
