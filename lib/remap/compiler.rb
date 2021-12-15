@@ -187,26 +187,11 @@ module Remap
         raise ArgumentError, "Argument to #embed must be a mapper, got #{mapper.class}"
       end
 
-      r = rule(backtrace: backtrace).add do |s0|
-        _embed(s0, mapper, backtrace)
+      result = rule(backtrace: backtrace).add do |s0|
+        build_embed(s0, mapper, backtrace)
       end
 
-      add r
-    end
-
-    def _embed(s0, mapper, backtrace)
-      f0 = catch_fatal do |fatal_id|
-        s1 = s0.set(fatal_id: fatal_id)
-        s2 = s1.set(mapper: mapper)
-        old_mapper = s0.fetch(:mapper)
-
-        return mapper.call!(s2) do |f1|
-          s3 = s2.set(notices: f1.notices + f1.failures)
-          s3.return!
-        end.except(:scope).merge(mapper: old_mapper)
-      end
-
-      raise f0.exception(backtrace)
+      add result
     end
 
     # Set a static value
@@ -565,6 +550,21 @@ module Remap
         },
         rule: call(backtrace: backtrace, &block)
       })
+    end
+
+    def build_embed(s0, mapper, backtrace)
+      f0 = catch_fatal do |fatal_id|
+        s1 = s0.set(fatal_id: fatal_id)
+        s2 = s1.set(mapper: mapper)
+        old_mapper = s0.fetch(:mapper)
+
+        return mapper.call!(s2) do |f1|
+          s3 = s2.set(notices: f1.notices + f1.failures)
+          s3.return!
+        end.except(:scope).merge(mapper: old_mapper)
+      end
+
+      raise f0.exception(backtrace)
     end
   end
 end
