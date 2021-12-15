@@ -32,9 +32,8 @@ module Remap
             rules.reduce(s2) do |s3, rule|
               s5 = s3.set(fatal_id: fatal_id)
               s6 = rule.call(s4)
-              s7 = s6.set(fatal_id: fatal_id)
-              s8 = s7.set(id: id)
-              s5.combine(s8)
+              s7 = s6.set(id: id)
+              s5.combine(s7)
             end
           end.remove_id.except(:fatal_id)
         end
