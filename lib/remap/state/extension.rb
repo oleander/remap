@@ -342,7 +342,7 @@ module Remap
         #
         # @return [Hash]
         def to_hash
-          super.except(:options, :notices, :value, :id)
+          super.except(:options, :notices, :value, :id, :ids, :fatal_id, :fatal_ids)
         end
 
         # @return [Any]
