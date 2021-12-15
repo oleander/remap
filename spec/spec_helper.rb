@@ -23,7 +23,6 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
-    # max backtrace length
     c.max_formatted_output_length = nil
   end
 
