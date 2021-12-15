@@ -29,10 +29,11 @@ module Remap
           return catch_ignored do |id|
             s2 = s1.set(id: id)
 
+
             rules.reduce(s2) do |s3, rule|
-              s5 = s3.set(fatal_id: fatal_id)
+              s5 = s3
               s6 = rule.call(s4)
-              s7 = s6.set(id: id, fatal_id: fatal_id)
+              s7 = s6.set(id: id)
               s5.combine(s7)
             end
           end.remove_id.remove_fatal_id

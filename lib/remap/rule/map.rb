@@ -54,7 +54,7 @@ module Remap
           s4 = s3.set(path: state.path)
           s5 = s4.except(:key)
 
-          return s5.except(:fatal_id)
+          return s5.remove_fatal_id
         end
 
         raise failure.exception(backtrace)

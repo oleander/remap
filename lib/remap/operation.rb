@@ -26,7 +26,7 @@ module Remap
         end
       end
 
-      s0 = State.call(input, options: options, mapper: self)
+      s0 = State.call(input, options: options, mapper: self)._
 
       s1 = call!(s0) do |failure|
         return error[failure]

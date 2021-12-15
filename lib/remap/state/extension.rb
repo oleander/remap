@@ -100,7 +100,9 @@ module Remap
         # @return [self]
         def _(&block)
           unless block
-            return _ { raise ArgumentError, "Input: #{self} output: #{_1.formatted}" }
+            return _ do |reason|
+              raise ArgumentError, "[BUG] State: #{formatted} reason: #{reason.formatted}"
+            end
           end
 
           unless (result = Schema.call(self)).success?
@@ -176,7 +178,7 @@ module Remap
             self
           in { ids: }
             raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
-          end
+          end._
         end
 
         def remove_fatal_id
@@ -189,7 +191,7 @@ module Remap
             self
           in { fatal_ids: }
             raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
-          end
+          end._
         end
 
         # Creates a new state with params
