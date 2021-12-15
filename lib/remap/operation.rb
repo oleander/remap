@@ -2,7 +2,6 @@
 
 module Remap
   using State::Extension
-  using Extensions::Hash
 
   # Class interface for {Remap::Base} and instance interface for {Mapper}
   module Operation
