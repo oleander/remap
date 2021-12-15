@@ -6,8 +6,8 @@ module Remap
 
     class Block < Unit
       # @return [Array<Rule>]
+      attribute :backtrace, [String], min_size: 1
       attribute :rules, [Types::Rule]
-      attribute :backtrace, [String]
 
       # Represents a non-empty define block with one or more rules
       # Calls every {#rules} with state and merges the output
