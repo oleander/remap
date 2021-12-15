@@ -4,7 +4,7 @@ describe Remap::Rule::Block do
   using Remap::State::Extension
 
   shared_examples described_class do
-    subject(:rule) { described_class.call(rules: rules) }
+    subject(:rule) { described_class.call(rules: rules, backtrace: caller) }
 
     subject { rule.call(state, &error) }
 
@@ -15,7 +15,7 @@ describe Remap::Rule::Block do
 
   describe "#call" do
     context "without rules" do
-      subject(:rule) { described_class.call(rules: rules) }
+      subject(:rule) { described_class.call(rules: rules, backtrace: caller) }
 
       let(:rules) { [] }
       let(:input) { { foo: :bar } }

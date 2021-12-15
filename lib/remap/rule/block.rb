@@ -7,6 +7,7 @@ module Remap
     class Block < Unit
       # @return [Array<Rule>]
       attribute :rules, [Types::Rule]
+      attribute :backtrace, [String]
 
       # Represents a non-empty define block with one or more rules
       # Calls every {#rules} with state and merges the output
@@ -21,13 +22,19 @@ module Remap
           return s0
         end
 
-        catch do |id|
-          s1 = s0.set(id: id)
+        failure = catch do |fatal_id|
+          s1 = s0.set(fatal_id: fatal_id)
 
-          rules.reduce(s1) do |s2, rule|
-            s2.combine(rule.call(state))
-          end.except(:id)
+          return catch do |id|
+            s2 = s1.set(id: id)
+
+            rules.reduce(s2) do |s3, rule|
+              s3.combine(rule.call(state))
+            end
+          end.except(:id, :fatal_id)
         end
+
+        raise failure.exception(backtrace)
       end
     end
   end

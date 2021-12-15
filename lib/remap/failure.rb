@@ -29,9 +29,19 @@ module Remap
       new(failure)
     end
 
+    class Error < Error
+      extend Dry::Initializer
+
+      option :failure, type: Types.Instance(Failure)
+      delegate :inspect, :to_s, to: :failure
+      delegate_missing_to :failure
+    end
+
     # @return [Error]
-    def exception
-      Error.new(attributes)
+    def exception(backtrace)
+      e = Error.new(failure: self)
+      e.set_backtrace(backtrace)
+      e
     end
   end
 end

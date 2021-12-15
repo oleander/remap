@@ -29,7 +29,7 @@ module Remap
     #   rule.call(state, &error).fetch(:value) # => { name: "John", age: 50 }
     #
     # @return [Rule]
-    def self.call(&block)
+    def self.call(backtrace: caller, &block)
       unless block_given?
         return Rule::VOID
       end
@@ -38,7 +38,7 @@ module Remap
         compiler.instance_exec(&block)
       end.rules
 
-      Rule::Block.new(rules)
+      Rule::Block.new(backtrace: backtrace, rules: rules)
     end
 
     # Maps input path [input] to output path [to]
@@ -189,18 +189,17 @@ module Remap
     end
 
     def _embed(s0, mapper, backtrace)
-      failure = catch do |fatal_id|
+      f0 = catch do |fatal_id|
         s1 = s0.set(fatal_id: fatal_id)
         s2 = s1.set(mapper: mapper)
 
-        return mapper.call!(s2) do |s3|
-          s3.ignore!("Mapper failed")
+        return mapper.call!(s2) do |f1|
+          s3 = s2.set(notices: f1.notices + f1.failures)
+          s3.return!
         end.except(:mapper, :scope)
       end
 
-      e = failure.exception
-      e.add_backtrace(backtrace)
-      raise e
+      raise f0.exception(backtrace)
     end
 
     # Set a static value
@@ -539,7 +538,7 @@ module Remap
           input: path.flatten
         },
         backtrace: backtrace,
-        rule: call(&block)
+        rule: call(backtrace: backtrace, &block)
       })
     end
 
@@ -549,7 +548,7 @@ module Remap
           output: [to].flatten,
           input: path.flatten
         },
-        rule: call(&block)
+        rule: call(backtrace: backtrace, &block)
       })
     end
   end

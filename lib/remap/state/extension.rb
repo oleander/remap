@@ -54,6 +54,10 @@ module Remap
 
         # Throws :fatal containing a Notice
         def fatal!(...)
+          fatal_id = fetch(:fatal_id) do
+            raise ArgumentError, "Missing :fatal_id in %s" % formatted
+          end
+
           throw fatal_id, Failure.new(failures: [notice(...)], notices: notices)
         end
 
@@ -64,11 +68,15 @@ module Remap
 
         # Throws :ignore containing a Notice
         def ignore!(...)
+          set(notice: notice(...)).except(:value).return!
+        end
+
+        def return!
           case self
           in {ids: [], id:}
-            throw id, set(notice: notice(...)).except(:value, :id)
+            throw id, except(:id)
           in { ids:, id: }
-            throw id, merge(ids: ids[1...], id: ids[0]).set(notice: notice(...)).except(:value)
+            throw id, merge(ids: ids[1...], id: ids[0])
           else
             raise ArgumentError, "#id not defined for state [%s]" % [formatted]
           end
@@ -194,7 +202,7 @@ module Remap
         #
         # @return [State<Y>]
         def fmap(**options, &block)
-          bind(**options, id: id) do |input, state|
+          bind(**options) do |input, state|
             state.set(block[input, state])
           end
         end
@@ -277,11 +285,7 @@ module Remap
         end
 
         def id
-          fetch(:id, :ignore)
-        end
-
-        def fatal_id
-          fetch(:fatal_id, :fatal)
+          fetch(:id)
         end
 
         # Represents options to a mapper
@@ -323,6 +327,31 @@ module Remap
         # @return [Array<Notice>]
         def notices
           fetch(:notices)
+        end
+
+        def failure(reason = Undefined)
+          failures = case [path, reason]
+          in [_, Notice => notice]
+            [notice]
+          in [path, Array => reasons]
+            reasons.map do |inner_reason|
+              Notice.call(path: path, reason: inner_reason, **only(:value))
+            end
+          in [path, String => reason]
+            [Notice.call(path: path, reason: reason, **only(:value))]
+          in [path, Hash => errors]
+            errors.paths.flat_map do |sufix|
+              Array.wrap(errors.dig(*sufix)).map do |inner_reason|
+                Notice.call(
+                  reason: inner_reason,
+                  path: path + sufix,
+                  **only(:value)
+                )
+              end
+            end
+          end
+
+          Failure.new(failures: failures, notices: notices)
         end
 
         private

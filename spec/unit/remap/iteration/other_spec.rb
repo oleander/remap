@@ -4,7 +4,7 @@ describe Remap::Iteration::Other do
   using Remap::State::Extension
 
   describe "#map" do
-    let(:state) { state!(value)                                    }
+    let(:state) { state!(value, fatal_id: :fatal) }
     let(:other) { described_class.call(state: state, value: value) }
 
     context "when called with a defined value" do

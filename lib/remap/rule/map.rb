@@ -57,7 +57,7 @@ module Remap
           return s5.except(:fatal_id)
         end
 
-        raise failure.exception
+        raise failure.exception(backtrace)
       end
 
       # A post-processor method

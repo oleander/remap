@@ -18,10 +18,10 @@ module Remap
     #   when request is a success
     # @raise [Remap::Error]
     #   when a fatal error occurs
-    def call(input, **options, &error)
+    def call(input, backtrace: caller, **options, &error)
       unless block_given?
         return call(input, **options) do |failure|
-          raise failure.exception
+          raise failure.exception(backtrace)
         end
       end
 

@@ -235,14 +235,16 @@ module Remap
     #   Mapper.call({name: "John"}).first_name # => "John"
     #
     # @return [void]
-    def self.define(target = Nothing, method: :new, strategy: :argument, &context)
+    # rubocop:disable Layout/LineLength
+    def self.define(target = Nothing, method: :new, strategy: :argument, backtrace: caller, &context)
       unless block_given?
         raise ArgumentError, "#{self}.define requires a block"
       end
 
       self.constructor = Constructor.call(method: method, strategy: strategy, target: target)
-      self.context = Compiler.call(&context)
+      self.context = Compiler.call(backtrace: backtrace, &context)
     end
+    # rubocop:enable Layout/LineLength
 
     # @param state [State]
     #
@@ -270,13 +272,19 @@ module Remap
     #
     # @private
     def call(s0, &error)
+      s0.tap do |input|
+        validation.call(input, s0.options).tap do |result|
+          unless result.success?
+            return error[s0.failure(result.errors.to_h)]
+          end
+        end
+      end
+
       s1 = catch do |id|
         return context.call(s0.set(id: id)).then(&constructor)
       end
 
-      notice = s1.notice("No mapped data")
-
-      Failure.new(notices: s1.notices, failures: [notice]).then(&error)
+      Failure.new(failures: s1.notices).then(&error)
     end
 
     private
