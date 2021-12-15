@@ -71,13 +71,6 @@ module Remap
           set(notice: notice(...)).except(:value).return!
         end
 
-        def return!
-          id = fetch(:id) do
-            raise ArgumentError, "#id not defined for state [%s]" % [formatted]
-          end
-
-          throw id, remove_id
-        end
 
         # Creates a notice containing the given message
         #
@@ -112,11 +105,11 @@ module Remap
           self
         end
 
-        # Makes the state iterable
+        # Iterates over {#value}
         #
         # @yieldparam value [Any]
-        # @yieldoption key [Symbol]
-        # @yieldoption index [Integer]
+        # @yieldparam key [Symbol]
+        # @yieldparam index [Integer]
         #
         # @yieldreturn [State]
         #
@@ -168,6 +161,8 @@ module Remap
           end._
         end
 
+        # @todo Merge with {#remove_fatal_id}
+        # @return [State]
         def remove_id
           case self
           in { ids: [], id: }
@@ -181,6 +176,8 @@ module Remap
           end._
         end
 
+        # @todo Merge with {#remove_id}
+        # @return [State]
         def remove_fatal_id
           case self
           in { fatal_ids: [], fatal_id: }
@@ -416,6 +413,14 @@ module Remap
               context.ignore!(message)
             end
           end.new(**to_hash, **options, value: value, state: self)
+        end
+
+        def return!
+          id = fetch(:id) do
+            raise ArgumentError, "#id not defined for state [%s]" % [formatted]
+          end
+
+          throw id, remove_id
         end
       end
     end
