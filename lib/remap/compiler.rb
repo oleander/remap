@@ -3,7 +3,6 @@
 module Remap
   using State::Extension
 
-
   # Constructs a {Rule} from the block passed to {Remap::Base.define}
   class Compiler < Proxy
     extend Catchable
@@ -199,11 +198,12 @@ module Remap
       f0 = catch_fatal do |fatal_id|
         s1 = s0.set(fatal_id: fatal_id)
         s2 = s1.set(mapper: mapper)
+        old_mapper = s0.fetch(:mapper)
 
         return mapper.call!(s2) do |f1|
           s3 = s2.set(notices: f1.notices + f1.failures)
           s3.return!
-        end.except(:mapper, :scope)
+        end.except(:scope).merge(mapper: old_mapper)
       end
 
       raise f0.exception(backtrace)

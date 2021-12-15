@@ -47,12 +47,15 @@ module Remap
           s0 = state.set(fatal_id: fatal_id)
 
           s2 = path.input.call(s0) do |s1|
-            callback(rule.call(s1))
+            s2 = rule.call(s1)
+            callback(s2)
           end
 
           s3 = s2.then(&path.output)
           s4 = s3.set(path: state.path)
           s5 = s4.except(:key)
+
+          # binding.pry
 
           return s5.remove_fatal_id
         end

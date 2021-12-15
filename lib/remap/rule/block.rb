@@ -29,7 +29,6 @@ module Remap
           return catch_ignored do |id|
             s2 = s1.set(id: id)
 
-
             rules.reduce(s2) do |s3, rule|
               s5 = s3
               s6 = rule.call(s4)
