@@ -370,6 +370,11 @@ module Remap
           fetch(:notices)
         end
 
+        # Creates a failure from the current state
+        #
+        # @param reason [String, Hash, Undefined]
+        #
+        # @return [Failure]
         def failure(reason = Undefined)
           failures = case [path, reason]
           in [_, Notice => notice]
