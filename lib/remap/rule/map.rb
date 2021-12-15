@@ -55,8 +55,6 @@ module Remap
           s4 = s3.set(path: state.path)
           s5 = s4.except(:key)
 
-          # binding.pry
-
           return s5.remove_fatal_id
         end
 
