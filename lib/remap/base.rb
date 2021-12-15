@@ -107,12 +107,9 @@ module Remap
     include ActiveSupport::Configurable
     include Dry::Core::Constants
 
-    extend Remap::Operation
     include Catchable
 
     using State::Extension
-    using Extensions::Hash
-    using Extensions::Object
 
     with_options instance_accessor: true do |scope|
       scope.config_accessor(:contract) { Dry::Schema.define {} }
@@ -124,6 +121,8 @@ module Remap
     end
 
     schema schema.strict(false)
+
+    extend Operation
 
     # Defines a schema for the mapper
     # If the schema fail, the mapper will fail
