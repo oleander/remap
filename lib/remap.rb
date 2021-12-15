@@ -10,7 +10,6 @@ require "dry/interface"
 require "dry/schema"
 require "dry/struct"
 require "dry/monads"
-require "sorted_set"
 require "dry/types"
 
 require "neatjson"
