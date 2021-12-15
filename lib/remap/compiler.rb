@@ -366,6 +366,10 @@ module Remap
         raise ArgumentError, "#wrap requires a block"
       end
 
+      unless type == :array
+        raise ArgumentError, "Argument to #wrap must equal :array, got [#{type}] (#{type.class})"
+      end
+
       add rule(backtrace: backtrace, &block).then { Array.wrap(_1) }
     end
 

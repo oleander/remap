@@ -30,7 +30,7 @@ describe Remap::Compiler do
   describe "#wrap" do
     let(:input) { { a: 100 } }
 
-    xcontext "with invalid type" do
+    context "with invalid type" do
       let(:block) { -> * { wrap(:does_not_exist) { map :a } } }
 
       it "raises an argument error" do

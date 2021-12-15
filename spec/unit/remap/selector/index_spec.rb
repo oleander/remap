@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 describe Remap::Selector::Index do
-  let(:fatal_id) { :fatal_id }
-  let(:state) { state!(input, fatal_id: fatal_id) }
+  let(:state) { state!(input) }
 
   describe "::call" do
     let(:index) { 100 }
@@ -25,7 +24,7 @@ describe Remap::Selector::Index do
 
     let(:selector) { described_class.call(index: index) }
 
-    xcontext "when input is not array" do
+    context "when input is not array" do
       let(:input) { "foo" }
       let(:index) { 0 }
 
