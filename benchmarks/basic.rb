@@ -226,10 +226,8 @@ input = {
   }
 }
 
-m = Fixed.new
-
 Benchmark.ips do |x|
-  x.report("fixed") { m.call(input, &:itself) }
+  x.report("fixed") { Fixed.call(input) }
 
   x.compare!
 end

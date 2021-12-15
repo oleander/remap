@@ -166,7 +166,7 @@ module Remap
             in [Symbol, _, value]
               value
             end
-          end
+          end._
         end
 
         def remove_id
@@ -179,6 +179,8 @@ module Remap
             self
           in { ids: }
             raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
+          else
+            binding.pry
           end
         end
 

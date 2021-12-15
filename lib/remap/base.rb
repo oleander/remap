@@ -107,6 +107,8 @@ module Remap
     include ActiveSupport::Configurable
     include Dry::Core::Constants
     using State::Extension
+    using Extensions::Hash
+    using Extensions::Object
     extend Operation
 
     with_options instance_accessor: true do |scope|
@@ -272,6 +274,10 @@ module Remap
     #
     # @private
     def call(s0, &error)
+      s0._ do |reason|
+        raise ArgumentError, "Invalid state due to #{reason.formatted}"
+      end
+
       s0.tap do |input|
         validation.call(input, s0.options).tap do |result|
           unless result.success?
