@@ -381,20 +381,18 @@ describe Remap::State::Extension do
       end
 
       context "when iterator ignores all of the elements" do
-        subject(:result) do
-          state.map do |element|
-            element.fmap do |_value, state|
-              state.ignore!("Ignored!")
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            state.map do |element|
+              element.fmap do |_value, state|
+                state.ignore!(reason)
+              end
             end
           end
-        end
 
-        it "throws a symbol" do
-          expect { result }.to throw_symbol(
-            id, include(
-              notices: contain_exactly(having_attributes(reason: "Ignored!"))
-            )
-          )
+          let(:attributes) do
+            { reason: reason }
+          end
         end
       end
     end
@@ -441,43 +439,39 @@ describe Remap::State::Extension do
       end
 
       context "when iterator ignores some of the elements" do
-        subject(:result) do
-          state.map do |element|
-            element.fmap do |value, state|
-              case state.index
-              in 0
-                value.upcase
-              in 1
-                state.ignore!("notice!")
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            state.map do |element|
+              element.fmap do |value, state|
+                case state.index
+                in 0
+                  value.upcase
+                in 1
+                  state.ignore!(reason)
+                end
               end
             end
           end
-        end
 
-        it "throws a symbol" do
-          expect { result }.to throw_symbol(
-            id, include(
-              notices: contain_exactly(having_attributes(reason: "notice!"))
-            )
-          )
+          let(:attributes) do
+            { reason: reason }
+          end
         end
       end
 
       context "when iterator ignores all of the elements" do
-        subject(:result) do
-          state.map do |element|
-            element.fmap do |_, state|
-              state.ignore!("notice!")
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            state.map do |element|
+              element.fmap do |_, state|
+                state.ignore!(reason)
+              end
             end
           end
-        end
 
-        it "throws a symbol" do
-          expect { result }.to throw_symbol(
-            id, include(
-              notices: contain_exactly(having_attributes(reason: "notice!"))
-            )
-          )
+          let(:attributes) do
+            { reason: reason }
+          end
         end
       end
     end

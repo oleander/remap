@@ -6,8 +6,7 @@ describe Remap::Path::Input do
   describe "#call" do
     subject(:path) { described_class.call(selectors) }
 
-    let(:fatal_id) { :fatal_id }
-    let(:state) { state!(input, fatal_id: fatal_id) }
+    let(:state) { state!(input, fatal_id: :fatal_id) }
 
     context "without selectors" do
       let(:input) { "value" }
@@ -86,20 +85,10 @@ describe Remap::Path::Input do
 
         let(:input) { 100_000 }
 
-        it "raises a fatal exception" do
-          expect { result }.to throw_symbol(
-            fatal_id, an_instance_of(Remap::Failure).and(
-              having_attributes(
-                failures: contain_exactly(
-                  an_instance_of(Remap::Notice).and(
-                    having_attributes(
-                      value: input
-                    )
-                  )
-                )
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: input }
+          end
         end
       end
     end
@@ -141,20 +130,10 @@ describe Remap::Path::Input do
 
         let(:input) { 100_000 }
 
-        it "raises a fatal exception" do
-          expect { result }.to throw_symbol(
-            fatal_id, an_instance_of(Remap::Failure).and(
-              having_attributes(
-                failures: contain_exactly(
-                  an_instance_of(Remap::Notice).and(
-                    having_attributes(
-                      value: input
-                    )
-                  )
-                )
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: input }
+          end
         end
       end
     end

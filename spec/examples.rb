@@ -33,6 +33,7 @@ shared_examples "a fatal exception" do
 end
 
 shared_examples "an ignored exception" do
+  let(:reason) { "this is a reason" }
   let(:state) do
     super().merge(
       id: super().fetch(:id, :ignore_id)

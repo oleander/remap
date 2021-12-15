@@ -18,20 +18,10 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        it "raises a fatal exception" do
-          expect { result }.to throw_symbol(
-            :fatal, an_instance_of(Remap::Failure).and(
-              having_attributes(
-                failures: contain_exactly(
-                  an_instance_of(Remap::Notice).and(
-                    having_attributes(
-                      value: value
-                    )
-                  )
-                )
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: value }
+          end
         end
       end
 
@@ -45,20 +35,10 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        it "throws a fatal symbol" do
-          expect { result }.to throw_symbol(
-            :fatal, an_instance_of(Remap::Failure).and(
-              having_attributes(
-                failures: contain_exactly(
-                  an_instance_of(Remap::Notice).and(
-                    having_attributes(
-                      value: value
-                    )
-                  )
-                )
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: value }
+          end
         end
       end
     end

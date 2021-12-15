@@ -7,8 +7,7 @@ describe Remap::Iteration do
       described_class.call(state: state, value: state.value)
     end
 
-    let(:fatal_id) { :fatal_id }
-    let(:state) { state!(input, fatal_id: fatal_id) }
+    let(:state) { state!(input, fatal_id: :fatal_id) }
 
     context "when enumerable" do
       context "when hash" do
@@ -36,20 +35,10 @@ describe Remap::Iteration do
         let(:input) { "value" }
         let(:output) { input.downcase }
 
-        it "raises a fatal exception" do
-          expect { result }.to throw_symbol(
-            fatal_id, an_instance_of(Remap::Failure).and(
-              having_attributes(
-                failures: contain_exactly(
-                  an_instance_of(Remap::Notice).and(
-                    having_attributes(
-                      value: input
-                    )
-                  )
-                )
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: input }
+          end
         end
       end
 

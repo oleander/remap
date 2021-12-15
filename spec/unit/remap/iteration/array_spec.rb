@@ -38,24 +38,16 @@ describe Remap::Iteration::Array do
     end
 
     context "when all values are rejected" do
-      subject(:result) do
-        iterator.call do
-          state.ignore!("Ignore!")
+      it_behaves_like "an ignored exception" do
+        subject(:result) do
+          iterator.call do
+            state.ignore!(reason)
+          end
         end
-      end
 
-      it "raises a fatal exception" do
-        expect { result }.to throw_symbol(
-          :ignore, include(
-            notices: contain_exactly(
-              an_instance_of(Remap::Notice).and(
-                having_attributes(
-                  reason: "Ignore!"
-                )
-              )
-            )
-          )
-        )
+        let(:attributes) do
+          { reason: reason }
+        end
       end
     end
   end
