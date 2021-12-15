@@ -72,14 +72,11 @@ module Remap
         end
 
         def return!
-          case self
-          in {ids: [], id:}
-            throw id, except(:id)
-          in { ids:, id: }
-            throw id, merge(ids: ids[1...], id: ids[0])
-          else
+          id = fetch(:id) do
             raise ArgumentError, "#id not defined for state [%s]" % [formatted]
           end
+
+          throw id, remove_id
         end
 
         # Creates a notice containing the given message
@@ -178,6 +175,19 @@ module Remap
           in { ids: [] }
             self
           in { ids: }
+            raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
+          end
+        end
+
+        def remove_fatal_id
+          case self
+          in { fatal_ids: [], fatal_id: }
+            except(:fatal_id)
+          in { fatal_ids: ids, fatal_id: id }
+            merge(fatal_ids: ids[1...], fatal_id: ids[0])
+          in { fatal_ids: [] }
+            self
+          in { fatal_ids: }
             raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
           end
         end

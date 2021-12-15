@@ -106,9 +106,12 @@ module Remap
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants
+    include Catchable
+
     using State::Extension
     using Extensions::Hash
     using Extensions::Object
+
     extend Operation
 
     with_options instance_accessor: true do |scope|
@@ -286,7 +289,7 @@ module Remap
         end
       end
 
-      s1 = catch do |id|
+      s1 = catch_ignored do |id|
         return context.call(s0.set(id: id)).then(&constructor).remove_id
       end
 

@@ -171,6 +171,45 @@ describe Remap::State::Extension do
     end
   end
 
+  describe "#remove_fatal_id" do
+    subject(:result) { state.remove_fatal_id }
+
+    let(:state) { state! }
+
+    context "with id" do
+      let(:state) { super().set(fatal_id: :id1) }
+
+      context "when no ids exists" do
+        its([:fatal_ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:fatal_id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(fatal_ids: [:id2]) }
+
+        its([:fatal_ids]) { is_expected.to be_empty }
+        its([:fatal_id]) { is_expected.to eq(:id2) }
+      end
+    end
+
+    context "without id" do
+      let(:state) { super() }
+
+      context "when no ids exists" do
+        its([:fatal_ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:fatal_id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(fatal_ids: [:id2]) }
+
+        it "raises an error" do
+          expect { result }.to raise_error(ArgumentError)
+        end
+      end
+    end
+  end
+
   describe "#combine" do
     subject(:result) { left.combine(right) }
 

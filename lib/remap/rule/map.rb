@@ -43,7 +43,7 @@ module Remap
       #
       # @abstract
       def call(state)
-        failure = catch do |fatal_id|
+        failure = catch_fatal do |fatal_id|
           s0 = state.set(fatal_id: fatal_id)
 
           s2 = path.input.call(s0) do |s1|

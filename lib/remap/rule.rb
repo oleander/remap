@@ -2,6 +2,7 @@
 
 module Remap
   class Rule < Dry::Interface
+    include Catchable
     defines :requirement
     requirement Types::Any
 
@@ -13,5 +14,6 @@ module Remap
     def call(state)
       raise NotImplementedError, "#{self.class}#call not implemented"
     end
+
   end
 end

@@ -3,8 +3,11 @@
 module Remap
   using State::Extension
 
+
   # Constructs a {Rule} from the block passed to {Remap::Base.define}
   class Compiler < Proxy
+    extend Catchable
+    include Catchable
     # @return [Array<Rule>]
     param :rules, type: Types.Array(Rule)
 
@@ -193,7 +196,7 @@ module Remap
     end
 
     def _embed(s0, mapper, backtrace)
-      f0 = catch do |fatal_id|
+      f0 = catch_fatal do |fatal_id|
         s1 = s0.set(fatal_id: fatal_id)
         s2 = s1.set(mapper: mapper)
 
