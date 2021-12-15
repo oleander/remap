@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-xdescribe Remap::Mapper::Xor do
+describe Remap::Mapper::Xor do
   using Remap::State::Extension
   let(:mapper) { described_class.new(left: left, right: right) }
 

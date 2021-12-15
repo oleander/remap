@@ -30,19 +30,18 @@ describe Remap::Path::Input do
         end
       end
 
-      xcontext "when the key is not present" do
+      context "when the key is not present" do
         let(:value) { "value" }
         let(:input) { { not: value } }
 
-        it "raises a fatal exception" do
-          expect { path.call(state, &error) }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                path: selectors,
-                value: input
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            path.call(state, &error)
+          end
+
+          let(:attributes) do
+            { value: input, path: selectors }
+          end
         end
       end
     end
@@ -177,18 +176,17 @@ describe Remap::Path::Input do
         it { is_expected.to contain(:TWO) }
       end
 
-      xcontext "when the key is not present" do
+      context "when the key is not present" do
         let(:input) { [:one] }
 
-        it "raises an ignore exception" do
-          expect { path.call(state, &error) }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                path: [1],
-                value: input
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            path.call(state, &error)
+          end
+
+          let(:attributes) do
+            { path: [1], value: input }
+          end
         end
       end
     end

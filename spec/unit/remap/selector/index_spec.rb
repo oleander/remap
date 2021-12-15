@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-xdescribe Remap::Selector::Index do
-  let(:state) { state!(input) }
+describe Remap::Selector::Index do
+  let(:fatal_id) { :fatal_id }
+  let(:state) { state!(input, fatal_id: fatal_id) }
 
   describe "::call" do
     let(:index) { 100 }
@@ -28,15 +29,13 @@ xdescribe Remap::Selector::Index do
       let(:input) { "foo" }
       let(:index) { 0 }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Fatal).and(
-            having_attributes(
-              path: [index],
-              value: input
-            )
-          )
-        )
+      it_behaves_like "a fatal exception" do
+        let(:attributes) do
+          {
+            path: [index],
+            value: input
+          }
+        end
       end
     end
 
@@ -61,15 +60,10 @@ xdescribe Remap::Selector::Index do
       let(:input) { [1, 2, 3] }
       let(:index) { 4 }
 
-      it "raises an ignore exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              path: [index],
-              value: input
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { path: [index], value: input }
+        end
       end
     end
 
@@ -84,15 +78,10 @@ xdescribe Remap::Selector::Index do
       let(:input) { [] }
       let(:index) { 0 }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              path: [index],
-              value: input
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { path: [index], value: input }
+        end
       end
     end
   end

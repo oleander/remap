@@ -146,7 +146,7 @@ module Remap
             in [:value, Array => list1, Array => list2]
               list1 + list2
             in [:value, left, right]
-              fatal!(
+              other.fatal!(
                 "Could not merge [%s] (%s) with [%s] (%s)",
                 left.formatted,
                 left.class,
@@ -155,6 +155,10 @@ module Remap
               )
             in [:notices, Array => n1, Array => n2]
               n1 + n2
+            in [:ids, Array => i1, Array => i2] unless i1.size == i2.size
+              other.fatal!("Could not merge [%s] (%s) with [%s] (%s) as they differ in length" % [
+                i1, i1.class, i2, i2.class
+              ])
             in [Symbol, _, value]
               value
             end
@@ -202,8 +206,8 @@ module Remap
         #
         # @return [State<Y>]
         def fmap(**options, &block)
-          bind(**options) do |input, state|
-            state.set(block[input, state])
+          bind(**options) do |input, state:|
+            state.set(block[input, state, state: state])
           end
         end
 
@@ -241,7 +245,7 @@ module Remap
           s1 = set(**options)
 
           fetch(:value) { return s1 }.then do |value|
-            block[value, s1]
+            block[value, s1, state: s1]
           end
         end
 
@@ -286,6 +290,10 @@ module Remap
 
         def id
           fetch(:id)
+        end
+
+        def fatal_id
+          fetch(:fatal_id)
         end
 
         # Represents options to a mapper
@@ -366,7 +374,7 @@ module Remap
         def context(value, context: self)
           ::Struct.new(*except(:id).keys, *options.keys, :state, keyword_init: true) do
             define_method :method_missing do |name, *|
-              fatal!("Method [%s] not defined", name)
+              context.fatal!("Method [%s] not defined", name)
             end
 
             define_method(:skip!) do |message = "Manual skip!"|

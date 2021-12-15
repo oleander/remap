@@ -27,7 +27,7 @@ describe Remap::Base do
       { age: 10 }
     end
 
-    xit "invokes block with failure" do
+    it "invokes block with failure" do
       expect { |e| mapper.call(input, &e) }.to yield_and_return(
         an_instance_of(Remap::Failure).and(
           have_attributes(

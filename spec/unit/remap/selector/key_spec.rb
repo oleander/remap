@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-xdescribe Remap::Selector::Key do
+describe Remap::Selector::Key do
   using Remap::State::Extension
 
   let(:key) { :key }
@@ -31,14 +31,14 @@ xdescribe Remap::Selector::Key do
     context "when input is not a hash" do
       let(:input) { [] }
 
-      it "raises a fatal exception" do
-        expect { selector.call(state, &error) }.to raise_error(
-          an_instance_of(Remap::Notice::Fatal).and(
-            having_attributes(
-              value: input
-            )
-          )
-        )
+      it_behaves_like "a fatal exception" do
+        subject(:result) do
+          selector.call(state, &error)
+        end
+
+        let(:attributes) do
+          { value: input }
+        end
       end
     end
 
@@ -56,14 +56,14 @@ xdescribe Remap::Selector::Key do
       context "when input does not contain the key" do
         let(:input) { { not: value } }
 
-        it "raises a fatal exception" do
-          expect { selector.call(state, &error) }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                value: input
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            selector.call(state, &error)
+          end
+
+          let(:attributes) do
+            { value: input }
+          end
         end
       end
     end
