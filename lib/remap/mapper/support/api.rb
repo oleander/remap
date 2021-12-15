@@ -5,6 +5,22 @@ module Remap
     using State::Extension
 
     module API
+      # @return [Boolean]
+      #
+      # @abstract
+      # @private
+      def validate?
+        raise NotImplementedError, "`validate?` is not implemented for #{self}"
+      end
+
+      # @param input [Any]
+      # @param backtrace [Array<String>]
+      # @param options [Hash]
+      #
+      # @yieldparam [Failure]
+      # @yieldreturn [T]
+      #
+      # @return [Any, T]
       def call(input, backtrace: caller, **options, &error)
         unless block_given?
           return call(input, **options) do |failure|

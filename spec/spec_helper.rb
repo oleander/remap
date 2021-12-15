@@ -15,6 +15,12 @@ require_relative "support"
 require_relative "examples"
 require_relative "matchers"
 
+class Remap::Base
+  configuration do |c|
+    c.validation = true
+  end
+end
+
 RSpec.configure do |config|
   config.filter_run_when_matching :focus
   config.include Dry::Monads[:maybe, :result, :do]
