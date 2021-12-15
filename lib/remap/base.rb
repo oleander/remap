@@ -106,13 +106,13 @@ module Remap
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants
+
+    extend Operation
     include Catchable
 
     using State::Extension
     using Extensions::Hash
     using Extensions::Object
-
-    extend Operation
 
     with_options instance_accessor: true do |scope|
       scope.config_accessor(:contract) { Dry::Schema.define {} }

@@ -27,7 +27,7 @@ module Remap
 
       def reduce(state, value, index, &block)
         s0 = block[value, index: index]
-        s1 = s0.set(fatal_id: state.fatal_id, ids: state.ids)
+        s1 = s0.set(**state.only(:ids, :fatal_id))
         state.combine(s1.fmap { [_1] })
       end
     end
