@@ -394,6 +394,18 @@ module Remap
           Failure.new(failures: failures, notices: notices)
         end
 
+        # @raise [ArgumentError]
+        #   when {#id} is not defined
+        #
+        # @private
+        def return!
+          id = fetch(:id) do
+            raise ArgumentError, "#id not defined for state [%s]" % [formatted]
+          end
+
+          throw id, remove_id
+        end
+
         private
 
         # Creates a context containing {options} and {self}
@@ -415,13 +427,7 @@ module Remap
           end.new(**to_hash, **options, value: value, state: self)
         end
 
-        def return!
-          id = fetch(:id) do
-            raise ArgumentError, "#id not defined for state [%s]" % [formatted]
-          end
 
-          throw id, remove_id
-        end
       end
     end
   end
