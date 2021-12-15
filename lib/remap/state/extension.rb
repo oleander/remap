@@ -151,9 +151,7 @@ module Remap
             in [:ids, i1, i2] if i2.all? { i1.include?(_1) }
               i1
             in [:ids, i1, i2]
-              # TODO: should use fatal!
-              raise ArgumentError,
-                    "Could not merge #ids [%s] (%s) with [%s] (%s)" % [i1, i1.class, i2, i2.class]
+              other.fatal!("Could not merge #ids [%s] (%s) with [%s] (%s)", i1, i1.class, i2, i2.class)
             in [Symbol, _, value]
               value
             end
