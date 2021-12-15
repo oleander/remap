@@ -20,11 +20,7 @@ describe Remap::Base do
 
     let(:fail) do
       mapper! do
-        define do
-          map.adjust do
-            skip!
-          end
-        end
+        contract { required(:something).filled }
       end
     end
 
