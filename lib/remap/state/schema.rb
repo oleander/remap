@@ -10,6 +10,7 @@ module Remap
       required(:options).value(:hash)
       required(:path).array(Types::Key)
       required(:ids).value(:array)
+      required(:fatal_ids).value(:array)
 
       optional(:index).filled(:integer)
       optional(:element).filled

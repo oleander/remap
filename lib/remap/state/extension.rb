@@ -206,6 +206,8 @@ module Remap
             merge(path: path + [index], index: index).set(**rest)
           in [{ids:, id: old_id}, {id: new_id, **rest}]
             merge(ids: [old_id] + ids, id: new_id).set(**rest)
+          in [{fatal_ids:, fatal_id: old_id}, {fatal_id: new_id, **rest}]
+            merge(fatal_ids: [old_id] + fatal_ids, fatal_id: new_id).set(**rest)
           else
             merge(options)
           end

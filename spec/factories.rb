@@ -76,6 +76,7 @@ FactoryBot.define do
     values { input }
     path { [] }
     ids { [] }
+    fatal_ids { [] }
 
     mapper
     input

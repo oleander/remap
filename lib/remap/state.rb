@@ -32,6 +32,7 @@ module Remap
     def self.call(value, mapper: Dummy, options: EMPTY_HASH)
       {
         ids: EMPTY_ARRAY,
+        fatal_ids: EMPTY_ARRAY,
         notices: EMPTY_ARRAY,
         path: EMPTY_ARRAY,
         options: options,

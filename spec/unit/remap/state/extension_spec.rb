@@ -463,6 +463,25 @@ describe Remap::State::Extension do
     let(:index) { 1        }
     let(:value) { "value"  }
 
+    context "given a fatal_id" do
+      subject { state.set(fatal_id: id1) }
+
+      let(:id1) { :id1 }
+
+      context "when state has no previous fatal_id" do
+        its([:fatal_id]) { is_expected.to eq(id1) }
+        its([:fatal_ids]) { is_expected.to be_empty }
+      end
+
+      context "when state already have an id" do
+        let(:id2)   { :id2 }
+        let(:state) { defined!.set(fatal_id: id2) }
+
+        its([:fatal_id]) { is_expected.to eq(id1) }
+        its([:fatal_ids]) { is_expected.to eq([id2]) }
+      end
+    end
+
     context "given an id" do
       subject { state.set(id: id1) }
 
@@ -473,7 +492,7 @@ describe Remap::State::Extension do
         its([:ids]) { is_expected.to be_empty }
       end
 
-      context "when state already have an idea" do
+      context "when state already have an id" do
         let(:id2)   { :id2 }
         let(:state) { defined!.set(id: id2) }
 
