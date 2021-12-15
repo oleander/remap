@@ -6,6 +6,7 @@ module Remap
 
     class Block < Unit
       # @return [Array<Rule>]
+      attribute :backtrace, [String], min_size: 1
       attribute :rules, [Types::Rule]
 
       # Represents a non-empty define block with one or more rules
@@ -14,24 +15,30 @@ module Remap
       # @param state [State]
       #
       # @return [State]
-      def call(state, &error)
-        unless block_given?
-          raise ArgumentError, "Block#call(state, &error) requires a block"
-        end
+      def call(state)
+        s0 = state.except(:value)
 
         if rules.empty?
-          return state.except(:value)
+          return s0
         end
 
-        rules.reduce(state.except(:value)) do |s1, rule|
-          result = rule.call(state) do |failure|
-            return error[failure]
-          end
+        failure = catch_fatal do |fatal_id|
+          s1 = s0.set(fatal_id: fatal_id)
+          s4 = state.set(fatal_id: fatal_id)
 
-          s1.combine(result)
-        rescue Notice::Fatal => e
-          raise e.traced(rule.backtrace)
+          return catch_ignored do |id|
+            s2 = s1.set(id: id)
+
+            rules.reduce(s2) do |s3, rule|
+              s5 = s3
+              s6 = rule.call(s4)
+              s7 = s6.set(id: id)
+              s5.combine(s7)
+            end
+          end.remove_id.remove_fatal_id
         end
+
+        raise failure.exception(backtrace)
       end
     end
   end

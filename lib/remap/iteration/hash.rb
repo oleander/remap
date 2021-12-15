@@ -22,12 +22,9 @@ module Remap
       private
 
       def reduce(state, key, value, &block)
-        notice = catch :ignore do
-          other = block[value, key: key]
-          return state.combine(other.fmap { { key => _1 } })
-        end
-
-        state.set(notice: notice)
+        s0 = block[value, key: key]
+        s1 = s0.set(fatal_id: state.fatal_id, ids: state.ids)
+        state.combine(s1.fmap { { key => _1 } })
       end
 
       def init

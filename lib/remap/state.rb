@@ -31,9 +31,11 @@ module Remap
     # @return [Hash] A valid state
     def self.call(value, mapper: Dummy, options: EMPTY_HASH)
       {
+        fatal_ids: EMPTY_ARRAY,
         notices: EMPTY_ARRAY,
         path: EMPTY_ARRAY,
         options: options,
+        ids: EMPTY_ARRAY,
         mapper: mapper,
         values: value,
         value: value,

@@ -23,9 +23,9 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+    c.max_formatted_output_length = nil
   end
 
   config.example_status_persistence_file_path = ".rspec_status"
   config.order = :random
-  config.max_displayed_failure_line_count = 100
 end

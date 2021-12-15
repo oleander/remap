@@ -30,14 +30,8 @@ module Remap
         # @param state [State]
         #
         # @return [State]
-        def call(state, &error)
-          unless block_given?
-            raise ArgumentError, "map.call(state, &error) requires a block"
-          end
-
-          super
-        rescue Notice::Ignore => e
-          e.undefined(state)
+        def call(state)
+          catch { super(state.set(id: _1)).except(:id) }
         end
       end
     end

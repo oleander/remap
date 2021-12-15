@@ -4,7 +4,7 @@ describe Remap::Iteration::Array do
   using Remap::State::Extension
   subject(:iterator) { described_class.call(state: state, value: value) }
 
-  let(:state) { state!(value) }
+  let(:state) { state!(value, :with_fatal_id, id: :ignore) }
 
   context "given an empty array" do
     let(:value) { [] }
@@ -38,20 +38,16 @@ describe Remap::Iteration::Array do
     end
 
     context "when all values are rejected" do
-      subject(:result) do
-        iterator.call do
-          state.ignore!("Ignore!")
+      it_behaves_like "an ignored exception" do
+        subject(:result) do
+          iterator.call do
+            state.ignore!(reason)
+          end
         end
-      end
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              reason: "Ignore!"
-            )
-          )
-        )
+        let(:attributes) do
+          { reason: reason }
+        end
       end
     end
   end

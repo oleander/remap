@@ -5,6 +5,8 @@ module Remap
 
   # Constructs a {Rule} from the block passed to {Remap::Base.define}
   class Compiler < Proxy
+    extend Catchable
+    include Catchable
     # @return [Array<Rule>]
     param :rules, type: Types.Array(Rule)
 
@@ -29,7 +31,7 @@ module Remap
     #   rule.call(state, &error).fetch(:value) # => { name: "John", age: 50 }
     #
     # @return [Rule]
-    def self.call(&block)
+    def self.call(backtrace: caller, &block)
       unless block_given?
         return Rule::VOID
       end
@@ -38,7 +40,7 @@ module Remap
         compiler.instance_exec(&block)
       end.rules
 
-      Rule::Block.new(rules)
+      Rule::Block.new(backtrace: backtrace, rules: rules)
     end
 
     # Maps input path [input] to output path [to]
@@ -181,13 +183,15 @@ module Remap
         raise ArgumentError, "#embed does not take a block"
       end
 
-      embeding = rule(backtrace: backtrace).add do |state, &error|
-        mapper.call!(state.set(mapper: mapper)) do |failure|
-          next error[failure]
-        end.except(:mapper, :scope)
+      Types::Mapper[mapper] do
+        raise ArgumentError, "Argument to #embed must be a mapper, got #{mapper.class}"
       end
 
-      add embeding
+      result = rule(backtrace: backtrace).add do |s0|
+        build_embed(s0, mapper, backtrace)
+      end
+
+      add result
     end
 
     # Set a static value
@@ -228,6 +232,10 @@ module Remap
     def set(*path, to:, backtrace: caller)
       if block_given?
         raise ArgumentError, "#set does not take a block"
+      end
+
+      unless to.is_a?(Static)
+        raise ArgumentError, "Argument to #set must be a static value, got #{to.class}"
       end
 
       add rule(to: path, backtrace: backtrace).add { to.call(_1) }
@@ -344,6 +352,10 @@ module Remap
     def wrap(type, backtrace: caller, &block)
       unless block_given?
         raise ArgumentError, "#wrap requires a block"
+      end
+
+      unless type == :array
+        raise ArgumentError, "Argument to #wrap must equal :array, got [#{type}] (#{type.class})"
       end
 
       add rule(backtrace: backtrace, &block).then { Array.wrap(_1) }
@@ -526,7 +538,7 @@ module Remap
           input: path.flatten
         },
         backtrace: backtrace,
-        rule: call(&block)
+        rule: call(backtrace: backtrace, &block)
       })
     end
 
@@ -536,8 +548,23 @@ module Remap
           output: [to].flatten,
           input: path.flatten
         },
-        rule: call(&block)
+        rule: call(backtrace: backtrace, &block)
       })
+    end
+
+    def build_embed(s0, mapper, backtrace)
+      f0 = catch_fatal do |fatal_id|
+        s1 = s0.set(fatal_id: fatal_id)
+        s2 = s1.set(mapper: mapper)
+        old_mapper = s0.fetch(:mapper)
+
+        return mapper.call!(s2) do |f1|
+          s3 = s2.set(notices: f1.notices + f1.failures)
+          s3.return!
+        end.except(:scope).merge(mapper: old_mapper)
+      end
+
+      raise f0.exception(backtrace)
     end
   end
 end

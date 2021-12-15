@@ -20,7 +20,7 @@ describe Remap::Base do
     end
   end
 
-  context "when the embeded mapper has a fatal crash" do
+  context "when the embeded mapper contains missing field" do
     let(:input) { { cat: "Volvo" } }
 
     it "raises an exception" do

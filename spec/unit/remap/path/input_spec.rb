@@ -6,7 +6,7 @@ describe Remap::Path::Input do
   describe "#call" do
     subject(:path) { described_class.call(selectors) }
 
-    let(:state) { state!(input) }
+    let(:state) { state!(input, fatal_id: :fatal_id) }
 
     context "without selectors" do
       let(:input) { "value" }
@@ -33,15 +33,14 @@ describe Remap::Path::Input do
         let(:value) { "value" }
         let(:input) { { not: value } }
 
-        it "raises a fatal exception" do
-          expect { path.call(state, &error) }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                path: selectors,
-                value: input
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            path.call(state, &error)
+          end
+
+          let(:attributes) do
+            { value: input, path: selectors }
+          end
         end
       end
     end
@@ -86,14 +85,10 @@ describe Remap::Path::Input do
 
         let(:input) { 100_000 }
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Fatal).and(
-              having_attributes(
-                value: input
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: input }
+          end
         end
       end
     end
@@ -131,16 +126,14 @@ describe Remap::Path::Input do
       end
 
       context "when input is not an enumerable" do
+        subject(:result) { path.call(state, &error) }
+
         let(:input) { 100_000 }
 
-        it "raises a fatal exception" do
-          expect { path.call(state, &error) }.to raise_error(
-            an_instance_of(Remap::Notice::Fatal).and(
-              having_attributes(
-                value: input
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: input }
+          end
         end
       end
     end
@@ -165,15 +158,14 @@ describe Remap::Path::Input do
       context "when the key is not present" do
         let(:input) { [:one] }
 
-        it "raises an ignore exception" do
-          expect { path.call(state, &error) }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                path: [1],
-                value: input
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            path.call(state, &error)
+          end
+
+          let(:attributes) do
+            { path: [1], value: input }
+          end
         end
       end
     end

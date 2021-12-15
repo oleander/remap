@@ -42,29 +42,28 @@ module Remap
       # @return [State]
       #
       # @abstract
-      def call(state, &error)
-        unless block_given?
-          raise ArgumentError, "Map#call(state, &error) requires error handler block"
+      def call(state)
+        failure = catch_fatal do |fatal_id|
+          s0 = state.set(fatal_id: fatal_id)
+
+          s2 = path.input.call(s0) do |s1|
+            s2 = rule.call(s1)
+            callback(s2)
+          end
+
+          s3 = s2.then(&path.output)
+          s4 = s3.set(path: state.path)
+          s5 = s4.except(:key)
+
+          return s5.remove_fatal_id
         end
 
-        s1 = path.input.call(state) do |inner_state|
-          other_state = rule.call(inner_state) do |failure|
-            return error[failure]
-          end
-
-          callback(other_state) do |failure|
-            return error[failure]
-          end
-        end.then(&path.output)
-
-        s1.set(path: state.path).except(:key)
-      rescue Notice::Fatal => e
-        raise e.traced(backtrace)
+        raise failure.exception(backtrace)
       end
 
       # A post-processor method
       #
-      # @example Upcase mapped value
+      # @example Up-case mapped value
       #   state = Remap::State.call("Hello World")
       #   map = Remap::Rule::Map.call({})
       #   upcase = map.adjust(&:upcase)
@@ -198,16 +197,8 @@ module Remap
       end
 
       # @return [Proc]
-      def callback(state, &error)
-        unless block_given?
-          raise ArgumentError, "Map#callback(state, &error) requires error handler block"
-        end
-
-        fn.reduce(state) do |inner, fn|
-          fn[inner] do |failure|
-            return error[failure]
-          end
-        end
+      def callback(state)
+        fn.reduce(state) { |s1, f1| f1[s1] }
       end
     end
   end

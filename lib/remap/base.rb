@@ -106,7 +106,12 @@ module Remap
   class Base < Mapper
     include ActiveSupport::Configurable
     include Dry::Core::Constants
+    include Catchable
+
     using State::Extension
+    using Extensions::Hash
+    using Extensions::Object
+
     extend Operation
 
     with_options instance_accessor: true do |scope|
@@ -235,26 +240,31 @@ module Remap
     #   Mapper.call({name: "John"}).first_name # => "John"
     #
     # @return [void]
-    def self.define(target = Nothing, method: :new, strategy: :argument, &context)
+    # rubocop:disable Layout/LineLength
+    def self.define(target = Nothing, method: :new, strategy: :argument, backtrace: caller, &context)
       unless block_given?
         raise ArgumentError, "#{self}.define requires a block"
       end
 
       self.constructor = Constructor.call(method: method, strategy: strategy, target: target)
-      self.context = Compiler.call(&context)
+      self.context = Compiler.call(backtrace: backtrace, &context)
     end
+    # rubocop:enable Layout/LineLength
 
-    # Similar to {::call}, but takes a state
-    #
     # @param state [State]
     #
-    # @yield [Failure] if mapper fails
+    # @yield [Failure]
+    #   when a non-critical error occurs
+    # @yieldreturn T
     #
-    # @return [Result] if mapper succeeds
+    # @return [State, T]
+    #   when request is a success
+    # @raise [Remap::Error]
+    #   when a fatal error occurs
     #
     # @private
     def self.call!(state, &error)
-      new(state.options).call(state._.set(mapper: self), &error)
+      new(state.options).call(state, &error)
     end
 
     # Mappers state according to the mapper rules
@@ -266,26 +276,24 @@ module Remap
     # @return [State]
     #
     # @private
-    def call(state, &error)
-      unless block_given?
-        raise ArgumentError, "Base#call(state, &error) requires block"
+    def call(s0, &error)
+      s0._ do |reason|
+        raise ArgumentError, "Invalid state due to #{reason.formatted}"
       end
 
-      state.tap do |input|
-        validation.call(input, state.options).tap do |result|
+      s0.tap do |input|
+        validation.call(input, s0.options).tap do |result|
           unless result.success?
-            return error[state.failure(result.errors.to_h)]
+            return error[s0.failure(result.errors.to_h)]
           end
         end
       end
 
-      notice = catch :fatal do
-        return context.call(state) do |failure|
-          return error[failure]
-        end.then(&constructor)
+      s1 = catch_ignored do |id|
+        return context.call(s0.set(id: id)).then(&constructor).remove_id
       end
 
-      error[state.failure(notice)]
+      Failure.new(failures: s1.notices).then(&error)
     end
 
     private

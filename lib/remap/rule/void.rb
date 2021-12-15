@@ -19,9 +19,7 @@ module Remap
       #
       # @return [State<T>]
       def call(state)
-        state.bind do |value, inner_state|
-          inner_state.set(value)
-        end
+        state
       end
     end
   end

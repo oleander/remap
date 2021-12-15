@@ -14,7 +14,7 @@ RSpec.describe Remap::Constructor::Keyword do
       let(:state) { state!(:foo) }
 
       it "raises a fatal exception" do
-        expect { result }.to raise_error(an_instance_of(Remap::Notice::Ignore))
+        expect { result }.to raise_error(ArgumentError)
       end
     end
 

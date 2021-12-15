@@ -1,9 +1,63 @@
 # frozen_string_literal: true
 
+RSpec::Matchers.define_negated_matcher :have_no_key, :have_key
+
 describe Remap::State::Extension do
   using Remap::Extensions::Enumerable
   using Remap::Extensions::Object
   using described_class
+
+  describe "#ignore!" do
+    let(:state) { defined! }
+
+    context "when id exists" do
+      let(:id) { :id1 }
+
+      let(:state) { super().set(id: id) }
+
+      context "when no pre-existing id's exists" do
+        it "throws an error" do
+          expect { state.ignore!("a reason") }.to throw_symbol(
+            id, include(ids: be_empty).and(have_no_key(:id))
+          )
+        end
+      end
+
+      context "when pre-existing id's exists" do
+        let(:id1) { id }
+        let(:id2) { :id2 }
+        let(:id3) { :id3 }
+
+        let(:state) { super().merge(ids: [id2, id3]) }
+
+        it "throws an error" do
+          expect { state.ignore!("a reason") }.to throw_symbol(id1, include(ids: [id3], id: id2))
+        end
+      end
+    end
+  end
+
+  describe "#fatal!" do
+    let(:state) { defined! }
+
+    context "when fatal_id exists" do
+      let(:fatal_id) { :fatal_id1 }
+
+      let(:state) { super().set(fatal_id: fatal_id) }
+
+      it "throws the symbol" do
+        expect { state.fatal!("a reason") }.to throw_symbol(
+          fatal_id, an_instance_of(Remap::Failure)
+        )
+      end
+    end
+
+    context "when fatal_id does not" do
+      it "raises an argument error" do
+        expect { state.fatal!("a reason") }.to raise_error(ArgumentError)
+      end
+    end
+  end
 
   describe "#notice" do
     context "when state is undefined" do
@@ -78,6 +132,84 @@ describe Remap::State::Extension do
     end
   end
 
+  describe "#remove_id" do
+    subject(:result) { state.remove_id }
+
+    let(:state) { state! }
+
+    context "with id" do
+      let(:state) { super().set(id: :id1) }
+
+      context "when no ids exists" do
+        its([:ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(ids: [:id2]) }
+
+        its([:ids]) { is_expected.to be_empty }
+        its([:id]) { is_expected.to eq(:id2) }
+      end
+    end
+
+    context "without id" do
+      let(:state) { super() }
+
+      context "when no ids exists" do
+        its([:ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(ids: [:id2]) }
+
+        it "raises an error" do
+          expect { result }.to raise_error(ArgumentError)
+        end
+      end
+    end
+  end
+
+  describe "#remove_fatal_id" do
+    subject(:result) { state.remove_fatal_id }
+
+    let(:state) { state! }
+
+    context "with id" do
+      let(:state) { super().set(fatal_id: :id1) }
+
+      context "when no ids exists" do
+        its([:fatal_ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:fatal_id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(fatal_ids: [:id2]) }
+
+        its([:fatal_ids]) { is_expected.to be_empty }
+        its([:fatal_id]) { is_expected.to eq(:id2) }
+      end
+    end
+
+    context "without id" do
+      let(:state) { super() }
+
+      context "when no ids exists" do
+        its([:fatal_ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:fatal_id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(fatal_ids: [:id2]) }
+
+        it "raises an error" do
+          expect { result }.to raise_error(ArgumentError)
+        end
+      end
+    end
+  end
+
   describe "#combine" do
     subject(:result) { left.combine(right) }
 
@@ -99,6 +231,49 @@ describe Remap::State::Extension do
       end
     end
 
+    context "when left has an id" do
+      let(:left) { defined!(id: :left_id) }
+
+      context "when right has an id" do
+        let(:right) { defined!(id: :right_id) }
+
+        its([:id]) { is_expected.to eq(:right_id) }
+      end
+    end
+
+    context "when left has ids" do
+      let(:left) { defined!(ids: [:id]) }
+
+      context "when right has ids" do
+        let(:right) { defined!(ids: [:id]) }
+
+        its([:ids]) { is_expected.to eq([:id]) }
+      end
+    end
+
+    context "when ids differs in length" do
+      subject(:result) do
+        left.combine(right)
+      end
+
+      let(:left) { defined!(ids: [:left_id], fatal_id: :left_fatal_id) }
+      let(:right) { defined!(ids: [:right_id, :right_id2], fatal_id: :right_fatal_id) }
+
+      it "raises an argument error" do
+        expect { result }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "when left has fatal_id" do
+      let(:left) { defined!(fatal_id: :left_id) }
+
+      context "when right has ids" do
+        let(:right) { defined!(fatal_id: :right_id) }
+
+        its([:fatal_id]) { is_expected.to eq(:right_id) }
+      end
+    end
+
     context "when right is defined!" do
       let(:left) { defined!(:with_notices) }
 
@@ -111,17 +286,14 @@ describe Remap::State::Extension do
     end
 
     context "when different types" do
-      let(:left)  { defined!(10)     }
-      let(:right) { defined!(:hello) }
+      let(:left)  { defined!(10, fatal_id: :left_fatal_id) }
+      let(:right) { defined!(:hello, fatal_id: :right_fatal_id) }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Fatal).and(
-            having_attributes(
-              value: 10
-            )
-          )
-        )
+      it_behaves_like "a fatal exception" do
+        let(:fatal_id) { :right_fatal_id }
+        let(:attributes) do
+          { value: :hello, reason: include("merge") }
+        end
       end
     end
 
@@ -160,7 +332,8 @@ describe Remap::State::Extension do
 
     context "when state is a hash" do
       let(:input) { { key1: "value1", key2: "value2" } }
-      let(:state) { defined!(input) }
+      let(:id)    { :an_id }
+      let(:state) { defined!(input, :with_fatal_id, id: id) }
 
       context "when accessing value" do
         subject(:result) do
@@ -200,41 +373,34 @@ describe Remap::State::Extension do
           end
         end
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                reason: "Ignored!"
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          let(:attributes) do
+            { reason: "Ignored!" }
+          end
         end
       end
 
       context "when iterator ignores all of the elements" do
-        subject(:result) do
-          state.map do |element|
-            element.fmap do |_value, state|
-              state.ignore!("Ignored!")
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            state.map do |element|
+              element.fmap do |_value, state|
+                state.ignore!(reason)
+              end
             end
           end
-        end
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                reason: "Ignored!"
-              )
-            )
-          )
+          let(:attributes) do
+            { reason: reason }
+          end
         end
       end
     end
 
     context "when state contains an array" do
       let(:input) { ["value1", "value2"] }
-      let(:state) { defined!(input) }
+      let(:id)    { :an_id }
+      let(:state) { defined!(input, :with_fatal_id, id: id) }
 
       context "when accessing value" do
         subject(:result) do
@@ -273,127 +439,40 @@ describe Remap::State::Extension do
       end
 
       context "when iterator ignores some of the elements" do
-        subject(:result) do
-          state.map do |element|
-            element.fmap do |value, state|
-              case state.index
-              in 0
-                value.upcase
-              in 1
-                state.ignore!("notice!")
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            state.map do |element|
+              element.fmap do |value, state|
+                case state.index
+                in 0
+                  value.upcase
+                in 1
+                  state.ignore!(reason)
+                end
               end
             end
           end
-        end
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                reason: "notice!"
-              )
-            )
-          )
+          let(:attributes) do
+            { reason: reason }
+          end
         end
       end
 
       context "when iterator ignores all of the elements" do
-        subject(:result) do
-          state.map do |element|
-            element.fmap do |_, state|
-              state.ignore!("notice!")
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            state.map do |element|
+              element.fmap do |_, state|
+                state.ignore!(reason)
+              end
             end
           end
+
+          let(:attributes) do
+            { reason: reason }
+          end
         end
-
-        it "raises an ignore exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                reason: "notice!"
-              )
-            )
-          )
-        end
-      end
-    end
-  end
-
-  describe "#failure" do
-    subject { state.failure(reason) }
-
-    let(:state) { state!(value, path: path, notices: notices) }
-    let(:value)   { "value"                }
-    let(:notices) { build_list(:notice, 1) }
-
-    context "when state is without path" do
-      let(:path) { [] }
-
-      context "when reason is a string" do
-        let(:reason) { "reason" }
-
-        it { is_expected.to be_a(Remap::Failure) }
-        it { is_expected.to have(1).failures }
-        it { is_expected.to have(1).notices }
-
-        its(:failures) { is_expected.to include(have_attributes(reason: "reason", path: path)) }
-      end
-
-      context "when reason is an array" do
-        let(:reason) { ["reason1", "reason2"] }
-
-        it { is_expected.to have(2).failures }
-        it { is_expected.to have(1).notices }
-
-        its(:failures) { is_expected.to include(have_attributes(reason: "reason1", path: path)) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "reason2", path: path)) }
-      end
-
-      context "when reason is a hash" do
-        let(:reason) { { key1: ["error1", "error2"], key2: ["error3", "error4"] } }
-
-        it { is_expected.to have(4).failures }
-        it { is_expected.to have(1).notices }
-
-        its(:failures) { is_expected.to include(have_attributes(reason: "error1", path: [:key1])) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "error2", path: [:key1])) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "error3", path: [:key2])) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "error4", path: [:key2])) }
-      end
-    end
-
-    context "when state has path" do
-      let(:path) { [:a, :b] }
-
-      context "when reason is a string" do
-        let(:reason) { "reason" }
-
-        it { is_expected.to have(1).failures }
-        it { is_expected.to have(1).notices }
-
-        its(:failures) { is_expected.to include(have_attributes(reason: reason, path: path)) }
-      end
-
-      context "when reason is an array" do
-        let(:reason) { ["reason1", "reason2"] }
-
-        it { is_expected.to have(2).failures }
-        it { is_expected.to have(1).notices }
-
-        its(:failures) { is_expected.to include(have_attributes(reason: "reason1", path: path)) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "reason2", path: path)) }
-      end
-
-      context "when reason is a hash" do
-        let(:reason) { { key1: ["error1", "error2"], key2: ["error3", "error4"] } }
-
-        it { is_expected.to have(4).failures }
-        it { is_expected.to have(1).notices }
-
-        its(:failures) { is_expected.to include(have_attributes(reason: "error1", path: path + [:key1])) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "error2", path: path + [:key1])) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "error3", path: path + [:key2])) }
-        its(:failures) { is_expected.to include(have_attributes(reason: "error4", path: path + [:key2])) }
       end
     end
   end
@@ -416,6 +495,44 @@ describe Remap::State::Extension do
     let(:state) { defined! }
     let(:index) { 1        }
     let(:value) { "value"  }
+
+    context "given a fatal_id" do
+      subject { state.set(fatal_id: id1) }
+
+      let(:id1) { :id1 }
+
+      context "when state has no previous fatal_id" do
+        its([:fatal_id]) { is_expected.to eq(id1) }
+        its([:fatal_ids]) { is_expected.to be_empty }
+      end
+
+      context "when state already have an id" do
+        let(:id2)   { :id2 }
+        let(:state) { defined!.set(fatal_id: id2) }
+
+        its([:fatal_id]) { is_expected.to eq(id1) }
+        its([:fatal_ids]) { is_expected.to eq([id2]) }
+      end
+    end
+
+    context "given an id" do
+      subject { state.set(id: id1) }
+
+      let(:id1) { :id1 }
+
+      context "when state has no previous id" do
+        its([:id]) { is_expected.to eq(id1) }
+        its([:ids]) { is_expected.to be_empty }
+      end
+
+      context "when state already have an id" do
+        let(:id2)   { :id2 }
+        let(:state) { defined!.set(id: id2) }
+
+        its([:id]) { is_expected.to eq(id1) }
+        its([:ids]) { is_expected.to eq([id2]) }
+      end
+    end
 
     context "when given an index" do
       subject(:result) { state.set(value, index: index) }
@@ -552,16 +669,13 @@ describe Remap::State::Extension do
       end
 
       let(:value) { value! }
-      let(:state) { defined!(value) }
+      let(:id)    { symbol! }
+      let(:state) { defined!(value, id: id) }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              value: value
-            )
-          )
-        )
+      it_behaves_like "a fatal exception" do
+        let(:attributes) do
+          { value: value }
+        end
       end
     end
 
@@ -596,15 +710,10 @@ describe Remap::State::Extension do
         { path: [:key1], reason: "This is skipped!", value: value }
       end
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              path: [:key1],
-              value: "value"
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { path: [:key1], value: value }
+        end
       end
     end
 
@@ -631,14 +740,10 @@ describe Remap::State::Extension do
 
         let(:state) { defined! }
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                path: [:a]
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          let(:attributes) do
+            { path: [:a] }
+          end
         end
       end
     end
@@ -653,14 +758,10 @@ describe Remap::State::Extension do
       let(:value) { { key: "value" } }
       let(:state) { defined!(value)  }
 
-      it "raises a ignore exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              value: value
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { value: value }
+        end
       end
     end
 
@@ -674,14 +775,10 @@ describe Remap::State::Extension do
       let(:value) { [1, 2, 3] }
       let(:state) { defined!(value) }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              value: value
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { value: value }
+        end
       end
     end
   end
@@ -697,22 +794,18 @@ describe Remap::State::Extension do
 
     context "when options are passed" do
       subject(:result) do
-        state.fmap(key: key) do |&error|
-          error["message"]
+        state.fmap(key: key) do |state:|
+          state.ignore!("a reason")
         end
       end
 
       let(:key)   { :key                       }
       let(:state) { defined!(value!, path: []) }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              path: [:key]
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { path: [:key] }
+        end
       end
     end
 
@@ -724,25 +817,21 @@ describe Remap::State::Extension do
       end
     end
 
-    context "when error block is invoked" do
-      context "without pre-existing path" do
-        subject(:result) do
-          state.fmap do |_value, &error|
-            error[reason]
-          end
+    context "when #ignore! is invoked in block" do
+      subject(:result) do
+        state.fmap do |state:|
+          state.ignore!(reason)
         end
+      end
 
+      context "without path" do
         let(:state)  { defined! }
         let(:reason) { "reason" }
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Ignore).and(
-              having_attributes(
-                reason: reason
-              )
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          let(:attributes) do
+            { reason: reason }
+          end
         end
       end
 
@@ -757,37 +846,27 @@ describe Remap::State::Extension do
           let(:state) { defined!(1, path: [:key]) }
           let(:reason) { "reason" }
 
-          it "raises a fatal exception" do
-            expect { result }.to raise_error(
-              an_instance_of(Remap::Notice::Ignore).and(
-                having_attributes(
-                  path: [:key],
-                  reason: reason
-                )
-              )
-            )
+          it_behaves_like "an ignored exception" do
+            let(:attributes) do
+              { path: [:key], reason: reason }
+            end
           end
         end
 
         context "with key argument" do
           subject(:result) do
-            state.fmap(key: :key2) do |_value, &error|
-              error[reason]
+            state.fmap(key: :key2) do |state:|
+              state.ignore!(reason)
             end
           end
 
           let(:state) { defined!(1, path: [:key1]) }
           let(:reason) { "reason" }
 
-          it "raises a fatal exception" do
-            expect { result }.to raise_error(
-              an_instance_of(Remap::Notice::Ignore).and(
-                having_attributes(
-                  path: [:key1, :key2],
-                  reason: reason
-                )
-              )
-            )
+          it_behaves_like "an ignored exception" do
+            let(:attributes) do
+              { path: [:key1, :key2], reason: reason }
+            end
           end
         end
       end
@@ -817,8 +896,8 @@ describe Remap::State::Extension do
 
     context "when options are passed" do
       subject(:result) do
-        state.bind(key: key) do |_value, _state, &error|
-          error["error"]
+        state.bind(key: key) do |state:|
+          state.ignore!("my reason")
         end
       end
 
@@ -826,36 +905,27 @@ describe Remap::State::Extension do
       let(:value) { "value"         }
       let(:state) { defined!(value) }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              path: [:key],
-              value: value
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { path: [:key], value: value }
+        end
       end
     end
 
     context "when error block is invoked" do
       subject(:result) do
-        state.bind do |&error|
-          error[reason]
+        state.bind do |state:|
+          state.ignore!(reason)
         end
       end
 
       let(:state) { defined! }
       let(:reason) { "reason" }
 
-      it "raises a fatal exception" do
-        expect { result }.to raise_error(
-          an_instance_of(Remap::Notice::Ignore).and(
-            having_attributes(
-              reason: reason
-            )
-          )
-        )
+      it_behaves_like "an ignored exception" do
+        let(:attributes) do
+          { reason: reason }
+        end
       end
     end
   end

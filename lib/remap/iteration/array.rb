@@ -26,12 +26,9 @@ module Remap
       end
 
       def reduce(state, value, index, &block)
-        notice = catch :ignore do
-          other = block[value, index: index]
-          return state.combine(other.fmap { [_1] })
-        end
-
-        state.set(notice: notice)
+        s0 = block[value, index: index]
+        s1 = s0.set(fatal_id: state.fatal_id, ids: state.ids)
+        state.combine(s1.fmap { [_1] })
       end
     end
   end

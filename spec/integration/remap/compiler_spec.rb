@@ -103,8 +103,14 @@ describe Remap::Compiler do
       context "when path is not a match" do
         let(:input) { { person: { mismatch: "John" } } }
 
-        it "yields a failure" do
-          expect { |error| rule.call(state, &error) }.to yield_control
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            rule.call(state)
+          end
+
+          let(:attributes) do
+            { value: { mismatch: "John" }, path: [:person, :name] }
+          end
         end
       end
     end
@@ -125,8 +131,14 @@ describe Remap::Compiler do
       context "when path is not a match" do
         let(:input) { { mismatch: "John" } }
 
-        it "yields a failure" do
-          expect { |error| rule.call(state, &error) }.to yield_control
+        it_behaves_like "an ignored exception" do
+          subject(:result) do
+            rule.call(state)
+          end
+
+          let(:attributes) do
+            { value: { mismatch: "John" }, path: [:name] }
+          end
         end
       end
     end

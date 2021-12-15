@@ -257,7 +257,7 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 RSpec/AlignLeftLetBrace:
-  Enabled: true
+  Enabled: false
 
 RSpec/AlignRightLetBrace:
   Enabled: false
@@ -268,5 +268,5 @@ RSpec/RepeatedDescription:
 Performance/BlockGivenWithExplicitBlock:
   Enabled: false
 
-
-
+Naming/MethodParameterName:
+  Enabled: false

@@ -4,7 +4,7 @@ describe Remap::Iteration::Other do
   using Remap::State::Extension
 
   describe "#map" do
-    let(:state) { state!(value)                                    }
+    let(:state) { state!(value, fatal_id: :fatal) }
     let(:other) { described_class.call(state: state, value: value) }
 
     context "when called with a defined value" do
@@ -18,14 +18,10 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Fatal).and(
-              having_attributes(
-                value: value
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: value }
+          end
         end
       end
 
@@ -39,8 +35,10 @@ describe Remap::Iteration::Other do
         let(:value) { [1, 2, 3] }
         let(:output) { value.size }
 
-        it "raises an fatal exception" do
-          expect { result }.to raise_error(Remap::Notice::Fatal)
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: value }
+          end
         end
       end
     end

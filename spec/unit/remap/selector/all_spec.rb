@@ -14,7 +14,7 @@ describe Remap::Selector::All do
   describe "#call" do
     subject(:selector) { described_class.call({}) }
 
-    let(:state) { state!(input) }
+    let(:state) { state!(input, fatal_id: :fatal_id) }
 
     context "with block" do
       context "when enumerable" do
@@ -32,18 +32,14 @@ describe Remap::Selector::All do
       end
 
       context "when not enumerable" do
-        subject(:result) { selector.call(state, &:itself) }
+        subject(:result) { selector.call(state, &error) }
 
         let(:input) { 100 }
 
-        it "raises a fatal exception" do
-          expect { result }.to raise_error(
-            an_instance_of(Remap::Notice::Fatal).and(
-              having_attributes(
-                value: input
-              )
-            )
-          )
+        it_behaves_like "a fatal exception" do
+          let(:attributes) do
+            { value: input }
+          end
         end
       end
     end

@@ -2,6 +2,7 @@
 
 module Remap
   module State
+    # @api private
     module Extension
       using Extensions::Enumerable
       using Extensions::Object
@@ -54,7 +55,11 @@ module Remap
 
         # Throws :fatal containing a Notice
         def fatal!(...)
-          notice(...).fatal!
+          fatal_id = fetch(:fatal_id) do
+            raise ArgumentError, "Missing :fatal_id in %s" % formatted
+          end
+
+          throw fatal_id, Failure.new(failures: [notice(...)], notices: notices)
         end
 
         # Throws :warn containing a Notice
@@ -64,7 +69,7 @@ module Remap
 
         # Throws :ignore containing a Notice
         def ignore!(...)
-          notice(...).ignore!
+          set(notice: notice(...)).except(:value).return!
         end
 
         # Creates a notice containing the given message
@@ -88,7 +93,9 @@ module Remap
         # @return [self]
         def _(&block)
           unless block
-            return _ { raise ArgumentError, "Input: #{self} output: #{_1.formatted}" }
+            return _ do |reason|
+              raise ArgumentError, "[BUG] State: #{formatted} reason: #{reason.formatted}"
+            end
           end
 
           unless (result = Schema.call(self)).success?
@@ -98,11 +105,11 @@ module Remap
           self
         end
 
-        # Makes the state iterable
+        # Iterates over {#value}
         #
         # @yieldparam value [Any]
-        # @yieldoption key [Symbol]
-        # @yieldoption index [Integer]
+        # @yieldparam key [Symbol]
+        # @yieldparam index [Integer]
         #
         # @yieldreturn [State]
         #
@@ -131,7 +138,7 @@ module Remap
             in [:value, Array => list1, Array => list2]
               list1 + list2
             in [:value, left, right]
-              fatal!(
+              other.fatal!(
                 "Could not merge [%s] (%s) with [%s] (%s)",
                 left.formatted,
                 left.class,
@@ -140,10 +147,47 @@ module Remap
               )
             in [:notices, Array => n1, Array => n2]
               n1 + n2
+            in [:ids, i1, i2] if i1.all? { i2.include?(_1) }
+              i2
+            in [:ids, i1, i2] if i2.all? { i1.include?(_1) }
+              i1
+            in [:ids, i1, i2]
+              other.fatal!("Could not merge #ids [%s] (%s) with [%s] (%s)", i1, i1.class, i2,
+                           i2.class)
             in [Symbol, _, value]
               value
             end
-          end
+          end._
+        end
+
+        # @todo Merge with {#remove_fatal_id}
+        # @return [State]
+        def remove_id
+          case self
+          in { ids: [], id: }
+            except(:id)
+          in { ids:, id: }
+            merge(ids: ids[1...], id: ids[0])
+          in { ids: [] }
+            self
+          in { ids: }
+            raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
+          end._
+        end
+
+        # @todo Merge with {#remove_id}
+        # @return [State]
+        def remove_fatal_id
+          case self
+          in { fatal_ids: [], fatal_id: }
+            except(:fatal_id)
+          in { fatal_ids: ids, fatal_id: id }
+            merge(fatal_ids: ids[1...], fatal_id: ids[0])
+          in { fatal_ids: [] }
+            self
+          in { fatal_ids: }
+            raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
+          end._
         end
 
         # Creates a new state with params
@@ -168,6 +212,10 @@ module Remap
             merge(path: path + [index], element: value, index: index, value: value).set(**rest)
           in [{path:}, {index:, **rest}]
             merge(path: path + [index], index: index).set(**rest)
+          in [{ids:, id: old_id}, {id: new_id, **rest}]
+            merge(ids: [old_id] + ids, id: new_id).set(**rest)
+          in [{fatal_ids:, fatal_id: old_id}, {fatal_id: new_id, **rest}]
+            merge(fatal_ids: [old_id] + fatal_ids, fatal_id: new_id).set(**rest)
           else
             merge(options)
           end
@@ -185,8 +233,8 @@ module Remap
         #
         # @return [State<Y>]
         def fmap(**options, &block)
-          bind(**options) do |input, state, &error|
-            state.set(block[input, state, &error])
+          bind(**options) do |input, state:|
+            state.set(block[input, state, state: state])
           end
         end
 
@@ -203,28 +251,7 @@ module Remap
         # end
 
         def failure(reason = Undefined)
-          failures = case [path, reason]
-          in [_, Notice => notice]
-            [notice]
-          in [path, Array => reasons]
-            reasons.map do |inner_reason|
-              Notice.call(path: path, reason: inner_reason, **only(:value))
-            end
-          in [path, String => reason]
-            [Notice.call(path: path, reason: reason, **only(:value))]
-          in [path, Hash => errors]
-            errors.paths.flat_map do |sufix|
-              Array.wrap(errors.dig(*sufix)).map do |inner_reason|
-                Notice.call(
-                  reason: inner_reason,
-                  path: path + sufix,
-                  **only(:value)
-                )
-              end
-            end
-          end
-
-          Failure.new(failures: failures, notices: notices)
+          raise NotImplementedError, "Not implemented"
         end
 
         # Passes {#value} to block, if defined
@@ -242,12 +269,10 @@ module Remap
             raise ArgumentError, "State#bind requires a block"
           end
 
-          s = set(**options)
+          s1 = set(**options)
 
-          fetch(:value) { return s }.then do |value|
-            block[value, s] do |reason, **other|
-              return s.set(**other).ignore!(reason)
-            end
+          fetch(:value) { return s1 }.then do |value|
+            block[value, s1, state: s1]
           end
         end
 
@@ -259,11 +284,11 @@ module Remap
         #
         # @return [State<U>]
         def execute(&block)
-          bind do |value, &error|
-            result = context(value, &error).instance_exec(value, &block)
+          bind do |value|
+            result = context(value).instance_exec(value, &block)
 
             if result.equal?(Dry::Core::Constants::Undefined)
-              return error["Undefined returned, skipping!"]
+              ignore!("Undefined returned, skipping!")
             end
 
             set(result)
@@ -290,6 +315,21 @@ module Remap
           fetch(:path, EMPTY_ARRAY)
         end
 
+        # @return [Symbol]
+        def id
+          fetch(:id)
+        end
+
+        # @return [Array<Symbol>]
+        def ids
+          fetch(:ids)
+        end
+
+        # @return [Symbol]
+        def fatal_id
+          fetch(:fatal_id)
+        end
+
         # Represents options to a mapper
         #
         # @see Rule::Embed
@@ -303,7 +343,7 @@ module Remap
         #
         # @return [Hash]
         def to_hash
-          super.except(:options, :notices, :value)
+          super.except(:options, :notices, :value, :id, :ids, :fatal_id, :fatal_ids)
         end
 
         # @return [Any]
@@ -331,6 +371,48 @@ module Remap
           fetch(:notices)
         end
 
+        # Creates a failure from the current state
+        #
+        # @param reason [String, Hash, Undefined]
+        #
+        # @return [Failure]
+        def failure(reason = Undefined)
+          failures = case [path, reason]
+          in [_, Notice => notice]
+            [notice]
+          in [path, Array => reasons]
+            reasons.map do |inner_reason|
+              Notice.call(path: path, reason: inner_reason, **only(:value))
+            end
+          in [path, String => reason]
+            [Notice.call(path: path, reason: reason, **only(:value))]
+          in [path, Hash => errors]
+            errors.paths.flat_map do |sufix|
+              Array.wrap(errors.dig(*sufix)).map do |inner_reason|
+                Notice.call(
+                  reason: inner_reason,
+                  path: path + sufix,
+                  **only(:value)
+                )
+              end
+            end
+          end
+
+          Failure.new(failures: failures, notices: notices)
+        end
+
+        # @raise [ArgumentError]
+        #   when {#id} is not defined
+        #
+        # @private
+        def return!
+          id = fetch(:id) do
+            raise ArgumentError, "#id not defined for state [%s]" % [formatted]
+          end
+
+          throw id, remove_id
+        end
+
         private
 
         # Creates a context containing {options} and {self}
@@ -340,13 +422,13 @@ module Remap
         # @yieldparam reason [T]
         #
         # @return [Struct]
-        def context(value, context: self, &error)
-          ::Struct.new(*keys, *options.keys, :state, keyword_init: true) do
+        def context(value, context: self)
+          ::Struct.new(*except(:id).keys, *options.keys, :state, keyword_init: true) do
             define_method :method_missing do |name, *|
-              error["Method [#{name}] not defined"]
+              context.fatal!("Method [%s] not defined", name)
             end
 
-            define_method :skip! do |message = "Manual skip!"|
+            define_method(:skip!) do |message = "Manual skip!"|
               context.ignore!(message)
             end
           end.new(**to_hash, **options, value: value, state: self)
