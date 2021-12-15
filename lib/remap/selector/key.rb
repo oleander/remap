@@ -21,7 +21,7 @@ module Remap
 
       # Selects {#key} from state and passes it to block
       #
-      # @param outer_state [State<Hash<K, V>>]
+      # @param state [State<Hash<K, V>>]
       #
       # @yieldparam [State<V>]
       # @yieldreturn [State<U>]

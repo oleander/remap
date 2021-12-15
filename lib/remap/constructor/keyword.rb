@@ -26,8 +26,8 @@ module Remap
       # @param state [State]
       #
       # @return [State]
-      def call(s0)
-        super.fmap do |input, _s1|
+      def call(state)
+        super.fmap do |input|
           unless input.is_a?(Hash)
             raise ArgumentError, "Expected Hash, got #{input.class}"
           end

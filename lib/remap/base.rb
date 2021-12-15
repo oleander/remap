@@ -276,21 +276,21 @@ module Remap
     # @return [State]
     #
     # @private
-    def call(s0, &error)
-      s0._ do |reason|
+    def call(state, &error)
+      state._ do |reason|
         raise ArgumentError, "Invalid state due to #{reason.formatted}"
       end
 
-      s0.tap do |input|
-        validation.call(input, s0.options).tap do |result|
+      state.tap do |input|
+        validation.call(input, state.options).tap do |result|
           unless result.success?
-            return error[s0.failure(result.errors.to_h)]
+            return error[state.failure(result.errors.to_h)]
           end
         end
       end
 
       s1 = catch_ignored do |id|
-        return context.call(s0.set(id: id)).then(&constructor).remove_id
+        return context.call(state.set(id: id)).then(&constructor).remove_id
       end
 
       Failure.new(failures: s1.notices).then(&error)

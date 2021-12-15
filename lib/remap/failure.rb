@@ -27,7 +27,7 @@ module Remap
       new(failure)
     end
 
-    # @param [Array<String>] Backtrace from Kernel.caller
+    # @param backtrace [Array<String>] Backtrace from Kernel.caller
     #
     # @return [Failure::Error]
     def exception(backtrace)

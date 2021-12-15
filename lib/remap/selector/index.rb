@@ -24,7 +24,7 @@ module Remap
 
       # Selects the {#index}th element from state and passes it to block
       #
-      # @param outer_state [State<Array<T>>]
+      # @param state [State<Array<T>>]
       #
       # @yieldparam [State<T>]
       # @yieldreturn [State<U>]
