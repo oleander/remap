@@ -294,7 +294,7 @@ describe Remap::State::Extension do
     context "when state is a hash" do
       let(:input) { { key1: "value1", key2: "value2" } }
       let(:id)    { :an_id }
-      let(:state) { defined!(input, id: id) }
+      let(:state) { defined!(input, :with_fatal_id, id: id) }
 
       context "when accessing value" do
         subject(:result) do
@@ -334,12 +334,10 @@ describe Remap::State::Extension do
           end
         end
 
-        it "throws a symbol" do
-          expect { result }.to throw_symbol(
-            id, include(
-              notices: contain_exactly(having_attributes(reason: "Ignored!"))
-            )
-          )
+        it_behaves_like "an ignored exception" do
+          let(:attributes) do
+            { reason: "Ignored!" }
+          end
         end
       end
 

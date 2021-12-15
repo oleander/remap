@@ -6,7 +6,7 @@ describe Remap::Iteration::Hash do
 
   subject(:iterator) { described_class.call(state: state, value: value) }
 
-  let(:state) { state!(value, id: :ignore) }
+  let(:state) { state!(value, :with_fatal_id) }
 
   context "given an empty hash" do
     let(:value) { {} }
@@ -40,24 +40,16 @@ describe Remap::Iteration::Hash do
     end
 
     context "when all values are rejected" do
-      subject(:result) do
-        iterator.call do
-          state.ignore!("Ignore!")
+      it_behaves_like "an ignored exception" do
+        subject(:result) do
+          iterator.call do
+            state.ignore!("Ignore!")
+          end
         end
-      end
 
-      it "raises a fatal exception" do
-        expect { result }.to throw_symbol(
-          :ignore, include(
-            notices: contain_exactly(
-              an_instance_of(Remap::Notice).and(
-                having_attributes(
-                  reason: "Ignore!"
-                )
-              )
-            )
-          )
-        )
+        let(:attributes) do
+          { reason: "Ignore!" }
+        end
       end
     end
   end
