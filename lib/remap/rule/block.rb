@@ -24,14 +24,19 @@ module Remap
 
         failure = catch do |fatal_id|
           s1 = s0.set(fatal_id: fatal_id)
+          s4 = state.set(fatal_id: fatal_id)
 
           return catch do |id|
             s2 = s1.set(id: id)
 
             rules.reduce(s2) do |s3, rule|
-              s3.combine(rule.call(state))
+              s5 = s3.set(fatal_id: fatal_id)
+              s6 = rule.call(s4)
+              s7 = s6.set(fatal_id: fatal_id)
+              s8 = s7.set(id: id)
+              s5.combine(s8)
             end
-          end.except(:id, :fatal_id)
+          end.remove_id.except(:fatal_id)
         end
 
         raise failure.exception(backtrace)

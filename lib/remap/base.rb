@@ -281,7 +281,7 @@ module Remap
       end
 
       s1 = catch do |id|
-        return context.call(s0.set(id: id)).then(&constructor)
+        return context.call(s0.set(id: id)).then(&constructor).remove_id
       end
 
       Failure.new(failures: s1.notices).then(&error)

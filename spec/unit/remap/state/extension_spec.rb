@@ -132,6 +132,45 @@ describe Remap::State::Extension do
     end
   end
 
+  describe "#remove_id" do
+    subject(:result) { state.remove_id }
+
+    let(:state) { state! }
+
+    context "with id" do
+      let(:state) { super().set(id: :id1) }
+
+      context "when no ids exists" do
+        its([:ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(ids: [:id2]) }
+
+        its([:ids]) { is_expected.to be_empty }
+        its([:id]) { is_expected.to eq(:id2) }
+      end
+    end
+
+    context "without id" do
+      let(:state) { super() }
+
+      context "when no ids exists" do
+        its([:ids]) { is_expected.to be_empty }
+        it { is_expected.not_to have_key(:id) }
+      end
+
+      context "with ids" do
+        let(:state) { super().merge(ids: [:id2]) }
+
+        it "raises an error" do
+          expect { result }.to raise_error(ArgumentError)
+        end
+      end
+    end
+  end
+
   describe "#combine" do
     subject(:result) { left.combine(right) }
 
@@ -164,29 +203,25 @@ describe Remap::State::Extension do
     end
 
     context "when left has ids" do
-      let(:left) { defined!(ids: [:left_id]) }
+      let(:left) { defined!(ids: [:id]) }
 
       context "when right has ids" do
-        let(:right) { defined!(ids: [:right_id]) }
+        let(:right) { defined!(ids: [:id]) }
 
-        its([:ids]) { is_expected.to eq([:right_id]) }
+        its([:ids]) { is_expected.to eq([:id]) }
       end
     end
 
     context "when ids differs in length" do
+      subject(:result) do
+        left.combine(right)
+      end
+
       let(:left) { defined!(ids: [:left_id], fatal_id: :left_fatal_id) }
       let(:right) { defined!(ids: [:right_id, :right_id2], fatal_id: :right_fatal_id) }
 
-      it_behaves_like "a fatal exception" do
-        subject(:result) do
-          left.combine(right)
-        end
-
-        let(:fatal_id) { :right_fatal_id }
-
-        let(:attributes) do
-          { reason: include("merge") }
-        end
+      it "raises an argument error" do
+        expect { result }.to raise_error(ArgumentError)
       end
     end
 
@@ -330,7 +365,7 @@ describe Remap::State::Extension do
     context "when state contains an array" do
       let(:input) { ["value1", "value2"] }
       let(:id)    { :an_id }
-      let(:state) { defined!(input, id: id) }
+      let(:state) { defined!(input, :with_fatal_id, id: id) }
 
       context "when accessing value" do
         subject(:result) do

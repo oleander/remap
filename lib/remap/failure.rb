@@ -33,8 +33,12 @@ module Remap
       extend Dry::Initializer
 
       option :failure, type: Types.Instance(Failure)
-      delegate :inspect, :to_s, to: :failure
       delegate_missing_to :failure
+
+      def inspect
+        "#<%s %s>" % [self.class, to_hash.formatted]
+      end
+      alias to_s inspect
     end
 
     # @return [Error]

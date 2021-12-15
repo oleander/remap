@@ -155,13 +155,30 @@ module Remap
               )
             in [:notices, Array => n1, Array => n2]
               n1 + n2
-            in [:ids, Array => i1, Array => i2] unless i1.size == i2.size
-              other.fatal!("Could not merge [%s] (%s) with [%s] (%s) as they differ in length" % [
-                i1, i1.class, i2, i2.class
-              ])
+            in [:ids, i1, i2] if i1.all? { i2.include?(_1) }
+              i2
+            in [:ids, i1, i2] if i2.all? { i1.include?(_1) }
+              i1
+            in [:ids, i1, i2]
+              # TODO: should use fatal!
+              raise ArgumentError,
+                    "Could not merge #ids [%s] (%s) with [%s] (%s)" % [i1, i1.class, i2, i2.class]
             in [Symbol, _, value]
               value
             end
+          end
+        end
+
+        def remove_id
+          case self
+          in { ids: [], id: }
+            except(:id)
+          in { ids:, id: }
+            merge(ids: ids[1...], id: ids[0])
+          in { ids: [] }
+            self
+          in { ids: }
+            raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
           end
         end
 
@@ -290,6 +307,10 @@ module Remap
 
         def id
           fetch(:id)
+        end
+
+        def ids
+          fetch(:ids)
         end
 
         def fatal_id

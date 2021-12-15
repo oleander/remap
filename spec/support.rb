@@ -54,8 +54,8 @@ module Support
   end
 
   # @return [Hash]
-  def state!(value = value!, input: value, **options)
-    build(:defined, value: value, input: input, **options)
+  def state!(value = value!, *traits, input: value, **options)
+    build(:defined, *traits, value: value, input: input, **options)
   end
 
   # @return [Array<Key>]

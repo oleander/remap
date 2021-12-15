@@ -12,6 +12,8 @@ FactoryBot.define do
       FactoryBot.generate(:key)
     end
   end
+  sequence(:symbol) { |n| :"symbol_#{n}" }
+
   sequence(:integer, aliases: [:index]) { Faker::Number.number(digits: 2) }
   sequence(:key) { "key_#{Faker::Lorem.word.underscore}".to_sym }
   sequence(:value, aliases: [:values, :input]) { |n| "value#{n}" }
@@ -97,6 +99,10 @@ FactoryBot.define do
 
     trait :with_path do
       path { [generate(:path)] }
+    end
+
+    trait :with_fatal_id do
+      fatal_id { [generate(:symbol), "fatal_id"].join("_").to_sym }
     end
   end
 end
