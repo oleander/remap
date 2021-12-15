@@ -28,5 +28,4 @@ RSpec.configure do |config|
 
   config.example_status_persistence_file_path = ".rspec_status"
   config.order = :random
-  config.max_displayed_failure_line_count = nil
 end
