@@ -2,6 +2,7 @@
 
 module Remap
   using State::Extension
+  using Extensions::Hash
 
   # Class interface for {Remap::Base} and instance interface for {Mapper}
   module Operation
@@ -31,10 +32,13 @@ module Remap
         return error[failure]
       end
 
-      s1.fetch(:value) do
-        notice = s1.notice("No mapped data")
-
-        Failure.new(notices: s1.notices, failures: [notice]).then(&error)
+      case s1
+      in { value: value }
+        value
+      in { notices: [] }
+        error[s1.failure("No data could be mapped")]
+      in { notices: }
+        error[Failure.new(failures: notices)]
       end
     end
   end
