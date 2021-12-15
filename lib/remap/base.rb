@@ -107,7 +107,7 @@ module Remap
     include ActiveSupport::Configurable
     include Dry::Core::Constants
 
-    extend Operation
+    extend Remap::Operation
     include Catchable
 
     using State::Extension
