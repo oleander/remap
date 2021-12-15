@@ -4,7 +4,7 @@ module Remap
   class Mapper
     # @abstract
     class Binary < self
-      include Operation
+      include API
 
       attribute :left, Types::Mapper
       attribute :right, Types::Mapper

@@ -19,6 +19,7 @@ module Remap
   loader = Zeitwerk::Loader.for_gem
   loader.collapse("#{__dir__}/remap/mapper/support")
   loader.setup
+  loader.inflector.inflect "api" => "API"
   loader.eager_load
 
   include ClassInterface
