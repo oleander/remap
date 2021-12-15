@@ -3,6 +3,8 @@
 module Remap
   class Rule < Dry::Interface
     using Extensions::Hash
+    using Extensions::Array
+    using Extensions::Object
     include Catchable
     defines :requirement
     requirement Types::Any
@@ -22,20 +24,7 @@ module Remap
     end
     alias to_s inspect
 
-    using Module.new {
-      refine Object do
-        def to_hash
-          self
-        end
-      end
-
-      refine Array do
-        def to_hash
-          map(&:to_hash)
-        end
-      end
-    }
-
+    # @return [Hash]
     def to_hash
       attributes.transform_values(&:to_hash).except(:backtrace)
     end

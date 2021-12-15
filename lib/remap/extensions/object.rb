@@ -4,6 +4,11 @@ module Remap
   module Extensions
     module Object
       refine ::Object do
+        # @return [Any]
+        def to_hash
+          self
+        end
+
         # Fallback validation method
         #
         # @yield if block is provided
@@ -43,6 +48,7 @@ module Remap
         end
         alias_method :fetch, :get
 
+        # return [Any]
         def formatted
           self
         end
