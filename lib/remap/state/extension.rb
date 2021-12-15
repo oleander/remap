@@ -2,6 +2,7 @@
 
 module Remap
   module State
+    # @api private
     module Extension
       using Extensions::Enumerable
       using Extensions::Object
@@ -313,14 +314,17 @@ module Remap
           fetch(:path, EMPTY_ARRAY)
         end
 
+        # @return [Symbol]
         def id
           fetch(:id)
         end
 
+        # @return [Array<Symbol>]
         def ids
           fetch(:ids)
         end
 
+        # @return [Symbol]
         def fatal_id
           fetch(:fatal_id)
         end
