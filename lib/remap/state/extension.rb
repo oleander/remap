@@ -71,7 +71,6 @@ module Remap
           set(notice: notice(...)).except(:value).return!
         end
 
-
         # Creates a notice containing the given message
         #
         # @param template [String]
@@ -426,8 +425,6 @@ module Remap
             end
           end.new(**to_hash, **options, value: value, state: self)
         end
-
-
       end
     end
   end
