@@ -181,6 +181,10 @@ module Remap
         raise ArgumentError, "#embed does not take a block"
       end
 
+      Types::Mapper[mapper] do
+        raise ArgumentError, "Argument to #embed must be a mapper, got #{mapper.class}"
+      end
+
       r = rule(backtrace: backtrace).add do |s0|
         _embed(s0, mapper, backtrace)
       end
@@ -240,6 +244,10 @@ module Remap
     def set(*path, to:, backtrace: caller)
       if block_given?
         raise ArgumentError, "#set does not take a block"
+      end
+
+      unless to.is_a?(Static)
+        raise ArgumentError, "Argument to #set must be a static value, got #{to.class}"
       end
 
       add rule(to: path, backtrace: backtrace).add { to.call(_1) }
