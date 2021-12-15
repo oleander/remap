@@ -29,7 +29,7 @@ module Remap
       def call(s0)
         super.fmap do |input, _s1|
           unless input.is_a?(Hash)
-            raise Error, "Expected Hash, got #{input.class}"
+            raise ArgumentError, "Expected Hash, got #{input.class}"
           end
 
           target.public_send(id, **input)

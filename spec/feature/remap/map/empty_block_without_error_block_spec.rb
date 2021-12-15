@@ -16,6 +16,6 @@ describe Remap::Base do
   end
 
   it "raises error" do
-    expect { mapper.call(input) }.to raise_error(Remap::Error)
+    expect { mapper.call(input) }.to raise_error(Remap::Failure::Error)
   end
 end

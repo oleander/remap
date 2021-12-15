@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module Remap
-  using Extensions::Hash
-
   class Failure < Dry::Concrete
     attribute :failures, Types.Array(Types::Notice), min_size: 1
     attribute? :notices, Types.Array(Types::Notice), default: EMPTY_ARRAY
@@ -29,19 +27,9 @@ module Remap
       new(failure)
     end
 
-    class Error < Error
-      extend Dry::Initializer
-
-      option :failure, type: Types.Instance(Failure)
-      delegate_missing_to :failure
-
-      def inspect
-        "#<%s %s>" % [self.class, to_hash.formatted]
-      end
-      alias to_s inspect
-    end
-
-    # @return [Error]
+    # @param [Array<String>] Backtrace from Kernel.caller
+    #
+    # @return [Failure::Error]
     def exception(backtrace)
       e = Error.new(failure: self)
       e.set_backtrace(backtrace)

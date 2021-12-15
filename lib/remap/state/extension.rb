@@ -179,8 +179,6 @@ module Remap
             self
           in { ids: }
             raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
-          else
-            binding.pry
           end
         end
 

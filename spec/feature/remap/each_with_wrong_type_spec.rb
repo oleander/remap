@@ -17,6 +17,6 @@ describe Remap::Base do
   end
 
   it "invokes block with failure" do
-    expect { mapper.call(input, &error) }.to raise_error(Remap::Error)
+    expect { mapper.call(input, &error) }.to raise_error(Remap::Failure::Error)
   end
 end
