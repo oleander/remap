@@ -122,7 +122,30 @@ module Remap
 
     schema schema.strict(false)
 
-    extend Operation
+    # extend Operation
+
+    def self.call(input, backtrace: caller, **options, &error)
+      unless block_given?
+        return call(input, **options) do |failure|
+          raise failure.exception(backtrace)
+        end
+      end
+
+      s0 = State.call(input, options: options, mapper: self)._
+
+      s1 = call!(s0) do |failure|
+        return error[failure]
+      end
+
+      case s1
+      in { value: value }
+        value
+      in { notices: [] }
+        error[s1.failure("No data could be mapped")]
+      in { notices: }
+        error[Failure.new(failures: notices)]
+      end
+    end
 
     # Defines a schema for the mapper
     # If the schema fail, the mapper will fail
