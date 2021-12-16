@@ -56,8 +56,8 @@ describe Remap::Base do
       let(:mapper) do
         mapper! do
           define do
-            map.then do
-              skip!
+            map.then do |&error|
+              error["my reason"]
             end
           end
         end
@@ -74,7 +74,7 @@ describe Remap::Base do
       let(:mapper) do
         mapper! do
           define do
-            map(:a).then { skip!("A problem") }
+            map(:a).then { |&error| error["A problem"] }
           end
         end
       end

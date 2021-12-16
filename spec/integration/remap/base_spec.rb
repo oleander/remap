@@ -216,7 +216,7 @@ describe Remap::Base do
           option :id
 
           define do
-            map.adjust { id }
+            map.adjust { |id:| id }
           end
         end
       end

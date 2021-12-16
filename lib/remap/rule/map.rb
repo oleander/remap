@@ -117,7 +117,7 @@ module Remap
       # Keeps map, only if block is true
       #
       # @example Keep if value contains "A"
-      #   map = Remap::Rule::Map::Optional.call(backtrace: caller).if do
+      #   map = Remap::Rule::Map::Optional.call(backtrace: caller).if do |value|
       #     value.include?("A")
       #   end
       #
@@ -145,7 +145,7 @@ module Remap
       #
 
       # @example Keep unless value contains "A"
-      #   map = Remap::Rule::Map::Optional.new(backtrace: caller).if_not do
+      #   map = Remap::Rule::Map::Optional.new(backtrace: caller).if_not do |value|
       #     value.include?("A")
       #   end
       #

@@ -9,7 +9,7 @@ describe Remap::Base do
           to(:object, :costs) do
             map [:financing_plan, :objects_costs] do
               each do
-                map(:building).if do
+                map(:building).if do |input:|
                   input.dig(:offer, :reason) == "PURCHASE"
                 end
               end
@@ -20,7 +20,7 @@ describe Remap::Base do
             to(:of_legal_age) do
               map [:applicants] do
                 each do
-                  map(:birth_date).then do
+                  map(:birth_date).then do |value|
                     (2020 - ::Time.parse(value).to_date.year) >= 18
                   end
                 end
@@ -32,7 +32,7 @@ describe Remap::Base do
             end
 
             to(:income) do
-              map(:financial_data, :incomes).then do
+              map(:financial_data, :incomes).then do |value|
                 value.select { |v| v.fetch(:label).include?("Antragsteller") }
                   .map { |v| v.fetch(:value) }
                   .collect

@@ -6,7 +6,7 @@ describe Remap::Base do
       mapper! do
         define do
           each do
-            map?.if do
+            map?.if do |value|
               value.include?("A")
             end
           end

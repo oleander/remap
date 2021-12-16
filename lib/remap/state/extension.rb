@@ -292,7 +292,21 @@ module Remap
           bind do |value|
             result = catch :done do
               tail_path = catch :ignore do
-                throw :done, context(value).instance_exec(value, &block)
+                names = block.parameters.reduce([]) do |acc, (type, name)|
+                  case type
+                  in :keyreq
+                    acc + [name]
+                  else
+                    acc
+                  end
+                end
+
+                r = Proc.new(&block).call(value, **only(*names), **options.only(*names)) do |reason|
+                  ignore!(reason)
+                end
+                throw :done, r
+              rescue NameError => e
+                fatal!(e.message)
               rescue KeyError => e
                 [e.key]
               rescue IndexError
@@ -427,27 +441,6 @@ module Remap
           end
 
           throw id, remove_id
-        end
-
-        private
-
-        # Creates a context containing {options} and {self}
-        #
-        # @param value [Any]
-        #
-        # @yieldparam reason [T]
-        #
-        # @return [Struct]
-        def context(value, context: self)
-          ::Struct.new(*except(:id).keys, *options.keys, :state, keyword_init: true) do
-            define_method :method_missing do |name, *|
-              context.fatal!("Method [%s] not defined", name)
-            end
-
-            define_method(:skip!) do |message = "Manual skip!"|
-              context.ignore!(message)
-            end
-          end.new(**to_hash, **options, value: value, state: self)
         end
       end
     end

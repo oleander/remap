@@ -8,11 +8,11 @@ describe Remap::Base do
     let(:mapper) do
       mapper! do
         define do
-          to(:exists).then do
+          to(:exists).then do |value|
             value.get(:a, :b, 1)
           end
 
-          to?(:missing).then do
+          to?(:missing).then do |value|
             value.get(:a, :e, 1)
           end
         end

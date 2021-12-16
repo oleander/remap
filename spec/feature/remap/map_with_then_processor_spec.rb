@@ -8,7 +8,7 @@ describe Remap::Base do
     let(:mapper) do
       mapper! do
         define do
-          map.then { "#{value}!" }
+          map.then { "#{_1}!" }
         end
       end
     end

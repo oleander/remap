@@ -640,14 +640,6 @@ describe Remap::State::Extension do
       it { is_expected.to contain(2) }
     end
 
-    context "when options are avalible" do
-      subject { state.execute { name } }
-
-      let(:state) { defined!(1, name: "Linus") }
-
-      it { is_expected.to contain("Linus") }
-    end
-
     context "when a state is not found" do
       subject(:result) do
         state.execute do
@@ -668,12 +660,72 @@ describe Remap::State::Extension do
 
     context "when #values is accessed" do
       subject(:result) do
-        state.execute do
+        state.execute do |values:, input:|
           values == input
         end
       end
 
       let(:state) { state! }
+
+      it { is_expected.to contain(true) }
+    end
+
+    context "when #index is accessed" do
+      subject(:result) do
+        state.execute do |index:|
+          index
+        end
+      end
+
+      let(:state) { state!(index: 10) }
+
+      it { is_expected.to contain(10) }
+    end
+
+    context "when #key is accessed" do
+      subject(:result) do
+        state.execute do |key:|
+          key
+        end
+      end
+
+      let(:state) { state!(key: :a_key) }
+
+      it { is_expected.to contain(:a_key) }
+    end
+
+    context "when #element is accessed" do
+      subject(:result) do
+        state.execute do |value, element:|
+          value == element
+        end
+      end
+
+      let(:state) { state!.set(value!, index: 10) }
+
+      it { is_expected.to contain(true) }
+    end
+
+    context "when #mapper is accessed" do
+      subject(:result) do
+        state.execute do |_value, mapper:|
+          mapper.is_a?(Class)
+        end
+      end
+
+      let(:state) { state! }
+
+      it { is_expected.to contain(true) }
+    end
+
+    context "when an option is accessed" do
+      subject(:result) do
+        state.execute do |_value, name:|
+          name == "Linus"
+        end
+      end
+
+      let(:state) { state!(options: { name: "Linus" }) }
 
       it { is_expected.to contain(true) }
     end
@@ -686,9 +738,9 @@ describe Remap::State::Extension do
       end
     end
 
-    context "when skip! is called" do
+    context "when error block is called" do
       subject(:result) do
-        state.execute { skip!("This is skipped!") }
+        state.execute { |&error| error["This is skipped!"] }
       end
 
       let(:value) { "value" }
@@ -720,7 +772,7 @@ describe Remap::State::Extension do
 
       context "when value does not exists" do
         subject(:result) do
-          state.execute do
+          state.execute do |value|
             value.get(:a, :x)
           end
         end
@@ -737,7 +789,7 @@ describe Remap::State::Extension do
 
     context "when KeyError is raised" do
       subject(:result) do
-        state.execute do
+        state.execute do |input:|
           input.fetch(:does_not_exist)
         end
       end

@@ -34,33 +34,33 @@ module Remap
   #   Mapper.call({}) # => { api_key: "ABC-123" }
   #
   # @example Maps ["A", "B", "C"] to ["A", "C"]
-  #   class Mapper < Remap::Base
+  #   class IfNotMapper < Remap::Base
   #     define do
   #       each do
-  #         map?.if_not do
+  #         map?.if_not do |value|
   #           value.include?("B")
   #         end
   #       end
   #     end
   #   end
   #
-  #   Mapper.call(["A", "B", "C"]) # => ["A", "C"]
+  #   IfNotMapper.call(["A", "B", "C"]) # => ["A", "C"]
   #
   # @example Maps ["A", "B", "C"] to ["B"]
-  #   class Mapper < Remap::Base
+  #   class IfMapper < Remap::Base
   #     define do
   #       each do
-  #         map?.if do
+  #         map?.if do |value|
   #           value.include?("B")
   #         end
   #       end
   #     end
   #   end
   #
-  #   Mapper.call(["A", "B", "C"]) # => ["B"]
+  #   IfMapper.call(["A", "B", "C"]) # => ["B"]
   #
   # @example Maps { a: { b: "A" } } to "A"
-  #   class Mapper < Remap::Base
+  #   class EnumMapper < Remap::Base
   #     define do
   #       map(:a, :b).enum do
   #         value "A", "B"
@@ -68,11 +68,11 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call({ a: { b: "A" } }) # => "A"
-  #   Mapper.call({ a: { b: "B" } }) # => "B"
+  #   EnumMapper.call({ a: { b: "A" } }) # => "A"
+  #   EnumMapper.call({ a: { b: "B" } }) # => "B"
   #
   # @example Map { people: [{ name: "John" }] } to { names: ["John"] }
-  #   class Mapper < Remap::Base
+  #   class PeopleMapper < Remap::Base
   #     define do
   #       map :people, to: :names do
   #         each do
@@ -82,12 +82,12 @@ module Remap
   #     end
   #   end
   #
-  #   Mapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
+  #   PeopleMapper.call({ people: [{ name: "John" }] }) # => { names: ["John"] }
   #
   # @example Map "Hello" to "Hello!"
   #   class HelloMapper < Remap::Base
   #     define do
-  #       map.adjust do
+  #       map.adjust do |value|
   #         "#{value}!"
   #       end
   #     end

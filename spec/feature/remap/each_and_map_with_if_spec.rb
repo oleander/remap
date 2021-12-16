@@ -8,7 +8,7 @@ describe Remap::Base do
           to :drive do
             map :people do
               each do
-                map?(:name).if do
+                map?(:name).if do |element:|
                   element.fetch(:age) > 18
                 end
               end
@@ -18,7 +18,7 @@ describe Remap::Base do
           to :retire do
             map :people do
               each do
-                map?(:name).if_not do
+                map?(:name).if_not do |element:|
                   element.fetch(:age) < 65
                 end
               end

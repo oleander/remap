@@ -152,7 +152,7 @@ describe Remap::Rule::Map do
     context "when #fetch is called" do
       context "when given a hash" do
         before do
-          map.adjust do
+          map.adjust do |value|
             value.fetch(:key)
           end
         end
@@ -174,7 +174,7 @@ describe Remap::Rule::Map do
 
       context "when given an array" do
         before do
-          map.adjust do
+          map.adjust do |value|
             value.fetch(1)
           end
         end
@@ -194,7 +194,7 @@ describe Remap::Rule::Map do
 
       context "when caller does not respond to #fetch" do
         before do
-          map.adjust do
+          map.adjust do |value|
             value.fetch(1)
           end
         end
@@ -208,8 +208,8 @@ describe Remap::Rule::Map do
     context "when skipping a mapping skip!" do
       context "without reason" do
         before do
-          map.adjust do
-            skip!
+          map.adjust do |&error|
+            error["my reason"]
           end
         end
 
@@ -218,8 +218,8 @@ describe Remap::Rule::Map do
 
       context "with reason" do
         before do
-          map.adjust do
-            skip!("nope")
+          map.adjust do |&error|
+            error["my reason"]
           end
         end
 
