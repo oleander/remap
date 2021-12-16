@@ -31,7 +31,7 @@ module Remap
         #
         # @return [State]
         def call(state)
-          catch { super(state.set(id: _1)).except(:id) }
+          catch_ignored { super(state.set(id: _1)).remove_id }
         end
       end
     end

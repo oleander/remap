@@ -18,6 +18,7 @@ module Remap
     Rule       = Interface(:call) | Instance(Proc)
     Key        = Interface(:hash)
     Notice     = Instance(Remap::Notice)
+    ID         = String | Symbol
 
     # Validates a state according to State::Schema
     State = Hash.constructor do |input, type, &error|
