@@ -5,7 +5,7 @@ module Support
   include Remap
 
   def error
-    -> failure { raise failure.exception }
+    -> failure { raise failure.exception(caller) }
   end
 
   # @return [Remap::Rule::Void]

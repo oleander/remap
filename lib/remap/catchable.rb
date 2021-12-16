@@ -1,21 +1,42 @@
 # frozen_string_literal: true
 
 module Remap
+  # @api private
   module Catchable
-    # @yieldparam id [Symbol]
-    # @yieldreturn [T]
+    using State::Extension
+
+    # @param state [State]
     #
-    # @return [T]
-    def catch_ignored(&block)
-      catch(to_id(:ignored), &block)
+    # @yieldparam state [State]
+    # @yieldparam id [Symbol, String]
+    # @yieldreturn [State<T>]
+    #
+    # @return [State<T>]
+    def catch_ignored(state, &block)
+      id = to_id(:ignored)
+
+      catch(id) do
+        block[state.set(id: id), id: id].remove_id
+      end
     end
 
-    # @yieldparam id [Symbol]
-    # @yieldreturn [T]
+    # @param state [State]
+    # @param backtrace [Array<String>]
     #
-    # @return [T]
-    def catch_fatal(&block)
-      catch(to_id(:fatal), &block)
+    # @yieldparam state [State]
+    # @yieldparam id [Symbol, String]
+    # @yieldreturn [State<T>]
+    #
+    # @return [State<T>]
+    # @raise [Failure::Error]
+    def catch_fatal(state, backtrace, &block)
+      id = to_id(:fatal)
+
+      failure = catch(id) do
+        return block[state.set(fatal_id: id), fatal_id: id].remove_fatal_id
+      end
+
+      raise failure.exception(backtrace)
     end
 
     private

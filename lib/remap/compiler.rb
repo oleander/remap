@@ -554,8 +554,7 @@ module Remap
     end
 
     def build_embed(s0, mapper, backtrace)
-      f0 = catch_fatal do |fatal_id|
-        s1 = s0.set(fatal_id: fatal_id)
+      catch_fatal(s0, backtrace) do |s1|
         s2 = s1.set(mapper: mapper)
         old_mapper = s0.fetch(:mapper)
 
@@ -564,8 +563,6 @@ module Remap
           s3.return!
         end.except(:scope).merge(mapper: old_mapper)
       end
-
-      raise f0.exception(backtrace)
     end
   end
 end

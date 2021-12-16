@@ -10,22 +10,16 @@ module Remap
 
         # @see Map#call
         def call(state)
-          failure = catch_fatal do |fatal_id|
-            s0 = state.set(fatal_id: fatal_id)
-
+          catch_fatal(state, backtrace) do |s0|
             s2 = path.input.call(s0) do |s1|
-              s2 = rule.call(s1)
-              callback(s2)
+              callback(rule.call(s1))
             end
 
             s3 = s2.then(&path.output)
             s4 = s3.set(path: state.path)
-            s5 = s4.except(:key)
 
-            return s5.remove_fatal_id
+            s4.except(:key)
           end
-
-          raise failure.exception(backtrace)
         end
       end
     end

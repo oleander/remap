@@ -305,11 +305,11 @@ module Remap
         end
       end
 
-      s1 = catch_ignored do |id|
-        return context.call(state.set(id: id)).then(&constructor).remove_id
+      s1 = catch_ignored(state) do |s0|
+        return context.call(s0).then(&constructor).remove_id
       end
 
-      Failure.new(failures: s1.notices).then(&error)
+      error[s1.failure]
     end
 
     private

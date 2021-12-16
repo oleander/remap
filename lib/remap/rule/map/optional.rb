@@ -5,6 +5,7 @@ module Remap
     class Map
       using State::Extension
 
+      # @api private
       class Optional < Required
         # Represents an optional mapping rule
         # When the mapping fails, the value is ignored
@@ -22,14 +23,14 @@ module Remap
         #   })
         #
         #   output = map.call(state) do |failure|
-        #     raise failure.exeception
+        #     raise failure.exception(caller)
         #   end
         #
         #   output.fetch(:value) # => { nickname: "John" }
         #
         # @see Map#call
         def call(state)
-          catch_ignored { super(state.set(id: _1)).remove_id }
+          catch_ignored(state) { super(_1) }
         end
       end
     end

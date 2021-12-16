@@ -16,29 +16,23 @@ module Remap
       #
       # @return [State]
       def call(state)
-        s0 = state.except(:value)
+        init = state.except(:value)
 
         if rules.empty?
-          return s0
+          return init
         end
 
-        failure = catch_fatal do |fatal_id|
-          s1 = s0.set(fatal_id: fatal_id)
-          s4 = state.set(fatal_id: fatal_id)
+        catch_fatal(init, backtrace) do |s1, fatal_id:|
+          s2 = state.set(fatal_id: fatal_id)
 
-          return catch_ignored do |id|
-            s2 = s1.set(id: id)
-
-            rules.reduce(s2) do |s3, rule|
-              s5 = s3
-              s6 = rule.call(s4)
-              s7 = s6.set(id: id)
-              s5.combine(s7)
+          catch_ignored(s1) do |s3, id:|
+            rules.reduce(s3) do |s4, rule|
+              s5 = rule.call(s2)
+              s6 = s5.set(id: id)
+              s4.combine(s6)
             end
-          end.remove_id.remove_fatal_id
+          end
         end
-
-        raise failure.exception(backtrace)
       end
     end
   end
