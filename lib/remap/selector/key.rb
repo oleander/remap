@@ -17,8 +17,6 @@ module Remap
       # @return [#hash
       attribute :key, Types::Key
 
-      requirement Types::Hash
-
       # Selects {#key} from state and passes it to block
       #
       # @param state [State<Hash<K, V>>]
@@ -32,17 +30,17 @@ module Remap
           raise ArgumentError, "The key selector requires an iteration block"
         end
 
-        state.bind(key: key) do |hash, s|
-          requirement[hash] do
-            s.fatal!("Expected hash")
-          end
+        hash = state.fetch(:value) { return state }
 
-          value = hash.fetch(key) do
-            s.ignore!("Key not found")
-          end
-
-          state.set(value, key: key).then(&block)
+        unless hash.is_a?(Hash)
+          state.fatal!("Expected hash got %s", hash.class)
         end
+
+        value = hash.fetch(key) do
+          state.ignore!("Key [%s] (%s) not found", key, key.class)
+        end
+
+        state.set(value, key: key).then(&block)
       end
     end
   end

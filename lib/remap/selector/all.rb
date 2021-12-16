@@ -15,28 +15,28 @@ module Remap
     #   end
     #   result.fetch(:value) # => [Hash, Hash]
     class All < Concrete
-      requirement Types::Enumerable
-
       # Iterates over state and passes each value to block
       #
-      # @param outer_state [State<Enumerable<T>>]
+      # @param state [State<Enumerable<T>>]
       #
       # @yieldparam [State<T>]
       # @yieldreturn [State<U>]
       #
       # @return [State<U>]
-      def call(outer_state, &block)
+      def call(state, &block)
         unless block
           raise ArgumentError, "All selector requires an iteration block"
         end
 
-        outer_state.bind(quantifier: "*") do |enum, state|
-          requirement[enum] do
-            state.fatal!("Expected enumerable")
-          end
-
-          state.map(&block)
+        value = state.fetch(:value) do
+          return state
         end
+
+        unless value.is_a?(Enumerable)
+          state.fatal!("Not an enumerator")
+        end
+
+        state.map(&block)
       end
     end
   end

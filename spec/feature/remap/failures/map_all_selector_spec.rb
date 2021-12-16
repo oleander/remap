@@ -21,7 +21,8 @@ describe Remap::Base do
             failures: contain_exactly(
               have_attributes(
                 value: { does_not_match: "with John" },
-                path: [:people, 0, :name]
+                reason: include("name"),
+                path: [:people, 0]
               )
             )
           )
@@ -39,7 +40,7 @@ describe Remap::Base do
       expect { |b| mapper.call(input, &b) }.to yield_with_args(
         an_instance_of(Remap::Failure).and(
           have_attributes(
-            failures: contain_exactly(have_attributes(value: input, path: [:people]))
+            failures: contain_exactly(have_attributes(value: input, path: []))
           )
         )
       )

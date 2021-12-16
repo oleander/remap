@@ -39,7 +39,7 @@ describe Remap::Path::Input do
           end
 
           let(:attributes) do
-            { value: input, path: selectors }
+            { value: input, path: be_empty, reason: include("key") }
           end
         end
       end
@@ -164,7 +164,7 @@ describe Remap::Path::Input do
           end
 
           let(:attributes) do
-            { path: [1], value: input }
+            { path: [], value: input, reason: include("1") }
           end
         end
       end

@@ -20,8 +20,6 @@ module Remap
       # @return [Integer]
       attribute :index, Integer
 
-      requirement Types::Array
-
       # Selects the {#index}th element from state and passes it to block
       #
       # @param state [State<Array<T>>]
@@ -35,17 +33,17 @@ module Remap
           raise ArgumentError, "The index selector requires an iteration block"
         end
 
-        state.bind(index: index) do |array, s|
-          requirement[array] do
-            s.fatal!("Expected an array")
-          end
+        array = state.fetch(:value) { return state }
 
-          element = array.fetch(index) do
-            s.ignore!("Index not found")
-          end
-
-          state.set(element, index: index).then(&block)
+        unless array.is_a?(Array)
+          state.fatal!("Expected an array got %s", array.class)
         end
+
+        value = array.fetch(index) do
+          state.ignore!("Index [%s] (%s) not found", index, index.class)
+        end
+
+        state.set(value, index: index).then(&block)
       end
     end
   end

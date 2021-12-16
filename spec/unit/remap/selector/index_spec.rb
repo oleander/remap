@@ -31,7 +31,7 @@ describe Remap::Selector::Index do
       it_behaves_like "a fatal exception" do
         let(:attributes) do
           {
-            path: [index],
+            path: be_empty,
             value: input
           }
         end
@@ -61,7 +61,7 @@ describe Remap::Selector::Index do
 
       it_behaves_like "an ignored exception" do
         let(:attributes) do
-          { path: [index], value: input }
+          { path: [], value: input, reason: include("4") }
         end
       end
     end
@@ -79,7 +79,7 @@ describe Remap::Selector::Index do
 
       it_behaves_like "an ignored exception" do
         let(:attributes) do
-          { path: [index], value: input }
+          { path: [], value: input, reason: include("0") }
         end
       end
     end

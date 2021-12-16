@@ -109,7 +109,7 @@ describe Remap::Compiler do
           end
 
           let(:attributes) do
-            { value: { mismatch: "John" }, path: [:person, :name] }
+            { value: { mismatch: "John" }, path: [:person], reason: include("name") }
           end
         end
       end
@@ -137,7 +137,7 @@ describe Remap::Compiler do
           end
 
           let(:attributes) do
-            { value: { mismatch: "John" }, path: [:name] }
+            { value: { mismatch: "John" }, path: [], reason: include("name") }
           end
         end
       end

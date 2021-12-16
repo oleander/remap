@@ -27,7 +27,13 @@ describe Remap::Base do
       expect { |b| mapper.call(input, &b) }.to yield_with_args(
         an_instance_of(Remap::Failure).and(
           have_attributes(
-            failures: contain_exactly(have_attributes(value: input, path: [:name]))
+            failures: contain_exactly(
+              have_attributes(
+                reason: include("name"),
+                path: be_empty,
+                value: input
+              )
+            )
           )
         )
       )
@@ -41,7 +47,13 @@ describe Remap::Base do
       expect { |b| mapper.call(input, &b) }.to yield_with_args(
         an_instance_of(Remap::Failure).and(
           have_attributes(
-            failures: contain_exactly(have_attributes(value: input, path: [:car]))
+            failures: contain_exactly(
+              have_attributes(
+                reason: include("car"),
+                path: be_empty,
+                value: input
+              )
+            )
           )
         )
       )

@@ -19,27 +19,24 @@ describe Remap::Base do
     it "invokes block with failure" do
       expect { |b| mapper.call(input, &b) }.to yield_with_args(
         have_attributes(
-          failures: contain_exactly(have_attributes(value: { age: 50 }, path: [:person, :name]))
+          failures: contain_exactly(have_attributes(value: { age: 50 }, path: [:person], reason: include("name")))
         )
       )
     end
   end
 
   context "when key points to the wrong data type" do
+    let(:string) { "not a hash" }
+
     let(:input) do
-      { person: "hes 50 years old" }
+      { person: string }
     end
 
     it "raises an exception" do
       expect { mapper.call(input, &error) }.to raise_error(
         an_instance_of(Remap::Failure::Error).and(
           having_attributes(
-            failures: contain_exactly(
-              having_attributes(
-                value: "hes 50 years old",
-                path: [:person, :name]
-              )
-            )
+            failures: contain_exactly(having_attributes(path: [:person], value: string))
           )
         )
       )

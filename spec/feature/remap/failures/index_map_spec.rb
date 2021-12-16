@@ -23,7 +23,8 @@ describe Remap::Base do
             failures: contain_exactly(
               have_attributes(
                 value: { not_a_match: "Lisa" },
-                path: [:people, 1, :name]
+                reason: include("name"),
+                path: [:people, 1]
               )
             )
           )
@@ -41,7 +42,7 @@ describe Remap::Base do
       expect { |b| mapper.call(input, &b) }.to yield_with_args(
         be_an_instance_of(Remap::Failure).and(
           have_attributes(
-            failures: contain_exactly(have_attributes(path: [:people, 1]))
+            failures: contain_exactly(have_attributes(path: [:people]))
           )
         )
       )
@@ -57,7 +58,13 @@ describe Remap::Base do
       expect { |b| mapper.call(input, &b) }.to yield_with_args(
         an_instance_of(Remap::Failure).and(
           have_attributes(
-            failures: contain_exactly(have_attributes(value: input, path: [:people]))
+            failures: contain_exactly(
+              have_attributes(
+                reason: include("people"),
+                path: be_empty,
+                value: input
+              )
+            )
           )
         )
       )
@@ -65,20 +72,17 @@ describe Remap::Base do
   end
 
   context "when key points to the wrong data type" do
+    let(:string) { "not a hash" }
+
     let(:input) do
-      { people: [{ name: "John" }, "this is not a hash"] }
+      { people: [{ name: "John" }, string] }
     end
 
     it "raises an exception" do
       expect { mapper.call(input, &error) }.to raise_error(
         an_instance_of(Remap::Failure::Error).and(
           having_attributes(
-            failures: contain_exactly(
-              having_attributes(
-                value: "this is not a hash",
-                path: [:people, 1, :name]
-              )
-            )
+            failures: contain_exactly(having_attributes(path: [:people, 1], value: string))
           )
         )
       )
