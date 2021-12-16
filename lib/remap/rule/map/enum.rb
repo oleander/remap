@@ -4,13 +4,9 @@ module Remap
   class Rule
     class Map
       class Enum < Proxy
-        include Dry::Monads[:maybe]
-
         # @return [Hash]
-        option :mappings, default: -> { Hash.new { default } }
-
-        # @return [Maybe]
-        option :default, default: -> { None() }
+        option :table, default: -> { {} }
+        option :default, default: -> { Undefined }
 
         alias execute instance_eval
 
@@ -37,7 +33,7 @@ module Remap
           new.tap { _1.execute(&block) }
         end
 
-        # Translates key into a value using predefined mappings
+        # Translates key into a value using predefined table
         #
         # @param key [#hash]
         #
@@ -50,24 +46,21 @@ module Remap
             return get(key) { raise Error, _1 }
           end
 
-          self[key].bind { return _1 }.or do
-            error["Enum key [#{key}] not found among [#{mappings.keys.inspect}]"]
+          table.fetch(key) do
+            unless default == Undefined
+              return default
+            end
+
+            error["Enum key [#{key}] not found among [#{table.keys.inspect}]"]
           end
         end
         alias call get
 
-        # @return [Maybe]
-        def [](key)
-          mappings[key]
-        end
-
         # @return [void]
         def from(*keys, to:)
-          value = Some(to)
-
           keys.each do |key|
-            mappings[key] = value
-            mappings[to] = value
+            table[key] = to
+            table[to] = to
           end
         end
 
@@ -80,7 +73,7 @@ module Remap
 
         # @return [void]
         def otherwise(value)
-          mappings.default = Some(value)
+          @default = value
         end
       end
     end

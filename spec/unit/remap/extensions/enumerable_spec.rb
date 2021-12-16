@@ -18,8 +18,8 @@ describe Remap::Extensions::Enumerable do
         let(:receiver) { {} }
         let(:path) { [0] }
 
-        it "raises a path error" do
-          expect { result }.to raise_error(Remap::PathError)
+        it "throw a path" do
+          expect { result }.to throw_symbol(:ignore, path)
         end
       end
 
@@ -35,8 +35,8 @@ describe Remap::Extensions::Enumerable do
           let(:receiver) { { a: { b: "value" } } }
           let(:path) { [:a, 0] }
 
-          it "raises a path error" do
-            expect { result }.to raise_error(Remap::PathError)
+          it "throw a path" do
+            expect { result }.to throw_symbol(:ignore, [:a])
           end
         end
       end
@@ -56,8 +56,8 @@ describe Remap::Extensions::Enumerable do
         let(:receiver) { [] }
         let(:path) { [0] }
 
-        it "raises a path error" do
-          expect { result }.to raise_error(Remap::PathError)
+        it "throw a path" do
+          expect { result }.to throw_symbol(:ignore, path)
         end
       end
 
@@ -73,8 +73,8 @@ describe Remap::Extensions::Enumerable do
           let(:receiver) { ["value"] }
           let(:path) { [0, 1] }
 
-          it "raises a path error" do
-            expect { result }.to raise_error(Remap::PathError)
+          it "throw a path" do
+            expect { result }.to throw_symbol(:ignore, [0])
           end
         end
       end

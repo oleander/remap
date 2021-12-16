@@ -25,7 +25,7 @@ module Remap
       #
       # @return [State]
       def call(state, &iterator)
-        unless block_given?
+        unless iterator
           raise ArgumentError, "Input path requires an iterator block"
         end
 

@@ -251,19 +251,6 @@ describe Remap::State::Extension do
       end
     end
 
-    context "when ids differs in length" do
-      subject(:result) do
-        left.combine(right)
-      end
-
-      let(:left) { defined!(ids: [:left_id], fatal_id: :left_fatal_id) }
-      let(:right) { defined!(ids: [:right_id, :right_id2], fatal_id: :right_fatal_id) }
-
-      it "raises an argument error" do
-        expect { result }.to raise_error(ArgumentError)
-      end
-    end
-
     context "when left has fatal_id" do
       let(:left) { defined!(fatal_id: :left_id) }
 

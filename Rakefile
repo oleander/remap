@@ -57,3 +57,9 @@ namespace :gem do
     exec "bundle", "exec", "rake", "release"
   end
 end
+
+desc "Create profile"
+task :profile do
+  system "bundle", "exec", "ruby", "benchmarks/profile.rb"
+  exec "stackprof-webnav -d tmp"
+end

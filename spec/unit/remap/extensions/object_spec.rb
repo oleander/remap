@@ -6,8 +6,8 @@ describe Remap::Extensions::Object do
   let(:target) { string! }
 
   describe "#get" do
-    it "raises a path error" do
-      expect { target.get(:a) }.to raise_error(Remap::PathError)
+    it "throw a path" do
+      expect { target.get(:a) }.to throw_symbol(:ignore, [:a])
     end
   end
 

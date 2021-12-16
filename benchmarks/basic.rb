@@ -226,6 +226,7 @@ input = {
   }
 }
 
+# GC.disable
 Benchmark.ips do |x|
   x.report("fixed") { Fixed.call(input) }
 

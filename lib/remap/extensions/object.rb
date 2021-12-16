@@ -38,9 +38,9 @@ module Remap
         def get(*path, trace: [], &fallback)
           return self if path.empty?
 
-          unless block_given?
+          unless fallback
             return get(*path, trace: trace) do
-              raise PathError, trace
+              throw :ignore, trace + path
             end
           end
 

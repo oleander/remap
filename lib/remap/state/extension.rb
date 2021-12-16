@@ -46,11 +46,7 @@ module Remap
         # @returns [Hash] a hash containing the given path
         # @raise Europace::Error when path doesn't exist
         def only(*path)
-          path.reduce(EMPTY_HASH) do |hash, key|
-            next hash unless key?(key)
-
-            hash.deep_merge(key => fetch(key))
-          end
+          dup.extract!(*path)
         end
 
         # @see #notice
@@ -112,11 +108,30 @@ module Remap
         #
         # @return [State]
         def map(&block)
-          bind do |value, state|
-            Iteration.call(state: state, value: value).call do |other, **options|
-              state.set(other, **options).then(&block)
-            end.except(:index, :element, :key)
+          result = case self
+          in { value: Array => array }
+            array.each_with_index.each_with_object([]) do |(value, index), array|
+              s1 = block[set(value, index: index)]
+
+              if s1.key?(:value)
+                array << s1[:value]
+              end
+            end
+          in { value: Hash => hash }
+            hash.each_with_object({}) do |(key, value), acc|
+              s1 = block[set(value, key: key)]
+
+              if s1.key?(:value)
+                acc[key] = s1[:value]
+              end
+            end
+          in { value: }
+            fatal!("Expected an enumerable got %s", value.class)
+          else
+            return self
           end
+
+          set(result)
         end
 
         # @return [String]
@@ -130,10 +145,14 @@ module Remap
         #
         # @return [State]
         def combine(other)
-          deep_merge(other) do |key, value1, value2|
+          merge(other) do |key, value1, value2|
             case [key, value1, value2]
-            in [:value, Array => list1, Array => list2]
-              list1 + list2
+            in [_, Hash => left, Hash => right]
+              left.merge(right)
+            in [:ids | :fatal_ids, _, right]
+              right
+            in [_, Array => left, Array => right]
+              left + right
             in [:value, left, right]
               other.fatal!(
                 "Could not merge [%s] (%s) with [%s] (%s)",
@@ -142,15 +161,6 @@ module Remap
                 right.formatted,
                 right.class
               )
-            in [:notices, Array => n1, Array => n2]
-              n1 + n2
-            in [:ids, i1, i2] if i1.all? { i2.include?(_1) }
-              i2
-            in [:ids, i1, i2] if i2.all? { i1.include?(_1) }
-              i1
-            in [:ids, i1, i2]
-              other.fatal!("Could not merge #ids [%s] (%s) with [%s] (%s)", i1, i1.class, i2,
-                           i2.class)
             in [Symbol, _, value]
               value
             end
@@ -160,31 +170,39 @@ module Remap
         # @todo Merge with {#remove_fatal_id}
         # @return [State]
         def remove_id
-          case self
+          state = dup
+
+          case state
           in { ids: [], id: }
-            except(:id)
+            state.except!(:id)
           in { ids:, id: }
-            merge(ids: ids[1...], id: ids[0])
+            state.merge!(ids: ids[1...], id: ids[0])
           in { ids: [] }
-            self
+            state
           in { ids: }
             raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
-          end._
+          end
+
+          state
         end
 
         # @todo Merge with {#remove_id}
         # @return [State]
         def remove_fatal_id
-          case self
+          state = dup
+
+          case state
           in { fatal_ids: [], fatal_id: }
-            except(:fatal_id)
-          in { fatal_ids: ids, fatal_id: id }
-            merge(fatal_ids: ids[1...], fatal_id: ids[0])
+            state.except!(:fatal_id)
+          in { fatal_ids: ids, fatal_id: }
+            state.merge!(fatal_ids: ids[1...], fatal_id: ids[0])
           in { fatal_ids: [] }
-            self
+            state
           in { fatal_ids: }
             raise ArgumentError, "[BUG] #ids for state are set, but not #id: %s" % formatted
-          end._
+          end
+
+          state
         end
 
         # Creates a new state with params
@@ -198,24 +216,30 @@ module Remap
             return set(**options, value: value)
           end
 
-          case [self, options]
-          in [{notices:}, {notice: notice, **rest}]
-            merge(notices: notices + [notice]).set(**rest)
-          in [{value:}, {mapper:, **rest}]
-            merge(scope: value, mapper: mapper).set(**rest)
-          in [{path:}, {key:, **rest}]
-            merge(path: path + [key], key: key).set(**rest)
-          in [{path:}, {index:, value:, **rest}]
-            merge(path: path + [index], element: value, index: index, value: value).set(**rest)
-          in [{path:}, {index:, **rest}]
-            merge(path: path + [index], index: index).set(**rest)
-          in [{ids:, id: old_id}, {id: new_id, **rest}]
-            merge(ids: [old_id] + ids, id: new_id).set(**rest)
-          in [{fatal_ids:, fatal_id: old_id}, {fatal_id: new_id, **rest}]
-            merge(fatal_ids: [old_id] + fatal_ids, fatal_id: new_id).set(**rest)
+          state = dup
+
+          case [state, options]
+          in [{notices:}, {notice: notice}]
+            state.merge!(notices: notices + [notice])
+          in [{value:}, {mapper:}]
+            state.merge!(scope: value, mapper: mapper)
+          in [{path:}, {key:, value:}]
+            state.merge!(path: path + [key], key: key, value: value)
+          in [{path:}, {key:}]
+            state.merge!(path: path + [key], key: key)
+          in [{path:}, {index:, value:}]
+            state.merge!(path: path + [index], element: value, index: index, value: value)
+          in [{path:}, {index:}]
+            state.merge!(path: path + [index], index: index)
+          in [{ids:, id: old_id}, {id: new_id}]
+            state.merge!(ids: [old_id] + ids, id: new_id)
+          in [{fatal_ids:, fatal_id: old_id}, {fatal_id: new_id}]
+            state.merge!(fatal_ids: [old_id] + fatal_ids, fatal_id: new_id)
           else
-            merge(options)
+            state.merge!(options)
           end
+
+          state
         end
 
         # Passes {#value} to block, if defined
@@ -235,22 +259,6 @@ module Remap
           end
         end
 
-        # Creates a failure to be used in {Remap::Base} & {Remap::Mapper}
-        #
-        # @param reason [#to_s]
-        #
-        # @see State::Schema
-        #
-        # @return [Failure]
-
-        # class Failure < Dry::Interface
-        #   attribute :notices, [Notice], min_size: 1
-        # end
-
-        def failure(reason = Undefined)
-          raise NotImplementedError, "Not implemented"
-        end
-
         # Passes {#value} to block, if defined
         # {options} are combine into the final state
         #
@@ -262,7 +270,7 @@ module Remap
         #
         # @return [Y]
         def bind(**options, &block)
-          unless block_given?
+          unless block
             raise ArgumentError, "State#bind requires a block"
           end
 
@@ -282,19 +290,23 @@ module Remap
         # @return [State<U>]
         def execute(&block)
           bind do |value|
-            result = context(value).instance_exec(value, &block)
+            result = catch :done do
+              tail_path = catch :ignore do
+                throw :done, context(value).instance_exec(value, &block)
+              rescue KeyError => e
+                [e.key]
+              rescue IndexError
+                []
+              end
+
+              set(path: path + tail_path).ignore!("Undefined path")
+            end
 
             if result.equal?(Dry::Core::Constants::Undefined)
               ignore!("Undefined returned, skipping!")
             end
 
             set(result)
-          rescue KeyError => e
-            set(path: path + [e.key]).ignore!(e.message)
-          rescue IndexError => e
-            ignore!(e.message)
-          rescue PathError => e
-            set(path: path + e.path).ignore!("Undefined path")
           end
         end
 

@@ -17,7 +17,7 @@ module Remap
         ]
       end
 
-      failure = attributes.deep_merge(other.attributes) do |key, value1, value2|
+      failure = attributes.merge(other.attributes) do |key, value1, value2|
         case [key, value1, value2]
         in [:failures | :notices, Array, Array]
           value1 + value2
