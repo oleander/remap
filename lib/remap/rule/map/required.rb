@@ -16,7 +16,7 @@ module Remap
             end
 
             s3 = s2.then(&path.output)
-            s4 = s3.set(path: state.path)
+            s4 = s3.merge(path: state.path)
 
             s4.except(:key)
           end

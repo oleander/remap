@@ -223,6 +223,8 @@ module Remap
             state.merge!(notices: notices + [notice])
           in [{value:}, {mapper:}]
             state.merge!(scope: value, mapper: mapper)
+          in [{path: p1}, {path: p2}]
+            state.merge!(path: p1 + p2)
           in [{path:}, {key:, value:}]
             state.merge!(path: path + [key], key: key, value: value)
           in [{path:}, {key:}]
@@ -289,39 +291,33 @@ module Remap
         #
         # @return [State<U>]
         def execute(&block)
-          bind do |value|
-            result = catch :done do
-              tail_path = catch :ignore do
-                names = block.parameters.reduce([]) do |acc, (type, name)|
-                  case type
-                  in :keyreq
-                    acc + [name]
-                  else
-                    acc
-                  end
-                end
+          value = fetch(:value) { return self }
 
-                r = Proc.new(&block).call(value, **only(*names), **options.only(*names)) do |reason|
-                  ignore!(reason)
-                end
-                throw :done, r
-              rescue NameError => e
-                fatal!(e.message)
-              rescue KeyError => e
-                [e.key]
-              rescue IndexError
-                []
+          path = catch :ignore do
+            names = block.parameters.reduce([]) do |acc, (type, name)|
+              case type
+              in :keyreq
+                acc + [name]
+              else
+                acc
               end
-
-              set(path: path + tail_path).ignore!("Undefined path")
             end
 
-            if result.equal?(Dry::Core::Constants::Undefined)
-              ignore!("Undefined returned, skipping!")
+            n1 = options.only(*names)
+            n2 = only(*names)
+
+            result = block[value, **n2, **n1] do |reason|
+              return ignore!(reason)
             end
 
-            set(result)
+            return set(result)
           end
+
+          set(path: path).ignore!("Undefined path")
+        rescue KeyError => e
+          set(path: [e.key]).ignore!(e.message)
+        rescue IndexError => e
+          ignore!(e.message)
         end
 
         # Passes {#value} to block and returns {self}

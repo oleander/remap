@@ -640,24 +640,6 @@ describe Remap::State::Extension do
       it { is_expected.to contain(2) }
     end
 
-    context "when a state is not found" do
-      subject(:result) do
-        state.execute do
-          does_not_exist
-        end
-      end
-
-      let(:value) { value! }
-      let(:id)    { symbol! }
-      let(:state) { defined!(value, id: id) }
-
-      it_behaves_like "a fatal exception" do
-        let(:attributes) do
-          { value: value }
-        end
-      end
-    end
-
     context "when #values is accessed" do
       subject(:result) do
         state.execute do |values:, input:|

@@ -137,18 +137,6 @@ describe Remap::Rule::Map do
       it { is_expected.to contain(output) }
     end
 
-    context "when Undefined is returned from the block" do
-      let(:output) { input }
-
-      before do
-        map.adjust do
-          Dry::Core::Constants::Undefined
-        end
-      end
-
-      its([:notices]) { is_expected.to have(1).items }
-    end
-
     context "when #fetch is called" do
       context "when given a hash" do
         before do
