@@ -271,7 +271,9 @@ module Remap
     #
     # @return [void]
     def self.configuration(&block)
-      block[config_options]
+      config = Config.new
+      block[config]
+      self.config_options = config
     end
 
     # @see Mapper::API
