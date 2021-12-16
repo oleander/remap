@@ -548,6 +548,7 @@ module Remap
           output: [to].flatten,
           input: path.flatten
         },
+        backtrace: backtrace,
         rule: call(backtrace: backtrace, &block)
       })
     end

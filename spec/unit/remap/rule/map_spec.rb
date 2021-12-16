@@ -2,16 +2,16 @@
 
 describe Remap::Rule::Map do
   describe "::call" do
-    subject { described_class.call(rule: rule!, path: path!) }
+    subject { described_class::Optional.call(rule: rule!, path: path!, backtrace: caller) }
 
-    it { is_expected.to be_a(described_class) }
+    it { is_expected.to be_a(described_class::Optional) }
   end
 
   describe "#call" do
     subject { rule.call(state, &error) }
 
-    let(:rule)  { described_class.call(path: path, rule: void!) }
-    let(:state) { state!({ a: 1 })                              }
+    let(:rule)  { described_class::Optional.call(path: path, rule: void!, backtrace: caller) }
+    let(:state) { state!({ a: 1 }) }
 
     context "without fn" do
       let(:path) { path!([:a], [:b]) }
