@@ -50,7 +50,7 @@ module Remap
       #
       # @example Up-case mapped value
       #   state = Remap::State.call("Hello World")
-      #   map = Remap::Rule::Map.call({})
+      #   map = Remap::Rule::Map.call(backtrace: caller)
       #   upcase = map.adjust(&:upcase)
       #   error = -> failure { raise failure.exception }
       #   upcase.call(state, &error).fetch(:value) # => "HELLO WORLD"
@@ -69,7 +69,7 @@ module Remap
       #
       # @example Pending mapping
       #   state = Remap::State.call(:value)
-      #   map = Remap::Rule::Map.call({})
+      #   map = Remap::Rule::Map::Optional.call(backtrace: caller)
       #   pending = map.pending("this is pending")
       #   error = -> failure { raise failure.exception }
       #   pending.call(state, &error).key?(:value) # => false
@@ -84,7 +84,7 @@ module Remap
       # An enumeration processor
       #
       # @example A mapped enum
-      #   enum = Remap::Rule::Map.call({}).enum do
+      #   enum = Remap::Rule::Map.call(backtrace: caller).enum do
       #     value "A", "B"
       #     otherwise "C"
       #   end
@@ -117,7 +117,7 @@ module Remap
       # Keeps map, only if block is true
       #
       # @example Keep if value contains "A"
-      #   map = Remap::Rule::Map.call({}).if do
+      #   map = Remap::Rule::Map::Optional.call(backtrace: caller).if do
       #     value.include?("A")
       #   end
       #
@@ -145,11 +145,11 @@ module Remap
       #
 
       # @example Keep unless value contains "A"
-      #   map = Remap::Rule::Map.call({}).if_not do
+      #   map = Remap::Rule::Map::Optional.new(backtrace: caller).if_not do
       #     value.include?("A")
       #   end
       #
-      #   error = -> failure { raise failure.exception }
+      #   error = -> failure { raise failure.exception(caller) }
       #
       #   a = Remap::State.call("A")
       #   map.call(a, &error).key?(:value) # => false

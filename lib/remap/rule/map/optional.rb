@@ -12,6 +12,7 @@ module Remap
         #
         # @example Map [:name] to [:nickname]
         #   map = Map::Optional.call({
+        #     backtrace: caller,
         #     path: {
         #       input: [:name],
         #       output: [:nickname]
