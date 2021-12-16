@@ -33,15 +33,13 @@ module Remap
 
           key = path.first
 
-          unless block_given?
+          unless fallback
             return get(*path, trace: trace) do
-              raise PathError, trace + [key]
+              throw :ignore, trace + [key]
             end
           end
 
           fetch(key, &fallback).get(*path[1..], trace: trace + [key], &fallback)
-        rescue TypeError
-          raise PathError, trace + [key]
         end
       end
     end

@@ -3,12 +3,18 @@
 require "bundler/setup"
 Bundler.require
 require "remap"
+require "stackprof"
 require "benchmark/ips"
 
 class Mapper < Remap::Base
+  option :date # <= Custom required value
+
   define do
     # Fixed values
     set :description, to: value("This is a description")
+
+    # Semi-dynamic values
+    set :date, to: option(:date)
 
     # Required rules
     get :friends do
@@ -93,8 +99,20 @@ input = {
   ]
 }
 
-Benchmark.ips do |x|
-  x.report("fixed") { Mapper.call(input) }
-
-  x.compare!
+def path(name)
+  Pathname(__dir__).join("..", "tmp/#{name}.dump").to_s
 end
+
+options = { date: Date.today }
+state = Remap::State.call(input, mapper: Mapper, options: options)
+mapper = Mapper.new(options)
+
+runner = -> do
+  10.times do
+    mapper.call(state)
+  end
+end
+
+StackProf.run(raw: true, out: path("wall"), mode: :wall, &runner)
+StackProf.run(raw: true, out: path("object"), mode: :object, &runner)
+StackProf.run(raw: true, out: path("cpu"), mode: :cpu, &runner)

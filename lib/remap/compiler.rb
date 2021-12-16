@@ -32,7 +32,7 @@ module Remap
     #
     # @return [Rule]
     def self.call(backtrace: caller, &block)
-      unless block_given?
+      unless block
         return Rule::VOID
       end
 
@@ -317,7 +317,7 @@ module Remap
     # @return [Rule::Each]]
     # @raise [ArgumentError] if no block given
     def each(backtrace: caller, &block)
-      unless block_given?
+      unless block
         raise ArgumentError, "#each requires a block"
       end
 
@@ -350,7 +350,7 @@ module Remap
     # @return [Rule::Wrap]
     # @raise [ArgumentError] if type is not :array
     def wrap(type, backtrace: caller, &block)
-      unless block_given?
+      unless block
         raise ArgumentError, "#wrap requires a block"
       end
 

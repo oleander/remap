@@ -26,7 +26,7 @@ module Remap
       #
       # @return [State<U>]
       def call(outer_state, &block)
-        unless block_given?
+        unless block
           raise ArgumentError, "All selector requires an iteration block"
         end
 

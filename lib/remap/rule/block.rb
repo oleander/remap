@@ -26,8 +26,11 @@ module Remap
           s2 = state.set(fatal_id: fatal_id)
 
           catch_ignored(s1) do |s3, id:|
-            rules.reduce(s3) do |s4, rule|
-              s5 = rule.call(s2)
+            states = rules.map do |rule|
+              rule.call(s2)
+            end
+
+            states.reduce(s3) do |s4, s5|
               s6 = s5.set(id: id)
               s4.combine(s6)
             end

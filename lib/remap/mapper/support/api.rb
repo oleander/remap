@@ -22,7 +22,7 @@ module Remap
       #
       # @return [Any, T]
       def call(input, backtrace: caller, **options, &error)
-        unless block_given?
+        unless error
           return call(input, **options) do |failure|
             raise failure.exception(backtrace)
           end

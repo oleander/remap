@@ -105,6 +105,7 @@ module Remap
   #   Mapper.call([1, 2, 3]) # => 2
   class Base < Mapper
     include ActiveSupport::Configurable
+    include Dry::Core::Memoizable
     include Dry::Core::Constants
     include Catchable
     extend Mapper::API
@@ -239,7 +240,7 @@ module Remap
     # @return [void]
     # rubocop:disable Layout/LineLength
     def self.define(target = Nothing, method: :new, strategy: :argument, backtrace: caller, &context)
-      unless block_given?
+      unless context
         raise ArgumentError, "#{self}.define requires a block"
       end
 
@@ -318,5 +319,7 @@ module Remap
     def validation
       Contract.call(attributes: attributes, contract: contract, options: options, rules: rules)
     end
+
+    memoize :validation
   end
 end

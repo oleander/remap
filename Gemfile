@@ -41,3 +41,5 @@ group :test do
 end
 
 gem "benchmark-ips"
+gem "stackprof"
+gem "stackprof-webnav"
