@@ -8,6 +8,11 @@ module Remap
 
       attribute :left, Types::Mapper
       attribute :right, Types::Mapper
+
+      # @return [Bool]
+      def validate?
+        left.validate? && right.validate?
+      end
     end
   end
 end

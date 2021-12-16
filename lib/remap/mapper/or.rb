@@ -39,6 +39,12 @@ module Remap
           end
         end
       end
+
+      # @return [String]
+      def inspect
+        "%s | %s" % [left, right]
+      end
+      alias to_s inspect
     end
   end
 end

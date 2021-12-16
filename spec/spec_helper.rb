@@ -3,8 +3,9 @@
 require "simplecov"
 
 require "active_support/core_ext/hash/deep_transform_values"
-require "dry/core/class_builder"
 require "rspec/collection_matchers"
+require "dry/core/class_builder"
+require "rspec-benchmark"
 require "factory_bot"
 require "rspec/its"
 require "remap"
@@ -15,9 +16,16 @@ require_relative "support"
 require_relative "examples"
 require_relative "matchers"
 
+class Remap::Base
+  configuration do |c|
+    c.validation = true
+  end
+end
+
 RSpec.configure do |config|
   config.filter_run_when_matching :focus
   config.include Dry::Monads[:maybe, :result, :do]
+  config.include RSpec::Benchmark::Matchers
   config.include FactoryBot::Syntax::Methods
   config.include Support
 

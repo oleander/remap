@@ -107,13 +107,12 @@ module Remap
     include ActiveSupport::Configurable
     include Dry::Core::Constants
     include Catchable
-
     extend Mapper::API
-
     using State::Extension
 
     with_options instance_accessor: true do |scope|
       scope.config_accessor(:contract) { Dry::Schema.define {} }
+      scope.config_accessor(:config_options) { Config.new }
       scope.config_accessor(:constructor) { IDENTITY }
       scope.config_accessor(:options) { EMPTY_ARRAY }
       scope.config_accessor(:option) { EMPTY_HASH }
@@ -263,6 +262,25 @@ module Remap
     # @private
     def self.call!(state, &error)
       new(state.options).call(state, &error)
+    end
+
+    # Configuration options for the mapper
+    #
+    # @yield [Config]
+    # @yieldreturn [void]
+    #
+    # @return [void]
+    def self.configuration(&block)
+      config = Config.new
+      block[config]
+      self.config_options = config
+    end
+
+    # @see Mapper::API
+    #
+    # @private
+    def self.validate?
+      config_options.validation
     end
 
     # Mappers state according to the mapper rules

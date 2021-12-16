@@ -92,6 +92,8 @@ module Remap
         #
         # @return [self]
         def _(&block)
+          return self unless mapper.validate?
+
           unless block
             return _ do |reason|
               raise ArgumentError, "[BUG] State: #{formatted} reason: #{reason.formatted}"
@@ -318,6 +320,11 @@ module Remap
         # @return [Symbol]
         def id
           fetch(:id)
+        end
+
+        # @return [Mapper::API]
+        def mapper
+          fetch(:mapper)
         end
 
         # @return [Array<Symbol>]

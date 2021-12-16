@@ -32,6 +32,7 @@ group :test do
   gem "factory_bot"
   gem "faker"
   gem "rspec"
+  gem "rspec-benchmark"
   gem "rspec-collection"
   gem "rspec-github"
   gem "rspec-its"
