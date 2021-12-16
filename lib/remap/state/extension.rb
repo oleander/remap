@@ -53,7 +53,7 @@ module Remap
           end
         end
 
-        # Throws :fatal containing a Notice
+        # @see #notice
         def fatal!(...)
           fatal_id = fetch(:fatal_id) do
             raise ArgumentError, "Missing :fatal_id in %s" % formatted
@@ -62,12 +62,7 @@ module Remap
           throw fatal_id, Failure.new(failures: [notice(...)], notices: notices)
         end
 
-        # Throws :warn containing a Notice
-        def notice!(...)
-          raise NotImplementedError, "Not implemented"
-        end
-
-        # Throws :ignore containing a Notice
+        # @see #notice
         def ignore!(...)
           set(notice: notice(...)).except(:value).return!
         end
@@ -385,6 +380,8 @@ module Remap
         # @return [Failure]
         def failure(reason = Undefined)
           failures = case [path, reason]
+          in [_, Undefined]
+            return Failure.new(failures: notices)
           in [_, Notice => notice]
             [notice]
           in [path, Array => reasons]
