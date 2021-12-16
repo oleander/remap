@@ -34,7 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-core", "~> 0.7.1"
   spec.add_dependency "dry-initializer", "~> 3.0.4"
   spec.add_dependency "dry-interface", "~> 1.0.3"
-  spec.add_dependency "dry-monads", "~> 1.4.0"
   spec.add_dependency "dry-schema", "~> 1.8.0"
   spec.add_dependency "dry-struct", "~> 1.4.0"
   spec.add_dependency "dry-types", "~> 1.5.1"

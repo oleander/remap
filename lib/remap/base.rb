@@ -105,8 +105,8 @@ module Remap
   #   Mapper.call([1, 2, 3]) # => 2
   class Base < Mapper
     include ActiveSupport::Configurable
-    include Dry::Core::Constants
     include Dry::Core::Memoizable
+    include Dry::Core::Constants
     include Catchable
     extend Mapper::API
     using State::Extension

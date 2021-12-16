@@ -24,7 +24,6 @@ end
 
 RSpec.configure do |config|
   config.filter_run_when_matching :focus
-  config.include Dry::Monads[:maybe, :result, :do]
   config.include RSpec::Benchmark::Matchers
   config.include FactoryBot::Syntax::Methods
   config.include Support

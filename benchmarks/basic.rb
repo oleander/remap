@@ -5,230 +5,96 @@ Bundler.require
 require "remap"
 require "benchmark/ips"
 
-class Fixed < Remap::Base
+class Mapper < Remap::Base
   define do
-    map :a do
-      map :b do
-        map :c do
-          map :d do
-            map :e do
-              map :f do
-                map :g do
-                  map :h do
-                    map :i do
-                      map :j do
-                        map :k do
-                          map :l do
-                            map :m do
-                              map :n do
-                                map :o do
-                                  map :p do
-                                    map :q do
-                                      map :r do
-                                        map :s do
-                                          map :t do
-                                            map :u do
-                                              map :v do
-                                                map :w do
-                                                  map :x do
-                                                    map :y do
-                                                      map :z do
-                                                        to :a
-                                                      end
-                                                    end
-                                                  end
-                                                end
-                                              end
-                                            end
-                                          end
-                                        end
-                                      end
-                                    end
-                                  end
-                                end
-                              end
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
+    # Fixed values
+    set :description, to: value("This is a description")
+
+    # Required rules
+    get :friends do
+      each do
+        # Post processors
+        map(:name, to: :id).adjust(&:upcase)
+
+        # Field conditions
+        get?(:age).if do |age|
+          (30..50).cover?(age)
+        end
+
+        # Map to a finite set of values
+        get(:phones) do
+          each do
+            map.enum do
+              from "iPhone", to: "iOS"
+              value "iOS", "Android"
+
+              otherwise "Unknown"
             end
           end
         end
       end
     end
 
-    map :z do
-      map :a do
-        map :b do
-          map :c do
-            map :d do
-              map :e do
-                map :f do
-                  map :g do
-                    map :h do
-                      map :i do
-                        map :j do
-                          map :k do
-                            map :l do
-                              map :m do
-                                map :n do
-                                  map :o do
-                                    map :p do
-                                      map :q do
-                                        map :r do
-                                          map :s do
-                                            map :t do
-                                              map :u do
-                                                map :v do
-                                                  map :w do
-                                                    map :x do
-                                                      map :y do
-                                                        map :z do
-                                                          to :a
-                                                        end
-                                                      end
-                                                    end
-                                                  end
-                                                end
-                                              end
-                                            end
-                                          end
-                                        end
-                                      end
-                                    end
-                                  end
-                                end
-                              end
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
+    class Linux < Remap::Base
+      define do
+        get :kernel
       end
     end
+
+    class Windows < Remap::Base
+      define do
+        get :price
+      end
+    end
+
+    # Composable mappers
+    to :os do
+      map :computer, :operating_system do
+        embed Linux | Windows
+      end
+    end
+
+    # Wrapping values in an array
+    to :houses do
+      wrap :array do
+        map :house
+      end
+    end
+
+    # Array selector (all)
+    map :cars, all, :model, to: :cars
   end
 end
 
 input = {
-  z: {
-    a: {
-      b: {
-        c: {
-          d: {
-            e: {
-              f: {
-                g: {
-                  h: {
-                    i: {
-                      j: {
-                        k: {
-                          l: {
-                            m: {
-                              n: {
-                                o: {
-                                  p: {
-                                    q: {
-                                      r: {
-                                        s: {
-                                          t: {
-                                            u: {
-                                              v: {
-                                                w: {
-                                                  x: {
-                                                    y: {
-                                                      z: "U"
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+  house: "100kvm",
+  friends: [
+    {
+      name: "Lisa",
+      age: 20,
+      phones: ["iPhone"]
+    }, {
+      name: "Jane",
+      age: 40,
+      phones: ["Samsung"]
+    }
+  ],
+  computer: {
+    operating_system: {
+      kernel: :latest
     }
   },
-  a: {
-    b: {
-      c: {
-        d: {
-          e: {
-            f: {
-              g: {
-                h: {
-                  i: {
-                    j: {
-                      k: {
-                        l: {
-                          m: {
-                            n: {
-                              o: {
-                                p: {
-                                  q: {
-                                    r: {
-                                      s: {
-                                        t: {
-                                          u: {
-                                            v: {
-                                              w: {
-                                                x: {
-                                                  y: {
-                                                    z: "U"
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+  cars: [
+    {
+      model: "Volvo"
+    }, {
+      model: "Tesla"
     }
-  }
+  ]
 }
 
-# GC.disable
 Benchmark.ips do |x|
-  x.report("fixed") { Fixed.call(input) }
+  x.report("fixed") { Mapper.call(input) }
 
   x.compare!
 end

@@ -5,12 +5,11 @@ require "active_support/core_ext/enumerable"
 require "active_support/core_ext/array/wrap"
 require "active_support/proxy_object"
 
-require "dry/validation"
 require "dry/core/memoizable"
+require "dry/validation"
 require "dry/interface"
 require "dry/schema"
 require "dry/struct"
-require "dry/monads"
 require "dry/types"
 
 require "neatjson"
