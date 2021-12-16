@@ -4,11 +4,10 @@ describe Remap::Rule::Block do
   using Remap::State::Extension
 
   shared_examples described_class do
-    subject(:rule) { described_class.call(rules: rules, backtrace: caller) }
-
     subject { rule.call(state, &error) }
 
     let(:state) { state!(input) }
+    let(:rule) { described_class.call(rules: rules, backtrace: caller) }
 
     it { is_expected.to match(output) }
   end
@@ -41,5 +40,11 @@ describe Remap::Rule::Block do
         let(:output) { contain(input) }
       end
     end
+  end
+
+  describe "#inspect" do
+    subject { described_class.call(rules: [map!, void!, static!("a value")], backtrace: caller) }
+
+    its(:inspect) { is_expected.to be_a(String) }
   end
 end

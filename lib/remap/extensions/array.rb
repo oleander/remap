@@ -4,6 +4,8 @@ module Remap
   module Extensions
     module Array
       refine ::Array do
+        using Object
+
         # @return [Array<Hash>]
         def to_hash
           map(&:to_hash)

@@ -18,6 +18,10 @@ module Support
     Notice.call(value: value, path: path, reason: reason)
   end
 
+  def map!
+    Rule::Map::Required.new(backtrace: caller)
+  end
+
   # @return [Hash]
   def hash!(max = 3)
     Faker::Types.complex_rb_hash(number: max)
