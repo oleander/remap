@@ -110,7 +110,7 @@ describe Remap::Base do
     let(:fast) { self.class::Fast }
     let(:slow) { self.class::Slow }
     let(:date) { Date.today }
-    let(:n) { 50 }
+    let(:n) { 10 }
 
     it "runs the [Fast] mapper faster than the [Slow] mapper" do
       expect do
