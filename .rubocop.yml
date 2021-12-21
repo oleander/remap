@@ -7,6 +7,7 @@ require:
 AllCops:
   TargetRubyVersion: 3.0
   NewCops: enable
+  Exclude: ['bin/*']
 
 Layout/LineLength:
    Max: 100

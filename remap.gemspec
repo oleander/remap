@@ -40,10 +40,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-validation", "~> 1.7.0"
   spec.add_dependency "neatjson", "~> 0.9"
   spec.add_dependency "zeitwerk", "~> 2.5.1"
-
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec-collection_matchers"
-  spec.add_development_dependency "rubocop", "~> 1.23.0"
-  spec.add_development_dependency "rubocop-performance"
-  spec.add_development_dependency "rubocop-rake"
 end

@@ -1,0 +1,17 @@
+{
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/main.yml"
+  ],
+  "cSpell.enableFiletypes": [
+    "ruby"
+  ],
+  "spellright.language": [
+    "en"
+  ],
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext",
+    "ruby"
+  ]
+}

@@ -4,29 +4,23 @@ source "https://rubygems.org"
 
 gemspec
 
-group :development do
-  gem "guard", require: false
-  gem "guard-bundler", require: false
-  gem "guard-rspec", require: false
-  gem "guard-rubocop", require: false
+gem "debug"
+gem "pry"
 
-  gem "rubocop-md", require: false
-  gem "rubocop-rspec", require: false
-
-  gem "bump"
-  gem "reek", require: false
-  gem "yard"
-  gem "yard-coderay"
-  gem "yard-doctest"
-  gem "yard-rspec"
-  gem "yard-spellcheck"
-  gem "yardstick", require: false
-end
-
-group :test, :development do
-  gem "bundler", "~> 2"
-  gem "pry"
-end
+gem "benchmark-ips", require: false
+gem "bump", require: false
+gem "reek", require: false
+gem "rubocop", "~> 1", require: false
+gem "rubocop-md", require: false
+gem "rubocop-performance", require: false
+gem "rubocop-rake", require: false
+gem "rubocop-rspec", require: false
+gem "yard", require: false
+gem "yard-coderay", require: false
+gem "yard-doctest", require: false
+gem "yard-rspec", require: false
+gem "yard-spellcheck", require: false
+gem "yardstick", require: false
 
 group :test do
   gem "factory_bot"
@@ -34,12 +28,9 @@ group :test do
   gem "rspec"
   gem "rspec-benchmark"
   gem "rspec-collection"
+  gem "rspec-collection_matchers"
   gem "rspec-github"
   gem "rspec-its"
   gem "simplecov"
   gem "simplecov-cobertura"
 end
-
-gem "benchmark-ips"
-gem "stackprof"
-gem "stackprof-webnav"
