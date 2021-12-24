@@ -34,3 +34,18 @@ group :test do
   gem "simplecov"
   gem "simplecov-cobertura"
 end
+
+group :development, :test do
+  gem "ruby-debug-ide"
+
+  platform :jruby do
+    gem "ruby-debug-base"
+  end
+
+  platform :ruby do
+    gem "debase", "~> 0.2.5.beta2"
+  end
+
+  gem "bundler"
+  gem "solargraph"
+end

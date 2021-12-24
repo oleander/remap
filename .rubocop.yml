@@ -131,9 +131,6 @@ RSpec/FilePath:
 Layout/CaseIndentation:
   EnforcedStyle: end
 
-Metrics/ModuleLength:
-  Exclude: ["lib/remap/state/extension.rb"]
-
 Lint/ShadowedException:
   Enabled: false
 
@@ -271,4 +268,7 @@ Performance/BlockGivenWithExplicitBlock:
   Enabled: true
 
 Naming/MethodParameterName:
+  Enabled: false
+
+Metrics/ModuleLength:
   Enabled: false

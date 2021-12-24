@@ -1,35 +1,25 @@
-// https://code.visualstudio.com/docs/editor/debugging
-// https://code.visualstudio.com/docs/editor/variables-reference
 {
-
   "configurations": [{
-      "label": "test:current",
-      "type": "rdbg",
-      "name": "Execute current spec file",
+      "name": "test:file",
+      "type": "Ruby",
       "request": "launch",
-      "script": "${file}",
-      "command": "rspec",
-      "bundlePath": "${env:HOME}/.rbenv/shims/bundle",
-      "args": [],
-      "rdbgPath": "${env:HOME}/.rbenv/shims/rdbg",
+      "program": "bin/rspec",
+      "args": ["${file}"],
+      "pathToRDebugIDE": "bin/rdebug-ide",
     },
     {
-      "label": "run:current",
-      "type": "rdbg",
-      "name": "Execute current file",
+      "name": "run:file",
+      "type": "Ruby",
       "request": "launch",
-      "script": "${file}",
-      "bundlePath": "${env:HOME}/.rbenv/shims/bundle",
-      "rdbgPath": "${env:HOME}/.rbenv/shims/rdbg",
+      "program": "${file}",
+      "pathToRDebugIDE": "bin/rdebug-ide",
     }, {
-      "label": "test:all",
-      "type": "rdbg",
-      "name": "Execute all specs",
+      "name": "test:all",
+      "type": "Ruby",
       "request": "launch",
       "script": "spec",
-      "command": "rspec",
-      "bundlePath": "${env:HOME}/.rbenv/shims/bundle",
-      "rdbgPath": "${env:HOME}/.rbenv/shims/rdbg",
+      "program": "bin/rspec",
+      "pathToRDebugIDE": "bin/rdebug-ide",
     }
   ]
 }

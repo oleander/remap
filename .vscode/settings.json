@@ -13,5 +13,14 @@
     "latex",
     "plaintext",
     "ruby"
-  ]
+  ],
+  "solargraph.useBundler": true,
+  "solargraph.formatting": true,
+  "solargraph.symbols": true,
+  "solargraph.completion": true,
+  "solargraph.hover": true,
+  "solargraph.rename": true,
+  "solargraph.references": true,
+  "solargraph.autoformat": true
+
 }
