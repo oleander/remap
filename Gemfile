@@ -48,4 +48,5 @@ group :development, :test do
 
   gem "bundler"
   gem "solargraph"
+  gem "rake"
 end
