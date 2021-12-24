@@ -106,6 +106,8 @@ GEM
     neatjson (0.9)
     nokogiri (1.12.5-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
+      racc (~> 1.4)
     panolint (0.1.4)
       brakeman (>= 4.8, < 6.0)
       rubocop (>= 0.83, < 2.0)
@@ -236,6 +238,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   benchmark-ips
