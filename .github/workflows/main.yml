@@ -28,7 +28,7 @@ jobs:
       with:
         bundler-cache: true
         ruby-version: 3.0.3
-    - run: bundle exec rake rubocop
+    - run: bin/rubocop
 
   doctest:
     runs-on: ubuntu-latest
