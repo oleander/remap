@@ -10,9 +10,7 @@ end
 
 shared_examples "a fatal exception" do
   let(:state) do
-    super().merge(
-      fatal_id: super().fetch(:fatal_id, :fatal_id)
-    )
+    super().merge(fatal_id: super().fetch(:fatal_id, :fatal_id))
   end
 
   let(:fatal_id) { state.fatal_id }
@@ -35,9 +33,7 @@ end
 shared_examples "an ignored exception" do
   let(:reason) { "this is a reason" }
   let(:state) do
-    super().merge(
-      id: super().fetch(:id, :ignore_id)
-    )
+    super().merge(id: super().fetch(:id, :ignore_id))
   end
 
   it "throws an ignored symbol" do

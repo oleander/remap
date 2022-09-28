@@ -4,15 +4,12 @@ require "bundler/setup"
 Bundler.require
 require "remap"
 
-mapper = Remap.define do
-  map :e do
-    # map :g do
+class Hello < Remap::Base
+  option :that
 
-    map :a
-
-    map :b
-    # end
+  define do
+    map :this, to: [:symbol_key, option(:that)]
   end
 end
 
-pp mapper.call({ e: { a: "1", b: "2" } })
+pp Hello.call({ this: "in" }, that: "out")

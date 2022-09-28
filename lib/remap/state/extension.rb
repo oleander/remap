@@ -109,27 +109,27 @@ module Remap
         # @return [State]
         def map(&block)
           result = case self
-          in { value: Array => array }
-            array.each_with_index.each_with_object([]) do |(value, index), array|
-              s1 = block[set(value, index: index)]
+                   in { value: Array => array }
+                     array.each_with_index.each_with_object([]) do |(value, index), array|
+                       s1 = block[set(value, index: index)]
 
-              if s1.key?(:value)
-                array << s1[:value]
-              end
-            end
-          in { value: Hash => hash }
-            hash.each_with_object({}) do |(key, value), acc|
-              s1 = block[set(value, key: key)]
+                       if s1.key?(:value)
+                         array << s1[:value]
+                       end
+                     end
+                   in { value: Hash => hash }
+                     hash.each_with_object({}) do |(key, value), acc|
+                       s1 = block[set(value, key: key)]
 
-              if s1.key?(:value)
-                acc[key] = s1[:value]
-              end
-            end
-          in { value: }
-            fatal!("Expected an enumerable got %s", value.class)
-          else
-            return self
-          end
+                       if s1.key?(:value)
+                         acc[key] = s1[:value]
+                       end
+                     end
+                   in { value: }
+                     fatal!("Expected an enumerable got %s", value.class)
+                   else
+                     return self
+                   end
 
           set(result)
         end
@@ -402,27 +402,23 @@ module Remap
         # @return [Failure]
         def failure(reason = Undefined)
           failures = case [path, reason]
-          in [_, Undefined]
-            return Failure.new(failures: notices)
-          in [_, Notice => notice]
-            [notice]
-          in [path, Array => reasons]
-            reasons.map do |inner_reason|
-              Notice.call(path: path, reason: inner_reason, **only(:value))
-            end
-          in [path, String => reason]
-            [Notice.call(path: path, reason: reason, **only(:value))]
-          in [path, Hash => errors]
-            errors.paths.flat_map do |sufix|
-              Array.wrap(errors.dig(*sufix)).map do |inner_reason|
-                Notice.call(
-                  reason: inner_reason,
-                  path: path + sufix,
-                  **only(:value)
-                )
-              end
-            end
-          end
+                     in [_, Undefined]
+                       return Failure.new(failures: notices)
+                     in [_, Notice => notice]
+                       [notice]
+                     in [path, Array => reasons]
+                       reasons.map do |inner_reason|
+                         Notice.call(path: path, reason: inner_reason, **only(:value))
+                       end
+                     in [path, String => reason]
+                       [Notice.call(path: path, reason: reason, **only(:value))]
+                     in [path, Hash => errors]
+                       errors.paths.flat_map do |sufix|
+                         Array.wrap(errors.dig(*sufix)).map do |inner_reason|
+                           Notice.call(reason: inner_reason, path: path + sufix, **only(:value))
+                         end
+                       end
+                     end
 
           Failure.new(failures: failures, notices: notices)
         end
