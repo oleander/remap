@@ -3,7 +3,6 @@
 require "dry/schema"
 require "dry/validation"
 require "dry/core/constants"
-require "factory_bot"
 require "dry/logic"
 require "dry/logic/operations"
 require "dry/logic/predicates"
