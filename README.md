@@ -36,7 +36,7 @@ class Mapper < Remap::Base
     get :friends do
       each do
         # Post processors
-        map(:name, to: :id).then do
+        map(:name, to: :id).then do |value:|
           "#{value.upcase}!"
         end
 
@@ -349,7 +349,7 @@ Selected values can easily be processed before being returned using call-backs.
 
 ``` ruby
 class Mapper < Remap::Base
-  using Extensions::Hash
+  using Remap::Extensions::Hash
 
   define do
     map :people, all do
@@ -357,21 +357,21 @@ class Mapper < Remap::Base
       map(:name).then(&:upcase)
 
       # Or pass a block
-      map(:name).then do
+      map(:name).then do |value:|
         value.upcase
       end
 
-      # Manually skip a mapping using skip!
-      map(:name).then do
-        skip!
+      # Manually skip a mapping
+      map(:name).then do |&error|
+        error["skip"]
       end
 
       # Add conditions
-      map?(:name).if do
+      map?(:name).if do |value:|
         value.include?("John")
       end
 
-      map?(:name).if_not do
+      map?(:name).if_not do |value:|
         value.include?("Lisa")
       end
 
@@ -389,7 +389,7 @@ class Mapper < Remap::Base
       # and allows for a path to be passed. If the path is missing,
       # the rule will be ignored in the case of `map?` and `map`
       # a detailed error message will be thrown with a detailed path
-      map(:name).then do
+      map(:name).then do |value:|
         value.get(:a, :b)
       end
     end
@@ -408,10 +408,12 @@ The callback context has access to the following values
 
 ``` ruby
 class Person < Remap::Base
+  using Remap::Extensions::Enumerable
+
   define do
     get :person do
       get(:name)
-      get(:age).if do
+      get?(:age).if do |values:|
         values.get(:person, :name) == "John"
       end
     end
@@ -434,7 +436,7 @@ class Mapper < Remap::Base
     set :secret, to: option(:code)
 
     # Access {code} inside a callback
-    map(:pin_code, to: :seed).then do |pin|
+    map(:pin_code, to: :seed).then do |pin, code:|
       code**pin
     end
   end
